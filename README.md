@@ -76,24 +76,23 @@ can successfully run HipsterPizza.
   - run `./boot.sh` in a screen session
   - in `/etc/nginx/sites-enabled/hipsterpizza`:
 
+            server {
+                listen YOUR_V4_IP:80;
+                listen YOUR_V6_IP:80;
 
-    server {
-        listen YOUR_V4_IP:80;
-        listen YOUR_V6_IP:80;
+                keepalive_timeout 60;
 
-        keepalive_timeout 60;
+                root /path/to/your/hipsterpizza/;
+                access_log /var/log/nginx/hipsterpizza-access.log combined;
+                error_log /var/log/nginx/hipsterpizza-error.log;
+                index index.html index.htm;
 
-        root /path/to/your/hipsterpizza/;
-        access_log /var/log/nginx/hipsterpizza-access.log combined;
-        error_log /var/log/nginx/hipsterpizza-error.log;
-        index index.html index.htm;
+                server_name SAME_AS_OUR_HOST;
 
-        server_name SAME_AS_OUR_HOST;
-
-        location / {
-            proxy_pass http://localhost:9292;
-        }
-    }
+                location / {
+                    proxy_pass http://localhost:9292;
+                }
+            }
 
 
 
