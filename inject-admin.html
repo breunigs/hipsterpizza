@@ -1,0 +1,39 @@
+<script>
+// disable area code selection popup
+cart.config.behavior.checkDeliveryAreaOnCustDomains = 0;
+window.check4DeliveryArea = function() {}
+cart.check4DeliveryArea = function() {}
+
+
+// This is the admin version of hipsterOrderFinishedAlert. It will notify
+// the user of errors and also fill out the form fields.
+function hipsterOrderFinishedAlert() {
+  hipsterSetSubmitData();
+
+  var stat = "Expected sum: " + hipsterTotalPrice + "<br/>";
+  if(hipsterItems.length > 0) {
+    stat += "Missing items: <ul>";
+    $.each(hipsterItems, function(ind, item) {
+      var ex = item["extra"].length === 0 ? "" : " + " + item["extra"].join(" + ")
+      stat += "<li>"+item["prod"]+ex+"</li>";
+    });
+    stat += "</ul>";
+  }
+  stat += "<a href='"+hipsterPizzaHost+"?action=marksubmitted'>After submitting, click here to set the accurate submit timer and return to the overview.</a>";
+  $("#hipsterStatus").html(stat);
+
+
+  if(hipsterItems.length > 0) {
+    alert("Some items have not been found. They are now being logged to your console.");
+    console.warn(hipsterItems);
+  } else if(hipsterTotalPrice !== hipsterGetPriceForAllItems()) {
+    alert("No errors have been reported, but the prices do not match up.\nExpected "+hipsterTotalPrice+" but got "+hipsterGetPriceForAllItems()+". Please investigate before submitting.");
+  } else {
+    alert("All done! You now may submit the cart.");
+  }
+}
+
+hipsterSetupReplay();
+</script>
+
+<title>HipsterPizza: ADMIN MODE</title>

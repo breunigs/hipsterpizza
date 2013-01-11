@@ -1,0 +1,23 @@
+.wait {
+  cursor: wait !important
+}
+
+#hipsterStatus {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  max-width: 240px;
+  background: #FFF0CC;
+  z-index:100;
+  font-size:13px;
+}
+
+#hipsterStatus a {
+  color: #B83319;
+  text-decoration:none;
+}
+
+#hipsterStatus a:hover {
+  text-decoration:underline;
+}

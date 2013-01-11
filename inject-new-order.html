@@ -1,0 +1,73 @@
+<!-- hide form and min order notice. They're regenerated with every new
+ order, so we need to use css instead. -->
+<style type="text/css">
+  #permkv8, .cart-minorderhint {
+    display: none !important
+  }
+</style>
+
+<script>
+// disable area code selection popup
+cart.config.behavior.checkDeliveryAreaOnCustDomains = 0;
+window.check4DeliveryArea = function() {}
+cart.check4DeliveryArea = function() {}
+
+// Overwrite submit function
+cart.verifyForm = function() {
+  if($(".cartitems").length === 0) {
+    alert("You can only be a part of HipsterPizza if you order something.");
+    return;
+  }
+
+  var data = { "nick": "Häcker", "items": [] };
+
+  // read all items from the basket, convert them to JSON and finally
+  // submit them to HipsterPizza by changing the window location.
+  $(".cartitems").each(function(ind, elm) {
+    var prod = $(elm).find(".cartitems-title div").text();
+    var price = $(elm).find(".cartitems-itemsum .cartitems-sprice div").text();
+    price = parseFloat(price.replace(/\s/, "").replace(",", "."));
+
+    if($.trim(prod) === "" || isNaN(price)) {
+      alert("Couldn't detect product properly, maybe the script is broken?");
+      return;
+    }
+
+    var extra = [];
+    $(elm).find(".cartitems-subitem .cartitems-subtitle a").each(function(ind, ingred) {
+      extra[ind] = $(ingred).text();
+    });
+
+    data["items"][ind] = { "price": price, "prod": prod, "extra": extra.sort() };
+  });
+
+  var nick = hipsterGetNick();
+  do {
+    nick = prompt("Your Nick:", nick === null ? "" : nick);
+    // user clicked cancel
+    if(nick === null) return;
+  } while(nick === "");
+  data["nick"] = nick;
+  hipsterSetNick(nick);
+
+  var urlParam = escape(JSON.stringify(data));
+  if(typeof(hipsterDeleteOldOrder) != "undefined" && hipsterDeleteOldOrder !== null) {
+    var d = new Date();
+    d = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    urlParam += "&delete=" + hipsterDeleteOldOrder + "&date=" + d;
+  }
+  if(window.console) console.log(urlParam);
+
+  window.location = hipsterPizzaHost + "?action=add&order=" + urlParam;
+}
+
+
+function hipsterOrderFinishedAlert() {
+  $("#hipsterStatus").html("Order has been replayed. Check for missing items. Click 'Bestellen' to commit order to HipsterPizza.<br/><a href='"+hipsterPizzaHost+"'>Cancel and return to overview</a>");
+}
+
+hipsterSetupReplay();
+
+</script>
+
+<title>HipsterPizza: Order</title>
