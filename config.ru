@@ -60,7 +60,8 @@ require "./db.rb"
 require "./gui.rb"
 
 use Rack::ReverseProxy do
-  reverse_proxy_options :preserve_host => false
+  # not sure why I set it false before. It needs to be true now.
+  reverse_proxy_options :preserve_host => true
 
   # matching in reverse proxy has been overwritten to ignore
   # "/" and all LOCAL_FILES.
