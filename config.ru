@@ -85,7 +85,7 @@ app = proc do |env|
         page = inject(INJECT_NEW_ORDER)
 
         # load pizza category by default instead of mexican food
-        page.sub!("cart.initCart( '/order/eppelheim_pizza-rapido/01/', 'framek100.htm'", "cart.initCart( '/order/eppelheim_pizza-rapido/01/', 'framek010.htm'")
+        page.sub!("cart.initCart( '/order/eppelheim_pizza-rapido/01/', 'framek080.htm'", "cart.initCart( '/order/eppelheim_pizza-rapido/01/', 'framek010.htm'")
 
         out << page
         [ 200, { "Content-Type" => "text/html" }, to_pizzade_encoding(out) ]
