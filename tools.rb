@@ -188,8 +188,11 @@ class Time
 
     unit = get_unit(time_difference)
     unit_difference = time_difference / Units.const_get(unit.capitalize)
+    
+    puts time_difference
+    puts unit
 
-    unit = unit.to_s.downcase + ('s' if time_difference > 1)
+    unit = unit.to_s.downcase + (time_difference > 1 ? 's' : '')
 
     is_future \
       ? "in #{unit_difference} #{unit}" \
