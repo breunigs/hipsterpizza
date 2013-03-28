@@ -13,7 +13,7 @@ cols, *rows = $db.execute2("SELECT tblname FROM meta")
 
 tbls = rows.map { |row| row['tblname'] }
 # pro SQL injection prevention
-tbls.reject! { |tbl| !tbl =~ /^a-z0-9$/i }
+tbls.reject! { |tbl| !(tbl =~ /^[a-z0-9]+$/i) }
 
 sums = {}
 total = 0
