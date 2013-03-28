@@ -10,7 +10,8 @@ cart.check4DeliveryArea = function() {}
 function hipsterOrderFinishedAlert() {
   hipsterSetSubmitData();
 
-  var stat = "Expected sum: " + hipsterTotalPrice + "<br/>";
+  var stat = "<b>1. Check Order</b><br/>";
+  stat += "Expected sum: " + hipsterTotalPrice.toFixed(2) + "<br/>";
   if(hipsterItems.length > 0) {
     stat += "Missing items: <ul>";
     $.each(hipsterItems, function(ind, item) {
@@ -19,7 +20,10 @@ function hipsterOrderFinishedAlert() {
     });
     stat += "</ul>";
   }
-  stat += "<a href='"+hipsterPizzaHost+"?action=marksubmitted'>After submitting, click here to set the accurate submit timer and return to the overview.</a>";
+  stat += "<br/><br/><b>2. Submit order and wait for confirmation</b><br/>";
+  stat += "<br/><br/><b>3. set correct submit date</b><br/>";
+  stat += "<a href='"+hipsterPizzaHost+"?action=marksubmitted'>click to set correct submit date</a>";
+  stat += "<br/><br/><b>4. set delivery date</b> (on overview page)<br/>";
   $("#hipsterStatus").html(stat);
 
 

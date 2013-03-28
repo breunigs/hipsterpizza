@@ -169,6 +169,10 @@ app = proc do |env|
         order_mark_submitted
         redirect_home
 
+      when "markdelivered" then
+        order_mark_delivered
+        redirect_home
+
       when "saveorder" then
         worked, content = save_order(p["id"], p["name"])
         if worked

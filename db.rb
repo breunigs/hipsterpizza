@@ -17,12 +17,23 @@ def order_submit_date
   return Time.parse(rows[0]["submitted"])
 end
 
+def order_delivery_date
+  return nil unless order_submitted?
+  cols, *rows = $db.execute2("SELECT * FROM meta WHERE tblname = ?", table_name)
+  t = rows[0]["delivered"]
+  return t.nil? || t.empty? ? nil : Time.parse(t)
+end
+
 def order_mark_submitted
   unless table_exists?("meta")
-    $db.execute("CREATE TABLE meta(tblname TEXT PRIMARY KEY, submitted TEXT)")
+    $db.execute("CREATE TABLE meta(tblname TEXT PRIMARY KEY, submitted TEXT, delivered TEXT)")
   end
 
-  $db.execute2("INSERT OR REPLACE INTO meta (tblname, submitted) VALUES (?, ?)", table_name, Time.now.utc.iso8601)
+  $db.execute2("INSERT OR REPLACE INTO meta (tblname, submitted, delivered) VALUES (?, ?, ?)", table_name, Time.now.utc.iso8601, '')
+end
+
+def order_mark_delivered
+  $db.execute2("UPDATE meta SET delivered = ? WHERE tblname = ?", Time.now.utc.iso8601, table_name)
 end
 
 def save_order(id, name)

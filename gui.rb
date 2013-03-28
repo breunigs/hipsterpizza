@@ -181,6 +181,19 @@ def order_status
   if order_submitted?
     t = order_submit_date
     out << %(<p class="lead">submitted @ #{t.getlocal.strftime("%H:%M")} (#{t.time_ago_in_words})</p>)
+
+    if deli = order_delivery_date
+      out << %(<p class="lead">delivered @ #{deli.getlocal.strftime("%H:%M")} (#{deli.time_ago_in_words})</p>)
+    else
+      sum = get_sum_for_order || 0
+      avg = avg_delivery_time
+      if avg > 0
+        est = t + (avg * sum)
+        out << %(<p class="lead">estimate @ #{est.getlocal.strftime("%H:%M")} (#{est.time_ago_in_words})</p>)
+      end
+    end
+
+    out << %(<a class="btn" onclick="if(confirm('Are you sure the delivery has arrived NOW? Otherwise click cancel and don’t insert a time to avoid skewing the stats.')) window.location.search='?action=markdelivered'; return false;" title="only click if “a wild pizza appears”">delivery arrived?</a>)
   else
     out << %(<p class="lead">The order has not yet been submitted.</p>)
     out << %(This means you can still order. It will be submitted around 8 PM. <strong>If it’s almost 8 PM and you still want to order SHOUT VERY LOUD or CALL SOMEONE AT LOCATION.</strong>)

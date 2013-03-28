@@ -40,6 +40,60 @@ def redirect_saved_orders
   [ 302, { "Content-Type" => "text/html", "Location" => OUR_HOST + "?action=showsaved" }, ["How did you get here?"] ]
 end
 
+def get_sum_for_order(tbl = nil)
+  tbl = table_name if tbl.nil?
+
+  # pro SQL injection prevention
+  return nil unless tbl =~ /^[a-z0-9]+$/i
+  begin
+    sum = 0
+    $db.execute("SELECT querystring FROM #{tbl}") do |row|
+      JSON.parse(row["querystring"])['items'].each do |item|
+        sum += item['price']
+      end
+    end
+    return sum
+  rescue
+    return nil
+  end
+end
+
+def get_delivery_time_for_order(tbl)
+  begin
+    cols, *times = $db.execute2("SELECT submitted, delivered FROM meta WHERE tblname = ?", tbl)
+    s = Time.parse(times.first['submitted'])
+    d = Time.parse(times.first['delivered'])
+    return nil if (d-s) < 0
+    return d-s
+  rescue
+    return nil
+  end
+end
+
+# returns the amount of time required per euro on average for all orders
+# with that data available.
+def avg_delivery_time
+  sums = 0
+  times = 0
+  cols, *rows = $db.execute2("SELECT tblname FROM meta")
+  tbls = rows.map { |row| row['tblname'] }
+
+  tbls.each do |tbl|
+    s = get_sum_for_order(tbl)
+    t = get_delivery_time_for_order(tbl)
+    next if s.nil? || t.nil?
+    sums += s
+    times += t
+    puts s
+    puts t
+    puts "\n\n"
+  end
+
+  return 0 if times == 0
+  return times.to_f/sums.to_f
+end
+
+
 # fetches all items from the database and returns a JavaScript string
 # that makes them available in “hipsterItems”. Also creates JS-variable
 # “hipsterTotalPrice”.
@@ -128,12 +182,18 @@ class Time
   def time_ago_in_words
     time_difference = Time.now.to_i - self.to_i
     return "just now" if time_difference == 0
+
+    is_future = time_difference < 0
+    time_difference = time_difference.abs
+
     unit = get_unit(time_difference)
     unit_difference = time_difference / Units.const_get(unit.capitalize)
 
     unit = unit.to_s.downcase + ('s' if time_difference > 1)
 
-    "#{unit_difference} #{unit} ago"
+    is_future \
+      ? "in #{unit_difference} #{unit}" \
+      : "#{unit_difference} #{unit} ago"
   end
 
   private
