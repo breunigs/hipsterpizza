@@ -27,16 +27,6 @@ def html_header
    <meta charset="utf-8" />
    <title>HipsterPizza Overview</title>
    <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
-   <style type="text/css">
-     body { margin: 0 auto; max-width:900px }
-     .price { text-align:right !important; }
-     h3 { font-size: 70px; text-align:center; }
-     h3 img { padding-right: 20px }
-     .large{ font-size:200%; }
-     .fakehidden p { visibility: hidden }
-     .fakehidden:hover p { visibility: visible }
-     .onlyWithCookies { display: none }
-   </style>
  </head>
  <body>
    <div class="masthead">
