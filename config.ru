@@ -33,6 +33,9 @@ LOCAL_FILES = {
   "/bootstrap.min.css" =>
     ["text/css", File.open("bootstrap.min.css", "rb").read],
 
+  "/turbolinks.js" =>
+    ["text/javascript", File.open("turbolinks.js", "rb").read],
+
   "/0_image/pizza-de_logoshop_v8.gif" =>
     ["image/png", File.open("images/logosml.png", "rb").read],
 
