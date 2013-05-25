@@ -101,6 +101,23 @@ def overview_table
     out << "</tr>"
   end
   out << "</table>"
+
+  out << <<-EOF
+    <script>
+      window.autoUpdate = function() {
+        var x = document.querySelectorAll(":hover");
+        for(var i = 0; i < x.length; i++) {
+          if(x[i].tagName !== "A") continue;
+          // okay, so mouse is over a link. Reload later.
+          window.setTimeout(window.autoUpdate, "10000");
+          return;
+        }
+        window.location.reload();
+      }
+      window.setTimeout(window.autoUpdate, "10000");
+    </script>
+  EOF
+
   out
 end
 
