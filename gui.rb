@@ -78,6 +78,9 @@ def overview_table
   out << <<-EOF
     <script>
       window.autoUpdate = function() {
+        // we navigated to a subpage, don’t reload
+        if(location.search !== "") return;
+
         var x = document.querySelectorAll(":hover");
         for(var i = 0; i < x.length; i++) {
           if(x[i].tagName !== "A") continue;
