@@ -218,7 +218,9 @@ app = proc do |env|
         out << user_actions
         out << saved_orders_table
         out << html_footer
-        [ 200, { "Content-Type" => "text/html" }, out ]
+        # XHR-Header is required turbolinks updates the current URL for
+        # pages that redirect here.
+        [ 200, { "Content-Type" => "text/html", "X-XHR-Current-Location" => OUR_HOST + "?action=showsaved" }, out ]
 
       else
         out << html_header
@@ -227,7 +229,9 @@ app = proc do |env|
         out << money_stats
         out << order_status
         out << html_footer
-        [ 200, { "Content-Type" => "text/html" }, out ]
+        # XHR-Header is required turbolinks updates the current URL for
+        # pages that redirect here.
+        [ 200, { "Content-Type" => "text/html", "X-XHR-Current-Location" => OUR_HOST }, out ]
     end
 
   elsif LOCAL_FILES.keys.include?(req.path)
