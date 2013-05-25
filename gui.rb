@@ -90,7 +90,8 @@ def overview_table
         }
         Turbolinks.visit("#{OUR_HOST}#refresh=" + new Date().toLocaleTimeString());
       }
-      window.setTimeout(window.autoUpdate, "10000");
+      if(window.autoUpdateTimeout) window.clearTimeout(window.autoUpdateTimeout);
+      window.autoUpdateTimeout = window.setTimeout(window.autoUpdate, "10000");
     </script>
   EOF
 
