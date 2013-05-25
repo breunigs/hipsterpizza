@@ -69,11 +69,9 @@ var hipsterOrderFinishedHasRun = false;
 function hipsterOrderFinished() {
   if(hipsterOrderFinishedHasRun) return;
   hipsterOrderFinishedHasRun = true;
-  $("body").unbind("DOMSubtreeModified");
   $("body").removeClass("wait");
-
-  // wait a bit so that the store may finish its animations
-  setTimeout("hipsterOrderFinishedAlert()", 300);
+  hipsterOrderFinishedAlert();
+  $.fx.off = false;
 }
 
 // sets the GUI to "loading" and waits for one second, before first
@@ -83,9 +81,11 @@ function hipsterSetupReplay() {
   if(typeof(hipsterItems) === "undefined" || hipsterItems === null)
     return;
 
-  console.log("Waiting 1s for page to finish loading...");
+  $.fx.off = true;
+
+  console.log("Waiting 250ms for page to finish loading...");
   $("body").addClass("wait");
-  setTimeout("hipsterStartReplay()", 1000);
+  setTimeout("hipsterStartReplay()", 250);
   $('#hipsterStatus').html('Waiting for page to load');
 }
 
@@ -95,8 +95,8 @@ function hipsterStartReplay() {
   // wait until pizza.de page has loaded completely
   var elm = $("label:contains('Vorwahl')");
   if(elm.length === 0) {
-    console.log("nope, waiting another 1s...");
-    return setTimeout("hipsterStartReplay", 1000);
+    console.log("nope, waiting another 250ms...");
+    return setTimeout("hipsterStartReplay()", 250);
   }
 
   var currentNav = null;
@@ -116,6 +116,10 @@ function hipsterStartReplay() {
     // load next sub page
     if(currentNav === null) {
       currentNav = $(navLinks.shift());
+      // if an element has this class, the pizza.de JS code avoids
+      // loading it. Therefore remove it to ensure the content_ready
+      // event fires.
+      currentNav.removeClass('activ');
       currentNav.click();
       return;
     }
@@ -170,21 +174,19 @@ function hipsterStartReplay() {
     $("#hipsterStatus").html("expect browser hangs!<br>Items to go: " + hipsterItems.length + "<br>" + "Categories to go: " + navLinks.length);
 
     // continue in a bit
-    setTimeout(function() { process(); }, 200);
+    setTimeout(function() { process(); }, 0);
   }
 
   // find all available categories. They will be removed one by one
   // after a category has been processed.
   var navLinks = $.makeArray($(".navbars a"));
 
-  // listen for changes in the body. This way we can tell if the
-  // product category page has finished loading. Since this fires
-  // multiple times utilize a timeout to run only once.
-  var loadTimeout = null;
-  $("body").bind("DOMSubtreeModified", function() {
-    if(loadTimeout !== null) clearTimeout(loadTimeout);
-    loadTimeout = setTimeout(function() { process(); }, 500);
+  // listen to the same event as pizza.de for content loading
+  $('#inhalt').bind('content_ready', function() {
+    console.log('Content loaded, processing...');
+    process();
   });
 
+  // start process
   process();
 }

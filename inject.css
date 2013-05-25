@@ -1,5 +1,9 @@
 .wait {
-  cursor: wait !important
+  cursor: wait !important;
+}
+
+.wait #framek {
+  display: none !important;
 }
 
 #hipsterStatus {
