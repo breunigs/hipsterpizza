@@ -212,7 +212,7 @@ app = proc do |env|
 
   elsif LOCAL_FILES.keys.include?(req.path)
     h = LOCAL_FILES[req.path]
-    [ 200, { "Content-Type" => h[0] }, [h[1]]]
+    [ 200, { "Content-Type" => h[0], "Cache-Control" => "max-age=#{6*24*60*60}, public" }, [h[1]]]
   else
     throw("Should never get here, should be handled by reverse proxy.")
   end
