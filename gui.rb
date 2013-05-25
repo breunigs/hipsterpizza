@@ -94,8 +94,8 @@ def overview_table
 
     unless order_submitted?
       out << %( <a title="Copy Order" class="btn" onclick="if(confirm('Copy this order?\\n\\n• Basically the same as “Make New Order” but faster.\\n• Will hang your browser for a while.\\n• No failsafes.\\n• You can change the order before submitting it to HipsterPizza.')) window.location.search='?action=copy&amp;#{qry}&amp;knddomain'; return false;">cp</a>)
-      out << %( <a data-nick="#{order["nick"]}" title="Edit Order" class="btn onlyWithCookies" onclick="if(confirm('Edit this order?\\n\\n• Will hang your browser for a while.\\n• No failsafes.\\n• Order remains unchanged until you hit “Bestellen”.')) window.location.search='?action=edit&amp;#{qry}&amp;knddomain'; return false;">Edit</a>)
-      out << %( <a data-nick="#{order["nick"]}" title="Delete Order" class="btn btn-danger onlyWithCookies" onclick="if(confirm('Do you really want to remove this order?')) window.location.search='?action=delete&amp;#{qry}'; return false;">❌</a> )
+      out << %( <a data-nick="#{order["nick"]}" title="Edit Order" class="btn onlyWithCookies" onclick="if(confirm('Edit “#{order["nick"]}”s order?\\n\\n• Will hang your browser for a while.\\n• No failsafes.\\n• Order remains unchanged until you hit “Bestellen”.')) window.location.search='?action=edit&amp;#{qry}&amp;knddomain'; return false;">Edit</a>)
+      out << %( <a data-nick="#{order["nick"]}" title="Delete Order" class="btn btn-danger onlyWithCookies" onclick="if(confirm('Do you really want to remove “#{order["nick"]}”s order?')) window.location.search='?action=delete&amp;#{qry}'; return false;">❌</a> )
     end
     out << "</td>"
     out << "</tr>"
