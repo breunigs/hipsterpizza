@@ -16,9 +16,9 @@ end
 def inject(content)
   throw "inject only accepts strings!" unless content.is_a?(String)
   Net::HTTP::start("pizza.de") do |http|
-    # ?kndDomain=1 prevents the pizza.de sign in form and also gives
+    # ?knddomain=1 prevents the pizza.de sign in form and also gives
     # less provisions to pizza.de
-    page = http.get(BASE + "/index.htm?kndDomain=1").body
+    page = http.get(BASE + "/index.htm?knddomain=1").body
     page = page.force_encoding("ISO-8859-1").encode("UTF-8")
     scr = %(<script>hipsterPizzaHost = "#{OUR_HOST}";</script>)
     scr << %(<script type="text/javascript" src="#{OUR_HOST}/hipsterTools.js"></script>)

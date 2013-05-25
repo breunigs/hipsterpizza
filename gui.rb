@@ -13,7 +13,7 @@ def show_saved_orders_button
 end
 
 def new_order_button
-  %( <a class="btn btn-success" href="#{OUR_HOST}/?action=neworder&amp;knddomain" data-no-turbolink>Make New Order</a>)
+  %( <a class="btn btn-success" href="#{OUR_HOST}/?action=neworder&amp;knddomain=1" data-no-turbolink>Make New Order</a>)
 end
 
 def home_button
@@ -66,8 +66,8 @@ def overview_table
     out << %( <a title="Save Order As" class="btn" onclick="var name=prompt('Choose a unique name for saving:', hipsterGetNick() + ': '); name=name.replace(/^\\s+|\\s+$/, ''); if(name == null || name == '') return false; else window.location.search='?action=saveorder&amp;#{qry}&amp;name='+name;">Save</a> )
 
     unless order_submitted?
-      out << %( <a title="Copy Order" class="btn" onclick="if(confirm('Copy this order?\\n\\n• Basically the same as “Make New Order” but faster.\\n• Will hang your browser for a while.\\n• No failsafes.\\n• You can change the order before submitting it to HipsterPizza.')) window.location.search='?action=copy&amp;#{qry}&amp;knddomain'; return false;">cp</a>)
-      out << %( <a data-nick="#{order["nick"]}" title="Edit Order" class="btn onlyWithCookies" onclick="if(confirm('Edit “#{order["nick"]}”s order?\\n\\n• Will hang your browser for a while.\\n• No failsafes.\\n• Order remains unchanged until you hit “Bestellen”.')) window.location.search='?action=edit&amp;#{qry}&amp;knddomain'; return false;">Edit</a>)
+      out << %( <a title="Copy Order" class="btn" onclick="if(confirm('Copy this order?\\n\\n• Basically the same as “Make New Order” but faster.\\n• Will hang your browser for a while.\\n• No failsafes.\\n• You can change the order before submitting it to HipsterPizza.')) window.location.search='?action=copy&amp;#{qry}&amp;knddomain=1'; return false;">cp</a>)
+      out << %( <a data-nick="#{order["nick"]}" title="Edit Order" class="btn onlyWithCookies" onclick="if(confirm('Edit “#{order["nick"]}”s order?\\n\\n• Will hang your browser for a while.\\n• No failsafes.\\n• Order remains unchanged until you hit “Bestellen”.')) window.location.search='?action=edit&amp;#{qry}&amp;knddomain=1'; return false;">Edit</a>)
       out << %( <a data-nick="#{order["nick"]}" title="Delete Order" class="btn btn-danger onlyWithCookies" onclick="if(confirm('Do you really want to remove “#{order["nick"]}”s order?')) window.location.search='?action=delete&amp;#{qry}'; return false;">❌</a> )
     end
     out << "</td>"
@@ -111,8 +111,8 @@ def saved_orders_table
     out << %(<td style="white-space: nowrap;">)
 
     if (ONLY_ON.nil? || Time.now.send(ONLY_ON+"?")) && !order_submitted?
-      out << %( <a title="Order EXACTLY this" class="btn" style="font-weight: bold" onclick="window.location.search='?action=ordersaved&amp;submitImmediately=yes&amp;#{qry}&amp;knddomain'; return false;">Order. This. NOW!</a>)
-      out << %( <a title="Create new order based on this one" class="btn" onclick="if(confirm('Really order this?\\n\\n• Will hang your browser for a while.\\n• No failsafes.\\n• You can change the order before commiting it to HipsterPizza.')) window.location.search='?action=ordersaved&amp;#{qry}&amp;knddomain'; return false;">order &amp; customize</a>)
+      out << %( <a title="Order EXACTLY this" class="btn" style="font-weight: bold" onclick="window.location.search='?action=ordersaved&amp;submitImmediately=yes&amp;#{qry}&amp;knddomain=1'; return false;">Order. This. NOW!</a>)
+      out << %( <a title="Create new order based on this one" class="btn" onclick="if(confirm('Really order this?\\n\\n• Will hang your browser for a while.\\n• No failsafes.\\n• You can change the order before commiting it to HipsterPizza.')) window.location.search='?action=ordersaved&amp;#{qry}&amp;knddomain=1'; return false;">order &amp; customize</a>)
     end
 
     out << %( <a title="Delete Saved Order" class="btn btn-danger" onclick="if(confirm('Really delete saved order?')) window.location.search='?action=deletesaved&amp;#{qry}'; return false;">❌</a> )
@@ -197,7 +197,7 @@ def order_status
   else
     out << %(<p class="lead">The order has not yet been submitted.</p>)
     out << %(This means you can still order. It will be submitted around 8 PM. <strong>If it’s almost 8 PM and you still want to order SHOUT VERY LOUD or CALL SOMEONE AT LOCATION.</strong>)
-    out << %(<div style="height:1000px"></div><div class="fakehidden"><p><a class="btn btn-warning" onclick="if(confirm('Click OK if you want to:\\n• Pay for everyone\\n• Block further orders\\n• rape your browser and init group order.\\n\\nOtherwise kindly leave the premesis.')) window.location.search='?action=submit&amp;knddomain'; return false;">I will pay for everyone</a> Don’t click, this button will brew incredibly awesome Latte no hipster can withstand.<br/><br/><a class="btn" onclick="a = document.querySelectorAll('.onlyWithCookies'); for(var i = 0; i < a.length; i++) { a[i].setAttribute('class', a[i].getAttribute('class').replace('onlyWithCookies','' )); }">SuperPowers Activate</a> Gives SuperAIDS. Don’t trust the button.</p></div>)
+    out << %(<div style="height:1000px"></div><div class="fakehidden"><p><a class="btn btn-warning" onclick="if(confirm('Click OK if you want to:\\n• Pay for everyone\\n• Block further orders\\n• rape your browser and init group order.\\n\\nOtherwise kindly leave the premesis.')) window.location.search='?action=submit&amp;knddomain=1'; return false;">I will pay for everyone</a> Don’t click, this button will brew incredibly awesome Latte no hipster can withstand.<br/><br/><a class="btn" onclick="a = document.querySelectorAll('.onlyWithCookies'); for(var i = 0; i < a.length; i++) { a[i].setAttribute('class', a[i].getAttribute('class').replace('onlyWithCookies','' )); }">SuperPowers Activate</a> Gives SuperAIDS. Don’t trust the button.</p></div>)
   end
   out
 end
