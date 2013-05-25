@@ -115,7 +115,12 @@ def saved_orders_table
     out << "<td>#{row["name"]}</td>"
     out << "<td>#{render_order_details(order)}</td>"
     out << %(<td style="white-space: nowrap;">)
-    out << %( <a title="Create new order based on this one" class="btn" onclick="if(confirm('Really order this?\\n\\n• Will hang your browser for a while.\\n• No failsafes.\\n• You can change the order before commiting it to HipsterPizza.')) window.location.search='?action=ordersaved&#{qry}&knddomain'; return false;">order this</a> ) if (ONLY_ON.nil? || Time.now.send(ONLY_ON+"?")) && !order_submitted?
+
+    if (ONLY_ON.nil? || Time.now.send(ONLY_ON+"?")) && !order_submitted?
+      out << %( <a title="Order EXACTLY this" class="btn" style="font-weight: bold" onclick="window.location.search='?action=ordersaved&submitImmediately=yes&#{qry}&knddomain'; return false;">Order. This. NOW!</a>)
+      out << %( <a title="Create new order based on this one" class="btn" onclick="if(confirm('Really order this?\\n\\n• Will hang your browser for a while.\\n• No failsafes.\\n• You can change the order before commiting it to HipsterPizza.')) window.location.search='?action=ordersaved&#{qry}&knddomain'; return false;">order &amp; customize</a>)
+    end
+
     out << %( <a title="Delete Saved Order" class="btn btn-danger" onclick="if(confirm('Really delete saved order?')) window.location.search='?action=deletesaved&#{qry}'; return false;">❌</a> )
     out << "</td>"
     out << "</tr>"

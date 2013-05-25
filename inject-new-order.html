@@ -63,7 +63,13 @@ cart.verifyForm = function() {
 
 
 function hipsterOrderFinishedAlert() {
-  $("#hipsterStatus").html("Order has been replayed. Check for missing items. Click 'Bestellen' to commit order to HipsterPizza.<br/><a href='"+hipsterPizzaHost+"'>Cancel and return to overview</a>");
+  if(location.href.match(/submitImmediately=yes/)) {
+    $("#hipsterStatus").html("Submitting to cart, hang tight.");
+    // overwritten submit function
+    cart.verifyForm();
+  } else {
+    $("#hipsterStatus").html("Order has been replayed. Check for missing items. Click 'Bestellen' to commit order to HipsterPizza.<br/><a href='"+hipsterPizzaHost+"'>Cancel and return to overview</a>");
+  }
 }
 
 hipsterSetupReplay();
