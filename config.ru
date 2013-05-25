@@ -62,6 +62,8 @@ require "./reverse_proxy.rb"
 require "./db.rb"
 require "./gui.rb"
 
+use Rack::Deflater
+
 use Rack::ReverseProxy do
   # not sure why I set it false before. It needs to be true now.
   reverse_proxy_options :preserve_host => true
