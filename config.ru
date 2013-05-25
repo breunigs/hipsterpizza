@@ -62,7 +62,24 @@ require "./reverse_proxy.rb"
 require "./db.rb"
 require "./gui.rb"
 
-use Rack::Deflater
+module Rack
+  class DeflaterWithInclusions < Deflater
+    def initialize(app, options = {})
+      @app = app
+    end
+
+    def call(env)
+      unless LOCAL_FILES.keys.include?(env['PATH_INFO'])
+        @app.call(env) # i.e. don’t gzip
+      else
+        super(env) # i.e. gzip
+      end
+    end
+  end
+end
+
+use Rack::DeflaterWithInclusions
+
 
 use Rack::ReverseProxy do
   # not sure why I set it false before. It needs to be true now.
