@@ -13,7 +13,7 @@ def show_saved_orders_button
 end
 
 def new_order_button
-  %( <a class="btn btn-success" href="#{OUR_HOST}/?action=neworder&amp;knddomain">Make New Order</a>)
+  %( <a class="btn btn-success" href="#{OUR_HOST}/?action=neworder&amp;knddomain" data-no-turbolink>Make New Order</a>)
 end
 
 def home_button
@@ -27,6 +27,7 @@ def html_header
    <meta charset="utf-8" />
    <title>HipsterPizza Overview</title>
    <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
+   <script src="turbolinks.js"></script>
  </head>
  <body>
    <div class="masthead">
@@ -102,7 +103,7 @@ def overview_table
           window.setTimeout(window.autoUpdate, "10000");
           return;
         }
-        window.location.reload();
+        Turbolinks.visit("#{OUR_HOST}#refresh=" + new Date().toLocaleTimeString());
       }
       window.setTimeout(window.autoUpdate, "10000");
     </script>

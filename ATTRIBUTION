@@ -13,3 +13,7 @@ http://twitter.github.com/bootstrap/
 reverse_proxy.rb from rack-reverse-proxy by jaswope
 MIT
 https://github.com/jaswope/rack-reverse-proxy
+
+turbolinks.js
+MIT
+https://github.com/epiclabs/turbolinks-js
