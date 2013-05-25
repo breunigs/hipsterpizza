@@ -36,6 +36,9 @@ LOCAL_FILES = {
   "/turbolinks.js" =>
     ["text/javascript", File.open("turbolinks.js", "rb").read],
 
+  "/gui-nick-handler.js" =>
+    ["text/javascript", File.open("gui-nick-handler.js", "rb").read],
+
   "/0_image/pizza-de_logoshop_v8.gif" =>
     ["image/png", File.open("images/logosml.png", "rb").read],
 

@@ -28,6 +28,7 @@ def html_header
         <title>HipsterPizza Overview</title>
         <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
         <script src="turbolinks.js"></script>
+        <script src="gui-nick-handler.js"></script>
       </head>
       <body>
         <div class="masthead">
@@ -37,26 +38,7 @@ def html_header
 end
 
 def html_footer
-  %(<br/><br/> <script>
-    function hipsterGetNick() {
-      var cookies = document.cookie.split(";");
-      for (var i=0; i<cookies.length; i++) {
-        var x = cookies[i].substr(0, cookies[i].indexOf("=")).replace(/^\s+|\s$/, "");
-        if (x === "hipsterNick")return unescape(cookies[i].substr(cookies[i].indexOf("=") + 1));
-      }
-      return null;
-    }
-
-    if(hipsterGetNick() != null) {
-      var a = document.querySelectorAll(".onlyWithCookies");
-      for(var i = 0; i < a.length; i++) {
-        if(a[i].getAttribute("data-nick") == hipsterGetNick()) {
-          var newClass = a[i].getAttribute("class").replace("onlyWithCookies","" );
-          a[i].setAttribute("class", newClass);
-        }
-      }
-    }
-   </script></body></html>)
+  %(<br/><br/></body></html>)
 end
 
 def overview_table
