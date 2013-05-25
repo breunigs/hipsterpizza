@@ -622,3 +622,4 @@ h3 img { padding-right: 20px }
 .fakehidden p { visibility: hidden }
 .fakehidden:hover p { visibility: visible }
 .onlyWithCookies { display: none }
+.masthead { height: 90px; }

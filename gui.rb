@@ -22,18 +22,18 @@ end
 
 def html_header
   %(<!DOCTYPE html>
-<html lang="en">
- <head>
-   <meta charset="utf-8" />
-   <title>HipsterPizza Overview</title>
-   <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
-   <script src="turbolinks.js"></script>
- </head>
- <body>
-   <div class="masthead">
-     <h3><img src="images/logo.png">HipsterPizza</h3>
-   </div>
-   <noscript><div class="large text-error" style="padding:10px">pizza.de and #{OUR_HOST} need JavaScript. Disable your snake oil please.</div></noscript>)
+      <html lang="en">
+      <head>
+        <meta charset="utf-8" />
+        <title>HipsterPizza Overview</title>
+        <link rel="stylesheet" href="bootstrap.min.css" type="text/css" />
+        <script src="turbolinks.js"></script>
+      </head>
+      <body>
+        <div class="masthead">
+          <h3><img src="images/logo.png" width="200" height="86">HipsterPizza</h3>
+        </div>
+        <noscript><div class="large text-error" style="padding:10px">pizza.de and #{OUR_HOST} need JavaScript. Disable your snake oil please.</div></noscript>)
 end
 
 def html_footer
