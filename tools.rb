@@ -16,8 +16,9 @@ end
 def inject(content)
   throw "inject only accepts strings!" unless content.is_a?(String)
   Net::HTTP::start("pizza.de") do |http|
-    # ?knddomain prevents the pizza.de sign in form
-    page = http.get(BASE + "/index.htm?knddomain").body
+    # ?kndDomain=1 prevents the pizza.de sign in form and also gives
+    # less provisions to pizza.de
+    page = http.get(BASE + "/index.htm?kndDomain=1").body
     page = page.force_encoding("ISO-8859-1").encode("UTF-8")
     scr = %(<script>hipsterPizzaHost = "#{OUR_HOST}";</script>)
     scr << %(<script type="text/javascript" src="#{OUR_HOST}/hipsterTools.js"></script>)
@@ -188,7 +189,7 @@ class Time
 
     unit = get_unit(time_difference)
     unit_difference = time_difference / Units.const_get(unit.capitalize)
-    
+
     puts time_difference
     puts unit
 
