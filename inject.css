@@ -25,3 +25,14 @@
 #hipsterStatus a:hover {
   text-decoration:underline;
 }
+
+/* hide slow order dialog */
+#deliverydelay-blobup {
+  /* use many hiding methods because I am coding blind here */
+  display: none !important;
+  visibility: hidden !important;
+  layer: -1 !important;
+  position: fixed !important;
+  top: -500px !important;
+  left: -500px !important;
+}
