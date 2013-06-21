@@ -61,6 +61,7 @@ INJECT_NEW_ORDER.sub("utf8 test", "")
 INJECT_ADMIN.sub("utf8 test", "")
 
 require "./tools.rb"
+require "./cache.rb"
 require "./reverse_proxy.rb"
 require "./db.rb"
 require "./gui.rb"

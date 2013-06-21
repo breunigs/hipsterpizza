@@ -4,6 +4,8 @@
 
 # via https://github.com/jaswope/rack-reverse-proxy
 # modified to pass "/" and LOCAL_FILES to app instead of proxying them
+# also added a very simple (and probably flawed) cache system to reduce
+# amount of revese lookups required
 
 
 require 'net/http'
@@ -21,9 +23,11 @@ module Rack
     def call(env)
       rackreq = Rack::Request.new(env)
       matcher = get_matcher rackreq.fullpath
-      # XXX: modified here
+      # XXX: modification 1/2 start
       return @app.call(env) if rackreq.path == "/" || LOCAL_FILES.keys.include?(rackreq.path)
-      #return @app.call(env) if matcher.nil?
+      cc = getCache(rackreq.path)
+      return cc unless cc.nil?
+      # XXX: modification 1/2 end
 
       uri = matcher.get_uri(rackreq.fullpath,env)
       all_opts = @global_options.dup.merge(matcher.options)
@@ -77,7 +81,11 @@ module Rack
           end
         end
 
-        [res.code, create_response_headers(res), [body]]
+        # XXX: modification 2/2 start
+        cc = [res.code, create_response_headers(res), [body]]
+        writeCache(rackreq.path, cc)
+        cc
+        # XXX: modifcation 2/2 end
       }
     end
 
