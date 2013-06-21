@@ -27,6 +27,8 @@ end
 
 def writeCache(path, content)
   return unless canCache(path)
+  # only cache successful responses, everything else looks too risky
+  return unless content[0] == 200
   puts "Caching #{path}"
   $cache[path] = { :expires => Time.now + CACHE_VALID_TIME, :content => content }
 end
