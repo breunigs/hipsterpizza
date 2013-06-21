@@ -97,7 +97,6 @@ end
 app = proc do |env|
   out = []
   req = Rack::Request.new(env)
-  puts req.path
 
 
   if req.path == "/"
