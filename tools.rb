@@ -85,9 +85,6 @@ def avg_delivery_time
     next if s.nil? || t.nil?
     sums += s
     times += t
-    puts s
-    puts t
-    puts "\n\n"
   end
 
   return 0 if times == 0
