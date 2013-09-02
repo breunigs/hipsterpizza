@@ -141,11 +141,11 @@ def date_is_valid?(date)
   # near ridiculous security
   begin
     if (Date.parse(date) - Date.today).abs >= 2
-      print_warning "Seems to be an old date."
+      warn "Seems to be an old date."
       return false
     end
   rescue
-    print_warning "Broken date."
+    warn "Broken date."
     return false
   end
   true
@@ -155,7 +155,7 @@ end
 def id_is_valid?(ord_id)
   return true if ord_id.match(/^[0-9]+$/)
 
-  print_warning("Invalid ID: #{ord_id}")
+  warn "Invalid ID: #{ord_id}"
   false
 end
 
