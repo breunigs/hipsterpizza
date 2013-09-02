@@ -1,5 +1,8 @@
 # encoding: utf-8
 
+require "sqlite3"
+
+
 def table_name
   "d" + Date.today.strftime("%Y%m%d")
 end
@@ -130,6 +133,7 @@ def toggle_paid(ord_id, date)
 end
 
 # Setup database
+DB_FILE = File.dirname(__FILE__) + "/db.sqlite3"
 `touch "#{DB_FILE}"` unless File.exist?(DB_FILE)
 $db = SQLite3::Database.new(DB_FILE)
 $db.results_as_hash = true

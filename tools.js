@@ -14,22 +14,24 @@ function hipsterSetSubmitData() {
     document.getElementById(id).value = value;
   }
 
-  // this intentionally does not pre-select the Herr/Frau checkbox, so
-  // the form can't be submitted by accidentally hitting enter
-  setInputByLabel("Firma",      "");
-  setInputByLabel("Vorname",    "");
-  setInputByLabel("Nachname",   "");
-  setInputByLabel("Straﬂe",     "");
-  setInputByLabel("Nr.",        "");
-  setInputByLabel("Vorwahl",    "");
-  setInputByLabel("Telefon-Nr", "");
-  setInputByLabel("PLZ",        "");
-  setInputByLabel("Ort",        "");
-  setInputByLabel("Email",      "");
-  // Note: Hinterhof and Bemerkung text fields are simply concatenated
-  // when pizza.de generates the fax. The character limit of 600
-  // characters is applied to the concatenation.
-  setInputByLabel("Hinterhof", "");
+  $.getJSON("/hipsterDeliveryData.json", function(data) {
+    // this intentionally does not pre-select the Herr/Frau checkbox, so
+    // the form can't be submitted by accidentally hitting enter
+    setInputByLabel("Firma",      data["firma"]);
+    setInputByLabel("Vorname",    data["vorname"]);
+    setInputByLabel("Nachname",   data["nachname"]);
+    setInputByLabel("Straﬂe",     data["strasse"]);
+    setInputByLabel("Nr.",        data["housenumber"]);
+    setInputByLabel("Vorwahl",    data["vorwahl"]);
+    setInputByLabel("Telefon-Nr", data["telefon"]);
+    setInputByLabel("PLZ",        data["plz"]);
+    setInputByLabel("Ort",        data["ort"]);
+    setInputByLabel("Email",      data["mail"]);
+    // Note: Hinterhof and Bemerkung text fields are simply concatenated
+    // when pizza.de generates the fax. The character limit of 600
+    // characters is applied to the concatenation.
+    setInputByLabel("Hinterhof", data["bemerkung"]);
+  }).fail(function() { alert("Lieferdaten-JSON kaputt!"); });
 }
 
 function hipsterGetPriceForLastItem() {
@@ -98,6 +100,8 @@ function hipsterStartReplay() {
     console.log("nope, waiting another 250ms...");
     return setTimeout("hipsterStartReplay()", 250);
   }
+
+  hipsterOnLoadActions();
 
   var currentNav = null;
   // this function does the actual work of finding the items and adding

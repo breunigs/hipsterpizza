@@ -8,8 +8,6 @@ cart.check4DeliveryArea = function() {}
 // This is the admin version of hipsterOrderFinishedAlert. It will notify
 // the user of errors and also fill out the form fields.
 function hipsterOrderFinishedAlert() {
-  hipsterSetSubmitData();
-
   var stat = "<b>1. Check Order</b><br/>";
   stat += "Expected sum: " + hipsterTotalPrice.toFixed(2) + "<br/>";
   if(hipsterItems.length > 0) {
@@ -35,6 +33,10 @@ function hipsterOrderFinishedAlert() {
   } else {
     alert("All done! You now may submit the cart.");
   }
+}
+
+function hipsterOnLoadActions() {
+  hipsterSetSubmitData();
 }
 
 hipsterSetupReplay();

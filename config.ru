@@ -26,8 +26,6 @@ require "sqlite3"
 require "net/http"
 require "json"
 
-DB_FILE = File.dirname(__FILE__) + "/db.sqlite3"
-
 
 LOCAL_FILES = {
   "/bootstrap.min.css" =>
@@ -49,7 +47,10 @@ LOCAL_FILES = {
     ["text/javascript", File.open("tools.js", "rb").read],
 
   "/hipsterInject.css" =>
-    ["text/css", File.open("inject.css", "rb").read]
+    ["text/css", File.open("inject.css", "rb").read],
+
+  "/hipsterDeliveryData.json" =>
+    ["text/javascript", File.open("hipsterDeliveryData.json", "rb").read]
 }
 
 # Read inject data once
