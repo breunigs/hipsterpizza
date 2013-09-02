@@ -85,9 +85,9 @@ function hipsterSetupReplay() {
 
   $.fx.off = true;
 
-  console.log("Waiting 250ms for page to finish loading...");
+  console.log("Waiting 100ms for page to finish loading...");
   $("body").addClass("wait");
-  setTimeout("hipsterStartReplay()", 250);
+  setTimeout("hipsterStartReplay()", 100);
   $('#hipsterStatus').html('Waiting for page to load');
 }
 
@@ -97,8 +97,8 @@ function hipsterStartReplay() {
   // wait until pizza.de page has loaded completely
   var elm = $("label:contains('Vorwahl')");
   if(elm.length === 0) {
-    console.log("nope, waiting another 250ms...");
-    return setTimeout("hipsterStartReplay()", 250);
+    console.log("nope, waiting another 100ms...");
+    return setTimeout("hipsterStartReplay()", 100);
   }
 
   hipsterOnLoadActions();
@@ -178,7 +178,7 @@ function hipsterStartReplay() {
     $("#hipsterStatus").html("expect browser hangs!<br>Items to go: " + hipsterItems.length + "<br>" + "Categories to go: " + navLinks.length);
 
     // continue in a bit
-    setTimeout(function() { process(); }, 0);
+    process();
   }
 
   // find all available categories. They will be removed one by one
