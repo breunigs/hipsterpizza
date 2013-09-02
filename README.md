@@ -57,7 +57,8 @@ Setup
 -----
 
 1. If you can run `rackup -s thin` and don’t get an error, it means you
-can successfully run HipsterPizza.
+can successfully run HipsterPizza. You’ll need to install *prawn*,
+either by `apt-get install ruby-prawn` or `gem install prawn`.
 2. Adjust your public URL and the shop you want to use in `config.ru`.
   - The public URL is where HipsterPizza will later be available for
  everyone. If you don’t have an own domain or want it only to be
@@ -94,7 +95,6 @@ can successfully run HipsterPizza.
                     proxy_pass http://localhost:9292;
                 }
             }
-
 
 
 License and attribution
