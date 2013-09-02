@@ -68,8 +68,9 @@ can successfully run HipsterPizza.
   - You can also only allow orders on a certain week day, if you want.
     This is not enforced however, so someone who knows the URL can still
     place orders.
-3. Adjust you contact info which will be sent to the delivery service in
-   `hipsterDeliveryData.json`
+3. Set your contact info which will be sent to the delivery service in
+   `hipster-delivery-data.json`. There’s a template available in
+   `hipster-delivery-data.json-template` that you can copy.
 4. You can integrate HipsterPizza any way you like into your server
    landscape. We’re using a reverse lookup because it’s easy to set up
    and HipsterPizza won’t be high traffic anyway.

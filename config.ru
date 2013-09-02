@@ -53,6 +53,8 @@ LOCAL_FILES = {
     ["text/javascript", File.open("hipsterDeliveryData.json", "rb").read]
 }
 
+DELIVERY_DATA = JSON.parse(LOCAL_FILES["/hipsterDeliveryData.json"][1])
+
 # Read inject data once
 INJECT_NEW_ORDER = File.open("inject-new-order.html", "rb:UTF-8").read
 INJECT_ADMIN = File.open("inject-admin.html", "rb:UTF-8").read
@@ -66,6 +68,7 @@ require "./cache.rb"
 require "./reverse_proxy.rb"
 require "./db.rb"
 require "./gui.rb"
+require "./pdf.rb"
 
 module Rack
   class DeflaterWithInclusions < Deflater
@@ -107,6 +110,9 @@ app = proc do |env|
       p[k] = v.force_encoding("ISO-8859-1").encode("UTF-8") if v.is_a?(String)
     end
     case p["action"]
+      when "genpdf" then
+        [ 200, { "Content-Type" => "application/pdf" }, [pdf_generate]]
+
       when "neworder" then
         page = inject(INJECT_NEW_ORDER)
 

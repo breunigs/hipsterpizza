@@ -197,7 +197,11 @@ def order_status
   else
     out << %(<p class="lead">The order has not yet been submitted.</p>)
     out << %(This means you can still order. It will be submitted around 8 PM. <strong>If it’s almost 8 PM and you still want to order SHOUT VERY LOUD or CALL SOMEONE AT LOCATION.</strong>)
-    out << %(<div style="height:1000px"></div><div class="fakehidden"><p><a class="btn btn-warning" onclick="if(confirm('Click OK if you want to:\\n• Pay for everyone\\n• Block further orders\\n• rape your browser and init group order.\\n\\nOtherwise kindly leave the premesis.')) window.location.search='?action=submit&amp;knddomain=1'; return false;">I will pay for everyone</a> Don’t click, this button will brew incredibly awesome Latte no hipster can withstand.<br/><br/><a class="btn" onclick="a = document.querySelectorAll('.onlyWithCookies'); for(var i = 0; i < a.length; i++) { a[i].setAttribute('class', a[i].getAttribute('class').replace('onlyWithCookies','' )); }">SuperPowers Activate</a> Gives SuperAIDS. Don’t trust the button.</p></div>)
+    out << %(<div style="height:1000px"></div><div class="fakehidden"><p>)
+    out << %(<a class="btn btn-warning" onclick="if(confirm('Click OK if you want to:\\n• Pay for everyone\\n• Block further orders\\n• rape your browser and init group order.\\n\\nOtherwise kindly leave the premesis.')) window.location.search='?action=submit&amp;knddomain=1'; return false;">I will pay for everyone</a> Don’t click, this button will brew incredibly awesome Latte no hipster can withstand.<br/><br/>)
+    out << %(<a class="btn" href="?action=genpdf">Generate PDF</a> No evil things will happen if you click this. I promise!<br/><br/>)
+    out << %(<a class="btn" onclick="a = document.querySelectorAll('.onlyWithCookies'); for(var i = 0; i < a.length; i++) { a[i].setAttribute('class', a[i].getAttribute('class').replace('onlyWithCookies','' )); }">SuperPowers Activate</a> Gives SuperAIDS. Don’t trust the button.)
+    out << %(</p></div>)
   end
   out
 end
