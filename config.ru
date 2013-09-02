@@ -140,7 +140,9 @@ app = proc do |env|
           page.sub!("<script", "<script>#{scr}</script><script")
           out << to_pizzade_encoding(page)
         else
-          out += [html_header, "Saved order could not be retrieved.", html_footer]
+          msg = %(<br/>Saved order could not be retrieved. Maybe you used an old link? )
+          msg << %(<a href="?action=showsaved">Visit the saved order page and try again.</a>)
+          out += [html_header, msg, html_footer]
         end
         [ 200, { "Content-Type" => "text/html" }, out ]
 
