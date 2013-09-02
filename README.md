@@ -69,7 +69,7 @@ can successfully run HipsterPizza.
     This is not enforced however, so someone who knows the URL can still
     place orders.
 3. Adjust you contact info which will be sent to the delivery service in
-   `tools.js` near the top. Look for the `setInputByLabel` function.
+   `hipsterDeliveryData.json`
 4. You can integrate HipsterPizza any way you like into your server
    landscape. We’re using a reverse lookup because it’s easy to set up
    and HipsterPizza won’t be high traffic anyway.
