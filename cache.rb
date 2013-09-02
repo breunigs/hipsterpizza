@@ -8,7 +8,10 @@ def canCache(path)
   return true if path.end_with?(".css")
   return true if path.end_with?(".js")
   return true if path.end_with?(".jpg")
-  return true if path.match(/framek[0-9]{3}k.htm$/)
+  return true if path.end_with?(".png")
+  return true if path.end_with?(".gif")
+  return true if path ==  "/_shop/shopinit_json"
+  return true if path.match(/framek[0-9]{3}\.htm$/)
   false
 end
 
@@ -22,14 +25,16 @@ def getCache(path)
   end
 
   puts "Used Cache for: #{path}"
+  STDOUT.flush
   return entry[:content]
 end
 
 def writeCache(path, content)
   return unless canCache(path)
   # only cache successful responses, everything else looks too risky
-  return unless content[0] == 200
+  return unless content[0].to_s == "200"
   puts "Caching #{path}"
+  STDOUT.flush
   $cache[path] = { :expires => Time.now + CACHE_VALID_TIME, :content => content }
 end
 
