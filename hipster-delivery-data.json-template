@@ -1,0 +1,13 @@
+{
+"firma":       "",
+"vorname":     "",
+"nachname":    "",
+"strasse":     "",
+"housenumber": "",
+"vorwahl":     "",
+"telefon":     "",
+"plz":         "",
+"ort":         "",
+"mail":        "",
+"bemerkung":   ""
+}
