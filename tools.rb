@@ -20,9 +20,9 @@ def inject(content)
     # less provisions to pizza.de
     page = http.get(BASE + "/index.htm?knddomain=1").body
     page = page.force_encoding("ISO-8859-1").encode("UTF-8")
-    scr = %(<script>hipsterPizzaHost = "#{OUR_HOST}";</script>)
-    scr << %(<script type="text/javascript" src="#{OUR_HOST}/hipsterTools.js"></script>)
-    scr << %(<link rel="stylesheet" type="text/css" href="#{OUR_HOST}/hipsterInject.css">)
+    scr = %(<script>hipsterPizzaHost = "#{$current_host}";</script>)
+    scr << %(<script type="text/javascript" src="#{$current_host}/hipsterTools.js"></script>)
+    scr << %(<link rel="stylesheet" type="text/css" href="#{$current_host}/hipsterInject.css">)
     page.sub!("<script", %(#{scr}<script))
     page.sub!("</head>", content + "</head>")
     return page
@@ -33,12 +33,12 @@ end
 # a HTTP redirect to the main page as expected by rackup.
 def redirect_home
   # expected format: [status code, headers, content]
-  [ 302, { "Content-Type" => "text/html", "Location" => OUR_HOST }, ["How did you get here?"] ]
+  [ 302, { "Content-Type" => "text/html", "Location" => $current_host }, ["How did you get here?"] ]
 end
 
 # a HTTP redirect to the saved orders as expected by rackup.
 def redirect_saved_orders
-  [ 302, { "Content-Type" => "text/html", "Location" => OUR_HOST + "?action=showsaved" }, ["How did you get here?"] ]
+  [ 302, { "Content-Type" => "text/html", "Location" => $current_host + "?action=showsaved" }, ["How did you get here?"] ]
 end
 
 def get_sum_for_order(tbl = nil)

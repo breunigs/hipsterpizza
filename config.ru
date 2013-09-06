@@ -1,7 +1,11 @@
 # encoding: utf-8
 
 # the absolute URL where the page will be available from the outside
-OUR_HOST = "http://YOUR.PUBLIC.URL"
+# If your server is configured correctly (e.g. by setting server_name
+# in nginx to the correct value), you don’t need to manually set this.
+# Instead, the correct value is detected automatically.
+#OUR_HOST = "http://YOUR.PUBLIC.URL"
+OUR_HOST = nil
 
 # in which page should stuff be injected
 BASE = "/order/PIZZA_SERVICE_NAME_HERE/01"
@@ -101,6 +105,8 @@ end
 app = proc do |env|
   out = []
   req = Rack::Request.new(env)
+
+  $current_host = OUR_HOST || req.env['HTTP_HOST']
 
 
   if req.path == "/"
@@ -229,7 +235,7 @@ app = proc do |env|
         out << html_footer
         # XHR-Header is required turbolinks updates the current URL for
         # pages that redirect here.
-        [ 200, { "Content-Type" => "text/html", "X-XHR-Current-Location" => OUR_HOST + "?action=showsaved" }, out ]
+        [ 200, { "Content-Type" => "text/html", "X-XHR-Current-Location" => $current_host + "?action=showsaved" }, out ]
 
       else
         out << html_header
@@ -240,7 +246,7 @@ app = proc do |env|
         out << html_footer
         # XHR-Header is required turbolinks updates the current URL for
         # pages that redirect here.
-        [ 200, { "Content-Type" => "text/html", "X-XHR-Current-Location" => OUR_HOST }, out ]
+        [ 200, { "Content-Type" => "text/html", "X-XHR-Current-Location" => $current_host }, out ]
     end
 
   elsif LOCAL_FILES.keys.include?(req.path)

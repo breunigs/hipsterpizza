@@ -9,15 +9,15 @@ def error(message)
 end
 
 def show_saved_orders_button
-  %( <a class="btn btn-info" href="#{OUR_HOST}/?action=showsaved">Show Saved Orders</a>)
+  %( <a class="btn btn-info" href="#{$current_host}/?action=showsaved">Show Saved Orders</a>)
 end
 
 def new_order_button
-  %( <a class="btn btn-success" href="#{OUR_HOST}/?action=neworder&amp;knddomain=1" data-no-turbolink>Make New Order</a>)
+  %( <a class="btn btn-success" href="#{$current_host}/?action=neworder&amp;knddomain=1" data-no-turbolink>Make New Order</a>)
 end
 
 def home_button
-  %( <a class="btn" href="#{OUR_HOST}">Go Home/Reload</a>)
+  %( <a class="btn" href="#{$current_host}">Go Home/Reload</a>)
 end
 
 def html_header
@@ -34,7 +34,7 @@ def html_header
         <div class="masthead">
           <h3><img src="images/logo.png" width="200" height="86">HipsterPizza</h3>
         </div>
-        <noscript><div class="large text-error" style="padding:10px">pizza.de and #{OUR_HOST} need JavaScript. Disable your snake oil please.</div></noscript>)
+        <noscript><div class="large text-error" style="padding:10px">pizza.de and #{$current_host} need JavaScript. Disable your snake oil please.</div></noscript>)
 end
 
 def html_footer
@@ -88,7 +88,7 @@ def overview_table
           window.setTimeout(window.autoUpdate, "10000");
           return;
         }
-        Turbolinks.visit("#{OUR_HOST}#refresh=" + new Date().toLocaleTimeString());
+        Turbolinks.visit("#{$current_host}#refresh=" + new Date().toLocaleTimeString());
       }
       if(window.autoUpdateTimeout) window.clearTimeout(window.autoUpdateTimeout);
       window.autoUpdateTimeout = window.setTimeout(window.autoUpdate, "10000");
