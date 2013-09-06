@@ -159,6 +159,13 @@ def id_is_valid?(ord_id)
   false
 end
 
+def get_fax_number
+  source = Net::HTTP.get('pizza.de', "#{BASE}/shopinit_mob.js")
+  m = source.match(/fax:\s*'([0-9\s-_\/]+)'/i)
+  return "could not find fax number" if m.nil? || m.size < 2
+  m[1].gsub(/[^0-9]/, "")
+end
+
 # extend Time class with “time_ago_in_words”. Originally copied from
 # somewhere, but can’t remember where. If you know who to attribute,
 # please let me know.

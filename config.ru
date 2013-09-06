@@ -242,6 +242,9 @@ app = proc do |env|
         # pages that redirect here.
         [ 200, { "Content-Type" => "text/html", "X-XHR-Current-Location" => $current_host + "?action=showsaved" }, out ]
 
+      when "getfaxnumber" then
+        [ 200, { "Content-Type" => "text/plain" }, [get_fax_number] ]
+
       else
         out << html_header
         out << user_actions
