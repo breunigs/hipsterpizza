@@ -1,14 +1,20 @@
 # encoding: utf-8
 
 # the absolute URL where the page will be available from the outside
-# If your server is configured correctly (e.g. by setting server_name
-# in nginx to the correct value), you don’t need to manually set this.
-# Instead, the correct value is detected automatically.
+# If your server is configured correctly (e.g. by setting
+# location / {
+#    …
+#    proxy_set_header Host $host;
+# }
+# in nginx), you don’t need to manually set this. Instead, the correct
+# value is detected automatically.
 #OUR_HOST = "http://YOUR.PUBLIC.URL"
 OUR_HOST = nil
 
 # in which page should stuff be injected
 BASE = "/order/PIZZA_SERVICE_NAME_HERE/01"
+BASE = "/order/eppelheim_pizza-rapido/01"
+
 
 # limit to one weekday or allow any time order
 ONLY_ON = nil
