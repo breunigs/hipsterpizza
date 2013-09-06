@@ -112,7 +112,7 @@ app = proc do |env|
   out = []
   req = Rack::Request.new(env)
 
-  $current_host = OUR_HOST || req.env['HTTP_HOST']
+  $current_host = OUR_HOST || ("http://" + req.env['HTTP_HOST'])
 
 
   if req.path == "/"
