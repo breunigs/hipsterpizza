@@ -13,7 +13,6 @@ OUR_HOST = nil
 
 # in which page should stuff be injected
 BASE = "/order/PIZZA_SERVICE_NAME_HERE/01"
-BASE = "/order/eppelheim_pizza-rapido/01"
 
 
 # limit to one weekday or allow any time order
