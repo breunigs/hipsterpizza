@@ -97,6 +97,32 @@ either by `apt-get install ruby-prawn` or `gem install prawn`.
             }
 
 
+Using your own fax
+------------------
+
+#### Why?
+
+- fax includes nicks, so if the vendor plays along it’s much easier to match pizza to person
+- pizza.de doesn’t take 10%+ from your pizza service
+- you can fax your cool logo
+
+It’s probably a good idea to ask your vendor first if it’s okay if you submit this way. HipsterPizza includes the scraped prices and a sum and not everyone might trust you on that.
+
+##### How?
+
+This highly depends on what fax solution you want to employ. First, setup your solution to be able to fax PDF files. After that you can incorporate HipsterPizza using these three URLs:
+```
+…?action=getfaxnumber       retrieve vendor’s fax number
+…?action=marksubmitted      block further orders
+…?action=genpdf             PDF file with the orders
+```
+
+**Using pdf24.org:** Most likely the easiest way to get this running is by making an account at pdf24.org. As far as I can tell, the ads are negligible and it’s free if you only send a few pages a month. You’ll need `apt-get install phantomjs w3m w3m-img && gem install casperjs` and adjust the configuration in `custom_fax/pdf24fax.js` after creating an account on pdf24.org. Use `custom_fax/pdf24fax_wrapper.sh` to send the faxes.
+
+**Using a FritzBox:** If you own a FritzBox, you can most likely use it to send faxes. The sample script in `custom_fax/fritz_box_fax.sh` uses Roger Router (formerly known as ffgtk) to talk to your FritzBox.
+
+Also, don’t forget to adjust your logo in `images/faxlogo.png`.
+
 License and attribution
 -----------------------
 
