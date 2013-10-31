@@ -45,14 +45,16 @@ end
 def overview_table
   return "" unless table_exists?
   out = "<h2>Overview</h2>"
-  out << %(<table class="table table-striped"><tr><th>Nick</th><th class="price">€</th><th>Paid?</th><th>Order</th><th>Actions</th></tr>)
+  out << %(<table class="table table-striped"><tr><th>ID</th><th>Nick</th><th class="price">€</th><th>Paid?</th><th>Order</th><th>Actions</th></tr>)
   $db.execute("SELECT * FROM #{table_name} ORDER BY nick COLLATE NOCASE ASC") do |row|
     order = JSON.parse(row["querystring"])
     sum = order["items"].map { |i| i["price"].to_f }.inject(0, :+)
     paid = row["paid"] == 1
     qry = "id=#{row["id"]}&amp;date=#{Date.today.strftime("%Y-%m-%d")}"
     out << "<tr>"
-    out << "<td>#{order["nick"]}</td>"
+    x = order["nick"]
+    out << "<td><b>#{x[0..2].upcase}</b></td>"
+    out << "<td>#{x}</td>"
     out << %(<td class="price">#{'%.2f' % sum}</td>)
     out << %(<td title="click to toggle">)
     if paid
