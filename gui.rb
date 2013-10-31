@@ -13,7 +13,8 @@ def show_saved_orders_button
 end
 
 def new_order_button
-  %( <a class="btn btn-success" href="#{$current_host}/?action=neworder&amp;knddomain=1" data-no-turbolink>Make New Order</a>)
+  url = "#{$current_host}/?action=neworder&amp;knddomain=1"
+  %( <a class="btn btn-success" href="#{url}" data-no-turbolink>Make New Order</a> <link rel="prefetch prerender" href="#{url}">)
 end
 
 def home_button
