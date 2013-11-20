@@ -78,11 +78,11 @@ casper.thenOpen('https://fax.pdf24.org/', function() {
   this.echo('Loading Login Popup');
 });
 
-casper.waitForSelector('#submitBox');
+casper.waitForSelector('#submitBox, #logInSubmitBox');
 casper.then(function() {
   this.echo('Logging in');
   this.fill('form[name="loginform"]', {'email': PDF24MAIL, 'password': PDF24PASS }, false);
-  this.click('#submitBox input');
+  this.click('#submitBox input, #logInSubmitBox input');
 });
 
 casper.waitForSelector('#mainMenu_settings');
