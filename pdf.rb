@@ -28,11 +28,22 @@ def pdfheader
   move_down 20
 end
 
+def pdffooter
+  move_down 30
+  size = 120
+  image "images/map_google.png", position: :left, width: size
+  move_up size
+  image "images/map_osm.png", position: :right, width: size
+  move_up size/2
+  text "Google Maps                               Open Street Map", align: :center
+end
+
 def pdf_generate
   unless table_exists?
     doc = Prawn::Document.new(page_size: "A4") do
       pdfheader
       text "Keine Bestellungen"
+      pdffooter
     end
     return doc.render
   end
@@ -92,6 +103,7 @@ def pdf_generate
     move_down 10
     text "Erstellt: #{Time.now.strftime("%H:%M Uhr %d.%m.%Y")}"
 
+    pdffooter
 
     number_pages "Seite <page> von <total>", {at: [bounds.right - 150, 0], width: 150, align: :right }
   end
