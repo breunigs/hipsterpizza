@@ -38,15 +38,16 @@ var casper = require('casper').create({
   //~　verbose: true,
   //~　logLevel: 'debug',
   viewportSize: {width: 640, height: 480},
-  onTimeout: dbgImg
+  onTimeout: dbgImg,
+  timeout: 20000
 });
 
 phantom.cookiesEnabled = true;
 
 var faxNumber = null;
 
-casper.echo('Getting pizza service fax number');
 casper.start(HOST + '?action=getfaxnumber', function() {
+  this.echo('Getting pizza service fax number');
   faxNumber = this.getPageContent().replace(/^0/, '+49');
   this.echo('\nFAX NUMBER: ' + faxNumber);
   this.echo('HOST:       ' + HOST + '\n');
@@ -65,22 +66,24 @@ casper.then(function() {
   }
 });
 
-casper.echo('Blocking further orders');
+casper.then(function() { casper.echo('Blocking further orders'); });
 casper.thenOpen(HOST + '?action=marksubmitted', function() {
   this.echo('Downloading order.pdf');
   this.download(HOST + '?action=genpdf', TMPPREFIX + 'order.pdf');
 });
 
-casper.echo('Loading landing page');
+casper.then(function() { casper.echo('Loading landing page'); });
 casper.thenOpen('https://fax.pdf24.org/', function() {
   this.click('#navBoxRight a');
+  this.echo('Loading Login Popup');
 });
 
-casper.waitForSelector('#submitBox');
+casper.waitForSelector('#submitBox, #logInSubmitBox');
 casper.then(function() {
   this.echo('Logging in');
   this.fill('form[name="loginform"]', {'email': PDF24MAIL, 'password': PDF24PASS }, false);
-  this.click('#submitBox input');
+  this.click('#submitBox input, #logInSubmitBox input');
+  this.echo('submitted login form');
 });
 
 casper.waitForSelector('#mainMenu_settings');
