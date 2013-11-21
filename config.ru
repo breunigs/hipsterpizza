@@ -59,7 +59,10 @@ LOCAL_FILES = {
     ["text/css", File.open("inject.css", "rb").read],
 
   "/hipsterDeliveryData.json" =>
-    ["text/javascript", File.open("hipster-delivery-data.json", "rb").read]
+    ["text/javascript", File.open("hipster-delivery-data.json", "rb").read],
+
+  "/robots.txt" =>
+    ["text/plain", File.open("robots.txt", "rb").read]
 }
 
 DELIVERY_DATA = JSON.parse(LOCAL_FILES["/hipsterDeliveryData.json"][1])
