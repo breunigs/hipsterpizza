@@ -8,7 +8,7 @@ cd $ROOT
 
 if [ ! -f rack.pid ]; then
   echo "PID file not found, booting service"
-  ./boot.sh&
+  ./boot.bash&
   exit 0
 fi
 
@@ -16,7 +16,7 @@ fi
 kill -0 $(cat rack.pid)
 if [ $? -ne 0 ]; then
   echo "PID file found, but service not running"
-  ./boot.sh&
+  ./boot.bash&
   exit 0
 fi
 
