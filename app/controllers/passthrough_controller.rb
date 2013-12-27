@@ -15,7 +15,10 @@ class PassthroughController < ActionController::Base
 
   private
   def inject!(ret)
-    return if ["js", "css"].include?(env['PATH_INFO'].split(".").last)
+    # heuristic: assume if the last part contains a dot, it’s not a
+    # HTML resource
+    last = env['PATH_INFO'].split("/").last
+    return if last && last.include?(".")
 
     b = ret[2].first
 
