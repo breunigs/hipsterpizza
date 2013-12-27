@@ -9,7 +9,7 @@ class PassthroughController < ActionController::Base
     ret = @@forwarder.call(env)
     inject!(ret)
 
-    send_data ret[2].first, type: ret[1]["content-type"].first, disposition: 'inline'
+    send_data ret[2].first, type: ret[1]["content-type"].first, disposition: 'inline', status: ret[0]
   end
 
 
