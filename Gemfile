@@ -19,7 +19,10 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
   gem 'guard-bundler'
+  gem 'guard-zeus'
   gem 'guard-rails'
+  gem 'rack-livereload'
+  gem 'guard-livereload',require: false
   gem 'haml-rails'
   gem 'haml2slim'
   gem 'html2haml'
@@ -28,4 +31,5 @@ group :development do
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
+  gem 'parallel_tests'
 end

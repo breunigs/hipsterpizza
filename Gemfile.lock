@@ -47,6 +47,9 @@ GEM
     coffee-script-source (1.6.3)
     daemons (1.1.9)
     debug_inspector (0.0.2)
+    em-websocket (0.5.0)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0.5.3)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -64,8 +67,15 @@ GEM
     guard-bundler (2.0.0)
       bundler (~> 1.0)
       guard (~> 2.2)
+    guard-livereload (2.1.0)
+      em-websocket (~> 0.5)
+      guard (~> 2.0)
+      multi_json (~> 1.8)
     guard-rails (0.4.7)
       guard (>= 0.2.2)
+    guard-zeus (0.0.1)
+      guard
+      zeus
     haml (4.1.0.alpha.2)
       tilt
     haml-rails (0.5.2)
@@ -85,6 +95,7 @@ GEM
       haml (>= 4.0.0.rc.1)
       hpricot (~> 0.8.6)
       ruby_parser (~> 3.1.1)
+    http_parser.rb (0.5.3)
     i18n (0.6.9)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -109,6 +120,9 @@ GEM
     multi_json (1.8.2)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    parallel (0.9.1)
+    parallel_tests (0.16.5)
+      parallel
     polyglot (0.3.3)
     pry (0.9.12.4)
       coderay (~> 1.0)
@@ -117,6 +131,8 @@ GEM
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
+    rack-livereload (0.3.15)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.2)
@@ -187,6 +203,8 @@ GEM
     uglifier (2.3.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    zeus (0.13.3)
+      method_source (>= 0.6.7)
 
 PLATFORMS
   ruby
@@ -198,14 +216,18 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   figaro
   guard-bundler
+  guard-livereload
   guard-rails
+  guard-zeus
   haml-rails
   haml2slim
   high_voltage
   html2haml
   jbuilder (~> 1.2)
   jquery-rails
+  parallel_tests
   quiet_assets
+  rack-livereload
   rails (= 4.0.2)
   rails_layout
   rb-fchange
