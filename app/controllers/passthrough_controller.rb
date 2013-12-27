@@ -8,6 +8,7 @@ class PassthroughController < ActionController::Base
     env['PATH_INFO'] = "" if env['PATH_INFO'].empty?
     ret = @@forwarder.call(env)
     inject!(ret)
+    fix_urls!(ret)
 
     send_data ret[2].first, type: ret[1]["content-type"].first, disposition: 'inline', status: ret[0]
   end
@@ -27,6 +28,11 @@ class PassthroughController < ActionController::Base
 
     b.sub!("</head>", "</head>\n#{get_view(:head_bottom)}")
     b.sub!("</body>", "</body>\n#{get_view(:body_bottom)}")
+  end
+
+  def fix_urls!(ret)
+    ret[2].first.gsub!("http://pizza.de", "")
+    ret[2].first.gsub!("https://pizza.de", "")
   end
 
   def get_view(where)
