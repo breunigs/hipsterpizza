@@ -4,6 +4,21 @@ class PassthroughController < ActionController::Base
   @@forwarder = Forwarder.new("pizza.de")
 
   def pass
+    rewrite
+  end
+
+  after_filter :add_missing_content_type, only: :pass_cached
+  caches_action :pass_cached, expires_in: 24.hours
+  def pass_cached
+    return rewrite
+  end
+
+  private
+  def add_missing_content_type
+    headers['Content-Type'] ||= Mime::Type.lookup_by_extension(params['ending']).to_s
+  end
+
+  def rewrite
     env['PATH_INFO'].sub!(%r{^/pizzade}, "")
     env['PATH_INFO'] = "" if env['PATH_INFO'].empty?
     ret = @@forwarder.call(env)
@@ -14,7 +29,6 @@ class PassthroughController < ActionController::Base
   end
 
 
-  private
   def inject!(ret)
     # heuristic: assume if the last part contains a dot, it’s not a
     # HTML resource
