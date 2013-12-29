@@ -19,7 +19,6 @@ class PassthroughController < ActionController::Base
   end
 
   def rewrite
-    env['PATH_INFO'].sub!(%r{^/pizzade}, "")
     env['PATH_INFO'] = "" if env['PATH_INFO'].empty?
     ret = @@forwarder.call(env)
     inject!(ret)
