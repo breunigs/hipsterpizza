@@ -40,8 +40,8 @@ class PassthroughController < ActionController::Base
     b.sub!("<head>", "<head>\n#{get_view(:head_top)}")
     b.sub!("<body>", "<body>\n#{get_view(:body_top)}")
 
-    b.sub!("</head>", "</head>\n#{get_view(:head_bottom)}")
-    b.sub!("</body>", "</body>\n#{get_view(:body_bottom)}")
+    b.sub!("</head>", "#{get_view(:head_bottom)}\n</head>")
+    b.sub!("</body>", "#{get_view(:body_bottom)}\n</body>")
   end
 
   def fix_urls!(ret)
