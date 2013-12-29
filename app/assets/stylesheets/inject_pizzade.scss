@@ -1,0 +1,15 @@
+body {
+  padding-top: 5.2rem;
+}
+
+#hipsterTopBar {
+  position: fixed;
+  z-index: 99;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  height: 5rem;
+  background: #FFD9AB;
+  border-bottom: 0.2rem #E5840F solid;
+}
