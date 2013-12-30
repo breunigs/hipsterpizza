@@ -1,3 +1,8 @@
+$bg_light: #FFD9AB;
+$bg_dark: #FFC680;
+$bg_done: #94FF80;
+$border: #E5840F;
+
 body {
   padding-top: 5.2rem;
 }
@@ -10,6 +15,91 @@ body {
   width: 100%;
   display: block;
   height: 5rem;
-  background: #FFD9AB;
-  border-bottom: 0.2rem #E5840F solid;
+  line-height: 4.8rem;
+  background: $bg_light;
+  border-bottom: 0.2rem $border solid;
+  font-size: 1.4rem;
+  font-family: 'Cabin', sans-serif;
+
+  $bc_height: 3.1rem;
+  $arrow_width: 0.1rem;
+  ol.step {
+    line-height: $bc_height;
+    color: black;
+    border: 0;
+    padding: 0;
+    display: inline-block;
+    background: $border;
+    border-left: 0.1rem solid $border;
+    margin: 0.8rem 5rem;
+
+    li {
+      display: inline-block;
+      background: $bg_dark;
+      padding-right: 10px;
+      height: $bc_height;
+      margin-right: $bc_height + $arrow_width;
+      position: relative;
+      text-decoration: none;
+      color: black;
+      border-top: 0.1rem solid $border;
+      border-bottom: 0.1rem solid $border;
+
+      &:last-of-type {
+        margin-right: 0;
+        border-right: 0.1rem solid $border;
+        &:after {
+          display: none !important;
+        }
+      }
+
+      &:before {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 0;
+        left: -$bc_height;
+        border: $bc_height/2 solid $bg_dark;
+        border-left-color: transparent;
+        pointer-events: none;
+      }
+
+      &:after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        position: absolute;
+        top: 0;
+        right: -$bc_height;
+        border: $bc_height/2 solid transparent;
+        border-left-color: $bg_dark;
+        pointer-events: none;
+      }
+
+      &:first-of-type {
+        padding-left: 15px;
+
+        &:before {
+          display: none;
+        }
+      }
+
+      &.checked, &.active {
+        background: $bg_done;
+        text-decoration: none;
+
+        &:before {
+          border-color: $bg_done;
+          border-left-color: transparent;
+        }
+
+        &:after {
+          border-left-color: $bg_done;
+        }
+      }
+    }
+  }
 }
