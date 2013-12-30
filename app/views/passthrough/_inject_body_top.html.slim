@@ -1,0 +1,10 @@
+- c = cookies['_hipsterpizza_action']
+
+#hipsterTopBar
+  /! HipsterAction:
+     = cookies['_hipsterpizza_action']
+
+  - if ["choose_service"].include?(c)
+    = render c
+  - else
+    = render "missing_cookie"

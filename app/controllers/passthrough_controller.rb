@@ -19,7 +19,8 @@ class PassthroughController < ActionController::Base
   end
 
   def rewrite
-    env['PATH_INFO'] = "" if env['PATH_INFO'].empty?
+    env['PATH_INFO'] = "/" if env['PATH_INFO'] == "/pizzade_root"
+
     ret = @@forwarder.call(env)
     inject!(ret)
     fix_urls!(ret)
@@ -49,6 +50,6 @@ class PassthroughController < ActionController::Base
   end
 
   def get_view(where)
-    render_to_string partial: "passthrough/inject_#{where}.html.erb", locals: { environment: env }
+    render_to_string partial: "passthrough/inject_#{where}", locals: { environment: env }
   end
 end
