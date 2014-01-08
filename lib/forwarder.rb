@@ -26,15 +26,21 @@ class Forwarder
     res_hash["content-type"].join(" ").match(/charset=([^\s]+)/)[1] rescue nil
   end
 
+  def is_text?(res_hash)
+    res_hash["content-type"].join(" ").include?("text")
+  end
+
   def fix_encoding!(resource, res_hash)
-    return unless res_hash["content-type"].include?("text")
+    return unless is_text?(res_hash)
 
     charset = guess_charset(res_hash)
     return if charset == "utf-8"
 
-    resource.body.encode!('utf-8', "iso-8859-1", invalid: :replace, undef: :replace, :replace => '♥')
+    res_hash['content-type'].each { |x| x.sub!(charset, 'utf-8') } if charset
+
+    resource.body.encode!('utf-8', charset, invalid: :replace, undef: :replace, :replace => '♥')
     # correct meta tags to fixed encoding, hope it works
-    resource.body.sub!('content="text/html; charset=iso-8859-1"', 'content="text/html; charset=utf-8"')
+    resource.body.sub!(/content="text\/html; charset=[^"]+"/, 'content="text/html; charset=utf-8"')
   end
 
   def http
