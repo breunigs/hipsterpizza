@@ -27,9 +27,14 @@ class Forwarder
   end
 
   def fix_encoding!(resource, res_hash)
+    return unless res_hash["content-type"].include?("text")
+
     charset = guess_charset(res_hash)
-    return unless charset
-    resource.body.encode!('utf-8', charset, invalid: :replace, undef: :replace, :replace => '♥') if charset != "utf-8"
+    return if charset == "utf-8"
+
+    resource.body.encode!('utf-8', "iso-8859-1", invalid: :replace, undef: :replace, :replace => '♥')
+    # correct meta tags to fixed encoding, hope it works
+    resource.body.sub!('content="text/html; charset=iso-8859-1"', 'content="text/html; charset=utf-8"')
   end
 
   def http
