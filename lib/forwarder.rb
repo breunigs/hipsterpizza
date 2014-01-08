@@ -79,6 +79,9 @@ class Forwarder
       h[$1] = value if key =~ /HTTP_(.*)/
     end
 
+    # do net send hipsterpizza cookies to pizza.de
+    h["COOKIE"].gsub!(/_hipsterpizza_[^;,\s]+/, "")
+
     h["HOST"] = "#{@host}:#{@port}"
     h
   end
