@@ -55,6 +55,7 @@ class Forwarder
     h.ca_path = '/etc/ssl/certs'
     h.verify_mode = OpenSSL::SSL::VERIFY_PEER
     h.verify_depth = 10
+    h.read_timeout = 30
     h
   end
 
