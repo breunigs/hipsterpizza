@@ -34,12 +34,15 @@ class Forwarder
     return unless is_text?(res_hash)
 
     charset = guess_charset(res_hash)
-    return if charset == "utf-8"
-
-    res_hash['content-type'].each { |x| x.sub!(charset, 'utf-8') } if charset
-
+    return if charset == 'utf-8'
+    # if it’s a text resource without given encoding, it’s most likely
+    # encoded in iso-8859-1. This may change if pizza.de updates their
+    # code.
+    charset ||= 'iso-8859-1'
+    # convert to UTF-8 and update HTML headers as well as embedded meta-
+    # tags.
     resource.body.encode!('utf-8', charset, invalid: :replace, undef: :replace, :replace => '♥')
-    # correct meta tags to fixed encoding, hope it works
+    res_hash['content-type'].each { |x| x.sub!(charset, 'utf-8') }
     resource.body.sub!(/content="text\/html; charset=[^"]+"/, 'content="text/html; charset=utf-8"')
   end
 
