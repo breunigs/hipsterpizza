@@ -85,7 +85,7 @@ class Forwarder
     end
 
     # do net send hipsterpizza cookies to pizza.de
-    h["COOKIE"].gsub!(/_hipsterpizza_[^;,\s]+/, "")
+    h["COOKIE"].gsub!(/_hipsterpizza_[^;,\s]+/, "") if h["COOKIE"]
 
     h["HOST"] = "#{@host}:#{@port}"
     h
