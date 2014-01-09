@@ -38,9 +38,12 @@ class PassthroughController < ActionController::Base
 
   def inject!(ret)
     # heuristic: assume if the last part contains a dot, it’s not a
-    # HTML resource
-    last = env['PATH_INFO'].split("/").last
-    return if last && last.include?(".")
+    # HTML resource. If it contains more than one slash, it’s a sub page
+    # in which we don’t want to inject.
+    logger.warn env['PATH_INFO']
+    return if env['PATH_INFO'].count("/") > 1
+    return if env['PATH_INFO'].last(5).include?(".")
+
 
     b = ret[2].first
 
