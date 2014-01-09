@@ -19,7 +19,10 @@ class PassthroughController < ActionController::Base
 
   private
   def add_missing_content_type
-    headers['Content-Type'] ||= Mime::Type.lookup_by_extension(params['ending']).to_s
+    content = Mime::Type.lookup_by_extension(params['ending']).to_s.dup
+    content << "; charset=utf-8" if content.include?("text")
+    headers['Content-Type'] ||= content
+    logger.debug "Detected content type from ending #{params['ending']}: #{content}. Final header: #{headers['Content-Type']}"
   end
 
   def rewrite
