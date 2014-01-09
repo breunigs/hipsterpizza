@@ -28,7 +28,7 @@ class Forwarder
 
   def is_text?(res_hash)
     h = res_hash["content-type"].join(" ")
-    h.include?("text") || h.include?("charset=")
+    h.include?("text") || h.include?("charset=") || h == "application/x-javascript"
   end
 
   def fix_encoding!(resource, res_hash)
