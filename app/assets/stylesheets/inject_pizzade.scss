@@ -1,28 +1,32 @@
 $bg_light: #FFD9AB;
 $bg_dark: #FFC680;
-$bg_done: #94FF80;
+
+$bg_active: #94FF80;
+$bg_done: $bg_dark;
+$bg_togo: $bg_light;
 $border: #E5840F;
 
 body {
-  padding-top: 5.2rem;
+  padding-top: 57px;
 }
+
 
 #hipsterTopBar {
   position: fixed;
-  z-index: 99;
+  z-index: 10000;
   top: 0;
   left: 0;
   width: 100%;
   display: block;
-  height: 5rem;
-  line-height: 4.8rem;
+  height: 55px;
+  line-height: 53px;
   background: $bg_light;
-  border-bottom: 0.2rem $border solid;
-  font-size: 1.4rem;
+  border-bottom: 2px $border solid;
+  font-size: 15px;
   font-family: 'Cabin', sans-serif;
 
-  $bc_height: 3.1rem;
-  $arrow_width: 0.1rem;
+  $bc_height: 34px;
+  $arrow_width: 1px;
   ol.step {
     line-height: $bc_height;
     color: black;
@@ -30,24 +34,24 @@ body {
     padding: 0;
     display: inline-block;
     background: $border;
-    border-left: 0.1rem solid $border;
-    margin: 0.8rem 5rem;
+    border-left: 1px solid $border;
+    margin: 5px 80px;
 
     li {
       display: inline-block;
-      background: $bg_dark;
+      background: $bg_togo;
       padding-right: 10px;
       height: $bc_height;
       margin-right: $bc_height + $arrow_width;
       position: relative;
       text-decoration: none;
       color: black;
-      border-top: 0.1rem solid $border;
-      border-bottom: 0.1rem solid $border;
+      border-top: 1px solid $border;
+      border-bottom: 1px solid $border;
 
       &:last-of-type {
         margin-right: 0;
-        border-right: 0.1rem solid $border;
+        border-right: 1px solid $border;
         &:after {
           display: none !important;
         }
@@ -61,7 +65,7 @@ body {
         position: absolute;
         top: 0;
         left: -$bc_height;
-        border: $bc_height/2 solid $bg_dark;
+        border: $bc_height/2 solid $bg_togo;
         border-left-color: transparent;
         pointer-events: none;
       }
@@ -75,7 +79,7 @@ body {
         top: 0;
         right: -$bc_height;
         border: $bc_height/2 solid transparent;
-        border-left-color: $bg_dark;
+        border-left-color: $bg_togo;
         pointer-events: none;
       }
 
@@ -87,13 +91,25 @@ body {
         }
       }
 
-      &.checked, &.active {
+      &.active {
+        background: $bg_active;
+        text-decoration: none;
+
+        &:before {
+          border-color: $bg_active;
+        }
+
+        &:after {
+          border-left-color: $bg_active;
+        }
+      }
+
+      &.done {
         background: $bg_done;
         text-decoration: none;
 
         &:before {
           border-color: $bg_done;
-          border-left-color: transparent;
         }
 
         &:after {
