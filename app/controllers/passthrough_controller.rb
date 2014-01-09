@@ -4,7 +4,11 @@ class PassthroughController < ActionController::Base
   @@forwarder = Forwarder.new("pizza.de")
 
   def pass
-    rewrite
+    if env['PATH_INFO'].include?("reporterror")
+      render text: "withheld error from pizza.de"
+    else
+      rewrite
+    end
   end
 
   after_filter :add_missing_content_type, only: :pass_cached
