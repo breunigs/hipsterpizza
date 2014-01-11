@@ -1,5 +1,6 @@
 $bg_light: #FFD9AB;
 $bg_dark: #FFC680;
+$bg_hover: #FDB356;
 
 $bg_active: #94FF80;
 $bg_done: $bg_dark;
@@ -18,12 +19,42 @@ body {
   left: 0;
   width: 100%;
   display: block;
-  height: 55px;
-  line-height: 53px;
   background: $bg_light;
   border-bottom: 2px $border solid;
   font-size: 15px;
   font-family: 'Cabin', sans-serif;
+  padding: 10px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+
+  > * {
+    margin: 0 10px;
+  }
+
+  .button {
+    display: inline-block;
+    line-height: 34px;
+    padding: 0 10px;
+    height: 34px;
+    color: #000;
+    border: 1px solid $border;
+    white-space: nowrap;
+    max-width: 300px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    vertical-align: middle;
+    font-weight: bold;
+    background: $bg_dark;
+    border-radius: 3px;
+    box-shadow: 0 0 2px $border;
+
+    &:hover {
+      box-shadow: 0 0 5px $border;
+      background: #FDB356;
+    }
+  }
+
 
   $bc_height: 34px;
   $arrow_width: 1px;
@@ -35,7 +66,8 @@ body {
     display: inline-block;
     background: $border;
     border-left: 1px solid $border;
-    margin: 5px 80px;
+    margin: 0;
+    vertical-align: middle;
 
     li {
       display: inline-block;
