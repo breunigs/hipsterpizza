@@ -33,9 +33,15 @@ class Forwarder
 
   def fix_encoding!(resource, res_hash)
     return unless is_text?(res_hash)
+    Rails.logger.warn "RES_HASH is text"
 
     charset = guess_charset(res_hash)
-    return if charset == 'utf-8'
+    if charset == 'utf-8'
+      resource.body.encode!('utf-8', 'utf-8')
+      return
+    end
+
+
     # if it’s a text resource without given encoding, it’s most likely
     # encoded in iso-8859-1. This may change if pizza.de updates their
     # code.
