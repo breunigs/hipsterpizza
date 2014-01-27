@@ -67,11 +67,14 @@ var hipster = window.hipster = (function() {
     },
 
     detectAndSetShop: function() {
-      var button = $(".hipsterProviderName");
+      var button = $("#hipsterShopChooser");
       button.val("Choose " + hipster.getShopName());
 
-      var hidden = $("#hipsterProviderCanonicalUrl");
+      var hidden = $("#hipsterShopCanonicalUrl");
       hidden.val($("link[rel=canonical]").attr("href"));
+
+      hidden = $("#hipsterShopName");
+      hidden.val(hipster.getShopName());
 
       button.show();
     }
