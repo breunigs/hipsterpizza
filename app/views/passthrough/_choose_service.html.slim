@@ -1,4 +1,11 @@
+- p = cookies['_hipsterpizza_basket_guid']
+
 ol.step
-  li choose food provider
+  li class=(p ? 'done' : 'active') choose food provider
   li hand out link to everyone
   li submit group order
+
+
+= form_tag({controller: :basket, action: :create}, method: :post)
+  input type='hidden' id='hipsterProviderCanonicalUrl' name='canonical_url'
+  = submit_tag "Choose Provider First", class: "button hipsterProviderName", style: "display: none", data: { disable_with: "Creating New Group Basket…" }

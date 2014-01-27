@@ -46,7 +46,7 @@ body {
     color: #000;
     border: 1px solid $border;
     white-space: nowrap;
-    max-width: 300px;
+    width: 300px;
     text-overflow: ellipsis;
     overflow-x: hidden;
     vertical-align: middle;
@@ -54,6 +54,7 @@ body {
     background: $bg_dark;
     border-radius: 3px;
     box-shadow: 0 0 2px $border;
+    cursor: pointer;
 
     &:hover {
       box-shadow: 0 0 5px $border;
