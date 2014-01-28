@@ -1,2 +1,27 @@
 #hipsterTopBar
-  h1 Group Basket
+  - if admin? && (!@order || @order.paid?)
+    = render "progress_bars/choose_shop"
+  - elsif @order
+    /! order=#{@order.uuid}
+    = render "progress_bars/new_order"
+  - else
+    h1 Group Basket
+
+
+h2 Your Options
+p
+  - if @basket.editable?
+    - confirm = @order ? 'There’s already an order for you. Continue only if this is for someone else (=OK), otherwise edit your old order (=Cancel).' : ''
+    a href="#{new_order_path}" class="button" data-confirm="#{confirm}" Place New Order
+
+  - if @order
+    a href="#{edit_order_path(@order)}" class="button" Edit My Order
+
+  - if admin?
+    a href="#{submit_basket_path(@basket.uid)}" class="button" data-confirm="⚠ Blocks further orders – better ask around if everyone is finished. Continue?" Submit Group Order
+    br
+
+- if @order
+  h2 Your Order
+
+h2 Basket

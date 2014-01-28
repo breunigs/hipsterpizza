@@ -1,10 +1,9 @@
-- c = cookies['_hipsterpizza_action']
+- c = cookie_get(:action)
 
 #hipsterTopBar
-  /! HipsterAction:
-     = c
+  /! action=#{c}
 
-  - if ["choose_shop"].include?(c)
-    = render c
+  - if ["choose_shop", "new_order"].include?(c)
+    = render "progress_bars/#{c}"
   - else
     = render "shared/missing_cookie"

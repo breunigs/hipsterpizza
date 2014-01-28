@@ -1,17 +1,20 @@
 # encoding: utf-8
 
 class Basket < ActiveRecord::Base
+  has_many :orders
+
+
+  validates :uid, presence: true, uniqueness: true
   validates :shop_name, presence: true
   validates :shop_url, presence: true,
     format: { with: %r{\A/}, message: "must start with /" }
 
-  validates :uid, presence: true, uniqueness: true
-
-  has_many :orders
-
-
   before_validation(on: :create) do
     create_uid
+  end
+
+  def editable?
+    submitted == nil && !cancelled?
   end
 
 

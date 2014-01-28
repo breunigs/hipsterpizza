@@ -1,12 +1,16 @@
 # encoding: utf-8
 
 class BasketController < ApplicationController
+  include CookieHelper
+
   before_filter :find_basket, except: [:new, :create]
+  before_filter :find_order, only: [:show]
 
   def new
-    cookies['_hipsterpizza_action'] = :choose_shop
-    cookies['_hipsterpizza_basket'] = nil
-    cookies['_hipsterpizza_admin'] = nil
+    cookie_set(:action, :choose_shop)
+    cookie_delete(:basket)
+    cookie_delete(:admin)
+
     redirect_to pizzade_root_path
   end
 
@@ -17,40 +21,35 @@ class BasketController < ApplicationController
       render text: "Could not create basket. Messages: #{msgs}"
       # TODO: nicer rendering
     else
-      cookies['_hipsterpizza_action'] = :share_link
-      cookies['_hipsterpizza_basket'] = b.uid
-      cookies['_hipsterpizza_admin'] = b.uid
+      cookie_set(:action, :share_link)
+      cookie_set(:basket, b.uid)
+      cookie_set(:admin, b.uid)
 
       redirect_to share_basket_path(b.uid)
     end
   end
 
   def show
+    update_action_from_order
+
     respond_to do |format|
       format.html
-      format.svg  { render qrcode: basket_url(@basket.uid), level: :l, unit: 6, offset: 10 }
+      format.svg  { render qrcode: basket_with_uid_url(@basket.uid), level: :l, unit: 6, offset: 10 }
     end
   end
 
   def set_admin
-    cookies['_hipsterpizza_basket'] = @basket.uid
+    cookie_set(:admin, @basket.uid)
     redirect_to basket_path(@basket.uid), notice: 'You have been set as admin.'
   end
 
+  def share
+    cookie_set(:action, :share_link)
+  end
+
   private
-
-  def find_basket
-    uid = params[:uid]
-    uid ||= cookies['_hipsterpizza_basket']
-    @basket = Basket.where(uid: uid).first
-
-    # ensure cookies and URL match up
-    cookies['_hipsterpizza_basket'] = @basket ? @basket.uid : nil
-
-    # handle failure
-    unless @basket
-      flash[:error] = uid ? 'Missing Basket-ID. Ask someone to share the link with you or create initiate a new group order.' : 'Invalid Basket-ID. Are you sure there are no typos and that it is recent?'
-      redirect_to root_path(uid: uid)
-    end
+  def update_action_from_order
+    return unless @order
+    cookie_set(:action, @order.paid? ?  :wait : :pay_order)
   end
 end

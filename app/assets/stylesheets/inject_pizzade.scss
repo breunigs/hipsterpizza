@@ -46,7 +46,7 @@ body {
     color: #000;
     border: 1px solid $border;
     white-space: nowrap;
-    width: 300px;
+    max-width: 500px;
     text-overflow: ellipsis;
     overflow-x: hidden;
     vertical-align: middle;
@@ -55,10 +55,15 @@ body {
     border-radius: 3px;
     box-shadow: 0 0 2px $border;
     cursor: pointer;
+    text-decoration: none;
 
     &:hover {
       box-shadow: 0 0 5px $border;
       background: #FDB356;
+    }
+
+    &.dim {
+      font-weight: normal;
     }
   }
 
@@ -75,6 +80,7 @@ body {
     border-left: 1px solid $border;
     border-radius: 3px;
     margin: 0;
+    margin-right: 10px;
     vertical-align: middle;
 
     li {
@@ -161,5 +167,13 @@ body {
         }
       }
     }
+  }
+}
+
+
+body.hideOrderFields {
+  // address fields, minimal required price, pizza.de submit button
+  #permkv8, .cart-minorderhint, #button-2012 {
+    display: none !important;
   }
 }

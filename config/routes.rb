@@ -5,11 +5,12 @@ Hipsterpizza::Application.routes.draw do
     resources :basket, only: [:new, :create]
 
     scope "basket/:uid" do
-      get '', to: "basket#show", as: :basket
+      get '', to: "basket#show", as: :basket_with_uid
       get 'share', to: "basket#share", as: :share_basket
       get 'set_admin', to: "basket#set_admin", as: :set_admin_basket
+      get 'submit', to: "basket#submit", as: :submit_basket
     end
-    get 'basket', to: "basket#show"
+    get 'basket', to: "basket#show", as: :basket
 
     resources :order#, only: [:index, :new, :create]
   end

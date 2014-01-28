@@ -1,0 +1,19 @@
+- a = cookie_get(:action).to_s
+
+- progress = { \
+  new_order: 'select items',
+  pay_order: 'pay',
+  wait: 'wait patiently' }
+
+= render "progress_bars/bar", locals: { progress: progress }
+
+- if a == 'new_order'
+  = form_tag({controller: :order, action: :create}, method: :post)
+    input type='hidden' id='hipsterOrderJson' name='json'
+    input type='hidden' id='hipsterOrderNick' name='nick'
+    = submit_tag 'Place My Order in Group Basket',
+      id: 'hipsterOrderSubmitButton',
+      class: :button,
+      data: { disable_with: 'Saving Order…' }
+
+  a href="#{basket_path}" class="button dim" Cancel My Order

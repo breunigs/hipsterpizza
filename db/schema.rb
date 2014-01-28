@@ -25,8 +25,10 @@ ActiveRecord::Schema.define(version: 20140127184410) do
 
   create_table "orders", force: true do |t|
     t.string   "nick"
-    t.string   "json_blob"
-    t.boolean  "paid"
+    t.string   "json"
+    t.string   "uuid"
+    t.integer  "basket_id"
+    t.boolean  "paid",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
