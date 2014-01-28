@@ -1,0 +1,25 @@
+- b = cookies['_hipsterpizza_basket']
+- r = cookies['_hipsterpizza_admin']
+- a = cookies['_hipsterpizza_action']
+- progress = { \
+  choose_shop: 'choose food shop',
+  share_link:  'hand out link to everyone',
+  submit_order: 'submit group order' }
+
+/! current_action=#{a}
+ol.step
+  - default_class = 'done'
+  - progress.each do |action, text|
+    - active = a == action.to_s
+    - default_class = '' if active
+    li class=(active ? 'active' : default_class)
+      #{text}
+      /! #{action}
+
+
+
+
+= form_tag({controller: :basket, action: :create}, method: :post)
+  input type='hidden' id='hipsterShopCanonicalUrl' name='shop_url'
+  input type='hidden' id='hipsterShopName' name='shop_name'
+  = submit_tag 'Choose Shop First', id: :hipsterShopChooser, class: :button, style: 'display: none', data: { disable_with: 'Creating New Group Basket…' }

@@ -24,7 +24,7 @@ class Basket < ActiveRecord::Base
     other = Basket.pluck(:uid)
 
     50.times do
-      self.uid = SecureRandom.hex(10)
+      self.uid = SecureRandom.hex(3)
       break unless other.include?(self.uid)
     end
 

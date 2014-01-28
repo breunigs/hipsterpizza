@@ -1,0 +1,25 @@
+- uid = @basket.uid
+
+#hipsterTopBar
+  = render "passthrough/choose_shop"
+
+h1 Share Link
+
+p
+  | Successfully created new for
+  b  #{@basket.shop_name}
+  | . Please share the link below with everyone who wants to participate.
+
+p.huge
+  = link_to basket_url(uid), basket_url(uid)
+  = image_tag basket_url(uid) + '.svg'
+
+
+h2 Submitting Order
+p
+  | You’ve been marked as admin and can submit the basket later. Simply
+    follow above link to place
+  i  your
+  |  order. Use the link below in case you want to share your power or
+    somehow lost them.
+  = link_to set_admin_basket_url(uid), set_admin_basket_url(uid)

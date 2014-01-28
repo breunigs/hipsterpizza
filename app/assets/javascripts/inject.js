@@ -44,6 +44,10 @@ var hipster = window.hipster = (function() {
     //~　},
 
     disableAreaCodePopup: function() {
+      if(!window.cart) {
+        return;
+      }
+
       // URLs without &knddomain=1 switch
       window.cart.check4DeliveryArea = function() {}
       // URLs with that switch

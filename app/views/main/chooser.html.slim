@@ -1,10 +1,43 @@
-h1 HipsterPizza
+#hipsterTopBar
+  h1 HipsterPizza
+
+noscript
+  h2 Warning: JavaScript disabled
+  p
+    | HipsterPizza will not work without JavaScript. Please enable it in
+      order to continue.
+
+= render "shared/flash"
+
+- if @basket
+  h2 Previous Basket Detected
+  p
+    b Created:
+    '  #{@basket.created_at.strftime("%Y-%m-%d %H:%m")}<br>
+    b Shop:
+    '  #{@basket.shop_name}<br><br>
+    - if @basket.submitted?
+      | It has been submitted already, but you can view the details
+    - else
+      | You can still place an order
+    |  or mark yourself as having paid.<br>
+    a href="#{basket_path(@basket.uid)}" class="button" Show Previously Used Basket
 
 h2 New Group Basket
 
 p
   ' Use this if you want to create a
   b new
-  '  group order. You’ll be able to choose which shop will be used.
+  '  group order. You’ll be able to choose which shop will be used.<br>
+  = link_to "Create New Basket", new_basket_path, class: "button"
 
-= link_to "Create New Basket", new_basket_path, class: "button"
+h2 Participate
+
+p
+  | In order to participate in an existing order, simply ask anyone for
+    the link to the group basket. If for some reason copy and pasting is
+    cumbersome, you can enter the basket ID manually here:
+
+form method="GET" action="#{basket_path(uid: '')}"
+  input required="required" name="uid" value="#{params[:uid]}"
+  input type="submit" value="Use Basket"

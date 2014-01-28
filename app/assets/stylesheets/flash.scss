@@ -1,0 +1,44 @@
+.flash {
+  padding: 10px 0;
+  margin: 0 0 2px 0;
+  border: 2px solid #ddd;
+  font-size: 150%;
+  text-align: center;
+
+  &.error {
+    background: #FBE3E4;
+    color: #8a1f11;
+    border-color: #FBC2C4;
+    a {
+      color: #8a1f11;
+    }
+  }
+
+  &.warn {
+    background: #FFF6BF;
+    color: #514721;
+    border-color: #FFD324;
+    a {
+      color: #514721;
+    }
+  }
+
+  &.success {
+    background: #DDFCD5;
+    color: #000;
+    border-color: #44A815;
+    a {
+      color: #264409;
+    }
+  }
+
+  &.info {
+    background: #ACD4FF;
+    color: #000;
+    border-color: #69B1FF;
+    a {
+      color: #003062;
+    }
+  }
+
+}

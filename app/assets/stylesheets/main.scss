@@ -1,0 +1,66 @@
+body {
+  min-height: 100%;
+  background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed;
+  font-family: 'Cabin', sans-serif;
+}
+
+a {
+  color: #DB8D2E;
+  text-decoration: none;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.02);
+
+  &:hover {
+    color: #E5840F;
+    text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.15);
+  }
+}
+
+p.huge {
+  font-size: 300%;
+  img {
+    vertical-align: middle;
+    padding-left: 30px;
+  }
+}
+
+h1, h2, h3, h4, h5 {
+  & + p {
+    margin-top: -15px;
+  }
+}
+
+input, .button {
+  font-family: 'Cabin', sans-serif;
+  padding: 6px 8px;
+  margin: 4px 4px 4px 0;
+  vertical-align: middle;
+  border: 1px solid #777;
+  outline: 0;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+
+  &:active, &:focus {
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 4px rgba(229, 132, 15, 0.8);
+    border-color: #E5840F;
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  &[type=submit], &.button {
+    background: #F5F5F5;
+    cursor: pointer;
+
+    &:hover, &:active, &:focus {
+      background: #FFD9AB;
+      border-color: #E5840F;
+    }
+  }
+
+  &.button {
+    color: #000;
+    display: inline-block;
+  }
+}

@@ -2,6 +2,6 @@
 
 class MainController < ApplicationController
   def chooser
-    render :chooser
+    @basket = Basket.where(uid: cookies['_hipsterpizza_basket']).first
   end
 end

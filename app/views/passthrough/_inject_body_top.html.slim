@@ -2,9 +2,9 @@
 
 #hipsterTopBar
   /! HipsterAction:
-     = cookies['_hipsterpizza_action']
+     = c
 
   - if ["choose_shop"].include?(c)
     = render c
   - else
-    = render "missing_cookie"
+    = render "shared/missing_cookie"
