@@ -28,11 +28,26 @@ class PassthroughController < ActionController::Base
   def rewrite
     env['PATH_INFO'] = "/" if env['PATH_INFO'] == "/pizzade_root"
 
+    return if replace
+
     ret = @@forwarder.call(env)
     inject!(ret)
     fix_urls!(ret)
 
     send_data ret[2].first, type: ret[1]["content-type"].first, disposition: 'inline', status: ret[0]
+  end
+
+  def replace
+    map = {
+      '/0_image/pizza-de_logoshop_v8.gif' => 'blank.png'
+    }
+    return false unless map.keys.include?(env['PATH_INFO'])
+
+    target = map[env['PATH_INFO']]
+    path = ActionController::Base.helpers.asset_path(target)
+    redirect_to path, status: 301
+
+    true
   end
 
 
