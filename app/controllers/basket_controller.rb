@@ -60,8 +60,11 @@ class BasketController < ApplicationController
 
   private
   def update_action_from_order
-    return unless @order
-    cookie_set(:action, @order.paid? ?  :wait : :pay_order)
-    cookie_set(:action, :share_link) if @order.paid? && view_context.admin?
+    if @order
+      cookie_set(:action, @order.paid? ?  :wait : :pay_order)
+      cookie_set(:action, :share_link) if view_context.admin? && @order.paid?
+    else
+      cookie_set(:action, view_context.admin? ? :share_link : nil)
+    end
   end
 end
