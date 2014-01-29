@@ -1,0 +1,19 @@
+table
+  tr
+    th Nick
+    th.price € with tip
+    th Paid?
+    th Order
+    th Actions
+
+  - @basket.orders.each do |order|
+    tr class="#{order.uuid == cookie_get(:order).to_s ? 'highlight' : ''}"
+      td = order.nick
+      td.price
+        span.dim
+          ' (#{number_to_currency(order.amount, unit: '')})
+        = number_to_currency(order.amount_with_tip, unit: '')
+      td.bold class="#{order.paid? ? :good : :bad}" #{order.paid? ? "yes" : "NOPE" }
+      td = order_details(order)
+      td
+        a href="TODO" copy

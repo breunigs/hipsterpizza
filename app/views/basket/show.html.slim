@@ -7,21 +7,53 @@
   - else
     h1 Group Basket
 
+= render "shared/flash"
 
-h2 Your Options
+h2 General Options
 p
   - if @basket.editable?
-    - confirm = @order ? 'There’s already an order for you. Continue only if this is for someone else (=OK), otherwise edit your old order (=Cancel).' : ''
-    a href="#{new_order_path}" class="button" data-confirm="#{confirm}" Place New Order
-
-  - if @order
-    a href="#{edit_order_path(@order)}" class="button" Edit My Order
+    = render "place_new_order_button"
 
   - if admin?
-    a href="#{submit_basket_path(@basket.uid)}" class="button" data-confirm="⚠ Blocks further orders – better ask around if everyone is finished. Continue?" Submit Group Order
-    br
+    - if !@basket.cancelled?
+      a href="#{submit_basket_path(@basket.uid)}" class="button" data-confirm="⚠ Blocks further orders – better ask around if everyone is finished. Continue?" ⎙ Submit Group Order
+
+    - if !@basket.submitted?
+      = render "toggle_cancel_button"
 
 - if @order
-  h2 Your Order
+  h2
+    | Your Order
+    - nick = cookie_get(:nick)
+    - if nick
+      ' , #{nick}
+
+  p
+    - if @basket.editable?
+      a href="#{edit_order_path(@order.uuid)}" class="button" ✎ Edit My Order
+
+      a href="#{destroy_order_path(@order.uuid)}" class="button" data-method="delete" data-confirm="Do you really want to starve of hunger?" ☢ Destroy My Order
+
+    a href="#{toggle_paid_order_path(@order.uuid)}" data-method="put" class="button"
+      span.larger 💶
+      '  Mark Order as #{@order.paid? ? "NOT" : ""} Paid
+
+
+  p
+    ' Price:
+    b #{euro(@order.amount_with_tip)}
+    span.dim
+      |  (or #{euro(@order.amount)} without tip)
+    ' .
+    - if @order.paid?
+      span.good ✓ You are marked as having paid.
+    - else
+      span.bad ✗ You still need to pay.
+
+  = order_details(@order)
+
+h2 Money Pile
+= render "money_pile"
 
 h2 Basket
+= render "order_table"
