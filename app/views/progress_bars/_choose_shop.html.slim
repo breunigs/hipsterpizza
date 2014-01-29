@@ -14,3 +14,6 @@
     = submit_tag 'Choose Shop First', id: :hipsterShopChooser, class: :button, style: 'display: none', data: { disable_with: 'Creating New Group Basket…' }
 
   a href="#{root_path}" class="button dim" Cancel Basket Creation
+
+- if a == 'share_link' && controller.action_name != 'share'
+  = render 'submit_group_order_button'

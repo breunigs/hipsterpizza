@@ -16,7 +16,7 @@ p
 
   - if admin?
     - if !@basket.cancelled?
-      a href="#{submit_basket_path(@basket.uid)}" class="button" data-confirm="⚠ Blocks further orders – better ask around if everyone is finished. Continue?" ⎙ Submit Group Order
+      = render "submit_group_order_button"
 
     - if !@basket.submitted?
       = render "toggle_cancel_button"
@@ -34,9 +34,7 @@ p
 
       a href="#{destroy_order_path(@order.uuid)}" class="button" data-method="delete" data-confirm="Do you really want to starve of hunger?" ☢ Destroy My Order
 
-    a href="#{toggle_paid_order_path(@order.uuid)}" data-method="put" class="button"
-      span.larger 💶
-      '  Mark Order as #{@order.paid? ? "NOT" : ""} Paid
+    = render 'toggle_order_paid_button'
 
 
   p

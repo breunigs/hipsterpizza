@@ -17,3 +17,6 @@
       data: { disable_with: 'Saving Order…' }
 
   a href="#{basket_path}" class="button dim" Cancel My Order
+
+- if a == 'pay_order'
+  = render 'toggle_order_paid_button'
