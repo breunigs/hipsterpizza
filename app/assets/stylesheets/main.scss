@@ -1,6 +1,6 @@
 body {
   min-height: 100%;
-  background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed;
+  background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed #fff;
   font-family: 'Cabin', sans-serif;
 }
 
@@ -24,8 +24,10 @@ p.huge {
 }
 
 h1, h2, h3, h4, h5 {
-  & + p {
-    margin-top: -15px;
+  padding-top: 10px;
+
+  & + p, + .pile, + table {
+    margin-top: -10px;
   }
 }
 
@@ -62,5 +64,84 @@ input, .button {
   &.button {
     color: #000;
     display: inline-block;
+    height: 21px;
+    line-height: 22px;
+  }
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 1px;
+  margin: 8px 0;
+}
+
+p + ul {
+  margin-top: -15px;
+}
+
+.bad {
+  color: #AE0000;
+}
+
+.good {
+  color: #007D28;
+}
+
+span.larger {
+  font-size: 150%;
+  line-height: inherit;
+  vertical-align: top;
+}
+
+.dim {
+  color: #999;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+table {
+  margin: 0;
+  border-collapse: collapse;
+}
+
+td, th {
+  text-align: left;
+  padding: 8px;
+  min-width: 60px;
+}
+
+tr:first-child {
+  background: rgba(100, 100, 100, 0.06);
+  border-bottom: 1px solid rgba(100, 100, 100, 0.3);
+}
+
+.price {
+  text-align: right;
+}
+
+td ul {
+  margin: 0;
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(100, 100, 100, 0.03);
+}
+
+tr.highlight {
+  background-color: rgba(255, 217, 171, 0.2);
+}
+
+.pile {
+  font-size: 140%;
+  div {
+    display: inline-block;
+    margin-right: 60px;
+  }
+
+  span {
+    display: inline-block;
+    margin-right: 10px;
   }
 }

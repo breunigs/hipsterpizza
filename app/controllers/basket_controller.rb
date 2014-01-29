@@ -40,16 +40,28 @@ class BasketController < ApplicationController
 
   def set_admin
     cookie_set(:admin, @basket.uid)
-    redirect_to basket_path(@basket.uid), notice: 'You have been set as admin.'
+    flash[:info] = 'You have been set as admin.'
+    redirect_to_basket
   end
 
   def share
     cookie_set(:action, :share_link)
   end
 
+  def toggle_cancelled
+    @basket.toggle(:cancelled).save
+    if @basket.cancelled?
+      flash[:info] = "Group order has been cancelled"
+    else
+      flash[:success] = "Group order has been enabled again"
+    end
+    redirect_to_basket
+  end
+
   private
   def update_action_from_order
     return unless @order
     cookie_set(:action, @order.paid? ?  :wait : :pay_order)
+    cookie_set(:action, :share_link) if @order.paid? && view_context.admin?
   end
 end

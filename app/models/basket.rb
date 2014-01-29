@@ -17,7 +17,17 @@ class Basket < ActiveRecord::Base
     submitted == nil && !cancelled?
   end
 
+  def sum
+    sum_orders(orders)
+  end
 
+  def sum_paid
+    sum_orders(orders.paid)
+  end
+
+  def sum_unpaid
+    sum_orders(orders.unpaid)
+  end
 
   private
 
@@ -33,5 +43,9 @@ class Basket < ActiveRecord::Base
 
     # if we don’t find a unique ID after 50 tries, the basket creation
     # will fail on validation
+  end
+
+  def sum_orders(orders)
+    orders.map { |o| o.amount }.inject(0, :+)
   end
 end

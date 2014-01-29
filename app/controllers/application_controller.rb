@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
 
   def find_basket
-    uid = params[:uid]
+    uid = params[:basket_uid]
     uid ||= cookie_get(:basket)
     @basket = Basket.where(uid: uid).first
 
@@ -20,7 +20,12 @@ class ApplicationController < ActionController::Base
   end
 
   def find_order
-    uuid = cookie_get(:order)
+    uuid = params[:order_uuid]
+    uuid ||= cookie_get(:order)
     @order = Order.where(uuid: uuid, basket: @basket).first
+  end
+
+  def redirect_to_basket
+    redirect_to basket_with_uid_path(@basket.uid)
   end
 end
