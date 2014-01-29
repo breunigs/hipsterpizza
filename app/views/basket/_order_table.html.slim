@@ -6,7 +6,7 @@ table
     th Order
     th Actions
 
-  - @basket.orders.each do |order|
+  - @basket.orders.sorted.each do |order|
     tr class="#{order.uuid == cookie_get(:order).to_s ? 'highlight' : ''}"
       td = order.nick
       td.price
