@@ -29,6 +29,10 @@ class Basket < ActiveRecord::Base
     sum_orders(orders.unpaid)
   end
 
+  def json
+    ActiveSupport::JSON.encode(orders.map(&:json_parsed).flatten)
+  end
+
   private
 
   def create_uid

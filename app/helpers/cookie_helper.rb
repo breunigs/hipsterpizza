@@ -21,6 +21,6 @@ module CookieHelper
   end
 
   def cookie_valid_key?(key)
-    ["basket", "admin", "action", "nick", "order"].include?(key.to_s)
+    ["basket", "admin", "action", "nick", "order", "replay"].include?(key.to_s)
   end
 end

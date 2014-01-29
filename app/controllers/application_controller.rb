@@ -28,4 +28,12 @@ class ApplicationController < ActionController::Base
   def redirect_to_basket
     redirect_to basket_with_uid_path(@basket.uid)
   end
+
+  def get_replay_mode
+    modes = ['insta', 'nocheck', 'check']
+    p = params[:mode]
+    return p if modes.include?(p)
+    logger.warn "Invalid Replay Mode: #{p}" unless p.blank?
+    modes.last
+  end
 end

@@ -1,1 +1,18 @@
+- if replay = cookie_get(:replay)
+  - replay = replay.split(" ", 3)
+  - obj = replay[0] == "order" \
+      ? Order.where(uuid: replay[2]).first \
+      : Basket.where(uid: replay[2]).first
+  - if obj
+    script
+      | window.hipsterReplayData =
+      == obj.json
+      | ;
+      | window.hipsterReplayMode = '#{replay[1]}';
+
+
 = javascript_include_tag "inject"
+
+- if replay
+  div#hipsterProgress
+    progress max="10"

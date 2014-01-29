@@ -8,7 +8,7 @@ class OrderController < ApplicationController
 
   def new
     cookie_set(:action, :new_order)
-    redirect_to root_url + @basket.shop_url[1..-1] + '?knddomain=1'
+    redirect_to_shop
   end
 
   before_filter :ensure_basket_editable, only: :create
@@ -29,7 +29,7 @@ class OrderController < ApplicationController
 
   def toggle_paid
     @order.toggle(:paid).save
-    redirect_to_basket
+    return redirect_to_basket
   end
 
   def destroy
@@ -45,6 +45,12 @@ class OrderController < ApplicationController
     redirect_to_basket
   end
 
+  def copy
+    cookie_set(:replay, "order #{get_replay_mode} #{@order.uuid}")
+    cookie_set(:action, :new_order)
+    redirect_to_shop
+  end
+
   private
   def ensure_basket_editable
     if @basket.cancelled?
@@ -55,5 +61,9 @@ class OrderController < ApplicationController
       # TODO: repeat order here for convenience
       redirect_to_basket
     end
+  end
+
+  def redirect_to_shop
+    redirect_to @basket.shop_url + '?knddomain=1'
   end
 end

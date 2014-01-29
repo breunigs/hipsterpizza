@@ -39,9 +39,16 @@ var hipster = window.hipster = (function() {
       return;
     }
 
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + 365);
-    var data = escape(value) + "; expires=" + exdate.toUTCString();
+    var date;
+    if(value === null) {
+      // i.e. delete the cookie
+      date = 'Thu, 01 Jan 1970 00:00:01 GMT';
+    } else {
+      var exdate = new Date();
+      exdate.setDate(exdate.getDate() + 365);
+      date = exdate.toUTCString();
+    }
+    var data = escape(value) + "; expires=" + date;
     document.cookie = "_hipsterpizza_" + name + "=" + data;
   }
 
@@ -102,6 +109,145 @@ var hipster = window.hipster = (function() {
     return nick;
   }
 
+  function findLinkWithText(text) {
+    return $('a').filter(function() { return $(this).text() === text; });
+  }
+
+  function getPriceOfLastItem() {
+    var p = $(".cartitems:last .cartitems-itemsum .cartitems-sprice div").text();
+    p = $.trim(p).replace(/\s.*$/, "").replace(",", ".");
+    return parseFloat(p);
+  }
+
+  function getActiveSubPageText() {
+    return $(".navbars a.activ").text();
+  }
+
+  function replay(items, finishCallback) {
+    // setup
+    log("replay: setup started");
+    $.fx.off = true;
+    $("body").addClass("wait");
+    var navLinks = $.makeArray($(".navbars a"));
+    var currentNav = null;
+    var errorMsgs = [];
+
+    // loads the next sub page in the nav links array.
+    function loadNextSubPage() {
+      log("replay: loading next subpage");
+      currentNav = $(navLinks.shift());
+      // if an element has this class, the pizza.de JS code avoids
+      // loading it. Therefore remove it to ensure the content_ready
+      // event fires.
+      currentNav.removeClass('activ');
+      currentNav.click();
+      return true;
+    }
+
+    // searches current sub page and adds found items to basket. The
+    // items get removed from the "to go" list
+    function addItemsToBasket() {
+      log("replay: searching page “" + getActiveSubPageText() + "” for items");
+
+      items = $.grep(items, function (item, ind) {
+        var link = findLinkWithText(item["prod"]);
+        if(link.length === 0) return true; // not found; keep in queue
+        if(link.length >= 2) {
+          console.warn("ITEM #"+ind+" AMBIGUOUS: " + item["prod"]);
+          // keep item, so it may be added manually later
+          return true;
+        }
+
+        log("replay: found item “" + item["prod"] + "”");
+
+        var errmsg = "product="+item["prod"]+"  | ";
+        // exactly one link found. Add it to cart or open extra
+        // ingredients popup. If an item can't have extra ingredients
+        // this will immediately put the item in the cart.
+        link.click();
+        // add extra ingredients, if any.
+        $.each(item["extra"], function(ind, extra) {
+          // .shop-dialog == the popup
+          // .dlg-nodes-addition == the "add items part". Required if
+          // an ingredient should be added multiple times. Otherwise
+          // the remove item link would be catched as well.
+          var ingred = $(".shop-dialog .dlg-nodes-addition a:contains('"+extra+"')");
+          if(ingred.length === 0) {
+            console.warn(errmsg + " EXTRA NOT FOUND: " + extra);
+          } else if(ingred.length >= 2) {
+            console.warn(errmsg + " EXTRA AMBIGUOUS: " + extra);
+          } else {
+            ingred.click();
+          }
+        });
+        // If there was an extra ingredients popup: close it and put
+        // finalized item into cart.
+        // If there wasn't an extra igredients popup; will not match
+        // anything and thus not execute.
+        $(".shop-dialog a:contains('in den Warenkorb'):first").click();
+
+        // comparing prices as sanity check
+        if(getPriceOfLastItem() !== item["price"]) {
+          var msg = errmsg + "Prices do not match. Expected: " + item["price"] + "   Actual price: " + getPriceOfLastItem();
+          console.warn(msg);
+          errorMsgs.push(msg);
+        }
+
+        // remove item from list
+        return false;
+      });
+    }
+
+
+    // this function does the actual work of finding the items and adding
+    // them to the basket. Because the category sub pages are loaded by
+    // asynchronous JavaScript magic it's not possible to simply loop
+    // over all categories. Instead, this function is called once to load
+    // a new subpage and exit. It is called again by listening to changes
+    // in the webpage (see below). In this call it iterates over all items
+    // which still need to be found and adds them to the basket. It also
+    // resets the current category and executes again in a bit. This
+    // repeats until all items are found or there are no more sub pages.
+    function process() {
+      if(items.length === 0 || (currentNav === null && navLinks.length === 0))
+        return tearDown();
+
+      if(currentNav === null) {
+        loadNextSubPage();
+      } else {
+        // reset sub page
+        currentNav = null;
+        addItemsToBasket();
+        // continue with next step
+        process();
+      }
+    }
+
+    function tearDown() {
+      log('replay: tear down');
+      $('#inhalt').unbind('content_ready', process);
+      $("body").removeClass("wait");
+      $("#hipsterProgress").hide();
+      $.fx.off = false;
+      // only ever replay once
+      setCookie('replay', null);
+
+      if(typeof finishCallback === 'function') {
+        log('replay: running callback');
+        finishCallback(errorMsgs);
+      }
+    }
+
+    // listen to the same event as pizza.de for content loading
+    $('#inhalt').bind('content_ready', process);
+
+    // start processing
+    process();
+  }
+
+  function getSubmitButton() {
+    return $('#hipsterOrderSubmitButton');
+  }
 
   var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
   var waitForLoad = new MutationObserver(function(mutations, observer) {
@@ -118,9 +264,6 @@ var hipster = window.hipster = (function() {
 
   // PUBLIC ////////////////////////////////////////////////////////////
   return {
-    //~　isFrame: function() {
-      //~　return window.self !== window.top;
-    //~　},
     hideOrderFieldsAppropriately: function() {
       if(getCurrentAction() === 'submit_group_order') {
         log('Not hiding address fields because we want to submit the group basket');
@@ -171,7 +314,7 @@ var hipster = window.hipster = (function() {
     },
 
     bindSubmitButton: function() {
-      var form = $('#hipsterOrderSubmitButton').parents('form');
+      var form = getSubmitButton().parents('form');
       form.submit(function() {
         var items = getCartItemsJson();
         if(items.length === 0) {
@@ -187,6 +330,34 @@ var hipster = window.hipster = (function() {
         }
         $('#hipsterOrderNick').val(nick);
       });
+    },
+
+    replayData: function() {
+      var data = window.hipsterReplayData;
+      var mode = window.hipsterReplayMode;
+      if(typeof data === 'undefined' || data === null) {
+        return;
+      }
+
+      switch(mode) {
+        case 'check':
+          replay(data, function(err) {
+            if(err.length === 0) return;
+            alert('There have been errors replaying the data: \n' + err.join('\n'));
+          });
+          break;
+
+        case 'nocheck':
+          replay(data);
+          break;
+
+        case 'insta':
+          replay(data, function() { getSubmitButton().click(); });
+          break;
+
+        default:
+          err('Invalid replay mode, no action taken');
+      }
     }
   };
 })();
@@ -195,11 +366,9 @@ var hipster = window.hipster = (function() {
 hipster.disableAreaCodePopup();
 
 
-// für das replay später
-//$('#inhalt').bind('content_ready', function() {
-
 hipster.runAfterLoad(function() {
   hipster.detectAndSetShop();
   hipster.hideOrderFieldsAppropriately();
   hipster.bindSubmitButton();
+  hipster.replayData();
 });
