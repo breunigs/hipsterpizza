@@ -78,7 +78,9 @@ var hipster = window.hipster = (function() {
       }
 
       var extra = [];
-      $(elm).find(".cartitems-subitem .cartitems-subtitle a").each(function(ind, ingred) {
+      // subitems = additional toppings, subsubitems = salad dressing in menus
+      var finder = ".cartitems-subitem .cartitems-subtitle a, .cartitems-subsubitem .cartitems-subtitle a"
+      $(elm).find(finder).each(function(ind, ingred) {
         extra[ind] = $(ingred).text();
       });
 
