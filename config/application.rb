@@ -27,7 +27,7 @@ module Hipsterpizza
         img-src       'self'
         script-src    'self' 'unsafe-eval' 'unsafe-inline'
         style-src     'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com
-        font-src      https://themes.googleusercontent.com
+        font-src      'self'  https://themes.googleusercontent.com
       END
     }
   end
