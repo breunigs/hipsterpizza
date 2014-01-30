@@ -249,18 +249,39 @@ var hipster = window.hipster = (function() {
     return $('#hipsterOrderSubmitButton');
   }
 
-  var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-  var waitForLoad = new MutationObserver(function(mutations, observer) {
-      if(isLoading()) {
-        return;
-      }
+  function runAfterLoads() {
+    for(var i = 0; i < _runAfterLoad.length; i++) {
+      _runAfterLoad[i]();
+    }
+    _runAfterLoad = null;
+  }
+
+  function setupMutationObserver() {
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+    var waitForLoad = new MutationObserver(function(mutations, observer) {
+      if(isLoading()) return;
       observer.disconnect();
-      for(var i = 0; i < _runAfterLoad.length; i++) {
-        _runAfterLoad[i]();
-      }
-      _runAfterLoad = null;
-  });
-  waitForLoad.observe(window.document, { childList: true, subtree: true });
+      runAfterLoads();
+    });
+    waitForLoad.observe(window.document, { childList: true, subtree: true });
+  }
+
+  function setupLegacyObserver() {
+    var check = function() {
+      if(isLoading()) return;
+      $("body").unbind("DOMSubtreeModified", check);
+      runAfterLoads();
+    }
+
+    $("body").bind("DOMSubtreeModified", check);
+  }
+
+  try {
+    setupMutationObserver();
+  } catch(err) {
+    console.log('Using legacy observer (DomSubtreeModified) because MutationObserver seems broken.');
+    setupLegacyObserver();
+  }
 
   // PUBLIC ////////////////////////////////////////////////////////////
   return {
