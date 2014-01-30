@@ -8,6 +8,7 @@ before_install:
   - "export BUNDLE_JOBS=4"
   - "export COVERAGE=true"
   - "export COVERALLS=true"
+  - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 bundler_args: --without development --deployment
 cache:
