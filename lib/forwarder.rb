@@ -87,6 +87,7 @@ class Forwarder
   def headers(env)
     h = Rack::Utils::HeaderHash.new
     env.each do |key, value|
+      next if key == 'HTTP_REFERER'
       h[$1] = value if key =~ /HTTP_(.*)/
     end
 
