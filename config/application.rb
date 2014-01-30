@@ -21,5 +21,14 @@ module Hipsterpizza
     # config.i18n.default_locale = :de
 
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.action_dispatch.default_headers = {
+      'Content-Security-Policy' =>  <<-END.gsub("\n", ';').gsub(/\s+/, ' ')
+        img-src       'self'
+        script-src    'self' 'unsafe-eval' 'unsafe-inline'
+        style-src     'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com
+        font-src      https://themes.googleusercontent.com
+      END
+    }
   end
 end
