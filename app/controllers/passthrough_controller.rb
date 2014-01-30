@@ -34,7 +34,9 @@ class PassthroughController < ActionController::Base
     inject!(ret)
     fix_urls!(ret)
 
-    send_data ret[2].first, type: ret[1]["content-type"].first, disposition: 'inline', status: ret[0]
+    type = ret[1]["content-type"].first rescue 'text/plain'
+
+    send_data ret[2].first, type: type, disposition: 'inline', status: ret[0]
   end
 
   def replace
@@ -72,6 +74,7 @@ class PassthroughController < ActionController::Base
   def fix_urls!(ret)
     ret[2].first.gsub!("http://pizza.de", "")
     ret[2].first.gsub!("https://pizza.de", "")
+    ret[2].first.gsub!("window.location.hostname", "window.location.host")
   end
 
   def get_view(where)
