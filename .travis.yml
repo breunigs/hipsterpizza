@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+  - 2.1.0
+script:
+  - ./bin/rake db:migrate RAILS_ENV=test
+  - ./bin/rspec
+before_install:
+  - "export BUNDLE_JOBS=4"
+  - "export COVERAGE=true"
+  - "export COVERALLS=true"
+bundler_args: --without development --deployment
+cache:
+  - bundler
+  - apt
