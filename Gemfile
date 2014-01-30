@@ -35,6 +35,7 @@ end
 
 group :test do
   gem 'simplecov',  :require => false
+  gem 'coveralls',  :require => false
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
 end
