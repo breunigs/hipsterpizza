@@ -4,6 +4,7 @@
 
 require 'net/http'
 require 'rack'
+require 'pp'
 
 class Forwarder
   def initialize(host, port=443)
@@ -13,7 +14,17 @@ class Forwarder
   def call(env)
     req = request(env)
 
-    res = http.request(req)
+    begin
+      res = http.request(req)
+    rescue Net::HTTPBadResponse => e
+      puts "="*30
+      pp req.path
+      pp e
+      pp caller
+      puts "="*30
+    end
+
+
     res_hash = res.to_hash
     fix_encoding!(res, res_hash)
 
@@ -27,7 +38,7 @@ class Forwarder
   end
 
   def is_text?(res_hash)
-    h = res_hash["content-type"].join(" ")
+    h = (res_hash["content-type"] || []).join(" ")
     h.include?("text") || h.include?("charset=") || h == "application/x-javascript"
   end
 
@@ -54,9 +65,8 @@ class Forwarder
   end
 
   def http
-    return @connection if @connection
+    h = Net::HTTP.new(@host, @port)
 
-    @connection = h = Net::HTTP.new(@host, @port)
     h.use_ssl = true
     # TODO: move to config
     h.ca_path = '/etc/ssl/certs'
@@ -92,8 +102,10 @@ class Forwarder
     end
 
     # do net send hipsterpizza cookies to pizza.de
-    h["COOKIE"].gsub!(/_hipsterpizza_[^;,\s]+;?/, "") if h["COOKIE"]
-    h["COOKIE"].strip!
+    if h["COOKIE"]
+      h["COOKIE"].gsub!(/_hipsterpizza_[^;,\s]+;?/, "")
+      h["COOKIE"].strip!
+    end
 
     h["HOST"] = "#{@host}:#{@port}"
     h

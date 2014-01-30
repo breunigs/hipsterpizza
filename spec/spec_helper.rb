@@ -12,17 +12,15 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
-
 require 'capybara/rspec'
-#~　Capybara.register_driver :webkit do |app|
-  #~　driver = Capybara::Webkit::Driver.new(app)
-  #~　driver.browser.set_skip_image_loading true
-  #~　driver
-#~　end
-Capybara.current_driver = :webkit_debug
-Capybara.javascript_driver = :webkit_debug
-
-
+require 'capybara-screenshot/rspec'
+Capybara.register_driver :webkit do |app|
+  driver = Capybara::Webkit::Driver.new(app)
+  driver.browser.set_skip_image_loading true
+  driver
+end
+Capybara.current_driver = :webkit
+Capybara.javascript_driver = :webkit
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
