@@ -21,6 +21,10 @@ describe 'Basket' do
 
     expect(page).to have_content 'Share Link'
     expect(page).to have_link basket_with_uid_path('')
+
+    click_link basket_with_uid_path(''), match: :first
+    expect(page).to have_link 'Place New Order'
+    expect(page).to have_link 'Submit Group Order'
   end
 
 end
