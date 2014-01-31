@@ -38,4 +38,5 @@ group :test do
   gem 'coveralls',  :require => false
   gem 'capybara-webkit'
   gem 'capybara-screenshot'
+  gem 'puffing-billy', :git => 'git://github.com/oesmith/puffing-billy.git'
 end

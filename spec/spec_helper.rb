@@ -1,34 +1,10 @@
-if ENV["COVERAGE"]
-  require 'simplecov'
-
-  if ENV["COVERALLS"]
-    require 'coveralls'
-    SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      Coveralls::SimpleCov::Formatter
-    ]
-  end
-
-  SimpleCov.start 'rails' do
-    add_filter 'vendor'
-  end
-end
-
+# encoding: utf-8
 
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
-
-require 'capybara/rspec'
-require 'capybara-screenshot/rspec'
-Capybara.register_driver :webkit do |app|
-  driver = Capybara::Webkit::Driver.new(app)
-  driver.browser.set_skip_image_loading true
-  driver
-end
-Capybara.current_driver = :webkit
-Capybara.javascript_driver = :webkit
+require 'billy/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -39,18 +15,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
-  # ## Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
-
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  #config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
+    # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
