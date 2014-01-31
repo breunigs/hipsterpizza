@@ -22,6 +22,8 @@ module Hipsterpizza
 
     config.autoload_paths += %W(#{config.root}/lib)
 
+    config.assets.prefix = '/hipster/assets'
+
     config.action_dispatch.default_headers = {
       'Content-Security-Policy' =>  <<-END.gsub("\n", ';').gsub(/\s+/, ' ')
         img-src       'self'
