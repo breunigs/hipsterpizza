@@ -34,7 +34,7 @@ class Forwarder
   private
 
   def guess_charset(res_hash)
-    res_hash["content-type"].join(" ").match(/charset=([^\s]+)/)[1] rescue nil
+    res_hash["content-type"].join(" ").match(/charset=([^\s]+)/)[1].downcase rescue nil
   end
 
   def is_text?(res_hash)
