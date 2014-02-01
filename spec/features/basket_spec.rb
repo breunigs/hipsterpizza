@@ -6,18 +6,7 @@ describe 'Basket' do
   subject { page }
 
   it 'allows to create basket for some shop' do
-    visit root_path
-    click_link 'Create New Basket'
-
-    fill_in 'plzsearch_input', with: '12347'
-    has_content?('12347 Berlin')
-
-    click_link 'Lieferservice suchen'
-    click_link 'Indian Curry'
-
-    within('#hipsterTopBar') do
-      click_on 'Choose Indian Curry'
-    end
+    basket_create
 
     expect(page).to have_content 'Share Link'
     expect(page).to have_link basket_with_uid_path('')
@@ -27,4 +16,13 @@ describe 'Basket' do
     expect(page).to have_link 'Submit Group Order'
   end
 
+  it 'allows group order cancel' do
+    basket_create
+    visit basket_path
+    click_link 'Cancel Group Order'
+
+    expect(page).to have_content 'has been cancelled'
+    expect(page).to have_link 'Un-Cancel Group Order'
+    expect(page).not_to have_link 'Submit Group Order'
+  end
 end
