@@ -29,4 +29,7 @@ Capybara::Screenshot.register_driver(:webkit_billy_no_imgs) {}
 Capybara::Screenshot.register_driver(:webkit_no_imgs) {}
 
 driver = "webkit#{cache_requests ? "_billy" : ""}#{load_images ? "" : "_no_imgs"}"
+
 Capybara.current_driver = driver.to_sym
+Capybara.default_driver = driver.to_sym
+Capybara.javascript_driver = driver.to_sym
