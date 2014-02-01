@@ -1,4 +1,7 @@
 - if @basket.cancelled?
   a href="#{toggle_cancelled_basket_path(@basket.uid)}" class="button" data-method="put" Un-Cancel Group Order
+
+  = link_to "Create Another Basket", new_basket_path, class: "button"
+
 - else
   a href="#{toggle_cancelled_basket_path(@basket.uid)}" class="button" data-method="put" data-confirm="⚠ Blocks further orders and prevents basket from being submitted." Cancel Group Order
