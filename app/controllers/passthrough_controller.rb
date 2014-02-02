@@ -3,6 +3,15 @@
 class PassthroughController < ActionController::Base
   @@forwarder = Forwarder.new("pizza.de")
 
+  # cache some of the probably non-static elements
+  after_filter :add_missing_content_type, only: :pass
+  caches_action :pass, expires_in: 60.minutes, if: Proc.new {
+    path = request.url
+    return true if path == "/_shop/shopinit_json"
+    return true if path.match(/framek[0-9]{3}\.htm$/)
+    false
+  }
+
   def pass
     if env['PATH_INFO'].include?("reporterror")
       render text: "withheld error from pizza.de"
