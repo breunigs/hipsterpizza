@@ -4,6 +4,7 @@ class BasketController < ApplicationController
   include CookieHelper
 
   before_filter :find_basket, except: [:new, :create]
+  before_filter :ensure_admin, except: [:new, :create, :show, :share, :set_admin]
   before_filter :find_order, only: [:show]
 
   def new
@@ -38,6 +39,19 @@ class BasketController < ApplicationController
     end
   end
 
+  def submit
+    @basket.update_column(:submitted, Time.current)
+    cookie_set(:replay, "basket #{get_replay_mode} #{@basket.uid}")
+    cookie_set(:action, :submit_group_order)
+    redirect_to_shop
+  end
+
+  def unsubmit
+    @basket.update_column(:submitted, nil)
+    flash[:info] = 'Basket has been reopened and further orders may be made.'
+    redirect_to_basket
+  end
+
   def set_admin
     cookie_set(:admin, @basket.uid)
     flash[:info] = 'You have been set as admin.'
@@ -65,6 +79,13 @@ class BasketController < ApplicationController
       cookie_set(:action, :share_link) if view_context.admin? && @order.paid?
     else
       cookie_set(:action, view_context.admin? ? :share_link : nil)
+    end
+  end
+
+  def ensure_admin
+    unless view_context.admin?
+      flash[:error] = 'You are not an admin, no action taken.'
+      redirect_to_basket
     end
   end
 end

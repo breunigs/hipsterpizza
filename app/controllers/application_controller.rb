@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     redirect_to basket_with_uid_path(@basket.uid)
   end
 
+  def redirect_to_shop
+    redirect_to @basket.shop_url + '?knddomain=1'
+  end
+
   def get_replay_mode
     modes = ['insta', 'nocheck', 'check']
     p = params[:mode]

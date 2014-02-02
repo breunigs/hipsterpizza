@@ -1,6 +1,6 @@
 module BasketHelper
   def admin?
-    @basket && @basket.uid == cookie_get(:basket).to_s
+    @basket && @basket.uid == cookie_get(:admin).to_s
   end
 
   def order_details(order)

@@ -205,3 +205,8 @@ body.wait {
     box-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
   }
 }
+
+// fix broken pizza.de styles for duplicate/remove buttons in Chrome
+.cartitems-btns .btn-v01 {
+  vertical-align: middle;
+}

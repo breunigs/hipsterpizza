@@ -1,4 +1,5 @@
 - a = cookie_get(:action).to_s
+- b = cookie_get(:basket).to_s
 
 - progress = { \
   choose_shop: 'choose food shop',
@@ -6,6 +7,7 @@
   submit_group_order: 'submit group order' }
 
 = render "progress_bars/bar", locals: { progress: progress }
+
 
 - if a == 'choose_shop'
   = form_tag({controller: :basket, action: :create}, method: :post)
@@ -15,5 +17,10 @@
 
   a href="#{root_path}" class="button dim" Cancel Basket Creation
 
+
 - if a == 'share_link' && controller.action_name != 'share'
   = render 'submit_group_order_button'
+
+
+- if a == 'submit_group_order'
+  a href="#{unsubmit_basket_path(b)}" class="button dim" Cancel Submission

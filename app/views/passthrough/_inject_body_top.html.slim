@@ -1,9 +1,14 @@
 - c = cookie_get(:action)
 
+- action_to_progress = { \
+    'choose_shop'        => 'choose_shop',
+    'submit_group_order' => 'choose_shop',
+    'new_order'          => 'new_order' }
+
 #hipsterTopBar
   /! action=#{c}
 
-  - if ["choose_shop", "new_order"].include?(c)
-    = render "progress_bars/#{c}"
+  - if action_to_progress.keys.include?(c)
+    = render "progress_bars/#{action_to_progress[c]}"
   - else
     = render "shared/missing_cookie"
