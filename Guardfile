@@ -14,8 +14,7 @@ guard :shell do
   end
 end
 
-
-guard :rails do
+guard :rails, daemon: true do
   watch('Gemfile.lock')
   watch(%r{^(config|lib)/.*})
 end
