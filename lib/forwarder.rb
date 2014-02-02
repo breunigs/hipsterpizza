@@ -64,7 +64,10 @@ class Forwarder
     # tags.
     resource.body.encode!('utf-8', charset, invalid: :replace, undef: :replace, :replace => '♥')
     res_hash['content-type'].each { |x| x.sub!(charset, 'utf-8') }
+    # HTML meta tags
     resource.body.sub!(/content="text\/html; charset=[^"]+"/, 'content="text/html; charset=utf-8"')
+    # XML
+    resource.body.sub!(/encoding="#{charset}"/i, 'encoding="utf-8"')
   end
 
   def http

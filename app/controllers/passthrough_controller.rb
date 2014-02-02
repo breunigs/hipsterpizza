@@ -3,16 +3,19 @@
 class PassthroughController < ActionController::Base
   @@forwarder = Forwarder.new("pizza.de")
 
+  after_filter :add_missing_content_type
+
   # cache some of the probably non-static elements
-  after_filter :add_missing_content_type, only: :pass
   caches_action :pass, expires_in: 60.minutes, if: Proc.new {
     path = request.url
-    return true if path == "/_shop/shopinit_json"
+    return true if path.match(%r{^/0_static/})
     return true if path.match(/framek[0-9]{3}\.htm$/)
     false
   }
 
   def pass
+    logger.warn "pass: #{headers['Content-Type']}"
+
     if env['PATH_INFO'].include?("reporterror")
       render text: "withheld error from pizza.de"
     else
@@ -20,7 +23,6 @@ class PassthroughController < ActionController::Base
     end
   end
 
-  after_filter :add_missing_content_type, only: :pass_cached
   caches_action :pass_cached, expires_in: 24.hours
   def pass_cached
     return rewrite
@@ -28,10 +30,23 @@ class PassthroughController < ActionController::Base
 
   private
   def add_missing_content_type
-    content = Mime::Type.lookup_by_extension(params['ending']).to_s.dup
+    return if headers['Content-Type']
+
+    content = mime_type_by_ending
     content << "; charset=utf-8" if content.include?("text")
     headers['Content-Type'] ||= content
-    logger.debug "Detected content type from ending #{params['ending']}: #{content}. Final header: #{headers['Content-Type']}"
+    logger.debug "Detected content type: #{content}. Final header: #{headers['Content-Type']}"
+  end
+
+  def mime_type_by_ending
+    ending = request.path.split('.').last
+    if ending.size > 4
+      logger.debug "Could not detect content type, skipping #{request.path}"
+      return 'text/html'
+    end
+
+    ending = 'html' if ending == 'htm'
+    Mime::Type.lookup_by_extension(ending).to_s.dup
   end
 
   def rewrite
