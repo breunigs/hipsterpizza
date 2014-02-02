@@ -147,6 +147,7 @@ GEM
     parallel_tests (0.16.8)
       parallel
     polyglot (0.3.3)
+    possessive (1.0.1)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -271,6 +272,7 @@ DEPENDENCIES
   guard-shell
   jquery-rails
   parallel_tests
+  possessive
   puffing-billy!
   quiet_assets
   rack-livereload

@@ -33,14 +33,20 @@ class OrderController < ApplicationController
   end
 
   def destroy
-    redirect_to_basket unless @order
+    return redirect_to_basket unless @order
+
+    my_order = cookie_get(:order) == @order.uuid
+    if !my_order && !view_context.admin?
+      flash[:warn] = 'Only admins can delete other people’s orders.'
+      redirect_to_basket
+    end
 
     amount = @order.paid? ? @order.amount : 0
     @order.destroy!
-    cookie_delete(:order)
+    cookie_delete(:order) if my_order
 
-    flash[:info] = 'Your order has been removed.'
-    flash[:info] << " Don’t forget to take your #{view_context.euro(amount)} (or #{view_context.euro(@order.amount_with_tip)} with tip) from the pile." if amount > 0
+    flash[:info] = "#{my_order ? 'Your' : @order.nick.possessive} order has been removed."
+    flash[:info] << " Don’t forget to take #{view_context.euro(amount)} (or #{view_context.euro(@order.amount_with_tip)} with tip) from the pile." if amount > 0
 
     redirect_to_basket
   end

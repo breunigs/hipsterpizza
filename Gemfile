@@ -11,6 +11,7 @@ gem 'therubyracer',         platform: :ruby
 gem 'thin'
 gem 'actionpack-action_caching'
 gem 'rqrcode-rails3'
+gem 'possessive'
 
 group :development do
   gem 'better_errors'

@@ -21,3 +21,6 @@ table
         a href="#{copy_order_path(order.uuid)}" data-method="put" data-confirm="#{confirm}" copy
         '
         a href="#{copy_order_path(order.uuid, mode: :insta)}" data-method="put"  data-confirm="#{confirm}" insta-copy
+        '
+        - if admin?
+          a href="#{destroy_order_path(order.uuid)}" data-method="delete" data-confirm="Really delete #{order.nick.possessive} order?" destroy
