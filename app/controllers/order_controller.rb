@@ -63,7 +63,7 @@ class OrderController < ApplicationController
     my_order = cookie_get(:order) == @order.uuid
     if !my_order && !view_context.admin?
       flash[:warn] = 'Only admins can delete other people’s orders.'
-      redirect_to_basket
+      return redirect_to_basket
     end
 
     amount = @order.paid? ? @order.amount : 0
