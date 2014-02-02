@@ -143,10 +143,10 @@ body {
 
       &.active {
         background: $bg_active;
-        text-decoration: none;
 
         &:before {
           border-color: $bg_active;
+          border-left-color: transparent;
         }
 
         &:after {
@@ -156,14 +156,14 @@ body {
 
       &.done {
         background: $bg_done;
-        text-decoration: none;
 
         &:before {
           border-color: $bg_done;
+          border-left-color: transparent;
         }
 
         &:after {
-          border-left-color: $border;
+          border-left-color: $bg_done;
         }
       }
     }
