@@ -5,7 +5,7 @@ class OrderController < ApplicationController
 
   before_filter :find_basket
   before_filter :find_order, except: [:new, :create]
-  before_filter :ensure_basket_editable, only: [:create, :destroy, :copy, :edit, :update]
+  before_filter :ensure_basket_editable, only: [:create, :new, :destroy, :copy, :edit, :update]
   before_filter :reset_replay
 
   def new
@@ -86,7 +86,7 @@ class OrderController < ApplicationController
   private
   def ensure_basket_editable
     if @basket.cancelled?
-      flash[:error] = 'This group order has been canceled. Please ask someone for the new link.'
+      flash[:error] = 'This group order has been cancelled. Please ask someone for the new link.'
       redirect_to basket_path
     elsif !@basket.submitted.nil?
       flash[:error] = 'This group order has already been submitted. Please talk to whoever ordered the food to add your order manually via phone.'

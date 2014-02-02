@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
 
   def find_basket
-    uid = params[:uid]
+    uid = params[:basket_uid]
     uid ||= cookie_get(:basket)
     @basket = Basket.where(uid: uid).first
 

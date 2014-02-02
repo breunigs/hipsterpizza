@@ -26,7 +26,7 @@ Hipsterpizza::Application.routes.draw do
 
   # catch all for unmatched /hipster/ routes
   get 'hipster', to: 'main#chooser'
-  get 'hipster/*page', to: 'main#chooser'
+  get 'hipster/*page', to: 'basket#find'
 
   # forward all other requests to pizza.de
   match '*any.:ending', to: "passthrough#pass_cached", ending: /swf|css|jpg|png|gif|js/, via: [:get, :post, :put, :delete]

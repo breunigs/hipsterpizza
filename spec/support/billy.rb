@@ -9,7 +9,7 @@ module Billy
     def cacheable?(url, headers)
       return false unless Billy.config.cache
       url = URI(url)
-      return false if url.path.start_with?('/hipster')
+      return false if url.path.start_with?('/hipster') || url.path == '/'
       # new and edit order share the same URL and are discerned by
       # cookies only. Caching would thus incorrectly handle replay data.
       return false if url.query.include?('knddomain=1') rescue false
