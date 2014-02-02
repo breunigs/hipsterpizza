@@ -1,13 +1,19 @@
 - a = cookie_get(:action).to_s
 
-- progress = { \
-  new_order: 'select items',
-  pay_order: 'pay',
-  wait: 'wait patiently' }
+- if editing?
+  - progress = { \
+    new_order: 'select items',
+    pay_order: 'pay',
+    wait: 'wait patiently' }
+- else
+  - progress = { \
+    edit_order: 'change selection',
+    pay_order: 'pay',
+    wait: 'wait patiently' }
 
 = render "progress_bars/bar", locals: { progress: progress }
 
-- if a == 'new_order'
+- if new_order?
   = form_tag({controller: :order, action: :create}, method: :post)
     input type='hidden' id='hipsterOrderJson' name='json'
     input type='hidden' id='hipsterOrderNick' name='nick'
@@ -17,6 +23,20 @@
       data: { disable_with: 'Saving Order…' }
 
   a href="#{basket_path}" class="button dim" Cancel My Order
+
+-if editing?
+  / Use replay cookie to determine which order is being updated. This
+  / allows admins to edit other people’s orders without losing theirs
+  - uuid = cookie_get(:replay).split(' ').last
+  = form_tag(update_order_path(uuid), method: :post)
+    input type='hidden' id='hipsterOrderJson' name='json'
+    input type='hidden' name='order_uuid' value='#{uuid}'
+    = submit_tag 'Update My Order',
+      id: 'hipsterOrderSubmitButton',
+      class: :button,
+      data: { disable_with: 'Updating Order…' }
+
+  a href="#{basket_path}" class="button dim" Cancel (ignore changes)
 
 - if a == 'pay_order'
   = render 'toggle_order_paid_button'

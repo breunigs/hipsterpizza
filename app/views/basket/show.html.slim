@@ -30,7 +30,7 @@ p
 
   p
     - if @basket.editable?
-      a href="#{edit_order_path(@order.uuid)}" class="button" ✎ Edit My Order
+      a href="#{edit_order_path(@order.uuid)}" class="button" data-no-turbolink="" ✎ Edit My Order
 
       a href="#{destroy_order_path(@order.uuid)}" class="button" data-method="delete" data-confirm="Do you really want to starve of hunger?" ☢ Destroy My Order
 

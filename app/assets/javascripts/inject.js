@@ -367,6 +367,11 @@ var hipster = window.hipster = (function() {
         }
         $('#hipsterOrderJson').val(JSON.stringify(items));
 
+        // do not ask for user’s nick if editing an order
+        if(getCookie('action') === 'edit_order') {
+          return true;
+        }
+
         var nick = getUserNick();
         if(nick === null) {
           // user clicked cancel in dialog, abort

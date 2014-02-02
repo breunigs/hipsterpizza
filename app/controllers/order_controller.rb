@@ -5,6 +5,7 @@ class OrderController < ApplicationController
 
   before_filter :find_basket
   before_filter :find_order, except: [:new, :create]
+  before_filter :ensure_basket_editable, only: [:create, :destroy, :copy, :edit, :update]
   before_filter :reset_replay
 
   def new
@@ -12,20 +13,43 @@ class OrderController < ApplicationController
     redirect_to_shop
   end
 
-  before_filter :ensure_basket_editable, only: [:create, :destroy, :copy]
+  def edit
+    cookie_set(:action, :edit_order)
+    cookie_set(:replay, "order nocheck #{@order.uuid}")
+    redirect_to_shop
+  end
+
+  def update
+    pay     = @order.paid? ? @order.amount : 0
+    pay_tip = @order.paid? ? @order.amount_with_tip : 0
+
+    @order.json = params[:json]
+    @order.save!
+
+    if @order.errors.any?
+      flash_error_msgs(@order)
+    else
+      pay = @order.amount - pay
+      pay_tip = @order.amount_with_tip - pay_tip
+
+      handle_price_difference(pay, pay_tip)
+    end
+
+    redirect_to_basket
+  end
+
   def create
-    o = Order.new(params.permit(:nick, :json))
+    @order = o = Order.new(params.permit(:nick, :json))
     o.basket_id = @basket.id
     o.save!
     if o.errors.any?
-      msgs = "\n• " + o.errors.full_messages.join("\n• ")
-      render text: "Could not create order. Messages: #{msgs}"
-      # TODO: nicer rendering
+      flash_error_msgs(o)
     else
       cookie_set(:order, o.uuid)
       cookie_set(:action, :pay_order)
-      redirect_to_basket
+      flash[:info] = "Your order has been saved. Please put #{view_context.amount} on the money pile."
     end
+    redirect_to_basket
   end
 
   def toggle_paid
@@ -47,7 +71,7 @@ class OrderController < ApplicationController
     cookie_delete(:order) if my_order
 
     flash[:info] = "#{my_order ? 'Your' : @order.nick.possessive} order has been removed."
-    flash[:info] << " Don’t forget to take #{view_context.euro(amount)} (or #{view_context.euro(@order.amount_with_tip)} with tip) from the pile." if amount > 0
+    flash[:info] << " Don’t forget to take  #{view_context.amount} from the pile." if amount > 0
 
     redirect_to_basket
   end
@@ -68,6 +92,27 @@ class OrderController < ApplicationController
       flash[:error] = 'This group order has already been submitted. Please talk to whoever ordered the food to add your order manually via phone.'
       # TODO: repeat order here for convenience
       redirect_to_basket
+    end
+  end
+
+  def flash_error_msgs(order)
+    return if order.errors.none?
+    msgs = "\n• " + order.errors.full_messages.join("\n• ")
+    flash[:error] = "Could not create order. Messages: #{msgs}"
+  end
+
+  def handle_price_difference(pay, pay_tip)
+    vc = view_context
+    flash[:info] = 'Your order has been updated. ' + if pay == 0
+      cookie_set(:action, :wait)
+      'The price didn’t change, so no worries here.'
+    elsif pay < 0
+      cookie_set(:action, :wait)
+      "Please take #{vc.euro(pay.abs)} (or #{vc.euro(pay_tip.abs)} if you tipped) from the money pile."
+    else
+      @order.update_column(:paid, false)
+      cookie_set(:action, :pay_order)
+      "You need to pay an additional  #{view_context.amount(pay, pay_tip)})."
     end
   end
 end
