@@ -4,7 +4,7 @@ class BasketController < ApplicationController
   include CookieHelper
 
   before_filter :find_basket, except: [:new, :create]
-  before_filter :ensure_admin, except: [:new, :create, :show, :share, :set_admin]
+  before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin]
   before_filter :find_order, only: [:show]
   before_filter :reset_replay
 
@@ -29,6 +29,10 @@ class BasketController < ApplicationController
 
       redirect_to share_basket_path(b.uid)
     end
+  end
+
+  def find
+    redirect_to_basket
   end
 
   def show
