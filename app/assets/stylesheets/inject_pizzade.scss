@@ -32,6 +32,10 @@ body {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 
+  h1, h2 {
+    padding-top: 0;
+  }
+
   > * {
     margin: 0 10px;
     display: inline-block;
@@ -45,7 +49,7 @@ body {
   .button {
     line-height: 34px;
     padding: 0 10px;
-    height: 34px;
+    height: 34px !important;
     color: #000;
     border: 1px solid $border;
     white-space: nowrap;
@@ -54,11 +58,14 @@ body {
     overflow-x: hidden;
     vertical-align: middle;
     font-weight: bold;
+    font-size: 15px;
     background: $bg_dark;
     border-radius: 3px;
     box-shadow: 0 0 2px $border;
     cursor: pointer;
     text-decoration: none;
+    overflow: hidden;
+    box-sizing: content-box;
 
     &:hover {
       box-shadow: 0 0 5px $border;
