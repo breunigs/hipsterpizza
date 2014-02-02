@@ -14,6 +14,10 @@ class Forwarder
   def call(env)
     req = request(env)
 
+    if Rails && Rails.logger
+      Rails.logger.info "remote loading #{req.path}"
+    end
+
     begin
       res = http.request(req)
     rescue Net::HTTPBadResponse => e
@@ -44,7 +48,6 @@ class Forwarder
 
   def fix_encoding!(resource, res_hash)
     return unless is_text?(res_hash)
-    Rails.logger.warn "RES_HASH is text"
 
     charset = guess_charset(res_hash)
     if charset == 'utf-8'
