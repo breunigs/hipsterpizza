@@ -14,8 +14,6 @@ class PassthroughController < ActionController::Base
   }
 
   def pass
-    logger.warn "pass: #{headers['Content-Type']}"
-
     if env['PATH_INFO'].include?("reporterror")
       render text: "withheld error from pizza.de"
     else
@@ -81,7 +79,6 @@ class PassthroughController < ActionController::Base
     # heuristic: assume if the last part contains a dot, it’s not a
     # HTML resource. If it contains more than one slash, it’s a sub page
     # in which we don’t want to inject.
-    logger.warn env['PATH_INFO']
     return if env['PATH_INFO'].count("/") > 1
     return if env['PATH_INFO'].last(5).include?(".")
 
