@@ -1,4 +1,4 @@
 - if @basket.editable?
   a href="#{submit_basket_path(@basket.uid)}" class="button" data-confirm="⚠ Blocks further orders – better ask around if everyone is finished. Continue?" data-no-turbolink="" ⎙ Submit Group Order
-- else
+- elsif !@basket.cancelled?
   a href="#{submit_basket_path(@basket.uid)}" class="button" data-confirm="The basket has already been submitted. Do you really want to submit it again?" data-no-turbolink="" ⎙ Submit Again
