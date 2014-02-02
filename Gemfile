@@ -34,6 +34,6 @@ group :test do
   gem 'simplecov',  require: false
   gem 'coveralls',  require: false
   gem 'capybara-webkit'
-  gem 'capybara-screenshot'
+  gem 'capybara-screenshot', git: 'git://github.com/mattheworiordan/capybara-screenshot.git'
   gem 'puffing-billy', git: 'git://github.com/oesmith/puffing-billy.git'
 end

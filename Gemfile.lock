@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/mattheworiordan/capybara-screenshot.git
+  revision: 412a5173995c231421051d2d81308cd872c83895
+  specs:
+    capybara-screenshot (0.3.16)
+      capybara (>= 1.0, < 3)
+      launchy
+
+GIT
   remote: git://github.com/oesmith/puffing-billy.git
   revision: 382f9a4073155f750c708f2b864c6bea1dfbc01e
   specs:
@@ -54,9 +62,6 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-screenshot (0.3.16)
-      capybara (>= 1.0, < 3)
-      launchy
     capybara-webkit (1.1.0)
       capybara (~> 2.0, >= 2.0.2)
       json
@@ -262,7 +267,7 @@ DEPENDENCIES
   actionpack-action_caching
   better_errors
   binding_of_caller
-  capybara-screenshot
+  capybara-screenshot!
   capybara-webkit
   coveralls
   guard-bundler

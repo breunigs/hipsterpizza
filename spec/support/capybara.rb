@@ -23,13 +23,27 @@ Capybara.register_driver :webkit_billy_no_imgs do |app|
   driver
 end
 
-# silence capybara-screenshot’s warnings when using any of the
-# customized drivers
-Capybara::Screenshot.register_driver(:webkit_billy_no_imgs) {}
-Capybara::Screenshot.register_driver(:webkit_no_imgs) {}
+
 
 driver = "webkit#{cache_requests ? "_billy" : ""}#{load_images ? "" : "_no_imgs"}"
+driver = driver.to_sym
 
 Capybara.current_driver = driver.to_sym
 Capybara.default_driver = driver.to_sym
 Capybara.javascript_driver = driver.to_sym
+
+# teach capybara-screenshot about our custom drivers
+Capybara::Screenshot.register_driver(driver)  do |driver, path|
+  if driver.respond_to?(:save_screenshot)
+    driver.save_screenshot(path)
+  else
+    driver.render(path)
+  end
+end
+
+Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
+  desc = example.full_description
+  "screenshot_#{desc.gsub(' ', '_')}"
+end
+
+Capybara::Screenshot.append_timestamp = false
