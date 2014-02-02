@@ -40,4 +40,8 @@ class ApplicationController < ActionController::Base
     logger.warn "Invalid Replay Mode: #{p}" unless p.blank?
     modes.last
   end
+
+  def reset_replay
+    cookie_delete(:replay)
+  end
 end

@@ -5,6 +5,7 @@ class OrderController < ApplicationController
 
   before_filter :find_basket
   before_filter :find_order, except: [:new, :create]
+  before_filter :reset_replay
 
   def new
     cookie_set(:action, :new_order)

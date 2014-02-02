@@ -229,8 +229,6 @@ var hipster = window.hipster = (function() {
       $("body").removeClass("wait");
       $("#hipsterProgress").hide();
       $.fx.off = false;
-      // only ever replay once
-      setCookie('replay', null);
 
       if(typeof finishCallback === 'function') {
         log('replay: running callback');

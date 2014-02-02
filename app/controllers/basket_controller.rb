@@ -6,6 +6,7 @@ class BasketController < ApplicationController
   before_filter :find_basket, except: [:new, :create]
   before_filter :ensure_admin, except: [:new, :create, :show, :share, :set_admin]
   before_filter :find_order, only: [:show]
+  before_filter :reset_replay
 
   def new
     cookie_set(:action, :choose_shop)
