@@ -2,12 +2,12 @@
 
 - if editing?
   - progress = { \
-    new_order: 'select items',
+    edit_order: 'change selection',
     pay_order: 'pay',
     wait: 'wait patiently' }
 - else
   - progress = { \
-    edit_order: 'change selection',
+    new_order: 'select items',
     pay_order: 'pay',
     wait: 'wait patiently' }
 
@@ -31,7 +31,8 @@
   = form_tag(update_order_path(uuid), method: :post)
     input type='hidden' id='hipsterOrderJson' name='json'
     input type='hidden' name='order_uuid' value='#{uuid}'
-    = submit_tag 'Update My Order',
+    - whose = uuid == cookie_get(:order) ? 'My' : ''
+    = submit_tag "Update #{whose} Order",
       id: 'hipsterOrderSubmitButton',
       class: :button,
       data: { disable_with: 'Updating Order…' }
