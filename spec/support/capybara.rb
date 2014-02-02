@@ -28,9 +28,9 @@ end
 driver = "webkit#{cache_requests ? "_billy" : ""}#{load_images ? "" : "_no_imgs"}"
 driver = driver.to_sym
 
-Capybara.current_driver = driver.to_sym
-Capybara.default_driver = driver.to_sym
-Capybara.javascript_driver = driver.to_sym
+Capybara.current_driver = driver
+Capybara.default_driver = driver
+Capybara.javascript_driver = driver
 
 # teach capybara-screenshot about our custom drivers
 Capybara::Screenshot.register_driver(driver)  do |driver, path|

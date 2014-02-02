@@ -30,4 +30,11 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+
+  config.before(:each) do
+    if Capybara && Capybara.current_driver.to_s.include?('no_imgs')
+      page.driver.browser.set_skip_image_loading true
+    end
+  end
 end
