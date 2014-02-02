@@ -39,5 +39,5 @@ p
     cumbersome, you can enter the basket ID manually here:
 
 form method="GET" action="#{basket_path(uid: '')}"
-  input required="required" name="uid" value="#{params[:uid]}"
+  input required="required" name="uid" value="#{params[:uid]}" placeholder="Enter Basket UID"
   input type="submit" value="Use Basket"
