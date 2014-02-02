@@ -23,4 +23,8 @@ table
         a href="#{copy_order_path(order.uuid, mode: :insta)}" data-method="put"  data-confirm="#{confirm}" insta-copy
         '
         - if admin?
+          a href="#{edit_order_path(order.uuid)}" data-no-turbolink="" edit
+
           a href="#{destroy_order_path(order.uuid)}" data-method="delete" data-confirm="Really delete #{order.nick.possessive} order?" destroy
+
+          a href="#{toggle_paid_order_path(@order.uuid)}" data-method="put" mark #{@order.paid? ? "NOT" : ""} paid
