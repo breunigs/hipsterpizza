@@ -27,7 +27,7 @@ var hipster = window.hipster = (function() {
     for(var i=0; i< cookies.length; i++) {
       c = cookies[i];
       if(c.indexOf(name) === 0) {
-        return unescape(c.substring(name.length, c.length));
+        return decodeURIComponent(c.substring(name.length, c.length));
       }
     }
     return null;
@@ -48,7 +48,7 @@ var hipster = window.hipster = (function() {
       exdate.setDate(exdate.getDate() + 365);
       date = exdate.toUTCString();
     }
-    var data = escape(value) + "; expires=" + date;
+    var data = encodeURIComponent(value) + "; expires=" + date;
     document.cookie = "_hipsterpizza_" + name + "=" + data;
   }
 
