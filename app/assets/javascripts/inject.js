@@ -276,6 +276,31 @@ var hipster = window.hipster = (function() {
     $("body").bind("DOMSubtreeModified", check);
   }
 
+  function restoreLocalStorage(elm) {
+    elm = $(elm);
+    var v = localStorage['hipsterpizza_' + elm.attr('name')];
+    if(typeof v === 'undefined' || v === null || v === '') {
+      return;
+    }
+
+    if(elm.attr('type') === 'radio') {
+      $('input[name="'+elm.attr('name')+'"][value="'+v+'"]').click();
+    } else {
+      elm.val(v);
+    }
+  }
+
+  function setLocalStorage(elm) {
+    elm = $(elm);
+    var v = elm.val();
+
+    if(v === '') {
+      v = null;
+    }
+    log('storing: ' + elm.attr('name') + ' = ' + v);
+    localStorage['hipsterpizza_' + elm.attr('name')] = v;
+  }
+
   try {
     setupMutationObserver();
   } catch(err) {
@@ -379,6 +404,23 @@ var hipster = window.hipster = (function() {
         default:
           err('Invalid replay mode, no action taken');
       }
+    },
+
+    attachAddressFieldListener: function() {
+      if(!localStorage) return;
+      // pizza.de replaces the whole sidebar when adding/removing items.
+      // Therefore this broad delegate is needed.
+      $('body').on('change', 'form#bestellform input', function() {
+        setLocalStorage(this);
+      });
+    },
+
+    restoreAddressFields: function() {
+      if(!localStorage) return;
+
+      $('form#bestellform input').each(function(idx, elm) {
+        restoreLocalStorage(elm);
+      });
     }
   };
 })();
@@ -388,8 +430,10 @@ hipster.disableAreaCodePopup();
 
 
 hipster.runAfterLoad(function() {
+  hipster.replayData();
   hipster.detectAndSetShop();
   hipster.hideOrderFieldsAppropriately();
   hipster.bindSubmitButton();
-  hipster.replayData();
+  hipster.restoreAddressFields();
+  hipster.attachAddressFieldListener();
 });
