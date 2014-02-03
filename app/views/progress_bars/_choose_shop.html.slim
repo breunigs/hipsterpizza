@@ -4,7 +4,8 @@
 - progress = { \
   choose_shop: 'choose food shop',
   share_link:  'hand out link to everyone',
-  submit_group_order: 'submit group order' }
+  submit_group_order: 'submit group order',
+  mark_delivery_arrived: 'mark delivery arrived' }
 
 = render "progress_bars/bar", locals: { progress: progress }
 
@@ -25,6 +26,14 @@
 - if a == 'submit_group_order'
   h2 Use pizza.de-UI to submit order
 
-  a href="#{set_submit_time_basket_path(b)}" class="button dim" Set Submit Time To Now
+  = form_tag(set_submit_time_basket_path(b), method: :post, id: :hipsterSetSubmitTime)
+    input type='hidden' id='hipsterShaAddress' name='sha_address'
+    = submit_tag 'Set Submit Time To Now', class: 'button dim'
+
 
   a href="#{unsubmit_basket_path(b)}" class="button dim" Cancel Submission
+
+  = javascript_include_tag "sha512", async: true
+
+- if a == 'mark_delivery_arrived'
+  = render 'delivery_arrived_button'

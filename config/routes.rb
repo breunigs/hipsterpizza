@@ -11,7 +11,8 @@ Hipsterpizza::Application.routes.draw do
       put 'toggle_cancelled', to: 'basket#toggle_cancelled', as: :toggle_cancelled_basket
       get 'submit', to: "basket#submit", as: :submit_basket
       get 'unsubmit', to: "basket#unsubmit", as: :unsubmit_basket
-      get 'set_submit_time', to: "basket#set_submit_time", as: :set_submit_time_basket
+      put 'delivery_arrived', to: "basket#delivery_arrived", as: :delivery_arrived_basket
+      post 'set_submit_time', to: "basket#set_submit_time", as: :set_submit_time_basket
     end
     get 'basket', to: "basket#find", as: :basket
 

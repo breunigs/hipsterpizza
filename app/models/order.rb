@@ -22,7 +22,7 @@ class Order < ActiveRecord::Base
   end
 
   def amount
-    json_parsed.map { |i| i['price'] }.inject(0, :+)
+    json_parsed.map { |i| i['price'] }.sum
   end
 
   def amount_with_tip

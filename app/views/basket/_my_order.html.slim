@@ -1,0 +1,27 @@
+h2
+  | Your Order
+  - nick = cookie_get(:nick)
+  - if nick
+    ' , #{nick}
+
+p
+  - if @basket.editable?
+    a href="#{edit_order_path(@order.uuid)}" class="button" data-no-turbolink="" ✎ Edit My Order
+
+    a href="#{destroy_order_path(@order.uuid)}" class="button" data-method="delete" data-confirm="Do you really want to starve of hunger?" ☢ Destroy My Order
+
+  = render 'toggle_order_paid_button'
+
+
+p
+  ' Price:
+  b #{euro(@order.amount_with_tip)}
+  span.dim
+    |  (or #{euro(@order.amount)} without tip)
+  ' .
+  - if @order.paid?
+    span.good ✓ You are marked as having paid.
+  - else
+    span.bad ✗ You still need to pay.
+
+= order_details(@order)

@@ -72,6 +72,21 @@ var hipster = window.hipster = (function() {
     return _isLoading;
   }
 
+  function getShaAddress() {
+    var prefix = 'hipsterpizza_odr_';
+    var addr = '';
+    addr += localStorage[prefix + 'zipcode'] + ' ';
+    addr += localStorage[prefix + 'street'] + ' ';
+    addr += localStorage[prefix + 'street_no'];
+    addr = $.trim(addr).toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    if(addr === '') {
+      return null;
+    }
+
+    return new jsSHA(addr, "TEXT").getHash("SHA-512", "HEX");
+  }
+
   function getCartItemsJson() {
     var data = [];
     $(".cartitems").each(function(ind, elm) {
@@ -424,6 +439,15 @@ var hipster = window.hipster = (function() {
       $('form#bestellform input').each(function(idx, elm) {
         restoreLocalStorage(elm);
       });
+    },
+
+    attachShaAddress: function() {
+      $('#hipsterSetSubmitTime').on('submit', function() {
+        var addr = getShaAddress();
+        if(addr !== null) {
+          $('#hipsterShaAddress').val();
+        }
+      });
     }
   };
 })();
@@ -439,4 +463,5 @@ hipster.runAfterLoad(function() {
   hipster.bindSubmitButton();
   hipster.restoreAddressFields();
   hipster.attachAddressFieldListener();
+  hipster.attachShaAddress();
 });

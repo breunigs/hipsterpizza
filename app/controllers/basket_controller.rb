@@ -4,7 +4,7 @@ class BasketController < ApplicationController
   include CookieHelper
 
   before_filter :find_basket, except: [:new, :create]
-  before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin]
+  before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin, :delivery_arrived]
   before_filter :find_order, only: [:show]
   before_filter :reset_replay
 
@@ -58,7 +58,14 @@ class BasketController < ApplicationController
   end
 
   def set_submit_time
+    cookie_set(:action, :mark_delivery_arrived)
     @basket.update_column(:submitted, Time.now)
+    @basket.update_column(:sha_address, params[:sha_address])
+    redirect_to_basket
+  end
+
+  def delivery_arrived
+    @basket.update_column(:arrival, Time.now)
     redirect_to_basket
   end
 
@@ -84,11 +91,12 @@ class BasketController < ApplicationController
 
   private
   def update_action_from_order
+    admin_action = @basket.submitted? ? :mark_delivery_arrived : :share_link
     if @order
       cookie_set(:action, @order.paid? ?  :wait : :pay_order)
-      cookie_set(:action, :share_link) if view_context.admin? && @order.paid?
+      cookie_set(:action, admin_action) if view_context.admin? && @order.paid?
     else
-      cookie_set(:action, view_context.admin? ? :share_link : nil)
+      cookie_set(:action, view_context.admin? ? admin_action : nil)
     end
   end
 

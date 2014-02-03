@@ -14,6 +14,9 @@ p
   - if @basket.editable?
     = render "place_new_order_button"
 
+  - if @basket.submitted?
+    = render "delivery_arrived_button"
+
   - if admin?
     - if !@basket.cancelled?
       = render "submit_group_order_button"
@@ -22,46 +25,16 @@ p
       = render "toggle_cancel_button"
 
 - if @order
-  h2
-    | Your Order
-    - nick = cookie_get(:nick)
-    - if nick
-      ' , #{nick}
+  = render "my_order"
 
-  p
-    - if @basket.editable?
-      a href="#{edit_order_path(@order.uuid)}" class="button" data-no-turbolink="" ✎ Edit My Order
-
-      a href="#{destroy_order_path(@order.uuid)}" class="button" data-method="delete" data-confirm="Do you really want to starve of hunger?" ☢ Destroy My Order
-
-    = render 'toggle_order_paid_button'
-
-
-  p
-    ' Price:
-    b #{euro(@order.amount_with_tip)}
-    span.dim
-      |  (or #{euro(@order.amount)} without tip)
-    ' .
-    - if @order.paid?
-      span.good ✓ You are marked as having paid.
-    - else
-      span.bad ✗ You still need to pay.
-
-  = order_details(@order)
 
 - if @basket.submitted?
-  h2 Status
-  p
-    ' The group order has been submitted at
-    - if @basket.submitted.today?
-      = @basket.submitted.strftime('%H:%M')
-    - else
-      = @basket.submitted.strftime('%Y-%m-%d %H:%M')
-    '  (#{distance_of_time_in_words_to_now(@basket.submitted)} ago).
+  = render "submitted_status"
+
 
 h2 Money Pile
 = render "money_pile"
+
 
 h2 Basket
 = render "order_table"
