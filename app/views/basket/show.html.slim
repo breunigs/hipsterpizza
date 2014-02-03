@@ -65,3 +65,7 @@ h2 Money Pile
 
 h2 Basket
 = render "order_table"
+
+- if Rails.env.production?
+  javascript:
+    window.setTimeout(function() { Turbolinks.visit(window.location.href); }, 6123);
