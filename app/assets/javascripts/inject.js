@@ -56,6 +56,37 @@ var hipster = window.hipster = (function() {
     return getCookie('action');
   }
 
+  function getPostalCode() {
+    var input = $('#plzsearch_input');
+
+    function isInputEmpty() {
+      return $.trim(input.val()) === '';
+    }
+
+    function checkPostalCode(data) {
+      log('Reverse Geocoding Result:');
+      log(data);
+      if(isInputEmpty()) {
+        input.val(data['address']['postcode']);
+        input.focus();
+      }
+    }
+
+    function queryNominatim(pos) {
+      var url = 'http://nominatim.openstreetmap.org/reverse?format=json&zoom=18';
+      var c = pos.coords;
+      var coords = '&lat='+c.latitude+'&lon='+c.longitude;
+      console.log('Querying Nominatim at ' + coords);
+      $.getJSON(url + coords, checkPostalCode);
+    }
+
+
+
+    if(navigator.geolocation && input.length > 0 && isInputEmpty()) {
+      navigator.geolocation.getCurrentPosition(queryNominatim);
+    }
+  }
+
   function isShopPage() {
     if(_isShop !== null) return _isShop;
 
@@ -448,12 +479,17 @@ var hipster = window.hipster = (function() {
           $('#hipsterShaAddress').val();
         }
       });
+    },
+
+    autoFillPostalCode: function() {
+      getPostalCode();
     }
   };
 })();
 
 
 hipster.disableAreaCodePopup();
+hipster.autoFillPostalCode();
 
 
 hipster.runAfterLoad(function() {
