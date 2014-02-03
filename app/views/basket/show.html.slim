@@ -50,6 +50,16 @@ p
 
   = order_details(@order)
 
+- if @basket.submitted?
+  h2 Status
+  p
+    ' The group order has been submitted at
+    - if @basket.submitted.today?
+      = @basket.submitted.strftime('%H:%M')
+    - else
+      = @basket.submitted.strftime('%Y-%m-%d %H:%M')
+    '  (#{distance_of_time_in_words_to_now(@basket.submitted)} ago).
+
 h2 Money Pile
 = render "money_pile"
 

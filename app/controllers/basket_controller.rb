@@ -45,7 +45,7 @@ class BasketController < ApplicationController
   end
 
   def submit
-    @basket.update_column(:submitted, Time.current)
+    @basket.update_column(:submitted, Time.now)
     cookie_set(:replay, "basket #{get_replay_mode} #{@basket.uid}")
     cookie_set(:action, :submit_group_order)
     redirect_to_shop
@@ -54,6 +54,11 @@ class BasketController < ApplicationController
   def unsubmit
     @basket.update_column(:submitted, nil)
     flash[:info] = 'Basket has been reopened and further orders may be made.'
+    redirect_to_basket
+  end
+
+  def set_submit_time
+    @basket.update_column(:submitted, Time.now)
     redirect_to_basket
   end
 
