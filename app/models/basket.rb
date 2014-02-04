@@ -26,6 +26,11 @@ class Basket < ActiveRecord::Base
     dur
   end
 
+  def duration_per_euro
+    return nil if sum == 0
+    duration.to_f/sum
+  end
+
   def editable?
     submitted == nil && !cancelled?
   end
@@ -48,10 +53,11 @@ class Basket < ActiveRecord::Base
 
   def estimate
     similar = Basket.similar(self).with_duration
-    durations = similar.map { |b| b.duration.to_f/b.sum rescue nil }.compact
-    return nil, 0 if durations.empty?
-    avg_per_euro = durations.sum.to_f / durations.size.to_f
-    return (avg_per_euro * sum).round, durations.size
+    dur_per_euro = similar.map { |b| b.duration_per_euro }.compact
+    return nil, 0 if dur_per_euro.empty?
+
+    avg = dur_per_euro.sum.to_f / dur_per_euro.size.to_f
+    return (avg * sum).round, dur_per_euro.size
   end
 
   private
