@@ -390,6 +390,13 @@ var hipster = window.hipster = (function() {
       return $("title").text();
     },
 
+    getShopFaxNumber: function() {
+      var n = window.cart.config.store.fax;
+      n = n.replace(/[^0-9+]/g, '');
+      n = n.replace(/^0/, '+49');
+      return n;
+    },
+
     detectAndSetShop: function() {
       var button = $('#hipsterShopChooser');
       button.val('Choose ' + hipster.getShopName());
@@ -399,6 +406,9 @@ var hipster = window.hipster = (function() {
 
       hidden = $('#hipsterShopName');
       hidden.val(hipster.getShopName());
+
+      hidden = $('#hipsterShopFaxNumber');
+      hidden.val(hipster.getShopFaxNumber());
 
       button.show();
     },

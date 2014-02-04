@@ -17,7 +17,7 @@ class BasketController < ApplicationController
   end
 
   def create
-    b = Basket.create(params.permit(:shop_name, :shop_url))
+    b = Basket.create(params.permit(:shop_name, :shop_url, :fax_number))
     if b.errors.any?
       msgs = "\n• " + b.errors.full_messages.join("\n• ")
       render text: "Could not create basket. Messages: #{msgs}"

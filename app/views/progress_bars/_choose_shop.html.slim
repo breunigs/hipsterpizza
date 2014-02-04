@@ -14,6 +14,7 @@
   = form_tag({controller: :basket, action: :create}, method: :post)
     input type='hidden' id='hipsterShopCanonicalUrl' name='shop_url'
     input type='hidden' id='hipsterShopName' name='shop_name'
+    input type='hidden' id='hipsterShopFaxNumber' name='fax_number'
     = submit_tag 'Choose Shop First', id: :hipsterShopChooser, class: :button, style: 'display: none', data: { disable_with: 'Creating New Group Basket…' }
 
   a href="#{root_path}" class="button dim" Cancel Basket Creation
