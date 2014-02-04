@@ -1,3 +1,6 @@
+//= require _both
+//= require _flash
+
 body {
   min-height: 100%;
   background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed #fff;
@@ -17,6 +20,8 @@ a {
 
 p.huge {
   font-size: 300%;
+  word-wrap: break-word;
+
   img {
     vertical-align: middle;
     padding-left: 30px;
@@ -110,6 +115,13 @@ td, th {
   text-align: left;
   padding: 8px;
   min-width: 60px;
+  vertical-align: top;
+
+  &.antiTroll {
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 tr:first-child {
@@ -146,6 +158,10 @@ td a {
   }
 }
 
+.nobr	{
+  white-space:nowrap;
+}
+
 .pile {
   font-size: 140%;
   div {
@@ -156,5 +172,62 @@ td a {
   span {
     display: inline-block;
     margin-right: 10px;
+  }
+}
+
+.showOnPressure {
+  display: none;
+}
+
+@media only screen
+and (max-width : 600px) {
+  body {
+    word-wrap: break-word;
+    background: #fff;
+  }
+
+  p.huge {
+    font-size: 150%;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  td, th {
+    min-width: 0;
+
+    a {
+      display: block;
+      padding: 8px 0;
+
+      &:first-of-type {
+        padding-top: 0;
+      }
+
+      &:last-of-type {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  td ul {
+    list-style-type: none;
+
+    li {
+      padding-bottom: 5px;
+    }
+  }
+}
+
+
+@media only screen
+and (max-width : 400px) {
+  .hideOnPressure {
+    display: none;
+  }
+
+  .showOnPressure {
+    display: block;
   }
 }

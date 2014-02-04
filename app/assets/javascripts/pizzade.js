@@ -1,4 +1,5 @@
 //= require jquery_ujs
+//= require _both
 
 var hipster = window.hipster = (function() {
   // CACHES ////////////////////////////////////////////////////////////
@@ -492,7 +493,9 @@ var hipster = window.hipster = (function() {
     },
 
     autoFillPostalCode: function() {
-      getPostalCode();
+      if(window.location.pathname === '/pizzade_root') {
+        getPostalCode();
+      }
     }
   };
 })();

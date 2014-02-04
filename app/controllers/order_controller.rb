@@ -112,7 +112,7 @@ class OrderController < ApplicationController
     else
       @order.update_column(:paid, false)
       cookie_set(:action, :pay_order)
-      "You need to pay an additional  #{view_context.amount(pay, pay_tip)})."
+      "You need to pay an additional  #{view_context.amount(pay, pay_tip)}."
     end
   end
 end

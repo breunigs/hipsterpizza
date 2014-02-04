@@ -1,30 +1,37 @@
 - confirm = @order ? 'There’s already an order for you. Continue only if this is for someone else (=OK), otherwise edit your old order (=Cancel).' : ''
 
-table
-  tr
-    th Nick
-    th.price € with tip
-    th Paid?
-    th Order
-    th Actions
+- if @basket.orders.size > 0
+  p.showOnPressure Hint: Hold device horizontally for more details.
 
-  - @basket.orders.sorted.each do |order|
-    tr class="#{order.uuid == cookie_get(:order).to_s ? 'highlight' : ''}"
-      td = order.nick
-      td.price
-        span.dim
-          ' (#{number_to_currency(order.amount, unit: '')})
-        = number_to_currency(order.amount_with_tip, unit: '')
-      td.bold class="#{order.paid? ? :good : :bad}" #{order.paid? ? "yes" : "NOPE" }
-      td = order_details(order)
-      td
-        a href="#{copy_order_path(order.uuid)}" data-method="put" data-confirm="#{confirm}" copy
-        '
-        a href="#{copy_order_path(order.uuid, mode: :insta)}" data-method="put"  data-confirm="#{confirm}" insta-copy
-        '
-        - if admin?
-          a href="#{edit_order_path(order.uuid)}" data-no-turbolink="" edit
+  table
+    tr
+      th Nick
+      th.price
+        span class="nobr" € with tip
+      th Paid?
+      th.hideOnPressure Order
+      th.hideOnPressure Actions
 
-          a href="#{destroy_order_path(order.uuid)}" data-method="delete" data-confirm="Really delete #{order.nick.possessive} order?" destroy
+    - @basket.orders.sorted.each do |order|
+      tr class="#{order.uuid == cookie_get(:order).to_s ? 'highlight' : ''}"
+        td.antiTroll = order.nick
+        td.price
+          span.dim
+            ' (#{number_to_currency(order.amount, unit: '')})
+          = number_to_currency(order.amount_with_tip, unit: '')
+        td.bold class="#{order.paid? ? :good : :bad}" #{order.paid? ? "yes" : "NOPE" }
+        td.hideOnPressure = order_details(order)
+        td.hideOnPressure
+          a href="#{copy_order_path(order.uuid)}" data-method="put" data-confirm="#{confirm}" copy
+          '
+          a href="#{copy_order_path(order.uuid, mode: :insta)}" data-method="put"  data-confirm="#{confirm}" insta-copy
+          '
+          - if admin?
+            a href="#{edit_order_path(order.uuid)}" data-no-turbolink="" edit
 
-          a href="#{toggle_paid_order_path(@order.uuid)}" data-method="put" mark #{@order.paid? ? "NOT" : ""} paid
+            a href="#{destroy_order_path(order.uuid)}" data-method="delete" data-confirm="Really delete #{order.nick.possessive} order?" destroy
+
+            a href="#{toggle_paid_order_path(@order.uuid)}" data-method="put" mark #{@order.paid? ? "NOT" : ""} paid
+
+- else
+  p No orders yet.

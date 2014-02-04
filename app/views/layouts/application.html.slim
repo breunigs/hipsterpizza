@@ -2,10 +2,14 @@ doctype html
 html
   head
     title HipsterPizza: #{controller.action_name} #{controller.controller_name}
-    = stylesheet_link_tag "application", media: "all"
-    = javascript_include_tag "application"
+    = stylesheet_link_tag "ours", media: "all"
     = csrf_meta_tags
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
   body
 
     == yield
+
+
+    = javascript_include_tag "ours", data: { turbolinks_eval: false }
