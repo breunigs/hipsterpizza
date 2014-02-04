@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -30,7 +32,14 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_shop
-    redirect_to @basket.shop_url + '?knddomain=1'
+    # knddomain=1 hides pizza.de related branding and logins
+    # noredir=1 prevents the “switch to mobile?” popup
+    redirect_to @basket.shop_url + '?knddomain=1&noredir=1'
+  end
+
+  def redirect_to_pizzade
+    # noredir=1 prevents the “switch to mobile?” popup
+    redirect_to pizzade_root_path + '?noredir=1'
   end
 
   def get_replay_mode

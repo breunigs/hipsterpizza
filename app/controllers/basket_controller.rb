@@ -13,7 +13,7 @@ class BasketController < ApplicationController
     cookie_delete(:basket)
     cookie_delete(:admin)
 
-    redirect_to pizzade_root_path
+    redirect_to_pizzade
   end
 
   def create
