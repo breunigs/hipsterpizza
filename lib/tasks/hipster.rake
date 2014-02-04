@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 namespace :hipster do
   DEFAULT_PORT = 10002
 
