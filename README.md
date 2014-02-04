@@ -28,11 +28,8 @@ should be `1.9.3`.
 
 Next, install the required dependencies and run HipsterPizza:
 ```bash
-bundle --deployment --without development test
-export RAILS_ENV=production
-bundle exec rake assets:precompile
-bundle exec rake db:migrate
-bundle exec rails server -p 10002 -b localhost --daemon
+gem install rake bundler
+rake hipster:setup_production
 ```
 
 You are almost done, now. HipsterPizza assumes you are going to run it
@@ -71,3 +68,12 @@ server {
     }
 }
 ```
+
+Finally, set up a cron job to execute the following command:
+```
+RAILS_ENV=production ./bin/rake hipster:purge_old
+```
+
+This ensures old and outdated data is removed, which keeps the users’
+privacy and ensures the estimate calculations are based on somewhat
+recent orders.

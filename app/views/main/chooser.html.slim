@@ -41,3 +41,12 @@ p
 form method="GET" action="#{basket_path(uid: '')}"
   input required="required" name="basket_uid" value="#{params[:uid]}" placeholder="Enter Basket UID"
   input type="submit" value="Use Basket"
+
+
+h2 Privacy / Data Usage
+
+p
+  b Summary:
+  '  Whatever you can see on the basket page for up to one year. Cookies are uncritical and your address data is only passed through HipsterPizza through pizza.de.
+  a href="#{privacy_path}" See more detailed description
+  ' .

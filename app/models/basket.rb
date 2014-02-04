@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class Basket < ActiveRecord::Base
-  has_many :orders
+  has_many :orders, dependent: :destroy
 
   scope :similar, ->(basket) { where(shop_url: basket.shop_url, sha_address: basket.sha_address) }
   scope :with_duration, -> { where.not(arrival: nil, submitted: nil) }

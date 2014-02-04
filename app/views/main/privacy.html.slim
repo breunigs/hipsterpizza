@@ -1,0 +1,36 @@
+#hipsterTopBar
+  h1 HipsterPizza Data Usage / Privacy
+
+  a href="#{root_path}" class="button" Return To Start
+
+h3 stored data (up to one year):
+ul
+  li chosen shop with current status and timestamps (creation, submission and arrival)
+  li orders with your nick, timestamps and product details/prices. Deleted orders are not stored.
+  li
+    ' your street, house number and postal code in
+    a href="http://en.wikipedia.org/wiki/SHA-2" scrambled form
+    ' . See below for details.
+  li page visits with your IP, user agent and timestamp
+
+h3 cookies (indefinitely / until you delete them):
+p
+  ' Your nick and status settings required by HipsterPizza. These are cleared
+  ' before forwarding requests to pizza.de.
+
+h3 your address details (indefinitely / until you delete them):
+p
+  ' The readable form is only stored in your browser, but could be read by pizza.de. When submitting the group order, the details are sent through HipsterPizza, but not stored by it. The scrambled form mentioned above is used to give an delivery time estimate for your address.
+
+h3 pizza.de
+p
+  ' Also see
+  a href="http://pizza.de/info/datenschutz" pizza.de’s privacy and data usage explanation
+  ' .
+
+h3 Questions?
+p
+  ' If you have any questions, please open a ticket at
+  a href="https://github.com/breunigs/hipsterpizza/issues" HipsterPizza’s project page on GitHub
+  '  or send a mail to
+  = mail_to 'stefan-hipsterpizza@yrden.de'

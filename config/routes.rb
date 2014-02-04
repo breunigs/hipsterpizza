@@ -2,6 +2,8 @@ Hipsterpizza::Application.routes.draw do
   root :to => "main#chooser"
 
   scope "hipster" do
+    get 'privacy', to: 'main#privacy'
+
     resources :basket, only: [:new, :create]
 
     scope "basket/:basket_uid" do
