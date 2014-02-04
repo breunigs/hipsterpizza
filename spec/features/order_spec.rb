@@ -4,9 +4,7 @@ require 'spec_helper'
 
 describe 'Order' do
   before do
-    basket_create
-    visit basket_path
-    order_create
+    basket_with_order_create
   end
 
   it 'can be created' do

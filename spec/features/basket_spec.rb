@@ -83,4 +83,33 @@ describe 'Basket' do
     visit submit_url
     expect(page).to have_content 'You are not an admin'
   end
+
+  it 'shows a delivery time estimate' do
+    visit basket_path
+    order_create
+
+    click_on 'Submit Group Order', match: :first
+    visit basket_path
+
+    expect(page).to have_content 'has been submitted at'
+    expect(page).to have_content 'less than a minute ago'
+
+    click_on 'Delivery Has Arrived', match: :first
+    expect(page).to have_content 'It arrived at'
+    expect(page).to have_content 'Time Taken'
+
+    # second basket, should be able to print an estimate now
+    basket_with_order_create
+
+    click_on 'Submit Group Order', match: :first
+    visit basket_path
+    expect(page).to have_content 'it will probably arrive at'
+  end
+
+  it 'sets correct submit time' do
+    visit basket_path
+    click_on 'Submit Group Order', match: :first
+    click_on 'Set Submit Time To Now'
+    expect(page).to have_content 'less than a minute ago'
+  end
 end

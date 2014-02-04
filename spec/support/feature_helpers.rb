@@ -1,6 +1,12 @@
 # encoding: utf-8
 
 module FeatureHelpers
+  def basket_with_order_create
+    basket_create
+    visit basket_path
+    order_create
+  end
+
   def basket_create
     visit root_path
     click_link 'Create New Basket'
