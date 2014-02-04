@@ -27,10 +27,9 @@ body {
   font-size: 15px;
   font-family: 'Cabin', sans-serif;
   color: #000;
-  padding: 8px;
-  padding-bottom: 10px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  padding-bottom: 5px;
 
   h1, h2 {
     padding-top: 0;
@@ -38,8 +37,10 @@ body {
   }
 
   > * {
-    margin: 0 10px;
+    margin: 10px;
+    margin-bottom: 5px;
     display: inline-block;
+    vertical-align: middle;
   }
 
   .warning b {
@@ -50,7 +51,8 @@ body {
   .button {
     line-height: 34px;
     padding: 0 10px;
-    height: 34px !important;
+    min-height: 34px;
+    height: 34px;
     color: #000;
     border: 1px solid $border;
     white-space: nowrap;
@@ -66,7 +68,6 @@ body {
     cursor: pointer;
     text-decoration: none;
     overflow: hidden;
-    box-sizing: content-box;
 
     &:hover {
       box-shadow: 0 0 5px $border;
@@ -78,6 +79,13 @@ body {
     }
   }
 
+  input.button {
+    height: 36px;
+  }
+
+  input.button::-moz-focus-inner {
+    padding-top: 2px;
+  }
 
   $bc_height: 34px;
   $arrow_width: 1px;
@@ -90,9 +98,8 @@ body {
     background: $border;
     border-left: 1px solid $border;
     border-radius: 3px;
-    margin: 0;
-    margin-right: 10px;
     vertical-align: middle;
+    white-space: nowrap;
 
     li {
       display: inline-block;
