@@ -16,6 +16,7 @@ gem 'possessive'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'guard',              require: false
   gem 'guard-bundler',      require: false
   gem 'guard-rails',        require: false
   gem 'guard-shell',        require: false

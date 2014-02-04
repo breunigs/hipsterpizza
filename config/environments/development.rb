@@ -1,5 +1,5 @@
 Hipsterpizza::Application.configure do
-  config.middleware.use Rack::LiveReload
+  config.middleware.use Rack::LiveReload rescue 'LiveReload not loaded, which may happen when using rake'
 
   # Settings specified here will take precedence over those in config/application.rb.
 

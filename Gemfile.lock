@@ -270,6 +270,7 @@ DEPENDENCIES
   capybara-screenshot!
   capybara-webkit
   coveralls
+  guard
   guard-bundler
   guard-livereload
   guard-rails
