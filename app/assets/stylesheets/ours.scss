@@ -179,8 +179,9 @@ td a {
   display: none;
 }
 
-@media only screen
-and (max-width : 600px) {
+@media
+only screen and (max-device-width : 600px),
+only screen and (max-width : 600px) {
   body {
     word-wrap: break-word;
     background: #fff;
@@ -221,8 +222,9 @@ and (max-width : 600px) {
 }
 
 
-@media only screen
-and (max-width : 400px) {
+@media
+only screen and (max-device-width : 400px),
+only screen and (max-width : 400px) {
   .hideOnPressure {
     display: none;
   }
