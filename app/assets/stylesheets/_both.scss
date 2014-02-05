@@ -16,7 +16,7 @@ body {
   z-index: 10000;
   top: 0;
   left: 0;
-  width: 100%;
+  min-width: 100%;
   display: block;
   background: $bg_light;
   border-bottom: 2px $border solid;
@@ -193,5 +193,35 @@ only screen and (max-width : 600px) {
     overflow-x: auto;
     overflow-y: hidden;
     position: absolute;
+  }
+
+  ol.step {
+    counter-reset: progress;
+
+    height: 36px;
+
+    li div {
+      height: 34px;
+      width: 10px;
+      overflow: hidden;
+
+      &:before {
+        counter-increment: progress;
+        content: counter(progress);
+        display: inline-block;
+        width: 10px;
+      }
+    }
+
+    li.active div {
+      width: auto;
+      height: auto;
+
+      &:before {
+        counter-increment: progress;
+        content: "";
+        width: 0;
+      }
+    }
   }
 }
