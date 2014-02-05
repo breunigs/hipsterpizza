@@ -2,6 +2,10 @@
 @media
 only screen and (max-device-width : 800px),
 only screen and (max-width : 800px) {
+  body {
+    background-image: none !important;
+  }
+
   #head {
     max-width: 100%;
     overflow-x: hidden;
