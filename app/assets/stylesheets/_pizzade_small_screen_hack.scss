@@ -21,7 +21,7 @@ only screen and (max-width : 800px) {
 
   #plzsearch_wrapper {
     top: 35px !important;
-    left: 20px !important;
+    left: 5px !important;
   }
 
   // START PAGE ////////////////////////////////////////////////////////
@@ -54,13 +54,39 @@ only screen and (max-width : 800px) {
 
   // hide unimportant colums
   .bew, .tea {
-    display: none;
+    display: none !important;
+  }
+
+  .sto {
+    width: 170px !important;
   }
 
   // make table size to its columns
   #shop-liste, #shop-liste-2012, #shop-liste, #page, #content-group,
   #shop-liste #slist > div {
     width: auto !important;
+  }
+
+  .srow {
+    white-space: nowrap;
+    vertical-align: top;
+
+    > div {
+      white-space: normal !important;
+      vertical-align: top;
+      float: none !important;
+      display: inline-block;
+      position: static !important;
+
+      div {
+        position: static !important;
+        i {
+          position: static !important;
+          display: inline-block !important;
+          padding-left: 5px;
+        }
+      }
+    }
   }
 
   .searchOptionsWrapper {
