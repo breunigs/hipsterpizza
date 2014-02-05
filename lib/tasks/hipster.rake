@@ -5,7 +5,7 @@ namespace :hipster do
 
   def run(command)
     puts "### Running: #{command}"
-    system(command)
+    system(command + ' 2>&1')
     puts
     puts
     unless $?.success?
