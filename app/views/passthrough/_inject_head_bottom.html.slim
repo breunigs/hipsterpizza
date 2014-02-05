@@ -1,3 +1,11 @@
 = stylesheet_link_tag "pizzade", media: "all"
 
-<link href='https://fonts.googleapis.com/css?family=Cabin:400,700' rel='stylesheet' type='text/css'>
+link href='https://fonts.googleapis.com/css?family=Cabin:400,700' rel='stylesheet' type='text/css'
+
+meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"
+
+/ This prevents pizza.de from asking “switch to mobile version?” when
+/ page is called from a phone or tablet. This check runs before the
+/ other inject code, so disable it here.
+javascript:
+  window.mobileRedirect.run = function() {};

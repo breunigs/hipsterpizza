@@ -1,0 +1,142 @@
+
+@media
+only screen and (max-device-width : 800px),
+only screen and (max-width : 800px) {
+  #head {
+    max-width: 100%;
+    overflow-x: hidden;
+    // some border or margin foils or plan of no horizontal scrolling,
+    // so simply make it smaller
+    width: 98%;
+    height: 100px;
+  }
+
+  #scrolltop, #logo-wrapper, #headlogin {
+    display: none;
+  }
+
+  #plzsearch_wrapper {
+    top: 35px !important;
+    left: 20px !important;
+  }
+
+  // START PAGE ////////////////////////////////////////////////////////
+  // bottom content and the image with people eating
+  #idx-teaser-img, .tdx-tea-r1, .tdx-tea-r2, .tdx-tea-r3, #idx-footer {
+    display: none;
+  }
+
+  // show map button
+  #idx-teaser-map-btn {
+    top: 300px !important;
+  }
+
+  // map popup when choosing a shop
+  #head .map_overlay {
+    z-index: 100;
+  }
+
+  .js_map_overlay > div {
+    top: 0px !important;
+    left: 00px !important;
+  }
+
+  // SHOP SELECT ///////////////////////////////////////////////////////
+  // sidebar
+  #marginal-group {
+    display: none;
+  }
+
+
+  // hide unimportant colums
+  .bew, .tea {
+    display: none;
+  }
+
+  // make table size to its columns
+  #shop-liste, #shop-liste-2012, #shop-liste, #page, #content-group,
+  #shop-liste #slist > div {
+    width: auto !important;
+  }
+
+  .searchOptionsWrapper {
+    display: none;
+  }
+
+  // SHOP PAGE /////////////////////////////////////////////////////////
+  .inhalt-content, .inhalt-content > div, .inhalt-content > div > div,
+  #framek, .infoline-bg-vektor, .navbars, .navbars > div {
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  div.bild, td.bild {
+    display: none;
+  }
+
+  .info-impressum2-v02 {
+    width: 98% !important;
+    max-width: 98%;
+    overflow: hidden;
+  }
+
+  .shoplink, .shoplogo {
+    display: none !important;
+  }
+
+  // increase space around category buttons
+  .navbars a {
+    padding: 2px 0;
+  }
+
+  .navbars > div {
+    background-repeat: repeat-y !important;
+  }
+
+  // zoom basket a bit, so it’s easier to click
+  #framek:before {
+    content: 'Note: your personal basket is located at the bottom';
+    font-size: 15px;
+    padding: 5px 15px;
+    display: block;
+    text-align: center;
+  }
+
+  #framek + div {
+    float: left !important;
+
+    -webkit-transform: scale(1.1);
+    -webkit-transform-origin: 0% 0%;
+    transform: scale(1.1);
+    transform-origin: 0% 0%;
+  }
+
+  // dialog popup //////////////////////////////////////////////////////
+  .dlg-pic {
+    display: none;
+  }
+
+  .shop-dialog {
+    width: auto !important;
+    margin: 0 auto;
+    background: #fff;
+  }
+
+  .jqmWindow {
+    width: 95%;
+    > div {
+      width: 100% !important;
+      height: 100% !important;
+      clip: auto !important;
+    }
+
+    .wmodal-bg {
+      display: none;
+    }
+
+    a.node-title, .node-price > div {
+      display: inline-block;
+      padding: 7px 0;
+    }
+  }
+}

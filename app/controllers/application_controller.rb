@@ -33,13 +33,11 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_shop
     # knddomain=1 hides pizza.de related branding and logins
-    # noredir=1 prevents the “switch to mobile?” popup
-    redirect_to @basket.shop_url + '?knddomain=1&noredir=1'
+    redirect_to @basket.shop_url + '?knddomain=1&noflash=1'
   end
 
   def redirect_to_pizzade
-    # noredir=1 prevents the “switch to mobile?” popup
-    redirect_to pizzade_root_path + '?noredir=1'
+    redirect_to pizzade_root_path + '?noflash=1'
   end
 
   def get_replay_mode
