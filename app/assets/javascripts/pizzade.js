@@ -321,6 +321,18 @@ var hipster = window.hipster = (function() {
     $("body").bind("DOMSubtreeModified", check);
   }
 
+  function restorePrefilledAddress(elm) {
+    elm = $(elm);
+    var field = elm.attr('name').replace(/^odr_/, '');
+    log("FIELD: " + field);
+    var v = window.hipsterPrefillAddress[field];
+    if(typeof v === 'undefined' || v === null) {
+      return;
+    }
+
+    elm.val(v);
+  }
+
   function restoreLocalStorage(elm) {
     elm = $(elm);
     var v = localStorage['hipsterpizza_' + elm.attr('name')];
@@ -468,9 +480,11 @@ var hipster = window.hipster = (function() {
 
     attachAddressFieldListener: function() {
       if(!localStorage) return;
+      if(window.hipsterPrefillAddress) return;
+
       // pizza.de replaces the whole sidebar when adding/removing items.
       // Therefore this broad delegate is needed.
-      $('body').on('change', 'form#bestellform input', function() {
+      $('body').on('change', 'form#bestellform input, form#bestellform textarea', function() {
         setLocalStorage(this);
       });
     },
@@ -478,8 +492,12 @@ var hipster = window.hipster = (function() {
     restoreAddressFields: function() {
       if(!localStorage) return;
 
-      $('form#bestellform input').each(function(idx, elm) {
-        restoreLocalStorage(elm);
+      $('form#bestellform input, form#bestellform textarea').each(function(idx, elm) {
+        if(window.hipsterPrefillAddress) {
+          restorePrefilledAddress(elm);
+        } else {
+          restoreLocalStorage(elm);
+        }
       });
     },
 

@@ -10,6 +10,11 @@
       | ;
       | window.hipsterReplayMode = '#{replay[1]}';
 
+      - if PINNING['address_prefill']
+        | window.hipsterPrefillAddress =
+        == PINNING['address'].to_json
+        | ;
+
 
 = javascript_include_tag "pizzade"
 

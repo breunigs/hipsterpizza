@@ -13,11 +13,15 @@ class BasketController < ApplicationController
     cookie_delete(:basket)
     cookie_delete(:admin)
 
-    redirect_to_pizzade
+    if PINNING['shop_url']
+      redirect_to PINNING['shop_url'] + '?knddomain=1&noflash=1'
+    else
+      redirect_to pizzade_root_path + '?noflash=1'
+    end
   end
 
   def create
-    b = Basket.create(params.permit(:shop_name, :shop_url, :fax_number))
+    @basket = b = Basket.create(params.permit(:shop_name, :shop_url, :fax_number))
     if b.errors.any?
       msgs = "\n• " + b.errors.full_messages.join("\n• ")
       render text: "Could not create basket. Messages: #{msgs}"
@@ -27,7 +31,11 @@ class BasketController < ApplicationController
       cookie_set(:basket, b.uid)
       cookie_set(:admin, b.uid)
 
-      redirect_to share_basket_path(b.uid)
+      if PINNING['single_basket_mode']
+        redirect_to_basket
+      else
+        redirect_to share_basket_path(b.uid)
+      end
     end
   end
 

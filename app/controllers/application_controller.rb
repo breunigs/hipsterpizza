@@ -36,10 +36,6 @@ class ApplicationController < ActionController::Base
     redirect_to @basket.shop_url + '?knddomain=1&noflash=1'
   end
 
-  def redirect_to_pizzade
-    redirect_to pizzade_root_path + '?noflash=1'
-  end
-
   def get_replay_mode
     modes = ['insta', 'nocheck', 'check']
     p = params[:mode]

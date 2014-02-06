@@ -1,0 +1,49 @@
+# this pins the shop to use and disallows the creation of any other
+# baskets. The URL is the one in the given in <link rel="canonical" …>
+# on the shop’s site. Alternatively, create a basket first and retrieve
+# this URL in a `rails console` via `puts Basket.last.shop_url`.
+shop_url: '/indian-curry-berlin-bruesseler-str-17'
+
+
+# This controls whether multiple baskets are allowed. If set to true,
+# there can only be one editable basket (i.e. only one which is neither
+# canceled nor already submitted). If there’s an editable basket, users
+# visiting the front page will be immediately redirected there.
+# If set to false, HipsterPizza allows any number of concurrent baskets
+# and no redirection will take place.
+single_basket_mode: true
+
+# Only takes effect if single_basket_mode=true. Controls how long users
+# will be redirect to the “old” basket, after it has been submitted. The
+# time is specified in minutes. If a new, editable basket is created in
+# the meantime, users will be redirected there, regardless of this
+# value.
+single_basket_timeout: 720
+
+
+# Set this to true to prefill address fields. Setting this will prevent
+# HipsterPizza from restoring the address data locally stored in your
+# browser.
+# Note: the gender field is intentionally not handled, so you can’t
+# submit the order by accident.
+address_prefill: true
+address:
+  company: 'Testfirma'
+  department: 'Testabteilung'
+  firstname: 'Max'
+  lastname: 'Mustermann'
+  street: 'Brüsseler Str.'
+  street_no: '17'
+  zipcode: '12347'
+  city: 'Berlin'
+  # first part of your phone number
+  areacode: '000'
+  # second part of your phone number
+  local_number: '00000000'
+  email: 'test@example.com'
+  # the two free text fields pizza.de offers are simply concatenated
+  # when submitting the form. I believe the limit for _both_ (not each!)
+  # is around 400 characters, but I haven’t checked.
+  # If you order by fax instead of through pizza.de, there is no
+  # arbitrary limit.
+  details: 'Danke für die Teilnahme am Test.'

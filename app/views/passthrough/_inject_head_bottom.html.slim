@@ -8,4 +8,6 @@ meta name="viewport" content="width=device-width, initial-scale=1, user-scalable
 / page is called from a phone or tablet. This check runs before the
 / other inject code, so disable it here.
 javascript:
-  window.mobileRedirect.run = function() {};
+  if(window.mobileRedirect) {
+    window.mobileRedirect.run = function() {};
+  }

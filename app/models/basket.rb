@@ -3,8 +3,9 @@
 class Basket < ActiveRecord::Base
   has_many :orders, dependent: :destroy
 
-  scope :similar, ->(basket) { where(shop_url: basket.shop_url, sha_address: basket.sha_address) }
+  scope :similar, ->(basket) { where(shop_url: basket.shop_url, sha_address: basket.sha_address).where.not(id: basket.id) }
   scope :with_duration, -> { where.not(arrival: nil, submitted: nil) }
+  scope :editable, -> { where(submitted: nil, cancelled: false) }
 
   validates :uid, presence: true, uniqueness: true
   validates :shop_name, presence: true
@@ -13,8 +14,36 @@ class Basket < ActiveRecord::Base
   validates :fax_number, allow_blank: true,
     format: { with: %r{\A\+[0-9]+}, message: "must start with a plus sign and otherwise only contain numbers." }
 
+  validate :pinned_shop_url
+  def pinned_shop_url
+    return unless PINNING['shop_url']
+    return if shop_url == PINNING['shop_url']
+    errors.add(:shop_url, 'Shop differs from the pinned one. Contact the admin.')
+  end
+
+  validate :pinned_single_basket_mode
+  def pinned_single_basket_mode
+    return unless PINNING['single_basket_mode']
+    other = Basket.find_editable(self.id)
+    return unless other
+    errors.add(:id, "There’s already a basket with UID=#{other.uid}, can’t create a new one until the other is sumbitted or cancelled.")
+  end
+
   before_validation(on: :create) do
     create_uid
+  end
+
+
+  def self.find_editable(exclude = nil)
+    self.editable.where.not(id: exclude).order(created_at: :desc).first
+  end
+
+  def self.find_recent_submitted(max_time_ago = 12.hours.ago)
+    self.where('submitted > ?', max_time_ago).order(submitted: :desc).first
+  end
+
+  def self.cancel_all_editable
+    self.editable.each { |b| b.update_column(:cancelled, true) }
   end
 
   def arrived?

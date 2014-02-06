@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140204111534) do
+ActiveRecord::Schema.define(version: 20140206153158) do
 
   create_table "baskets", force: true do |t|
     t.string   "shop_name"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20140204111534) do
     t.datetime "updated_at"
     t.string   "shop_url"
     t.string   "uid"
-    t.boolean  "cancelled"
+    t.boolean  "cancelled",   default: false
     t.string   "sha_address"
     t.datetime "arrival"
     t.string   "fax_number"
