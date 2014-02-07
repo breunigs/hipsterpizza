@@ -13,11 +13,12 @@ class BasketController < ApplicationController
     cookie_delete(:basket)
     cookie_delete(:admin)
 
-    if PINNING['shop_url']
-      redirect_to PINNING['shop_url'] + '?knddomain=1&noflash=1'
-    else
-      redirect_to pizzade_root_path + '?noflash=1'
+    if PINNING['single_basket_mode'] && @basket = Basket.find_editable
+      return redirect_to_basket
     end
+
+    url = PINNING['shop_url'] ? PINNING['shop_url'] : pizzade_root_path
+    redirect_to url + '?knddomain=1&noflash=1'
   end
 
   def create
