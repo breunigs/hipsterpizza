@@ -1,0 +1,66 @@
+# Note: you can edit this file and HipsterPizza will pick up your
+#       changes, even in production mode. Use this to modify special
+#       wishes, delivery address and the like on the fly.
+
+# Set this to true if you want to submit your order via fax instead of
+# via pizza.de. This has several implications:
+# – pizza.de loses their margin (10%+ or so)
+# – you’ll have additional infrastructure to maintain
+# – fax includes custom labeling, making it much easier to match items
+#   to people, speeding up the “something missing?” check
+# – the delivery service will most likely be mildly weirded out. Confirm
+#   with them it’s okay to order by fax before doing so!
+order_by_fax: true
+
+# Choose your fax provider to send the fax with. Currently supported
+# providers:
+#   – manual: simply downloads the PDF
+#   – pdf24:  fax.pdf24.org is an online fax service that is mostly ad-
+#             free and free of charge for up to 5 pages per month or so.
+#             This has been tested with HipsterPizza and works well.
+fax_provider: manual
+
+
+pdf24_mail = ''
+pdf24_pass = ''
+
+
+# The logo will be rendered proportionally in the upper right corner at
+# a fixed width (a bit less than half the page). This usually ensures
+# that there’s enough space to display the address data without over-
+# lapping. No measures are taken to prevent the logo from overlapping
+# vertically into the order’s table. Be sure to check there are no
+# issues before going into production. Also note that faxes have a
+# ridiculous low resolution which may cause fine details to go missing.
+# Set to “null” or “~” to omit the image.
+logo: 'public/nnev.png'
+
+
+# Set contact and address details here. If you specified them in
+# pinning.yml, you don’t need to repeat them here. Values defined here
+# take precedence over the ones in pinning.yml. Set a field to “null” or
+# to “~” to use the value from pinning.yml. If fields are missing in
+# both, they will not be included in the PDF.
+address:
+  company:      ~
+  department:   ~
+  firstname:    ~
+  lastname:     ~
+  street:       ~
+  street_no:    ~
+  zipcode:      ~
+  city:         ~
+  # first part of your phone number
+  areacode:     ~
+  # second part of your phone number
+  local_number: ~
+  email:        ~
+  details:      ~
+
+
+# Indicate your position and QR codes to OpenStreetMap and Google Maps
+# will be appended to the PDF. Especially useful if you order to large
+# complexes like the campus or your hackerspace. Like above, set to “~”
+# or “null” to omit the QR codes.
+lat: 49.417513
+lon: 8.668394

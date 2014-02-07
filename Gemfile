@@ -12,6 +12,11 @@ gem 'thin'
 gem 'actionpack-action_caching'
 gem 'rqrcode-rails3'
 gem 'possessive'
+gem 'unicode_utils'
+
+gem 'prawn', require: false
+gem 'prawn-qrcode', require: false
+gem 'prawn-rails'
 
 group :development do
   gem 'better_errors'

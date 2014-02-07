@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class Order < ActiveRecord::Base
-  belongs_to :basket
+  belongs_to :basket, touch: true
 
   validates :uuid, presence: true, uniqueness: true
   validates :json, presence: true, json: true
@@ -35,7 +35,8 @@ class Order < ActiveRecord::Base
   end
 
   def nick_id
-    n = nick.gsub(/[^a-z0-9]/, "").upcase[0..2]
+    n = UnicodeUtils.canonical_decomposition(nick)
+    n = n.gsub(/[^a-z0-9]/i, "").upcase[0..2]
     n[1] ||= '~'
     n[2] ||= '~'
     n

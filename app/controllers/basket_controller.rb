@@ -4,7 +4,7 @@ class BasketController < ApplicationController
   include CookieHelper
 
   before_filter :find_basket, except: [:new, :create]
-  before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin, :delivery_arrived]
+  before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin, :delivery_arrived, :pdf]
   before_filter :find_order, only: [:show]
   before_filter :reset_replay
 
@@ -96,6 +96,18 @@ class BasketController < ApplicationController
       flash[:success] = "Group order has been enabled again"
     end
     redirect_to_basket
+  end
+
+  def pdf
+    require 'prawn'
+    require 'prawn/qrcode'
+    @cfg = load_fax_config
+    name = @basket.updated_at.strftime('%Y-%m-%d_%H-%M')
+    name << '_hipster_fax_'
+    name << @basket.uid
+    name << '.pdf'
+    response.headers['Content-Disposition'] = %|INLINE; FILENAME="#{name}"|
+    render 'fax.pdf'
   end
 
   private
