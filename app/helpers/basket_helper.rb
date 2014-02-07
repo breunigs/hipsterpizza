@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module BasketHelper
   def admin?
     @basket && @basket.uid == cookie_get(:admin).to_s
