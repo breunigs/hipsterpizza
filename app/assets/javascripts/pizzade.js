@@ -424,6 +424,9 @@ var hipster = window.hipster = (function() {
       hidden.val(hipster.getShopFaxNumber());
 
       button.show();
+      if(window.hipsterSubmitAfterShopDetect) {
+        button.click();
+      }
     },
 
     bindSubmitButton: function() {

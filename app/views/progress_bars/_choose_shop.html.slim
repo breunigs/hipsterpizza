@@ -16,6 +16,9 @@
     input type='hidden' id='hipsterShopName' name='shop_name'
     input type='hidden' id='hipsterShopFaxNumber' name='fax_number'
     = submit_tag 'Choose Shop First', id: :hipsterShopChooser, class: :button, style: 'display: none', data: { disable_with: 'Creating New Group Basket…' }
+    - if PINNING['shop_url']
+      javascript:
+        window.hipsterSubmitAfterShopDetect = true;
 
   a href="#{root_path}" class="button dim" Cancel Basket Creation
 
