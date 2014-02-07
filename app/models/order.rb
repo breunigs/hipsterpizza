@@ -34,6 +34,12 @@ class Order < ActiveRecord::Base
     a + round_tip
   end
 
+  def nick_id
+    n = nick.gsub(/[^a-z0-9]/, "").upcase[0..2]
+    n[1] ||= '~'
+    n[2] ||= '~'
+    n
+  end
 
 
   private
