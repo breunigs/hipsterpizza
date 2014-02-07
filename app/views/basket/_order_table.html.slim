@@ -31,7 +31,7 @@
 
             a href="#{destroy_order_path(order.uuid)}" data-method="delete" data-confirm="Really delete #{order.nick.possessive} order?" destroy
 
-            a href="#{toggle_paid_order_path(order.uuid)}" data-method="put" mark #{@order.paid? ? "NOT" : ""} paid
+            a href="#{toggle_paid_order_path(order.uuid)}" data-method="put" mark #{order.paid? ? "NOT" : ""} paid
 
 - else
   p No orders yet.
