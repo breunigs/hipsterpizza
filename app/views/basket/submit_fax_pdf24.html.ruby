@@ -133,9 +133,13 @@ success
 
 
 a('Queuing Fax With PDF24 ') ###########################################
-send = m.get("https://faxout.pdf24.org/client.php?action=sendFax&faxId=#{faxid}&forceAgainCode=")
-json = json_or_fail(send.body)
-return if json.nil?
+if Rails.env.production?
+  send = m.get("https://faxout.pdf24.org/client.php?action=sendFax&faxId=#{faxid}&forceAgainCode=")
+  json = json_or_fail(send.body)
+  return if json.nil?
+else
+  a(' SKIPPED because not in production. ')
+end
 success
 
 n
