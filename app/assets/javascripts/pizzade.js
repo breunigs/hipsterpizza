@@ -157,7 +157,10 @@ var hipster = window.hipster = (function() {
   }
 
   function findLinkWithText(text) {
-    return $('a').filter(function() { return $(this).text() === text; });
+    return $('#framek a').filter(function() {
+      var el = $(this);
+      return el.text() === text || el.attr('title') === text;
+    });
   }
 
   function getPriceOfLastItem() {
@@ -200,7 +203,7 @@ var hipster = window.hipster = (function() {
         var link = findLinkWithText(item["prod"]);
         if(link.length === 0) return true; // not found; keep in queue
         if(link.length >= 2) {
-          console.warn("ITEM #"+ind+" AMBIGUOUS: " + item["prod"]);
+          errorMsgs.push("ITEM #"+ind+" AMBIGUOUS: " + item["prod"]);
           // keep item, so it may be added manually later
           return true;
         }
@@ -220,9 +223,9 @@ var hipster = window.hipster = (function() {
           // the remove item link would be catched as well.
           var ingred = $(".shop-dialog .dlg-nodes-addition a:contains('"+extra+"')");
           if(ingred.length === 0) {
-            console.warn(errmsg + " EXTRA NOT FOUND: " + extra);
+            errorMsgs.push(errmsg + " EXTRA NOT FOUND: " + extra);
           } else if(ingred.length >= 2) {
-            console.warn(errmsg + " EXTRA AMBIGUOUS: " + extra);
+            errorMsgs.push(errmsg + " EXTRA AMBIGUOUS: " + extra);
           } else {
             ingred.click();
           }
@@ -270,8 +273,29 @@ var hipster = window.hipster = (function() {
       }
     }
 
+    function missingItemsToErrors() {
+      if(items.length > 0) {
+        var list = $.map(items, function(item) {
+          var m = item['prod'];
+          if(item['extra'].length > 0) m += ' + ' + item["extra"].join(" + ");
+          return m;
+        }).join('\n  – ')
+        errorMsgs.push('Missing Items:\n  – ' + list);
+      }
+    }
+
+    function checkFinalSum() {
+      var should = parseFloat(window.hipsterReplayFinalSum);
+      var have = parseFloat($('.total').text().replace(',', '.'));
+      if(should !== have) {
+        errorMsgs.push('Final sum does not match. Should be ' + should + '€, but have ' + have + '€. This may occur if there’s bottle deposit.');
+      }
+    }
+
     function tearDown() {
       log('replay: tear down');
+      missingItemsToErrors();
+      checkFinalSum();
       $('#inhalt').unbind('content_ready', process);
       $("body").removeClass("wait");
       $("#hipsterProgress").hide();
@@ -324,7 +348,6 @@ var hipster = window.hipster = (function() {
   function restorePrefilledAddress(elm) {
     elm = $(elm);
     var field = elm.attr('name').replace(/^odr_/, '');
-    log("FIELD: " + field);
     var v = window.hipsterPrefillAddress[field];
     if(typeof v === 'undefined' || v === null) {
       return;
@@ -462,9 +485,10 @@ var hipster = window.hipster = (function() {
 
       switch(mode) {
         case 'check':
+          log("Replaying with error checking");
           replay(data, function(err) {
             if(err.length === 0) return;
-            alert('There have been errors replaying the data: \n' + err.join('\n'));
+            alert('There have been errors replaying the data: \n– ' + err.join('\n– '));
           });
           break;
 

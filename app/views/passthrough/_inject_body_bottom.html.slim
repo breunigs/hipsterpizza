@@ -9,6 +9,7 @@
       == obj.json
       | ;
       | window.hipsterReplayMode = '#{replay[1]}';
+      | window.hipsterReplayFinalSum = #{obj.respond_to?(:sum) ? obj.sum : obj.amount};
 
       - if PINNING['address_prefill']
         | window.hipsterPrefillAddress =
