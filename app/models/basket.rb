@@ -99,7 +99,7 @@ class Basket < ActiveRecord::Base
     other = Basket.pluck(:uid)
 
     50.times do
-      self.uid = SecureRandom.hex(3)
+      self.uid = (0...3).map { (65 + 32 + rand(26)).chr }.join
       break unless other.include?(self.uid)
     end
 
