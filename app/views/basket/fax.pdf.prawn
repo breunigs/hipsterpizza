@@ -22,7 +22,7 @@ pdf.move_down 20
 
 o = order_details_array
 last = o.size - 1
-pdf.table(o, column_widths: {1 => 65, 2 => 90}) do
+pdf.table(o, column_widths: [380, 65, 90], header: true) do
   cells.padding = 8
   cells.borders = []
   row(0..last).borders = [:top]
