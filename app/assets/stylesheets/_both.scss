@@ -6,6 +6,7 @@ $bg_active: #94FF80;
 $bg_done: $bg_dark;
 $bg_togo: $bg_light;
 $border: #E5840F;
+$border_darker: #E57D00;
 
 body {
   padding-top: 51px;
@@ -72,6 +73,20 @@ body {
 
     &.dim {
       font-weight: normal;
+    }
+
+    &.pulse {
+      -webkit-animation-name: glow;
+      -webkit-animation-duration: 1s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-direction: alternate;
+      -webkit-animation-timing-function: ease-in-out;
+
+      animation-name: glow;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-timing-function: ease-in-out;
     }
   }
 
@@ -223,5 +238,30 @@ only screen and (max-width : 600px) {
         width: 0;
       }
     }
+  }
+}
+
+
+
+
+@-webkit-keyframes glow {
+  0% {
+    -webkit-box-shadow: 0 0 1px $border;
+    border-color: $border;
+  }
+  100% {
+    -webkit-box-shadow: 0 0 13px $border;
+    border-color: $border_darker;
+  }
+}
+
+@keyframes glow {
+  0% {
+    border-color: $border;
+    box-shadow: 0 0 1px $border;
+  }
+  100% {
+    border-color: $border_darker;
+    box-shadow: 0 0 13px $border;
   }
 }
