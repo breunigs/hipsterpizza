@@ -160,7 +160,7 @@ var hipster = window.hipster = (function() {
   function findLinkWithText(text) {
     return $('#framek a').filter(function() {
       var el = $(this);
-      return el.text() === text || el.attr('title') === text;
+      return el.attr('title') === text;
     });
   }
 
