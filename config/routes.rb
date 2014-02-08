@@ -11,7 +11,7 @@ Hipsterpizza::Application.routes.draw do
       get 'share', to: "basket#share", as: :share_basket
       get 'set_admin', to: "basket#set_admin", as: :set_admin_basket
       put 'toggle_cancelled', to: 'basket#toggle_cancelled', as: :toggle_cancelled_basket
-      get 'submit', to: "basket#submit", as: :submit_basket
+      put 'submit', to: "basket#submit", as: :submit_basket
       get 'unsubmit', to: "basket#unsubmit", as: :unsubmit_basket
       get 'pdf', to: "basket#pdf", as: :pdf_basket
       put 'delivery_arrived', to: "basket#delivery_arrived", as: :delivery_arrived_basket

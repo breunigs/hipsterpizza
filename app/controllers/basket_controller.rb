@@ -2,6 +2,7 @@
 
 class BasketController < ApplicationController
   include CookieHelper
+  include ActionController::Live
 
   before_filter :find_basket, except: [:new, :create]
   before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin, :delivery_arrived, :pdf]
@@ -55,9 +56,20 @@ class BasketController < ApplicationController
 
   def submit
     @basket.update_column(:submitted, Time.now)
-    cookie_set(:replay, "basket #{get_replay_mode} #{@basket.uid}")
-    cookie_set(:action, :submit_group_order)
-    redirect_to_shop
+    @cfg = load_fax_config
+    provider = @cfg['order_by_fax'] ? @cfg['fax_provider'] : nil
+
+    case provider
+    when 'manual' then
+      redirect_to pdf_basket_path(@basket.uuid)
+    when 'pdf24' then
+      @cfg = load_fax_config
+      stream('submit_fax_pdf24')
+    else
+      cookie_set(:replay, "basket #{get_replay_mode} #{@basket.uid}")
+      cookie_set(:action, :submit_group_order)
+      redirect_to_shop
+    end
   end
 
   def unsubmit
@@ -99,14 +111,9 @@ class BasketController < ApplicationController
   end
 
   def pdf
-    require 'prawn'
-    require 'prawn/qrcode'
     @cfg = load_fax_config
-    name = @basket.updated_at.strftime('%Y-%m-%d_%H-%M')
-    name << '_hipster_fax_'
-    name << @basket.uid
-    name << '.pdf'
-    response.headers['Content-Disposition'] = %|INLINE; FILENAME="#{name}"|
+    response.headers['Content-Disposition'] = %|INLINE; FILENAME="#{@basket.fax_filename}"|
+    response.headers['Content-Type'] = 'application/pdf'
     render 'fax.pdf'
   end
 

@@ -21,8 +21,8 @@ order_by_fax: true
 fax_provider: manual
 
 
-pdf24_mail = ''
-pdf24_pass = ''
+pdf24_mail: ''
+pdf24_pass: ''
 
 
 # The logo will be rendered proportionally in the upper right corner at

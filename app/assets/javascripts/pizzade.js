@@ -106,6 +106,7 @@ var hipster = window.hipster = (function() {
 
   function getShaAddress() {
     var prefix = 'hipsterpizza_odr_';
+    // keep in sync with basket_helper#contact_sha_address
     var addr = '';
     addr += localStorage[prefix + 'zipcode'] + ' ';
     addr += localStorage[prefix + 'street'] + ' ';

@@ -47,4 +47,27 @@ class ApplicationController < ActionController::Base
   def reset_replay
     cookie_delete(:replay)
   end
+
+  def stream(template)
+    begin
+      @stream = response.stream
+      @header, @footer = *splitted_app_layout
+      render template, layout: false
+    rescue IOError
+    ensure
+      @stream.close
+    end
+  end
+
+  private
+  def splitted_app_layout
+    # FIXME: this is an ugly hack because there doesn’t seem to be an
+    # easy way to have a normal layout *and* stream the content
+    # generated here. Use render_to_body instead of render_to_string
+    # becuase the latter overwrites response.stream somehow, breaking
+    # the streaming (https://github.com/rails/rails/pull/11623)
+    layout = render_to_body(file: '/layouts/application', layout: false)
+    layout = layout.partition('</body>')
+    [layout[0], layout[1..-1].join]
+  end
 end

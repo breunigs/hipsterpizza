@@ -1,4 +1,6 @@
 - if @basket.editable?
-  a href="#{submit_basket_path(@basket.uid)}" class="button" data-confirm="⚠ Blocks further orders – better ask around if everyone is finished. Continue?" data-no-turbolink="" ⎙ Submit Group Order
+  a href="#{submit_basket_path(@basket.uid)}" class="button" data-method="put" data-confirm="⚠ Blocks further orders – better ask around if everyone is finished. Continue?" data-no-turbolink="" ⎙ Submit Group Order
 - elsif !@basket.cancelled? && !@basket.arrived?
-  a href="#{submit_basket_path(@basket.uid)}" class="button" data-confirm="The basket has already been submitted. Do you really want to submit it again?" data-no-turbolink="" ⎙ Submit Again
+  a href="#{submit_basket_path(@basket.uid)}" class="button" data-method="put" data-confirm="The basket has already been submitted. Do you really want to submit it again?" data-no-turbolink="" ⎙ Submit Again
+
+a href="#{pdf_basket_path(@basket.uid)}" class="button" Render PDF

@@ -26,9 +26,23 @@ module BasketHelper
     s
   end
 
+  def contact_field(field)
+    x = @cfg['address'][field.to_s] rescue nil
+    x ||= PINNING['address'][field.to_s] rescue nil
+    x
+  end
+
+  def contact_sha_address
+    addr = ''
+    addr << contact_field(:zipcode) << ' '
+    addr << contact_field(:street) << ' '
+    addr << contact_field(:street_no) << ' '
+    addr.strip.downcase.gsub(/[^a-z0-9]/, '')
+  end
+
   def contact_details_array
-    def get(field)
-      @cfg['address'][field.to_s] || PINNING['address'][field.to_s]
+    def get(f)
+      contact_field(f)
     end
 
     def add!(arr, desc, *lines)

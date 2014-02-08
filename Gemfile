@@ -6,16 +6,17 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'turbolinks'
-gem 'slim-rails'
+gem 'slim'
 gem 'therubyracer',         platform: :ruby
-gem 'thin'
+gem 'puma'
 gem 'actionpack-action_caching'
 gem 'rqrcode-rails3'
 gem 'possessive'
 gem 'unicode_utils'
 
-gem 'prawn', require: false
-gem 'prawn-qrcode', require: false
+gem 'mechanize'
+gem 'prawn'
+gem 'prawn-qrcode'
 gem 'prawn-rails'
 
 group :development do

@@ -91,6 +91,14 @@ class Basket < ActiveRecord::Base
     return (avg * sum).round, dur_per_euro.size
   end
 
+  def fax_filename
+    name = updated_at.strftime('%Y-%m-%d_%H-%M')
+    name << '_hipster_fax_'
+    name << uid
+    name << '.pdf'
+    name
+  end
+
   private
 
   def create_uid
