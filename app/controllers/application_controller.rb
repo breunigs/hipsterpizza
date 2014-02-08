@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   def find_basket
     uid = params[:basket_uid]
     uid ||= cookie_get(:basket)
-    @basket = Basket.where(uid: uid).first
+    @basket = Basket.where(uid: uid.downcase).first
 
     # ensure cookies and URL match up
     cookie_set(:basket, @basket ? @basket.uid : nil)
