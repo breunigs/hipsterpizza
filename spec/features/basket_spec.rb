@@ -74,14 +74,12 @@ describe 'Basket' do
     expect(page).to have_link 'Submit Group Order'
   end
 
-  it 'denies users to submit the group order' do
+  it 'doesn’t show submit button to users' do
     visit basket_path
-    submit_url = find_link('Submit Group Order', match: :first)[:href]
-
+    url = Capybara.current_url
     Capybara.reset_sessions!
-
-    visit submit_url
-    expect(page).to have_content 'You are not an admin'
+    visit url
+    expect(page).not_to have_content 'Submit Group Order'
   end
 
   it 'shows a delivery time estimate' do
