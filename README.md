@@ -6,9 +6,9 @@ public instance at **[pizza.yrden.de](http://pizza.yrden.de)**.
 
 ## Status
 
-[![Build Status](https://travis-ci.org/breunigs/hipsterpizza.png?branch=v2)](https://travis-ci.org/breunigs/hipsterpizza)
-[![Coverage Status](https://coveralls.io/repos/breunigs/hipsterpizza/badge.png?branch=v2)](https://coveralls.io/r/breunigs/hipsterpizza?branch=v2)
-[![Code Climate](https://codeclimate.com/github/breunigs/hipsterpizza.png?branch=v2)](https://codeclimate.com/github/breunigs/hipsterpizza?branch=v2)
+[![Build Status](https://travis-ci.org/breunigs/hipsterpizza.png)](https://travis-ci.org/breunigs/hipsterpizza)
+[![Coverage Status](https://coveralls.io/repos/breunigs/hipsterpizza/badge.png)](https://coveralls.io/r/breunigs/hipsterpizza?branch=v2)
+[![Code Climate](https://codeclimate.com/github/breunigs/hipsterpizza.png)](https://codeclimate.com/github/breunigs/hipsterpizza?branch=v2)
 
 
 ## Rolling your own copy
@@ -21,10 +21,6 @@ git clone -b v2 git://github.com/breunigs/hipsterpizza
 cd hipsterpizza/
 su www-data
 ```
-
-Now, edit the `Gemfile` so that the version in the line starting with
-`ruby` matches the one available on your system. In Debian’s case that
-should be `1.9.3`.
 
 Next, install the required dependencies and run HipsterPizza:
 ```bash
@@ -42,7 +38,7 @@ to `true`, otherwise the assets won’t be served.
 
 Here’s an example config for nginx:
 ```
-upstream thin-hipsterpizza {
+upstream puma-hipsterpizza {
     server 127.0.0.1:10002;
 }
 
@@ -60,7 +56,7 @@ server {
     }
 
     location / {
-        proxy_pass http://thin-hipsterpizza;
+        proxy_pass http://puma-hipsterpizza;
         proxy_set_header  X-Real-IP  $remote_addr;
         proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header  Host $http_host;
