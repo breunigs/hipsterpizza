@@ -14,7 +14,8 @@ module FeatureHelpers
     fill_in 'plzsearch_input', with: '12347'
     has_content?('12347 Berlin')
 
-    click_link 'Lieferservice suchen'
+    first('.suggest_entry_active').click
+    has_content?('pizza.de-Bewertungen in PLZ 12347 Britz')
     click_link 'Indian Curry'
 
     within('#hipsterTopBar') do
