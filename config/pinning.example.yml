@@ -4,6 +4,18 @@
 # this URL in a `rails console` via `puts Basket.last.shop_url`.
 shop_url: '/indian-curry-berlin-bruesseler-str-17'
 
+# If you only pin the shop URL the name and fax number will be deter-
+# mined when visiting the shop page. This means that whoever creates a
+# new basket, needs to visit the shop page. Everything is handled auto-
+# matically, but it slows things down. If you pin both values, the shop
+# will be created from that without visiting pizza.de first.
+#
+# If you don’t order by fax (see fax.example.yml) you can enter an
+# invalid number like +00000. Otherwise the format is of the form
+# +4912341234. Alternatively, grab the data via `rails console` and run
+# `puts Basket.last.fax_number` and `puts Basket.last.shop_name`.
+shop_fax: ~
+shop_name: ~
 
 # This controls whether multiple baskets are allowed. If set to true,
 # there can only be one editable basket (i.e. only one which is neither

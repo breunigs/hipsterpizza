@@ -18,8 +18,18 @@ class BasketController < ApplicationController
       return redirect_to_basket
     end
 
-    url = PINNING['shop_url'] ? PINNING['shop_url'] : pizzade_root_path
-    redirect_to url + '?knddomain=1&noflash=1'
+    add = '?knddomain=1&noflash=1'
+
+    if PINNING['shop_name'] && PINNING['shop_url'] && PINNING['shop_fax']
+      params[:shop_name] = PINNING['shop_name']
+      params[:shop_url] = PINNING['shop_url']
+      params[:fax_number] = PINNING['shop_fax']
+      create
+    elsif PINNING['shop_url']
+      redirect_to PINNING['shop_url'] + add
+    else
+      redirect_to pizzade_root_path + add
+    end
   end
 
   def create
