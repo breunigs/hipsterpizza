@@ -7,8 +7,8 @@ public instance at **[pizza.yrden.de](http://pizza.yrden.de)**.
 ## Status
 
 [![Build Status](https://travis-ci.org/breunigs/hipsterpizza.png)](https://travis-ci.org/breunigs/hipsterpizza)
-[![Coverage Status](https://coveralls.io/repos/breunigs/hipsterpizza/badge.png)](https://coveralls.io/r/breunigs/hipsterpizza?branch=v2)
-[![Code Climate](https://codeclimate.com/github/breunigs/hipsterpizza.png)](https://codeclimate.com/github/breunigs/hipsterpizza?branch=v2)
+[![Coverage Status](https://coveralls.io/repos/breunigs/hipsterpizza/badge.png)](https://coveralls.io/r/breunigs/hipsterpizza)
+[![Code Climate](https://codeclimate.com/github/breunigs/hipsterpizza.png)](https://codeclimate.com/github/breunigs/hipsterpizza)
 
 
 ## Rolling your own copy
@@ -25,6 +25,7 @@ su www-data
 Next, install the required dependencies and run HipsterPizza:
 ```bash
 gem install rake bundler
+bundle install
 rake hipster:setup_production
 ```
 
@@ -73,3 +74,31 @@ RAILS_ENV=production ./bin/rake hipster:purge_old
 This ensures old and outdated data is removed, which keeps the users’
 privacy and ensures the estimate calculations are based on somewhat
 recent orders.
+
+
+
+## Configuring HipsterPizza to your needs
+
+Once the above setup is done, you should have a public instance of
+HipsterPizza running, just like the one on
+[pizza.yrden.de](http://pizza.yrden.de).
+
+**config/pinning.yml:**
+([see example](https://github.com/breunigs/hipsterpizza/blob/master/config/pinning.example.yml))
+Allows you to fixate details you’d need to enter each time when using
+HipsterPizza’s public instance. You can prefill only some details or
+lock everything down, depending on your needs. Each config options is
+documented in the linked example file.
+
+**config/fax.yml:**
+([see example](https://github.com/breunigs/hipsterpizza/blob/master/config/fax.example.yml))
+If you order regularly from the same delivery service, you can order by
+directly sending them a fax (ask them first!). This file allows you to
+customize address, logos, etc.
+
+*Biggest advantage:* By
+including the nicks with each order, matching pizza box to nerd is speed
+up tremendously. If you register with [pdf24.org](https://fax.pdf24.org/),
+you can fax from HipsterPizza’s interface, too. This is the setup
+[we (Heidelberg’s hacker group)](https://www.noname-ev.de) use. If the
+delivery service plays along, this rocks.
