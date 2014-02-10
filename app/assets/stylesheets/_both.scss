@@ -1,12 +1,10 @@
-$bg_light: #FFD9AB;
-$bg_dark: #FFC680;
-$bg_hover: #FDB356;
-
-$bg_active: #94FF80;
-$bg_done: $bg_dark;
+$bg_light: #90E890;
+$bg_active: #4E9C4E;
+$bg_done: #73E673;
 $bg_togo: $bg_light;
-$border: #E5840F;
-$border_darker: #E57D00;
+$border: #63B363;
+$border_darker: #559955;
+
 
 body {
   padding-top: 51px;
@@ -20,13 +18,14 @@ body {
   min-width: 100%;
   display: block;
   background: $bg_light;
-  border-bottom: 2px $border solid;
+  border-bottom: 1px $border solid;
   font-size: 15px;
   font-family: 'Cabin', sans-serif;
   color: #000;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   padding-bottom: 5px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 
   h1, h2 {
     padding-top: 0;
@@ -57,22 +56,19 @@ body {
     text-overflow: ellipsis;
     overflow-x: hidden;
     vertical-align: middle;
-    font-weight: bold;
     font-size: 15px;
-    background: $bg_dark;
+    background: #fff;
     border-radius: 3px;
-    box-shadow: 0 0 2px $border;
     cursor: pointer;
     text-decoration: none;
     overflow: hidden;
 
     &:hover {
-      box-shadow: 0 0 5px $border;
-      background: #FDB356;
+      background: rgba(255,255,255,0.8);
     }
 
-    &.dim {
-      font-weight: normal;
+    &.danger, &.success, &.primary {
+      font-weight: bold;
     }
 
     &.pulse {
@@ -120,7 +116,7 @@ body {
       margin-right: $bc_height + $arrow_width;
       position: relative;
       text-decoration: none;
-      color: black;
+      color: #333;
       border-top: 1px solid $border;
       border-bottom: 1px solid $border;
 
@@ -172,6 +168,7 @@ body {
 
       &.active {
         background: $bg_active;
+        color: #fff;
 
         &:before {
           border-color: $bg_active;
@@ -185,6 +182,7 @@ body {
 
       &.done {
         background: $bg_done;
+        color: #000;
 
         &:before {
           border-color: $bg_done;

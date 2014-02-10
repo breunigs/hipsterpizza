@@ -21,7 +21,7 @@ noscript
     - else
       | You can still place an order
     |  or mark yourself as having paid.<br>
-    a href="#{basket_with_uid_path(@basket.uid)}" class="button" Show Previously Used Basket
+    a href="#{basket_with_uid_path(@basket.uid)}" class="button success" Show Previously Used Basket
 
 h2 New Group Basket
 
@@ -29,7 +29,7 @@ p
   ' Use this if you want to create a
   b new
   '  group order. You’ll be able to choose which shop will be used.<br>
-  = link_to "Create New Basket", new_basket_path, class: "button", data: { no_turbolink: '' }
+  = link_to "Create New Basket", new_basket_path, class: "button primary", data: { no_turbolink: '' }
 
 h2 Participate
 
@@ -40,7 +40,7 @@ p
 
 form method="GET" action="#{basket_path(uid: '')}"
   input required="required" name="basket_uid" value="#{params[:uid]}" placeholder="Enter Basket UID"
-  input type="submit" value="Use Basket"
+  input type="submit" class="primary" value="Use Basket"
 
 
 h2 Privacy / Data Usage

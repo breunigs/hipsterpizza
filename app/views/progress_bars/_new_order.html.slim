@@ -19,10 +19,10 @@
     input type='hidden' id='hipsterOrderNick' name='nick'
     = submit_tag 'Place My Order in Group Basket',
       id: 'hipsterOrderSubmitButton',
-      class: :button,
+      class: 'button primary',
       data: { disable_with: 'Saving Order…' }
 
-  a href="#{basket_path}" class="button dim" Cancel My Order
+  a href="#{basket_path}" class="button" Cancel My Order
 
 -if editing?
   / Use replay cookie to determine which order is being updated. This

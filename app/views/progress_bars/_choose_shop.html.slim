@@ -15,7 +15,7 @@
     input type='hidden' id='hipsterShopCanonicalUrl' name='shop_url'
     input type='hidden' id='hipsterShopName' name='shop_name'
     input type='hidden' id='hipsterShopFaxNumber' name='fax_number'
-    = submit_tag 'Choose Shop First', id: :hipsterShopChooser, class: 'button pulse', style: 'display: none', data: { disable_with: 'Creating New Group Basket…' }
+    = submit_tag 'Choose Shop First', id: :hipsterShopChooser, class: 'button primary pulse', style: 'display: none', data: { disable_with: 'Creating New Group Basket…' }
     - if PINNING['shop_url']
       javascript:
         window.hipsterSubmitAfterShopDetect = true;
@@ -32,7 +32,7 @@
 
   = form_tag(set_submit_time_basket_path(b), method: :post, id: :hipsterSetSubmitTime)
     input type='hidden' id='hipsterShaAddress' name='sha_address'
-    = submit_tag 'Set Submit Time To Now', class: 'button dim'
+    = submit_tag 'Set Submit Time To Now', class: 'button'
 
 
   a href="#{unsubmit_basket_path(b)}" class="button dim" Cancel Submission

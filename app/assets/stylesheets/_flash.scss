@@ -1,44 +1,32 @@
 .flash {
-  padding: 10px 0;
+  padding: 10px;
   margin: 10px 0 2px 0;
-  border: 2px solid #ddd;
   font-size: 150%;
   text-align: center;
 
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
   &.error {
-    background: #FBE3E4;
-    color: #8a1f11;
-    border-color: #FBC2C4;
-    a {
-      color: #8a1f11;
-    }
+    background: #F2DEDE;
+    color: #333;
   }
 
   &.warn {
-    background: #FFF6BF;
-    color: #514721;
-    border-color: #FFD324;
-    a {
-      color: #514721;
-    }
+    background: #FCF8E3;
+    color: #333;
   }
 
   &.success {
-    background: #DDFCD5;
-    color: #000;
-    border-color: #44A815;
-    a {
-      color: #264409;
-    }
+    background: #DFF0D8;
+    color: #333;
   }
 
   &.info {
-    background: #ACD4FF;
-    color: #000;
-    border-color: #69B1FF;
-    a {
-      color: #003062;
-    }
+    background: #428BCA;
+    color: #fff;
   }
 
 }

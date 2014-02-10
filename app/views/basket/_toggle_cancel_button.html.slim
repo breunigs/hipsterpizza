@@ -4,4 +4,4 @@
   = link_to "Create Another Basket", new_basket_path, class: "button", data: { no_turbolink: '' }
 
 - else
-  a href="#{toggle_cancelled_basket_path(@basket.uid)}" class="button" data-method="put" data-confirm="⚠ Blocks further orders and prevents basket from being submitted." Cancel Group Order
+  a href="#{toggle_cancelled_basket_path(@basket.uid)}" class="button warning" data-method="put" data-confirm="⚠ Blocks further orders and prevents basket from being submitted." Cancel Group Order
