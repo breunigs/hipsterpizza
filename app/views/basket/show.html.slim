@@ -41,4 +41,5 @@ h2 Basket
 
 - if Rails.env.production?
   javascript:
-    window.setTimeout(function() { Turbolinks.visit(window.location.href); }, 6123);
+    var t = document.getElementsByClassName('flash').length == 0 ? 6123 : 60;
+    window.setTimeout(function() { Turbolinks.visit(window.location.href); }, t);
