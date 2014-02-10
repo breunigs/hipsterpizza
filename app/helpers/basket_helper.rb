@@ -42,7 +42,7 @@ module BasketHelper
 
   def contact_details_array
     def get(f)
-      contact_field(f)
+      contact_field(f) || ''
     end
 
     def add!(arr, desc, *lines)
