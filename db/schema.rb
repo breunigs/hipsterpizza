@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140206153158) do
+ActiveRecord::Schema.define(version: 20140213120431) do
 
   create_table "baskets", force: true do |t|
     t.string   "shop_name"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(version: 20140206153158) do
     t.boolean  "paid",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "saved_orders", force: true do |t|
+    t.string "shop_url"
+    t.string "nick"
+    t.string "json"
+    t.string "name"
   end
 
 end

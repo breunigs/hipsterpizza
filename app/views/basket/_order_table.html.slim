@@ -33,5 +33,7 @@
 
             a href="#{toggle_paid_order_path(order.uuid)}" class="button #{order.paid? ? 'warning' : 'success'}" data-method="put" mark #{order.paid? ? "NOT" : ""} paid
 
+            = render "save_order_button", order: order, text: 'save'
+
 - else
   p No orders yet.

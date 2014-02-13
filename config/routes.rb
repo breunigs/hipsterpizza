@@ -24,6 +24,7 @@ Hipsterpizza::Application.routes.draw do
       put 'toggle_paid', to: 'order#toggle_paid', as: :toggle_paid_order
       delete 'destroy', to: 'order#destroy', as: :destroy_order
       post 'update', to: 'order#update', as: :update_order
+      post 'save', to: 'order#save', as: :save_order
       get 'edit', to: 'order#edit', as: :edit_order
       put 'copy', to: 'order#copy', as: :copy_order
     end

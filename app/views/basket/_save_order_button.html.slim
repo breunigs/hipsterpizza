@@ -1,0 +1,11 @@
+= link_to text,
+  save_order_path(order.uuid),
+  class: :button,
+  method: :post,
+  remote: true,
+  data: { \
+    inject_response: 1,
+    prompt: { \
+      message: 'How to name your order? (Include your nick, unless it’s something general)',
+      default: "#{cookie_get(:nick)}: ",
+      param: 'name' } }

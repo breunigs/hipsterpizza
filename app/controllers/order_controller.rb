@@ -19,6 +19,19 @@ class OrderController < ApplicationController
     redirect_to_shop
   end
 
+  def save
+    so = SavedOrder.new(params.permit(:name))
+    so.nick = cookie_get(:nick).strip
+    so.nick = 'not specified' if so.nick.blank?
+    so.shop_url = @order.basket.shop_url
+    so.json = @order.json
+    if so.save
+      render json: { text: 'saved ✓', disable: true }
+    else
+      render json: { text: 'error ☹', error: so.errors }
+    end
+  end
+
   def update
     pay     = @order.paid? ? @order.amount : 0
     pay_tip = @order.paid? ? @order.amount_with_tip : 0

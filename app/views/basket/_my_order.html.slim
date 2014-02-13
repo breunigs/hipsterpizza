@@ -12,6 +12,12 @@ p
 
   = render 'toggle_order_paid_button'
 
+  - if SavedOrder.exists?(cookie_get(:nick), @order)
+    a href="" class="button" saved ✓
+  - else
+    = render "save_order_button", order: @order, text: text
+
+
 
 p
   ' Price:
