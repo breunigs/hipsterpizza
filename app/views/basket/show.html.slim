@@ -41,6 +41,4 @@ h2 Basket
 
 - if Rails.env.production?
   javascript:
-    var t = document.getElementsByClassName('flash').length == 0 ? 6 : 30;
-    window.reloadInplace = function() { Turbolinks.visit(window.location.href); };
-    window.setTimeout(window.reloadInplace, t*1000);
+    window.doReloadAfterTimeout();

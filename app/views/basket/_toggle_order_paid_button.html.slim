@@ -1,2 +1,2 @@
-a href="#{toggle_paid_order_path(@order.uuid)}" data-method="put" class="button #{@order.paid? ? 'warning' : 'success'}"
+a href="#{toggle_paid_order_path(@order.uuid)}" data-method="put" data-remote="true"  data-auto-reload="1" class="button #{@order.paid? ? 'warning' : 'success'}"
   '  Mark Order as #{@order.paid? ? "NOT" : ""} Paid

@@ -67,7 +67,11 @@ class OrderController < ApplicationController
 
   def toggle_paid
     @order.toggle(:paid).save
-    return redirect_to_basket
+    if request.xhr?
+      return render json: { }
+    else
+      return redirect_to_basket
+    end
   end
 
   def destroy
