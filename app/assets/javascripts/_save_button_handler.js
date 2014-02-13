@@ -6,8 +6,6 @@ $(document).on('ajax:success', '[data-inject-response=1]', function(xhr, data, s
     console.log('disabling');
     $(this).attr('disabled', 'disabled');
   }
-  console.log("DPNE");
-
 });
 
 $(document).on('ajax:error', '[data-inject-response=1]', function(xhr, status, error) {
