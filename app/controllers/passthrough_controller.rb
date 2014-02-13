@@ -86,7 +86,7 @@ class PassthroughController < ActionController::Base
     b = ret[2].first
 
     b.sub!("<head>", "<head>\n#{get_view(:head_top)}")
-    b.sub!("<body>", "<body>\n#{get_view(:body_top)}")
+    b.sub!(/<body([^>]*)>/, "<body\\1>\n#{get_view(:body_top)}")
 
     b.sub!("</head>", "#{get_view(:head_bottom)}\n</head>")
     b.sub!("</body>", "#{get_view(:body_bottom)}\n</body>")
