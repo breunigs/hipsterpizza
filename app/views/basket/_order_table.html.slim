@@ -22,10 +22,11 @@
         td.bold class="#{order.paid? ? :good : :bad}" #{order.paid? ? "yes" : "NOPE" }
         td.hideOnPressure = order_details(order)
         td.hideOnPressure
+
           a href="#{copy_order_path(order.uuid)}" class="button" data-method="put" data-confirm="#{confirm}" copy
-          '
+
           a href="#{copy_order_path(order.uuid, mode: :insta)}" class="button" data-method="put"  data-confirm="#{confirm}" insta-copy
-          '
+
           - if admin?
             a href="#{edit_order_path(order.uuid)}" class="button" data-no-turbolink="" edit
 
