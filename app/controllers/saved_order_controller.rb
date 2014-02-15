@@ -7,6 +7,11 @@ class SavedOrderController < ApplicationController
   before_filter :find_order
 
   def index
+    if params[:nick]
+      cookie_set(:nick, params[:nick])
+      # remove ?nick= from URL
+      return redirect_to saved_order_index_path
+    end
     @nick = cookie_get(:nick)
     @saved = SavedOrder.where(shop_url: @basket.shop_url).sorted
     @previous_orders = Order

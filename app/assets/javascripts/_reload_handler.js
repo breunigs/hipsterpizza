@@ -10,7 +10,7 @@ window.doReloadAfterTimeout = function() {
   window.reloadTimeout = window.setTimeout(window.reloadInplace, t*1000);
 }
 
-$(document).on('ajax:success reload:now', '[data-auto-reload=true]', function() {
+$(document).on('ajax:success', '[data-auto-reload=true]', function() {
   console.log('Turbolink reloading now');
   window.doReload();
 });
