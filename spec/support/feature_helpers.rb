@@ -46,7 +46,12 @@ module FeatureHelpers
   end
 
   def shot(name)
-    save_screenshot("tmp/capybara/manual_screenshot_#{name}.png")
+    path = "tmp/capybara/manual_screenshot_#{name}.png"
+    save_screenshot(path)
+    puts
+    puts "IMAGE=#{path}"
+    puts "URL  =#{Capybara.current_url}"
+    puts
   end
 
   def print_console_msgs
