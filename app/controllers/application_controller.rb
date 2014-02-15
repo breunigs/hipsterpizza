@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
     uuid = params[:order_uuid]
     uuid ||= cookie_get(:order)
     @order = Order.where(uuid: uuid, basket: @basket).first rescue nil
-    @saved_order = SavedOrder.where(uuid: params[:saved_order_uuid]).first
+    @saved_order = SavedOrder.where(uuid: params[:saved_order_uuid]).first rescue nil
   end
 
   def redirect_to_basket

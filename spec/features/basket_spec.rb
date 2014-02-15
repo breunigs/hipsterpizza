@@ -107,4 +107,10 @@ describe 'Basket' do
     click_on 'Set Submit Time To Now'
     expect(page).to have_content 'less than a minute ago'
   end
+
+  it 'can render a pdf' do
+    visit basket_path
+    click_on 'Render PDF', match: :first
+    expect(page.status_code).to eql(200)
+  end
 end
