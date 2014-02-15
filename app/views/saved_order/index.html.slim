@@ -44,23 +44,29 @@ h2 Saved Orders
 
 p You can delete anyone’s orders, because it’s not feasible to protect them properly. Please be careful and don’t go dictator on others. Thanks.
 
-table
-  tr
-    th Name
-    th.hideOnPressure Order
-    th Actions
+- if @saved.none?
 
-  - @saved.each do |s|
+  p No saved orders yet.
+
+- else
+
+  table
     tr
-      td = s.name
-      td.hideOnPressure = order_details(s)
+      th Name
+      th.hideOnPressure Order
+      th Actions
 
-      td
-        a href="#{copy_saved_order_path(s.uuid, mode: :nocheck)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
+    - @saved.each do |s|
+      tr
+        td = s.name
+        td.hideOnPressure = order_details(s)
 
-        a href="#{copy_saved_order_path(s.uuid, mode: :insta)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
+        td
+          a href="#{copy_saved_order_path(s.uuid, mode: :nocheck)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
 
-        a href="#{destroy_saved_order_path(s.uuid)}" class="button danger" data-method="delete" data-confirm="STOP! Think about the consequences of removing “#{s.name}”. Continue?" destroy
+          a href="#{copy_saved_order_path(s.uuid, mode: :insta)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
+
+          a href="#{destroy_saved_order_path(s.uuid)}" class="button danger" data-method="delete" data-confirm="STOP! Think about the consequences of removing “#{s.name}”. Continue?" destroy
 
 
 p
