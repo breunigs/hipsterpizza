@@ -11,20 +11,22 @@ module FeatureHelpers
     visit root_path
     click_link 'Create New Basket'
 
+    expect(page).to have_content('Pizza Lieferservice und Pizzaservice')
+
     fill_in 'plzsearch_input', with: '12347'
-    has_content?('12347 Berlin')
+    expect(page).to have_content('12347 Berlin')
 
     first('.suggest_entry_active, .suggest_entry').click
-    has_content?('pizza.de-Bewertungen in PLZ 12347 Britz')
+    expect(page).to have_content('pizza.de-Bewertungen in PLZ 12347 Britz')
     click_link 'Indian Curry'
 
+    # wait for page load, reduce breakage
+    expect(page).to have_content('Warenkorb')
     within('#hipsterTopBar') do
-      # wait for page load, reduce breakage
-      has_content?('Warenkorb')
       click_on 'Choose Indian Curry'
     end
 
-    has_content?('Share Link')
+    expect(page).to have_content('Share Link')
   end
 
   def order_create

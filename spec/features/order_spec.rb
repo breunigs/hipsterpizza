@@ -16,7 +16,7 @@ describe 'Order' do
 
     # wait until marked as payed and top bar shows admin-progress bar
     # again
-    has_content?('hand out link to everyone')
+    expect(page).to have_content('hand out link to everyone')
 
     expect(page).to have_content 'You are marked as having paid'
     expect(page).to have_link 'Mark Order as NOT Paid'
@@ -35,7 +35,7 @@ describe 'Order' do
 
   it 'can be edited' do
     click_on 'Edit My Order'
-    has_content?('Warenkorb')
+    expect(page).to have_content('Warenkorb')
 
     # remove previous order
     first('.btn-v01.btn-remove').click

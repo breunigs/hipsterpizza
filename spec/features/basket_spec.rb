@@ -43,7 +43,7 @@ describe 'Basket' do
     end
 
     reload
-    has_content?('Warenkorb')
+    expect(page).to have_content('Warenkorb')
 
     # TODO: this works in normal browsers, but not when testing.
     # However, when echo debugging the JS it claims that it has
