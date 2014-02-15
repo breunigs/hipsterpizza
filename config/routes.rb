@@ -1,5 +1,5 @@
 Hipsterpizza::Application.routes.draw do
-  root :to => 'main#chooser'
+  root to: 'main#chooser'
 
   scope 'hipster' do
     get 'privacy', to: 'main#privacy'
@@ -8,12 +8,11 @@ Hipsterpizza::Application.routes.draw do
 
     scope 'basket/:basket_uid' do
       get '', to: 'basket#show', as: :basket_with_uid
-      get 'share', to: 'basket#share', as: :share_basket
-      get 'set_admin', to: 'basket#set_admin', as: :set_admin_basket
-      put 'toggle_cancelled', to: 'basket#toggle_cancelled', as: :toggle_cancelled_basket
-      put 'submit', to: 'basket#submit', as: :submit_basket
-      get 'unsubmit', to: 'basket#unsubmit', as: :unsubmit_basket
-      get 'pdf', to: 'basket#pdf', as: :pdf_basket
+
+      %w(share set_admin toggle_cancelled submit unsubmit pdf).each do |res|
+        get res, to: "basket##{res}", as: "#{res}_basket"
+      end
+
       put 'delivery_arrived', to: 'basket#delivery_arrived', as: :delivery_arrived_basket
       post 'set_submit_time', to: 'basket#set_submit_time', as: :set_submit_time_basket
     end
@@ -41,7 +40,7 @@ Hipsterpizza::Application.routes.draw do
   get 'hipster/*page', to: 'basket#find'
 
   # forward all other requests to pizza.de
-  match '*any.:ending', to: 'passthrough#pass_cached', ending: /swf|css|jpg|png|gif|js/, via: [:get, :post, :put, :delete]
-  match '*any', to: 'passthrough#pass', via: [:get, :post, :put, :delete]
-  match 'pizzade_root', to: 'passthrough#pass', via: :get
+  match '*any.:ending', to: 'passthrough#pass_cached', ending: /swf|css|jpg|png|gif|js/, via: :all
+  match '*any', to: 'passthrough#pass', via: :all
+  get 'pizzade_root', to: 'passthrough#pass'
 end
