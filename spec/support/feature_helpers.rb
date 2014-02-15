@@ -23,6 +23,8 @@ module FeatureHelpers
       has_content?('Warenkorb')
       click_on 'Choose Indian Curry'
     end
+
+    has_content?('Share Link')
   end
 
   def order_create
@@ -51,8 +53,8 @@ module FeatureHelpers
     path = "tmp/capybara/manual_screenshot_#{name}.png"
     save_screenshot(path)
     puts
-    puts "IMAGE=#{path}"
-    puts "URL  =#{Capybara.current_url}"
+    puts "IMAGE = #{path}"
+    puts "URL   = #{Capybara.current_url}"
     puts
   end
 

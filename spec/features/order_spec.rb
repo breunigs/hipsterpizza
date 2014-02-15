@@ -13,6 +13,11 @@ describe 'Order' do
 
   it 'paid status can be toggled' do
     click_on 'Mark Order as Paid', match: :first
+
+    # wait until marked as payed and top bar shows admin-progress bar
+    # again
+    has_content?('hand out link to everyone')
+
     expect(page).to have_content 'You are marked as having paid'
     expect(page).to have_link 'Mark Order as NOT Paid'
 
