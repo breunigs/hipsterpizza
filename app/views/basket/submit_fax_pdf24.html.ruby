@@ -29,7 +29,7 @@ def fail(msg)
 end
 
 def basket_link
-  %|<a href="#{basket_with_uid_path(@basket.uid)}" class="button">Return To Basket</a>|
+  %|<a href="#{basket_path}" class="button">Return To Basket</a>|
 end
 
 def json_or_fail(raw)
