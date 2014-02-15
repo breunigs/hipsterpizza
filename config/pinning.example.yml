@@ -13,7 +13,7 @@ shop_url: '/indian-curry-berlin-bruesseler-str-17'
 # If you don’t order by fax (see fax.example.yml) you can enter an
 # invalid number like +00000. Otherwise the format is of the form
 # +4912341234. Alternatively, grab the data via `rails console` and run
-# `puts Basket.last.fax_number` and `puts Basket.last.shop_name`.
+# `puts Basket.last.shop_fax` and `puts Basket.last.shop_name`.
 shop_fax: ~
 shop_name: ~
 

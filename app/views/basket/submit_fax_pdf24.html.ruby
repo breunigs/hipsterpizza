@@ -122,7 +122,7 @@ success
 
 
 a('Adding Fax Number ') ################################################
-faxnum = u @basket.fax_number
+faxnum = u @basket.shop_fax
 addfax = m.get("https://faxout.pdf24.org/client.php?action=setTargetNumbers&faxId=#{faxid}&targetNumbers=#{faxnum}")
 
 json = json_or_fail(addfax.body)

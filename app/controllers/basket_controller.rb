@@ -9,6 +9,8 @@ class BasketController < ApplicationController
   before_filter :find_order, only: [:show]
   before_filter :reset_replay
 
+  PIZZADE_URL_MODIFIERS = '?knddomain=1&noflash=1'
+
   def new
     cookie_set(:action, :choose_shop)
     cookie_delete(:basket)
@@ -18,17 +20,14 @@ class BasketController < ApplicationController
       return redirect_to_basket
     end
 
-    add = '?knddomain=1&noflash=1'
-
-    if PINNING['shop_name'] && PINNING['shop_url'] && PINNING['shop_fax']
-      params[:shop_name] = PINNING['shop_name']
-      params[:shop_url] = PINNING['shop_url']
-      params[:fax_number] = PINNING['shop_fax']
+    fields = %(name url fax)
+    if all_pinned?(fields)
+      copy_pinned_to_params(fields)
       create
     elsif PINNING['shop_url']
-      redirect_to PINNING['shop_url'] + add
+      redirect_to PINNING['shop_url'] + PIZZADE_URL_MODIFIERS
     else
-      redirect_to pizzade_root_path + add
+      redirect_to pizzade_root_path + PIZZADE_URL_MODIFIERS
     end
   end
 
@@ -142,6 +141,17 @@ class BasketController < ApplicationController
     unless view_context.admin?
       flash[:error] = 'You are not an admin, no action taken.'
       redirect_to_basket
+    end
+  end
+
+  def all_pinned?(fields)
+    fields.all? { |f| PINNING["shop_#{f}"] }
+  end
+
+  def copy_pinned_to_params(fields)
+    fields.each do |f|
+      f = "shop_#{f}"
+      params[f.to_sym] = PINNING[f]
     end
   end
 end

@@ -11,7 +11,7 @@ class Basket < ActiveRecord::Base
   validates :shop_name, presence: true
   validates :shop_url, presence: true,
     format: { with: %r{\A/}, message: "must start with /" }
-  validates :fax_number, allow_blank: true,
+  validates :shop_fax, allow_blank: true,
     format: { with: %r{\A\+[0-9]+}, message: "must start with a plus sign and otherwise only contain numbers." }
 
   validate :pinned_shop_url
