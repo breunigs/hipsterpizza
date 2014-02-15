@@ -60,7 +60,7 @@ class OrderController < ApplicationController
     else
       cookie_set(:order, o.uuid)
       cookie_set(:action, :pay_order)
-      flash[:info] = "Your order has been saved. Please put #{view_context.sum} on the money pile."
+      flash[:info] = "Your order has been added. Please put #{view_context.sum} on the money pile."
     end
     redirect_to_basket
   end
