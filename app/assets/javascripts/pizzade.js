@@ -467,6 +467,12 @@ var hipster = window.hipster = (function() {
           break;
 
         case 'insta':
+          // if a nickname is already set, simply re-use it without
+          // asking.
+          var curNick = hipsterGetCookie('nick');
+          if(curNick !== '' && curNick !== null) {
+            getUserNick = function() { return curNick; };
+          }
           replay(data, function() { getSubmitButton().click(); });
           break;
 
