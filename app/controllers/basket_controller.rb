@@ -32,21 +32,22 @@ class BasketController < ApplicationController
   end
 
   def create
-    @basket = b = Basket.create(params.permit(:shop_name, :shop_url, :shop_fax))
-    if b.errors.any?
-      msgs = "\n• " + b.errors.full_messages.join("\n• ")
-      render text: "Could not create basket. Messages: #{msgs}"
-      # TODO: nicer rendering
-    else
-      cookie_set(:action, :share_link)
-      cookie_set(:basket, b.uid)
-      cookie_set(:admin, b.uid)
+    @basket = Basket.create(params.permit(:shop_name, :shop_url, :shop_fax))
 
-      if PINNING['single_basket_mode']
-        redirect_to_basket
-      else
-        redirect_to share_basket_path(b.uid)
-      end
+    if @basket.errors.any?
+      msgs = errors_to_fake_list(b)
+      flash[:error] = "Could not create basket. Messages: #{msgs}"
+      return redirect_to root_path
+    end
+
+    cookie_set(:action, :share_link)
+    cookie_set(:basket, @basket.uid)
+    cookie_set(:admin, @basket.uid)
+
+    if PINNING['single_basket_mode']
+      redirect_to_basket
+    else
+      redirect_to share_basket_path(@basket.uid)
     end
   end
 

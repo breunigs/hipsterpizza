@@ -114,7 +114,7 @@ class OrderController < ApplicationController
 
   def flash_error_msgs(order)
     return if order.errors.none?
-    msgs = "\n• " + order.errors.full_messages.join("\n• ")
+    msgs = errors_to_fake_list(order)
     flash[:error] = "Could not create order. Messages: #{msgs}"
   end
 

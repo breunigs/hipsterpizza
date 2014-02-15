@@ -74,4 +74,8 @@ class ApplicationController < ActionController::Base
     layout = layout.partition('</body>')
     [layout[0], layout[1..-1].join]
   end
+
+  def errors_to_fake_list(obj)
+    "\n• " + obj.errors.full_messages.join("\n• ")
+  end
 end
