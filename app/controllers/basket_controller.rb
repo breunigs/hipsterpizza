@@ -20,7 +20,7 @@ class BasketController < ApplicationController
       return redirect_to_basket
     end
 
-    fields = %(name url fax)
+    fields = %w(name url fax)
     if all_pinned?(fields)
       copy_pinned_to_params(fields)
       create
