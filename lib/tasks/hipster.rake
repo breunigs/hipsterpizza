@@ -57,25 +57,13 @@ namespace :hipster do
     pid = File.open('tmp/pids/server.pid', 'r').read.to_i rescue nil
     running = pid && pid > 0 && (Process.kill(0, pid) rescue nil)
 
-    if running
-      puts '### old server is running, determining which port it listens on…'
-      port = `netstat --tcp --program --listening --wide --numeric-hosts --numeric-ports | grep #{pid}/ruby`
-      port = port.match(/.*?:([0-9]+)/)[1].to_i rescue nil
-      puts port ? "Found port to be #{port}" : "Didn’t find port, using default #{DEFAULT_PORT}"
-
-      run("kill #{pid}")
-      if (Process.kill(0, pid) rescue nil)
-        # still running, kill harder
-        run("kill -9 #{pid}")
-      end
-    end
     port ||= DEFAULT_PORT
 
     run("RAILS_ENV=#{Rails.env} bundle exec rake db:migrate")
 
     if running
       puts '### Restarting server…'
-      run("RAILS_ENV=#{Rails.env} bundle exec rails server -p #{port} -b localhost --daemon")
+      run("kill -2 #{pid}")
     else
       puts '### Server wasn’t running before, not running it now'
       puts '### In order to start your server, execute:'
