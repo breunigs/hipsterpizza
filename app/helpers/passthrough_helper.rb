@@ -2,7 +2,7 @@
 
 module PassthroughHelper
   def get_replay_details
-    c = cookie_get(:replay).split(" ", 3)
+    c = (cookie_get(:replay) || '').split(" ", 3)
     return nil, nil, nil if c.size < 3
     obj = case c[0]
       when 'order'      then Order.where(uuid: c[2]).first
