@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     uid = params[:basket_uid]
     uid ||= cookie_get(:basket)
     uid.downcase! if uid
-    @basket = Basket.where(uid: uid).first
+    @basket = Basket.where(uid: uid).first rescue nil
 
     @basket ||= Basket.find_basket_for_single_mode
 
@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   def find_order
     uuid = params[:order_uuid]
     uuid ||= cookie_get(:order)
-    @order = Order.where(uuid: uuid, basket: @basket).first
+    @order = Order.where(uuid: uuid, basket: @basket).first rescue nil
     @saved_order = SavedOrder.where(uuid: params[:saved_order_uuid]).first
   end
 
