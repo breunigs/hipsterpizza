@@ -32,7 +32,7 @@ class BasketController < ApplicationController
   end
 
   def create
-    @basket = b = Basket.create(params.permit(:shop_name, :shop_url, :fax_number))
+    @basket = b = Basket.create(params.permit(:shop_name, :shop_url, :shop_fax))
     if b.errors.any?
       msgs = "\n• " + b.errors.full_messages.join("\n• ")
       render text: "Could not create basket. Messages: #{msgs}"
