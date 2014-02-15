@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
     uid.downcase! if uid
     @basket = Basket.where(uid: uid).first
 
+    @basket ||= Basket.find_basket_for_single_mode
+
     # ensure cookies and URL match up
     cookie_set(:basket, @basket ? @basket.uid : nil)
 
@@ -26,6 +28,7 @@ class ApplicationController < ActionController::Base
     uuid = params[:order_uuid]
     uuid ||= cookie_get(:order)
     @order = Order.where(uuid: uuid, basket: @basket).first
+    @saved_order = SavedOrder.where(uuid: params[:saved_order_uuid]).first
   end
 
   def redirect_to_basket

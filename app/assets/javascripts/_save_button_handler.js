@@ -1,6 +1,6 @@
 //= require jquery_ujs.prompt
 
-$(document).on('ajax:success', '[data-inject-response=1]', function(xhr, data, status) {
+$(document).on('ajax:success', '[data-inject-response=true]', function(xhr, data, status) {
   $(this).html(data['text']);
   if(data['disable']) {
     console.log('disabling');
@@ -8,7 +8,7 @@ $(document).on('ajax:success', '[data-inject-response=1]', function(xhr, data, s
   }
 });
 
-$(document).on('ajax:error', '[data-inject-response=1]', function(xhr, status, error) {
+$(document).on('ajax:error', '[data-inject-response=true]', function(xhr, status, error) {
   $(this).html('error ☹');
   console.log('Broken AJAX: xhr/status/error:');
   console.log(xhr);

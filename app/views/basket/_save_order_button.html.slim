@@ -4,7 +4,7 @@
   method: :post,
   remote: true,
   data: { \
-    inject_response: 1,
+    inject_response: true,
     prompt: { \
       message: 'How to name your order? (Include your nick, unless it’s something general)',
       default: "#{cookie_get(:nick)}: ",

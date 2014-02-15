@@ -15,15 +15,15 @@ p
   - if SavedOrder.exists?(cookie_get(:nick), @order)
     a href="" class="button" saved ✓
   - else
-    = render "save_order_button", order: @order, text: text
+    = render "save_order_button", order: @order, text: 'Save My Order'
 
 
 
 p
   ' Price:
-  b #{euro(@order.amount_with_tip)}
+  b #{euro(@order.sum_with_tip)}
   span.dim
-    |  (or #{euro(@order.amount)} without tip)
+    |  (or #{euro(@order.sum)} without tip)
   ' .
   - if @order.paid?
     span.good ✓ You are marked as having paid.

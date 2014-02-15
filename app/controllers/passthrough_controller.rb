@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class PassthroughController < ActionController::Base
+class PassthroughController < ApplicationController
   @@forwarder = Forwarder.new("pizza.de")
 
   after_filter :add_missing_content_type

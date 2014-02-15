@@ -1,0 +1,68 @@
+#hipsterTopBar
+  h1 Saved and Previous Orders for #{@basket.shop_name}
+
+= render "shared/flash"
+
+p
+  a href="#{basket_path}" class="button" Return To Basket
+
+
+- if @nick.blank?
+  h2 Not stalking you or anything, but…
+  p who are you? If I don’t know, I can’t show you your recent orders.
+
+  / form has no Rails backend. JS code is in ours.js
+  form method="PUT" id="setNickForm" data-auto-reload="true"
+    input required="required" name="nick" placeholder="Enter Your Nickname"
+    input type="submit" class="primary" value="Set Nickname"
+
+- else
+
+  h2 Your Previous Orders, #{@nick}
+
+  - if @previous_orders.empty?
+    p You haven’t previously ordered from this shop.
+
+  - else
+    table
+      tr
+        th.hideOnPressure Date
+        th Order
+        th Actions
+
+      - @previous_orders.each do |po|
+        tr
+          td.hideOnPressure = po.date
+          td = order_details(po)
+          td
+
+            a href="#{copy_order_path(po.uuid, mode: :nocheck)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
+
+            a href="#{copy_order_path(po.uuid, mode: :insta)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
+
+
+h2 Saved Orders
+
+p You can delete anyone’s orders, because it’s not feasible to protect them properly. Please be careful and don’t go dictator on others. Thanks.
+
+table
+  tr
+    th Name
+    th.hideOnPressure Order
+    th Actions
+
+  - @saved.each do |s|
+    tr
+      td = s.name
+      td.hideOnPressure = order_details(s)
+
+      td
+        a href="#{copy_saved_order_path(s.uuid, mode: :nocheck)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
+
+        a href="#{copy_saved_order_path(s.uuid, mode: :insta)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
+
+        a href="#{destroy_saved_order_path(s.uuid)}" class="button danger" data-method="delete" data-confirm="STOP! Think about the consequences of removing “#{s.name}”. Continue?" destroy
+
+
+p
+  a href="#{basket_path}" class="button" Return To Basket

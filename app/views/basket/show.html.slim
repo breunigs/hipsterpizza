@@ -24,6 +24,8 @@ p
     - if !@basket.submitted?
       = render "toggle_cancel_button"
 
+  a href="#{saved_order_index_path}" class="button" Show Saved/Previous Orders
+
 - if @order
   = render "my_order"
 

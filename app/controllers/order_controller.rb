@@ -33,8 +33,8 @@ class OrderController < ApplicationController
   end
 
   def update
-    pay     = @order.paid? ? @order.amount : 0
-    pay_tip = @order.paid? ? @order.amount_with_tip : 0
+    pay     = @order.paid? ? @order.sum : 0
+    pay_tip = @order.paid? ? @order.sum_with_tip : 0
 
     @order.json = params[:json]
     @order.save!
@@ -42,8 +42,8 @@ class OrderController < ApplicationController
     if @order.errors.any?
       flash_error_msgs(@order)
     else
-      pay = @order.amount - pay
-      pay_tip = @order.amount_with_tip - pay_tip
+      pay = @order.sum - pay
+      pay_tip = @order.sum_with_tip - pay_tip
 
       handle_price_difference(pay, pay_tip)
     end
@@ -60,7 +60,7 @@ class OrderController < ApplicationController
     else
       cookie_set(:order, o.uuid)
       cookie_set(:action, :pay_order)
-      flash[:info] = "Your order has been saved. Please put #{view_context.amount} on the money pile."
+      flash[:info] = "Your order has been saved. Please put #{view_context.sum} on the money pile."
     end
     redirect_to_basket
   end
@@ -83,12 +83,12 @@ class OrderController < ApplicationController
       return redirect_to_basket
     end
 
-    amount = @order.paid? ? @order.amount : 0
+    sum = @order.paid? ? @order.sum : 0
     @order.destroy!
     cookie_delete(:order) if my_order
 
     flash[:info] = "#{my_order ? 'Your' : @order.nick.possessive} order has been removed."
-    flash[:info] << " Don’t forget to take  #{view_context.amount} from the pile." if amount > 0
+    flash[:info] << " Don’t forget to take  #{view_context.sum} from the pile." if sum > 0
 
     redirect_to_basket
   end
@@ -129,7 +129,7 @@ class OrderController < ApplicationController
     else
       @order.update_column(:paid, false)
       cookie_set(:action, :pay_order)
-      "You need to pay an additional  #{view_context.amount(pay, pay_tip)}."
+      "You need to pay an additional  #{view_context.sum(pay, pay_tip)}."
     end
   end
 end

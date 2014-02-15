@@ -21,14 +21,14 @@ class Order < ActiveRecord::Base
     ActiveSupport::JSON.decode(json)
   end
 
-  def amount
+  def sum
     json_parsed.map { |i| i['price'] }.sum
   end
 
-  def amount_with_tip
+  def sum_with_tip
     # TODO: make configurable
     tip_percent = 5
-    a = amount
+    a = sum
     # round to nearest 10 cents
     round_tip = (a * 10 * tip_percent/100.0).round / 10.0
     a + round_tip
@@ -42,6 +42,11 @@ class Order < ActiveRecord::Base
     n
   end
 
+  # returns the date the order was actually submitted, i.e. the basket
+  # submit time.
+  def date
+    basket.submitted.strftime('%Y-%m-%d') rescue 'never'
+  end
 
   private
   def create_uuid

@@ -46,6 +46,20 @@ class Basket < ActiveRecord::Base
     self.editable.each { |b| b.update_column(:cancelled, true) }
   end
 
+  def self.find_basket_for_single_mode
+    return nil unless PINNING['single_basket_mode']
+
+    # is there an editable basket we can forward the user to?
+    @basket = self.find_editable
+    return @basket if @basket
+
+    # is there a recently submitted basket in the timeout range?
+    after = PINNING['single_basket_timeout'].minutes.ago
+    @basket = self.find_recent_submitted(after)
+    return @basket if @basket
+    nil
+  end
+
   def arrived?
     !arrival.nil?
   end
@@ -116,6 +130,6 @@ class Basket < ActiveRecord::Base
   end
 
   def sum_orders(orders)
-    orders.map { |o| o.amount }.sum
+    orders.map(&:sum).sum
   end
 end
