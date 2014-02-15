@@ -9,11 +9,14 @@ Hipsterpizza::Application.routes.draw do
     scope 'basket/:basket_uid' do
       get '', to: 'basket#show', as: :basket_with_uid
 
-      %w(share set_admin toggle_cancelled submit unsubmit pdf).each do |res|
+      %w(share set_admin unsubmit pdf).each do |res|
         get res, to: "basket##{res}", as: "#{res}_basket"
       end
 
-      put 'delivery_arrived', to: 'basket#delivery_arrived', as: :delivery_arrived_basket
+      %w(submit toggle_cancelled delivery_arrived).each do |res|
+        put res, to: "basket##{res}", as: "#{res}_basket"
+      end
+
       post 'set_submit_time', to: 'basket#set_submit_time', as: :set_submit_time_basket
     end
     get 'basket', to: 'basket#find', as: :basket
