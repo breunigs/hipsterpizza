@@ -34,10 +34,12 @@ p
           td.hideOnPressure = po.date
           td = order_details(po)
           td
+            - if @basket.editable?
+              a href="#{copy_order_path(po.uuid, mode: :nocheck)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
 
-            a href="#{copy_order_path(po.uuid, mode: :nocheck)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
-
-            a href="#{copy_order_path(po.uuid, mode: :insta)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
+              a href="#{copy_order_path(po.uuid, mode: :insta)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
+            - else
+              ' Basket not editable
 
 
 h2 Saved Orders
@@ -62,12 +64,15 @@ p You can delete anyone’s orders, because it’s not feasible to protect them 
         td.hideOnPressure = order_details(s)
 
         td
-          a href="#{copy_saved_order_path(s.uuid, mode: :nocheck)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
+          - if @basket.editable?
+            a href="#{copy_saved_order_path(s.uuid, mode: :nocheck)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
 
-          a href="#{copy_saved_order_path(s.uuid, mode: :insta)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
+            a href="#{copy_saved_order_path(s.uuid, mode: :insta)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
 
-          a href="#{destroy_saved_order_path(s.uuid)}" class="button danger" data-method="delete" data-confirm="STOP! Think about the consequences of removing “#{s.name}”. Continue?" destroy
+            a href="#{destroy_saved_order_path(s.uuid)}" class="button danger" data-method="delete" data-confirm="STOP! Think about the consequences of removing “#{s.name}”. Continue?" destroy
 
+          - else
+            ' Basket not editable
 
 p
   a href="#{basket_path}" class="button" Return To Basket
