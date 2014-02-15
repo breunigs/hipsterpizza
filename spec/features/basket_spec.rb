@@ -75,10 +75,7 @@ describe 'Basket' do
   end
 
   it 'doesn’t show submit button to users' do
-    visit basket_path
-    url = Capybara.current_url
-    Capybara.reset_sessions!
-    visit url
+    visit_basket_as_new_user
     expect(page).not_to have_content 'Submit Group Order'
   end
 

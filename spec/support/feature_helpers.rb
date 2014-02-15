@@ -19,6 +19,8 @@ module FeatureHelpers
     click_link 'Indian Curry'
 
     within('#hipsterTopBar') do
+      # wait for page load, reduce breakage
+      has_content?('Warenkorb')
       click_on 'Choose Indian Curry'
     end
   end
@@ -56,6 +58,13 @@ module FeatureHelpers
 
   def print_console_msgs
     page.driver.console_messages.each { |m| puts m[:message] }
+  end
+
+  def visit_basket_as_new_user
+    visit basket_path
+    url = Capybara.current_url
+    Capybara.reset_sessions!
+    visit url
   end
 end
 

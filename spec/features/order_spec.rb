@@ -59,4 +59,12 @@ describe 'Order' do
     # three = two table entries + user’s own display
     expect(page).to have_content('Chicken Curry', count: 3)
   end
+
+  it 'can be saved' do
+    page.driver.js_prompt_input = "Tėst 42: Pizza Mo"
+    page.driver.accept_js_prompts!
+
+    click_on 'Save My Order'
+    expect(page).to have_content('saved ✓')
+  end
 end
