@@ -4,7 +4,7 @@
 = render "shared/flash"
 
 p
-  a href="#{basket_path}" class="button" Return To Basket
+  a href="#{auto_basket_path}" class="button" Return To Basket
 
 
 - if @nick.blank?
@@ -75,4 +75,4 @@ p You can delete anyone’s orders, because it’s not feasible to protect them 
             ' Basket not editable
 
 p
-  a href="#{basket_path}" class="button" Return To Basket
+  a href="#{auto_basket_path}" class="button" Return To Basket

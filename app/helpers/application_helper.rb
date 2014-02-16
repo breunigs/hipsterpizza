@@ -14,4 +14,8 @@ module ApplicationHelper
   def overwrite_order_confirm
     @order ? 'There’s already an order for you. Continue only if this is for someone else (=OK), otherwise edit your old order (=Cancel).' : ''
   end
+
+  def auto_basket_path
+    @basket ? basket_with_uid_path(@basket.uid) : basket_path
+  end
 end
