@@ -7,7 +7,7 @@ public instance at **[pizza.yrden.de](http://pizza.yrden.de)**.
 ## Status
 
 [![Build Status](https://travis-ci.org/breunigs/hipsterpizza.png)](https://travis-ci.org/breunigs/hipsterpizza)
-[![Coverage Status](https://coveralls.io/repos/breunigs/hipsterpizza/badge.png)](https://coveralls.io/r/breunigs/hipsterpizza)
+[![Coverage Status](https://coveralls.io/repos/breunigs/hipsterpizza/badge.png?branch=master)](https://coveralls.io/r/breunigs/hipsterpizza?branch=master)
 [![Code Climate](https://codeclimate.com/github/breunigs/hipsterpizza.png)](https://codeclimate.com/github/breunigs/hipsterpizza)
 
 
