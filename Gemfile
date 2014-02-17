@@ -42,5 +42,5 @@ group :test do
   gem 'coveralls',  require: false
   gem 'capybara-webkit'
   gem 'capybara-screenshot', git: 'git://github.com/mattheworiordan/capybara-screenshot.git'
-  gem 'puffing-billy', git: 'git://github.com/oesmith/puffing-billy.git'
+  gem 'puffing-billy', '>= 0.2.3'
 end
