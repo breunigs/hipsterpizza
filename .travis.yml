@@ -6,6 +6,7 @@ script:
   - ./bin/rake db:migrate RAILS_ENV=test
   - ./bin/rspec
 before_install:
+  - "export CAPYBARA_WAIT=15"
   - "export COVERAGE=true"
   - "export COVERALLS=true"
   - "export DISPLAY=:99.0"

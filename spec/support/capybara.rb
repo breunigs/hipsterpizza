@@ -32,6 +32,7 @@ Capybara.current_driver = driver
 Capybara.default_driver = driver
 Capybara.javascript_driver = driver
 
+Capybara.default_wait_time = ENV['CAPYBARA_WAIT'].to_i || 2
 # teach capybara-screenshot about our custom drivers
 Capybara::Screenshot.register_driver(driver)  do |driver, path|
   if driver.respond_to?(:save_screenshot)
