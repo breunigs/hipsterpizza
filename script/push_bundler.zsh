@@ -3,6 +3,8 @@
 cd $(dirname $0)
 cd ..
 
+source ~/.rvm/scripts/rvm
+
 rvm use 2.1.0
 bundle install --without development --deployment --jobs 4
 
