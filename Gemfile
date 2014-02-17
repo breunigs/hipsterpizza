@@ -17,7 +17,7 @@ gem 'unicode_utils'
 gem 'mechanize'
 gem 'prawn'
 gem 'prawn-qrcode'
-gem 'prawn-rails'
+gem 'prawn-rails', git: 'git://github.com/cortiz/prawn-rails.git'
 
 group :development do
   gem 'better_errors'
