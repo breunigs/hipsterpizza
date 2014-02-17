@@ -13,8 +13,12 @@ module FeatureHelpers
 
     expect(page).to have_content('Pizza Lieferservice und Pizzaservice')
 
-    fill_in 'plzsearch_input', with: '12347'
-    expect(page).to have_content('12347 Berlin')
+    plz = '12347'
+    plzort = '12347 Berlin'
+    fill_in 'plzsearch_input', with: plz
+    # try again, to help with random CI failures
+    fill_in 'plzsearch_input', with: plz unless has_content?(plzort)
+    expect(page).to have_content(plzort)
 
     first('.suggest_entry_active, .suggest_entry').click
     expect(page).to have_content('pizza.de-Bewertungen in PLZ 12347 Britz')

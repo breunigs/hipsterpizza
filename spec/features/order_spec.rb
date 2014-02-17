@@ -38,9 +38,11 @@ describe 'Order' do
     expect(page).to have_content('Warenkorb')
 
     # remove previous order
-    first('.btn-v01.btn-remove').click
-    # wait until pizza.de animation finished before continuing
-    expect(page).not_to have_css('#bestellform .btn-v01.btn-remove')
+    remove_button = '#bestellform .btn-v01.btn-remove'
+    first(remove_button).click
+    # try again, to help with random CI failures
+    first(remove_button).click if has_css?(remove_button)
+    expect(page).not_to have_css(remove_button)
     expect(page).not_to have_css('.cartitems-item')
 
     click_on('Geflügel')
