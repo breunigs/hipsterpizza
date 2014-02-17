@@ -40,8 +40,8 @@ describe 'Order' do
     # remove previous order
     first('.btn-v01.btn-remove').click
     # wait until pizza.de animation finished before continuing
-    has_no_css?('#bestellform .btn-v01.btn-remove')
-    has_no_css?('.cartitems-item')
+    expect(page).not_to have_css('#bestellform .btn-v01.btn-remove')
+    expect(page).not_to have_css('.cartitems-item')
 
     click_on('Geflügel')
     click_on('Chicken Sabzi', match: :first)
