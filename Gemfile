@@ -14,7 +14,7 @@ gem 'rqrcode-rails3'
 gem 'possessive'
 gem 'unicode_utils'
 
-gem 'mechanize'
+gem 'mechanize', require: false
 gem 'prawn'
 gem 'prawn-qrcode'
 gem 'prawn-rails', git: 'git://github.com/cortiz/prawn-rails.git'

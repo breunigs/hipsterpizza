@@ -57,7 +57,7 @@ def exit
   @stream.close
 end
 
-
+require 'mechanize'
 
 m = Mechanize.new
 @log = QueueToArrayWriter.new
