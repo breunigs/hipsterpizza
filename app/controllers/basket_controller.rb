@@ -71,7 +71,7 @@ class BasketController < ApplicationController
 
     case provider
     when 'manual' then
-      redirect_to pdf_basket_path(@basket.uuid)
+      redirect_to pdf_basket_path(@basket.uid)
     when 'pdf24' then
       @cfg = load_fax_config
       stream('submit_fax_pdf24')
