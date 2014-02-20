@@ -1,8 +1,5 @@
 h2
-  | Your Order
-  - nick = cookie_get(:nick)
-  - if nick
-    ' , #{nick}
+  | Your Order, #{@order.nick}
 
 p
   - if @basket.editable?
