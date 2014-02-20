@@ -7,7 +7,8 @@ window.doReload = function() {
 
 window.doReloadAfterTimeout = function() {
   var t = document.getElementsByClassName('flash').length == 0 ? 6 : 30;
-  window.reloadTimeout = window.setTimeout(window.reloadInplace, t*1000);
+  console.log('Reloading in ' + t + 'seconds');
+  window.reloadTimeout = window.setTimeout(window.doReload, t*1000);
 }
 
 $(document).on('ajax:success', '[data-auto-reload=true]', function() {

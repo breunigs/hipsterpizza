@@ -42,5 +42,6 @@ h2 Basket
 = render "order_table"
 
 - if Rails.env.production?
-  javascript:
-    window.doReloadAfterTimeout();
+  - content_for :below_script do
+    javascript:
+      window.doReloadAfterTimeout();
