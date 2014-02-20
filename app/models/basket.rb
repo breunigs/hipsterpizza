@@ -113,6 +113,10 @@ class Basket < ActiveRecord::Base
     name
   end
 
+  def clock_running?
+    submitted? && !arrived?
+  end
+
   private
 
   def create_uid
