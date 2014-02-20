@@ -1,11 +1,12 @@
-#hipsterTopBar
-  - if admin? && (!@order || @order.paid?)
-    = render "progress_bars/choose_shop"
-  - elsif @order
-    /! order=#{@order.uuid}
-    = render "progress_bars/new_order"
-  - else
-    h1 Group Basket
+- cache("top_bar_#{admin?}_#{@order.cache_key}") do
+  #hipsterTopBar
+    - if admin? && (!@order || @order.paid?)
+      = render "progress_bars/choose_shop"
+    - elsif @order
+      /! order=#{@order.uuid}
+      = render "progress_bars/new_order"
+    - else
+      h1 Group Basket
 
 = render "shared/flash"
 
@@ -27,19 +28,21 @@ p
   a href="#{saved_order_index_path}" class="button" Show Saved/Previous Orders
 
 - if @order
-  = render "my_order"
+  - cache @order do
+    = render "my_order"
 
 
 - if @basket.submitted?
   = render "submitted_status"
 
 
-h2 Money Pile
-= render "money_pile"
+- cache("pile_and_table_#{admin?}_#{@order.cache_key}") do
+  h2 Money Pile
+  = render "money_pile"
 
 
-h2 Basket
-= render "order_table"
+  h2 Basket
+  = render "order_table"
 
 - if Rails.env.production?
   - content_for :below_script do
