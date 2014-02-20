@@ -36,7 +36,7 @@ p
   = render "submitted_status"
 
 
-- cache("pile_and_table_#{admin?}_#{@order.cache_key}") do
+- cache("pile_and_table_#{admin?}_#{@basket.cache_key}_#{@order.cache_key}") do
   h2 Money Pile
   = render "money_pile"
 
