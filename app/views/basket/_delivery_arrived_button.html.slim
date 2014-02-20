@@ -1,3 +1,3 @@
 - confirm = @basket.arrived? ? 'It’s already marked as “arrived”. Update arrival time to now?' : ''
 - color = @basket.arrived? ? '' : 'success'
-a href="#{delivery_arrived_basket_path}" data-method="put" data-confirm="#{confirm}"  class="button #{color}" ✓ Delivery Has Arrived
+a href="#{delivery_arrived_basket_path}" title="Push this button only, if the Delivery really has arrived." data-method="put" data-confirm="#{confirm}"  class="button #{color}" ✓ Delivery Has Arrived

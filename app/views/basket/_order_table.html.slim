@@ -21,9 +21,9 @@
         td.hideOnPressure = order_details(order)
         td.hideOnPressure
 
-          a href="#{copy_order_path(order.uuid)}" class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" copy
+          a href="#{copy_order_path(order.uuid)}" title="Copies this order. You can edit it before you submit it." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" copy
 
-          a href="#{copy_order_path(order.uuid, mode: :insta)}" class="button" data-method="put"  data-confirm="#{overwrite_order_confirm}" insta-copy
+          a href="#{copy_order_path(order.uuid, mode: :insta)}" title="Copies this order. It will be submitted instant with your Nick." class="button" data-method="put"  data-confirm="#{overwrite_order_confirm}" insta-copy
 
           - if admin?
             a href="#{edit_order_path(order.uuid)}" class="button" data-no-turbolink="" edit
