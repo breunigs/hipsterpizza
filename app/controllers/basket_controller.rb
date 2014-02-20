@@ -55,8 +55,10 @@ class BasketController < ApplicationController
   end
 
   def show
-    keys = [@basket.cache_key, @order.cache_key, view_context.admin?, @basket.clock_running?]
-    return unless stale?(etag: keys.join(' '))
+    if flash.empty?
+      keys = [@basket.cache_key, @order.cache_key, view_context.admin?, @basket.clock_running?]
+      return unless stale?(etag: keys.join(' '))
+    end
 
     update_action_from_order
 
