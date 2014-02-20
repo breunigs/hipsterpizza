@@ -13,9 +13,11 @@ Hipsterpizza::Application.routes.draw do
         get res, to: "basket##{res}", as: "#{res}_basket"
       end
 
-      %w(submit toggle_cancelled delivery_arrived).each do |res|
+      %w(toggle_cancelled delivery_arrived).each do |res|
         put res, to: "basket##{res}", as: "#{res}_basket"
       end
+
+      put 'submit', to: "basket_submit#submit", as: "submit_basket"
 
       post 'set_submit_time', to: 'basket#set_submit_time', as: :set_submit_time_basket
     end
