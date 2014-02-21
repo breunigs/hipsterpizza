@@ -25,13 +25,17 @@ class Order < ActiveRecord::Base
     json_parsed.map { |i| i['price'] }.sum
   end
 
+  def tip_percent
+    if defined?(CONFIG['tip_percent']) && CONFIG['tip_percent'] > 0
+	  return CONFIG['tip_percent']
+	else
+	  return 0
+	end
+  end
+
   def sum_with_tip
-    # TODO: make configurable
-    tip_percent = 5
-    a = sum
     # round to nearest 10 cents
-    round_tip = (a * tip_percent/100.0 + a).round(1) - a
-    a + round_tip
+    (sum * tip_percent/100.0 + sum).round(1)
   end
 
   def nick_id
