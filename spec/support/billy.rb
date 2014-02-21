@@ -5,10 +5,11 @@
 # to pizza.de (and other domains) are cached after being processed by
 # lib/forwarder.rb and the passthrough_controller.
 module Billy
-  class Cache
-    def cacheable?(url, headers)
+  class ProxyConnection < EventMachine::Connection
+    def cacheable?(headers, status)
       return false unless Billy.config.cache
-      url = URI(url)
+
+      url = URI(@url)
       return false if url.path.start_with?('/hipster') || url.path == '/'
       # new and edit order share the same URL and are discerned by
       # cookies only. Caching would thus incorrectly handle replay data.

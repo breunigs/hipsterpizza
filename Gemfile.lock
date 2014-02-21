@@ -311,7 +311,7 @@ DEPENDENCIES
   prawn
   prawn-qrcode
   prawn-rails!
-  puffing-billy (>= 0.2.3)
+  puffing-billy (= 0.2.3)
   puma
   quiet_assets
   rack-livereload
