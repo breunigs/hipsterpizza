@@ -30,7 +30,7 @@ class Order < ActiveRecord::Base
     tip_percent = 5
     a = sum
     # round to nearest 10 cents
-    round_tip = ((a * tip_percent/100.0 + a) * 10).round / 10.0 -a
+    round_tip = (a * tip_percent/100.0 + a).round(1) - a
     a + round_tip
   end
 
