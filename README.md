@@ -39,17 +39,24 @@ to `true`, otherwise the assets won’t be served.
 
 Here’s an example config for nginx:
 ```
-upstream puma-hipsterpizza {
+upstream hipsterpizza {
     server 127.0.0.1:10002;
+}
+
+# used for proper streaming through nginx. Requires nginx 1.3.13+.
+map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
 }
 
 server {
     listen       80;
     listen       [2001:4d88:2000:8::3001]:80 ipv6only=on deferred;
     server_name  pizza.yrden.de;
-    access_log   /var/log/nginx/pizza.yrden.de.log;
+    access_log   /var/log/nginx/hipsterpizza.log;
     root         /srv/hipsterpizza/public;
 
+    # serve assets directly from the file system
     location ~ ^/hipster/assets/  {
         gzip_static on;
         expires max;
@@ -57,11 +64,16 @@ server {
     }
 
     location / {
-        proxy_pass http://puma-hipsterpizza;
+        proxy_pass http://hipsterpizza;
         proxy_set_header  X-Real-IP  $remote_addr;
         proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header  Host $http_host;
         proxy_redirect    off;
+
+        # required for proper streaming. Requires nginx 1.3.13+
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
     }
 }
 ```
