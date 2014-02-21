@@ -1,29 +1,30 @@
-h2 Your Order, #{@order.nick}
+div.highlight
 
-p
-  - if @basket.editable?
-    a href="#{edit_order_path(@order.uuid)}" title="This reopens your order and you can edit it." class="button" data-no-turbolink="" ✎ Edit My Order
+  h2 Your Order, #{@order.nick}
 
-    a href="#{destroy_order_path(@order.uuid)}" title="This deletes your order." class="button danger" data-method="delete" data-confirm="Do you really want to starve of hunger?" Destroy My Order
+  p
+    = render 'toggle_order_paid_button'
 
-  = render 'toggle_order_paid_button'
+    - if @basket.editable?
+      a href="#{edit_order_path(@order.uuid)}" title="This reopens your order and you can edit it." class="button" data-no-turbolink="" ✎ Edit My Order
 
-  - if SavedOrder.exists?(cookie_get(:nick), @order)
-    a href="" class="button" saved ✓
-  - else
-    = render "save_order_button", order: @order, text: 'Save My Order'
+    - if SavedOrder.exists?(cookie_get(:nick), @order)
+      a href="" class="button" saved ✓
+    - else
+      = render "save_order_button", order: @order, text: 'Save My Order'
 
+    - if @basket.editable?
+      a href="#{destroy_order_path(@order.uuid)}" title="This deletes your order." class="button danger" data-method="delete" data-confirm="Do you really want to starve of hunger?" Destroy My Order
 
+  p
+    ' Price:
+    b #{euro(@order.sum_with_tip)}
+    span.dim
+      |  (or #{euro(@order.sum)} without tip)
+    ' .
+    - if @order.paid?
+      span.good ✓ You are marked as having paid.
+    - else
+      span.bad ✗ You still need to pay.
 
-p
-  ' Price:
-  b #{euro(@order.sum_with_tip)}
-  span.dim
-    |  (or #{euro(@order.sum)} without tip)
-  ' .
-  - if @order.paid?
-    span.good ✓ You are marked as having paid.
-  - else
-    span.bad ✗ You still need to pay.
-
-= order_details(@order)
+  = order_details(@order)

@@ -29,7 +29,7 @@ p.huge {
 }
 
 h1, h2, h3, h4, h5 {
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 10px;
 
   font-weight: lighter;
@@ -133,7 +133,7 @@ ul {
 }
 
 p + ul {
-  margin-top: -15px;
+  margin-top: -5px;
 }
 
 .bad {
@@ -202,8 +202,20 @@ td ul {
 }
 
 
-tr.highlight {
-  background-color: rgba(100, 100, 100, 0.1);
+.highlight {
+  background-color: rgba(100, 100, 100, 0.07);
+}
+
+div.highlight  {
+  position: relative;
+  left: -8px;
+  padding: 8px;
+  width: 100%;
+  margin-top: 30px;
+
+  h2 {
+    margin-top: 0;
+  }
 }
 
 td a.button {
