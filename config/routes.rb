@@ -38,6 +38,8 @@ Hipsterpizza::Application.routes.draw do
       delete 'destroy', to: 'saved_order#destroy', as: :destroy_saved_order
       put 'copy', to: 'saved_order#copy', as: :copy_saved_order
     end
+
+    get 'streaming_test', to: "basket_submit#test"
   end
 
   # catch all for unmatched /hipster/ routes

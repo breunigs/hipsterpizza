@@ -2,7 +2,7 @@ class BasketSubmitController < ApplicationController
   include CookieHelper
   include ActionController::Live
 
-  before_filter :find_basket
+  before_filter :find_basket, only: :submit
 
   def submit
     @basket.update_column(:submitted, Time.now)
@@ -20,5 +20,9 @@ class BasketSubmitController < ApplicationController
       cookie_set(:action, :submit_group_order)
       redirect_to_shop
     end
+  end
+
+  def test
+    stream('test')
   end
 end
