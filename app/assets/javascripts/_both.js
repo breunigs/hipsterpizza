@@ -16,7 +16,8 @@ function hipsterGetCookie(name) {
   for(var i=0; i< cookies.length; i++) {
     c = cookies[i];
     if(c.indexOf(name) === 0) {
-      return decodeURIComponent(c.substring(name.length, c.length));
+      var x = c.substring(name.length, c.length);
+      return decodeURIComponent(x.split('+').join(' '));
     }
   }
   return null;
