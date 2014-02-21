@@ -23,7 +23,8 @@
 
           a href="#{copy_order_path(order.uuid)}" title="Copies this order. You can edit it before you place it into the group basket." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" copy
 
-          a href="#{copy_order_path(order.uuid, mode: :insta)}" title="Copies this order with your nick and adds it instantly to the group basket." class="button" data-method="put"  data-confirm="#{overwrite_order_confirm}" insta-copy
+          - if has_nick?
+            a href="#{copy_order_path(order.uuid, mode: :insta)}" title="Copies this order with your nick and adds it instantly to the group basket." class="button" data-method="put"  data-confirm="#{overwrite_order_confirm}" insta-copy
 
           - if admin?
             a href="#{edit_order_path(order.uuid)}" class="button" data-no-turbolink="" edit
