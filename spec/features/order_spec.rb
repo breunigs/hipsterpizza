@@ -75,6 +75,6 @@ describe 'Order' do
     page.driver.accept_js_prompts!
 
     click_on 'Save My Order'
-    expect(page).to have_content('saved ✓')
+    wait_until_content('saved ✓')
   end
 end

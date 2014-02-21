@@ -110,6 +110,8 @@ describe 'Basket' do
 
   it 'can render a pdf' do
     visit basket_path
+    order_create
+
     click_on 'Render PDF', match: :first
     expect(page.html).to start_with('%PDF-1')
     # This is always true due to a bug in Rails. See

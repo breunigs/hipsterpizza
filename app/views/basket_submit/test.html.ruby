@@ -9,7 +9,7 @@ END
 
 %w(This is a simple streaming test. It only works in Rails’ production mode. It should load word by word until this sentence is complete.).each do |word|
   a(word + ' ')
-  sleep 0.5
+  sleep Rails.env.test? ? 0.05 : 0.5
 end
 
 
