@@ -67,6 +67,8 @@ server {
         proxy_pass http://hipsterpizza;
         proxy_set_header  X-Real-IP  $remote_addr;
         proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        # ensure redirects keep the same protocol (i.e. no https → http)
+        proxy_set_header  X-Url-Scheme $scheme;
         proxy_set_header  Host $http_host;
         proxy_redirect    off;
 
