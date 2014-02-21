@@ -17,7 +17,7 @@ HipsterPizza uses Rails 4 and has been tested with Ruby 2.1. Here’s how to get
 ```bash
 apt-get install ruby bundler git ruby-sqlite3
 cd /srv
-git clone -b v2 git://github.com/breunigs/hipsterpizza
+git clone git://github.com/breunigs/hipsterpizza
 cd hipsterpizza/
 su www-data
 ```
