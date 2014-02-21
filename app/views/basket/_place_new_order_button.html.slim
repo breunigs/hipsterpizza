@@ -1,3 +1,3 @@
 - confirm = @order ? 'There’s already an order for you. Continue only if this is for someone else (=OK), otherwise edit your old order (=Cancel).' : ''
 - color = @order ? 'primary' : 'success'
-a href="#{new_order_path}" class="button #{color}" data-confirm="#{confirm}" data-no-turbolink="" ✚ Place New Order
+a href="#{new_order_path}" title="Create a new, personal basket to put your items before putting them into the group basket. Ordering works very much like it does normally on pizza.de." class="button #{color}" data-confirm="#{confirm}" data-no-turbolink="" ✚ Place New Order

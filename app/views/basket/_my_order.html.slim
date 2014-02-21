@@ -2,9 +2,9 @@ h2 Your Order, #{@order.nick}
 
 p
   - if @basket.editable?
-    a href="#{edit_order_path(@order.uuid)}" class="button" data-no-turbolink="" ✎ Edit My Order
+    a href="#{edit_order_path(@order.uuid)}" title="This reopens your order and you can edit it." class="button" data-no-turbolink="" ✎ Edit My Order
 
-    a href="#{destroy_order_path(@order.uuid)}" class="button danger" data-method="delete" data-confirm="Do you really want to starve of hunger?" Destroy My Order
+    a href="#{destroy_order_path(@order.uuid)}" title="This deletes your order." class="button danger" data-method="delete" data-confirm="Do you really want to starve of hunger?" Destroy My Order
 
   = render 'toggle_order_paid_button'
 
