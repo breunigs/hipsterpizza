@@ -14,13 +14,17 @@ module FeatureHelpers
     expect(page).to have_content('Pizza Lieferservice und Pizzaservice')
 
     plz = '12347'
-    plzort = '12347 Berlin'
-    fill_in 'plzsearch_input', with: plz
-    # try again, to help with random CI failures
-    fill_in 'plzsearch_input', with: plz unless has_content?(plzort)
-    expect(page).to have_content(plzort)
 
-    first('.suggest_entry_active, .suggest_entry').click
+    # This code fails very often in CI. Instead of testing pizza.de UI
+    # we simply hope for the best and visit the shop-list page for the
+    # given postal code directly.
+    #~　plzort = plz + ' Berlin'
+    #~　fill_in 'plzsearch_input', with: plz
+    #~　expect(page).to have_content(plzort)
+    #~　first('.suggest_entry_active, .suggest_entry').click
+
+    visit root_path + '/' + plz
+
     expect(page).to have_content('pizza.de-Bewertungen in PLZ 12347 Britz')
     click_link 'Indian Curry'
 
