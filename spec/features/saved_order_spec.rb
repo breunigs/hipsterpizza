@@ -10,6 +10,7 @@ describe 'SavedOrder' do
     page.driver.js_prompt_input = SAVED_ORDER_NAME
     page.driver.accept_js_prompts!
     click_on 'Save My Order'
+    wait_until_content 'saved ✓'
   end
 
   it 'shows saved orders' do
@@ -53,8 +54,8 @@ describe 'SavedOrder' do
     visit saved_order_index_path
     fill_in 'nick', with: 'new user'
     click_on 'Set Nickname'
-
     click_on 'insta order this'
+    wait_until_content 'General Options'
     expect(page).to have_content 'Your Order, new user'
   end
 end

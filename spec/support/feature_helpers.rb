@@ -74,9 +74,24 @@ module FeatureHelpers
 
   def visit_basket_as_new_user
     visit basket_path
+    expect(page).not_to have_css('div.flash')
+
     url = Capybara.current_url
     Capybara.reset_sessions!
     visit url
+    expect(page).not_to have_css('div.flash')
+  end
+
+  def wait_until_content(c)
+    15.times do
+      # rescue to silence NodeNotAttachedError exceptions. Required when
+      # HipsterPizza’s replay mode modifies the page concurrently to
+      # when Capybara tries to check for text content. Since we don’t
+      # care about the intermediate pages, we can treat these errors as
+      # if the content wasn’t present.
+      return if (has_content?(c) rescue nil)
+    end
+    expect(page).to have_content(c)
   end
 end
 

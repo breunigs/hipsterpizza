@@ -16,13 +16,13 @@ describe 'Order' do
 
     # wait until marked as payed and top bar shows admin-progress bar
     # again
-    expect(page).to have_content('hand out link to everyone')
+    wait_until_content('hand out link to everyone')
 
     expect(page).to have_content 'You are marked as having paid'
     expect(page).to have_link 'Mark Order as NOT Paid'
 
     click_on 'Mark Order as NOT Paid', match: :first
-    expect(page).to have_content 'You still need to pay'
+    wait_until_content 'You still need to pay'
     expect(page).to have_link 'Mark Order as Paid'
   end
 
@@ -35,13 +35,14 @@ describe 'Order' do
 
   it 'can be edited' do
     click_on 'Edit My Order'
-    expect(page).to have_content('Warenkorb')
+
+    wait_until_content('Summe')
 
     # remove previous order
     remove_button = '#bestellform .btn-v01.btn-remove'
     first(remove_button).click
-    # try again, to help with random CI failures
-    first(remove_button).click if has_css?(remove_button)
+    # wait until the animation is definitely over before going on
+    sleep 0.5
     expect(page).not_to have_css(remove_button)
     expect(page).not_to have_css('.cartitems-item')
 
@@ -64,6 +65,7 @@ describe 'Order' do
 
   it 'can be copied' do
     click_link 'insta-copy'
+    wait_until_content('General Options')
     # three = two table entries + user’s own display
     expect(page).to have_content('Chicken Curry', count: 3)
   end
