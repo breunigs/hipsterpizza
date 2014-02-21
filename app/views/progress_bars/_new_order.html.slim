@@ -20,10 +20,10 @@
     = submit_tag 'Place My Order in Group Basket',
       id: 'hipsterOrderSubmitButton',
       class: 'button primary',
-      title: 'Saves your new Order to the Group Basket',
+      title: 'Saves your new order to the group basket',
       data: { disable_with: 'Saving Order…' }
 
-  a href="#{basket_path}" title="Forget your Order and return to hipsterpizza." class="button" Cancel My Order
+  a href="#{basket_path}" title="forget your order and return to group basket." class="button" Cancel My Order
 
 -if editing?
   / Use replay cookie to determine which order is being updated. This
@@ -36,10 +36,10 @@
     = submit_tag "Update #{whose} Order",
       id: 'hipsterOrderSubmitButton',
       class: :button,
-      title: "Update #{whose} Order and save changes to the Group Basket.",
+      title: "Update #{whose} order and save changes to the group basket.",
       data: { disable_with: 'Updating Order…' }
 
-  a href="#{basket_path}" title="Forget your changes and return to hipsterpizza." class="button dim" Cancel (ignore changes)
+  a href="#{basket_path}" title="Forget your changes and return to group basket." class="button dim" Cancel (ignore changes)
 
 - if a == 'pay_order'
   = render 'toggle_order_paid_button'
