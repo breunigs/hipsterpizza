@@ -3,6 +3,7 @@
 class PassthroughController < ApplicationController
   @@forwarder = Forwarder.new("pizza.de")
 
+  skip_before_action :verify_authenticity_token
   after_filter :add_missing_content_type
 
   # cache some of the probably non-static elements
@@ -52,6 +53,8 @@ class PassthroughController < ApplicationController
 
     return if replace
 
+    fix_host!(env['rack.input'].string) if request.post?
+
     ret = @@forwarder.call(env)
     inject!(ret)
     fix_urls!(ret)
@@ -73,7 +76,6 @@ class PassthroughController < ApplicationController
 
     true
   end
-
 
   def inject!(ret)
     # heuristic: assume if the last part contains a dot, it’s not a
@@ -100,5 +102,13 @@ class PassthroughController < ApplicationController
 
   def get_view(where)
     render_to_string partial: "passthrough/inject_#{where}", locals: { environment: env }
+  end
+
+  def fix_host!(str)
+    our = '%3A%2F%2F' # ://
+    our << request.host
+    our << "%3A#{request.port}" if request.host != 80
+
+    str.gsub!(our, '%3A%2F%2Fpizza.de')
   end
 end

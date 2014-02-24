@@ -47,7 +47,7 @@ Hipsterpizza::Application.routes.draw do
   get 'hipster/*page', to: 'basket#find'
 
   # forward all other requests to pizza.de
-  match '*any.:ending', to: 'passthrough#pass_cached', ending: /swf|css|jpg|png|gif|js/, via: :all
+  match '*any.:ending', to: 'passthrough#pass_cached', ending: /swf|css|jpg|png|gif|js/, via: :get
   match '*any', to: 'passthrough#pass', via: :all
   get 'pizzade_root', to: 'passthrough#pass'
 end
