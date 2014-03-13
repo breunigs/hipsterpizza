@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
 
   scope :paid, -> { where(paid: true) }
   scope :unpaid, -> { where(paid: false) }
-  scope :sorted, -> { order(nick: :asc) }
+  scope :sorted, -> { order('lower(nick) asc') }
 
 
   before_validation(on: :create) do

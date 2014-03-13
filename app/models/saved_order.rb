@@ -6,7 +6,7 @@ class SavedOrder < ActiveRecord::Base
   validates :shop_url, presence: true,
     format: { with: %r{\A/}, message: "must start with /" }
 
-  scope :sorted, -> { order(name: :asc) }
+  scope :sorted, -> { order('lower(name) asc') }
 
   before_validation(on: :create) do
     create_uuid
