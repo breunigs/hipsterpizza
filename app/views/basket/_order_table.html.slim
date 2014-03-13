@@ -15,10 +15,10 @@
         td.antiTroll = order.nick
         td.price
           - if tips?
-              span.dim = "(#{number_to_currency(order.sum, unit: '')})"
-              = " #{number_to_currency(order.sum_with_tip, unit: '')}"
+              span.dim> = "(#{number_to_currency(order.sum, unit: '')})"
+              ' #{number_to_currency(order.sum_with_tip, unit: '')}
           - else
-              #{number_to_currency(order.sum, unit: '')}
+              = number_to_currency(order.sum, unit: '')
         td.bold class="#{order.paid? ? :good : :bad}" #{order.paid? ? "yes" : "NOPE" }
         td.hideOnPressure = order_details(order)
         td.hideOnPressure

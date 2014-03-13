@@ -26,10 +26,10 @@ class Order < ActiveRecord::Base
   end
 
   def sum_with_tip
+    # gets 'tip_percent' from the config and prevents negative values
+    tip_percent = [0, CONFIG['tip_percent'].to_i].max
     # round to nearest 10 cents
-    # ([0, CONFIG['tip_percent'].to_i].max) gets 'tip_percent' from the config
-    # and prevents negative values
-    (sum * (([0, CONFIG['tip_percent'].to_i].max)/100.0 + 1)).round(1)
+    (sum * (tip_percent/100.0 + 1)).round(1)
   end
 
   def nick_id

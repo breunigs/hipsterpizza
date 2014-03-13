@@ -1,5 +1,3 @@
-# Note: To omit errors all values have to be set.
-
 # This controls how many percent users shall tip. The price incl. tip will be
-# rounded to 10 cent. 0 disables tip proposals.
+# rounded to 10 cents. 0 disables tip proposals.
 tip_percent: 5
