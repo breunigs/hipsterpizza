@@ -1,7 +1,4 @@
-# Note: you can edit this file and HipsterPizza will pick up your
-#       changes, even in production mode. To omit errors all values have to be
-#       set. See also pinning.yml and fax.yml to personalize your hipsterpizza
-#       instance.
+# Note: To omit errors all values have to be set.
 
 # This controls how many percent users shall tip. The price incl. tip will be
 # rounded to 10 cent. 0 disables tip proposals.

@@ -80,10 +80,6 @@ class Basket < ActiveRecord::Base
     submitted == nil && !cancelled?
   end
 
-  def tips?
-    defined?(CONFIG['tip_percent']) && CONFIG['tip_percent'] > 0
-  end
-
   def sum
     sum_orders(orders)
   end

@@ -15,10 +15,10 @@ div.highlight
 
     - if @basket.editable?
       a href="#{destroy_order_path(@order.uuid)}" title="This deletes your order." class="button danger" data-method="delete" data-confirm="Do you really want to starve of hunger?" Destroy My Order
-  
+
   p
     ' Price:
-    - if @basket.tips?
+    - if tips?
       b #{euro(@order.sum_with_tip)}
       span.dim
         |  (or #{euro(@order.sum)} without tip)
@@ -29,5 +29,5 @@ div.highlight
       span.good ✓ You are marked as having paid.
     - else
       span.bad ✗ You still need to pay.
-  
+
   = order_details(@order)

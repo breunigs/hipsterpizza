@@ -5,7 +5,7 @@
     tr
       th Nick
       th.price
-        span class="nobr" € #{@basket.tips? ? 'with tip' : ''}
+        span class="nobr" € #{tips? ? 'with tip' : ''}
       th Paid?
       th.hideOnPressure Order
       th.hideOnPressure Actions
@@ -14,10 +14,9 @@
       tr class="#{order.uuid == cookie_get(:order).to_s ? 'highlight' : ''}"
         td.antiTroll = order.nick
         td.price
-          - if @basket.tips?
-			  span.dim
-                ' (#{number_to_currency(order.sum, unit: '')})
-              = number_to_currency(order.sum_with_tip, unit: '')
+          - if tips?
+              span.dim = "(#{number_to_currency(order.sum, unit: '')})"
+              = " #{number_to_currency(order.sum_with_tip, unit: '')}"
           - else
               #{number_to_currency(order.sum, unit: '')}
         td.bold class="#{order.paid? ? :good : :bad}" #{order.paid? ? "yes" : "NOPE" }
