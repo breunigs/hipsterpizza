@@ -149,19 +149,30 @@ var hipster = window.hipster = (function() {
     $.fx.off = true;
     $("body").addClass("wait");
     var navLinks = $.makeArray($(".navbars a"));
+    var subNavLinks = [];
+    var isTopLevelLink = true;
     var currentNav = null;
     var errorMsgs = [];
 
+    function getPossibleSubLinks() {
+      // TODO: does navigation-3-v8 exist?
+      // the currently active page has already been parsed when the main
+      // category page was loaded/clicked
+      subNavLinks = $.makeArray($("#navigation-2-v8 a:not(.firstactiv)"));
+      log("replay: “" + getActiveSubPageText() + "”: found " + subNavLinks.length + " subcategories");
+    }
+
     // loads the next sub page in the nav links array.
     function loadNextSubPage() {
-      log("replay: loading next subpage");
-      currentNav = $(navLinks.shift());
+      log("replay: loading next page");
+      isTopLevelLink = subNavLinks.length === 0;
+      currentNav = $((isTopLevelLink ? navLinks : subNavLinks).shift());
+      // load sub nav links first
       // if an element has this class, the pizza.de JS code avoids
       // loading it. Therefore remove it to ensure the content_ready
       // event fires.
       currentNav.removeClass('activ');
       currentNav.click();
-      return true;
     }
 
     // searches current sub page and adds found items to basket. The
@@ -229,7 +240,8 @@ var hipster = window.hipster = (function() {
     // resets the current category and executes again in a bit. This
     // repeats until all items are found or there are no more sub pages.
     function process() {
-      if(items.length === 0 || (currentNav === null && navLinks.length === 0))
+      var endOfCats = navLinks.length === 0 && subNavLinks.length === 0;
+      if(items.length === 0 || (currentNav === null && endOfCats))
         return tearDown();
 
       if(currentNav === null) {
@@ -238,6 +250,11 @@ var hipster = window.hipster = (function() {
         // reset sub page
         currentNav = null;
         addItemsToBasket();
+        // check if there are any subpages which also need processing
+        // before going to the next category. Only do this on top level
+        // links, otherwise this would cause infinite loops.
+        if(isTopLevelLink) getPossibleSubLinks();
+
         // continue with next step
         process();
       }
