@@ -7,10 +7,10 @@ class PassthroughController < ApplicationController
   after_filter :add_missing_content_type
 
   # cache some of the probably non-static elements
-  caches_action :pass, expires_in: 60.minutes, if: Proc.new {
+  caches_action :pass, expires_in: 90.minutes, if: Proc.new {
     path = request.url
     return true if path.match(%r{^/0_static/})
-    return true if path.match(/framek[0-9]{3}\.htm$/)
+    return true if path.match(/framek(?:[0-9]{3}\.)+htm$/)
     false
   }
 
