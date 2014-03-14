@@ -7,6 +7,13 @@ else
   PINNING = { }.freeze
 end
 
+path ="#{Rails.root}/config/config.yml"
+if File.exist?(path)
+  CONFIG = YAML.load_file(path).freeze
+else
+  CONFIG = { }.freeze
+end
+
 # the fax.yml file is reloaded on each access, to make it easy to change
 # stuff on the fly before submitting.
 def load_fax_config

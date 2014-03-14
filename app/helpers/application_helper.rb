@@ -22,4 +22,8 @@ module ApplicationHelper
   def has_nick?
     !cookie_get(:nick).blank?
   end
+
+  def tips?
+    defined?(CONFIG['tip_percent']) && CONFIG['tip_percent'] > 0
+  end
 end

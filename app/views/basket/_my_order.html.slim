@@ -18,9 +18,12 @@ div.highlight
 
   p
     ' Price:
-    b #{euro(@order.sum_with_tip)}
-    span.dim
-      |  (or #{euro(@order.sum)} without tip)
+    - if tips?
+      b #{euro(@order.sum_with_tip)}
+      span.dim
+        |  (or #{euro(@order.sum)} without tip)
+    - else
+      b #{euro(@order.sum)}
     ' .
     - if @order.paid?
       span.good ✓ You are marked as having paid.
