@@ -61,6 +61,9 @@ class PassthroughController < ApplicationController
 
     type = ret[1]["content-type"].first rescue 'text/plain'
 
+    # send_data does not include the headers from the response object,
+    # so include them manually. Required for e.g. CSP.
+    headers.merge!(response.headers)
     send_data ret[2].first, type: type, disposition: 'inline', status: ret[0]
   end
 
