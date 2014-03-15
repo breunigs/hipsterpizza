@@ -4,7 +4,7 @@ class OrderController < ApplicationController
   include CookieHelper
 
   before_filter :find_basket
-  before_filter :find_order, except: [:new, :create]
+  before_filter :require_order, except: [:new, :create]
   before_filter :ensure_basket_editable, only: [:create, :new, :destroy, :copy, :edit, :update]
   before_filter :reset_replay
 
@@ -130,6 +130,14 @@ class OrderController < ApplicationController
       @order.update_column(:paid, false)
       cookie_set(:action, :pay_order)
       "You need to pay an additional  #{view_context.sum(pay, pay_tip)}."
+    end
+  end
+
+  def require_order
+    find_order
+    unless @order
+      flash[:error] = 'Could not find order. Maybe the cookie went missing on a browser restart?'
+      return redirect_to_basket
     end
   end
 end
