@@ -6,11 +6,15 @@ class PassthroughController < ApplicationController
   skip_before_action :verify_authenticity_token
   after_filter :add_missing_content_type
 
-  # cache some of the probably non-static elements
+  # cache some of the probably non-static elements. In the worst case
+  # an element is 3 hours out of date, i.e. when the client requests a
+  # page just before it expires in Rails and won’t re-validate it for
+  # another 90 minutes.
   caches_action :pass, expires_in: 90.minutes, if: Proc.new {
-    path = request.url
-    return true if path.match(%r{^/0_static/})
-    return true if path.match(/framek(?:[0-9]{3}\.)+htm$/)
+    if short_time_cachable?
+      no_revalidate_for(90.minutes)
+      return true
+    end
     false
   }
 
@@ -22,8 +26,10 @@ class PassthroughController < ApplicationController
     end
   end
 
+
   caches_action :pass_cached, expires_in: 24.hours
   def pass_cached
+    no_revalidate_for(24.hours)
     return rewrite
   end
 
@@ -113,5 +119,15 @@ class PassthroughController < ApplicationController
     our << "%3A#{request.port}" if request.host != 80
 
     str.gsub!(our, '%3A%2F%2Fpizza.de')
+  end
+
+  def short_time_cachable?
+    return true if request.url.match(%r{^/0_static/})
+    return true if request.url.match(/framek(?:[0-9]{3}\.)+htm$/)
+    false
+  end
+
+  def no_revalidate_for(max_age)
+    headers['Cache-Control'] = "public, max-age=#{max_age}"
   end
 end

@@ -47,7 +47,16 @@ Hipsterpizza::Application.routes.draw do
   get 'hipster/*page', to: 'basket#find'
 
   # forward all other requests to pizza.de
-  match '*any.:ending', to: 'passthrough#pass_cached', ending: /swf|css|jpg|png|gif|js/, via: :get
+
+  # cache static resources for a very long time. Only JS files which are
+  # fingerprinted should be stored for an extended period.
+  match '*any.:ending', to: 'passthrough#pass_cached', ending: /swf|css|jpg|png|gif/, via: :get
+  match '*any.:fingerprint.:ending', to: 'passthrough#pass_cached', ending: 'js', fingerprint: /[a-z0-9]{40}/, via: :get
+  match '*any-:fingerprint.:ending', to: 'passthrough#pass_cached', ending: 'js', fingerprint: /[a-z0-9]{40}/, via: :get
+
+  # other elements are usually revalidated each time (using etags) or
+  # only stored for relatively short periods.
   match '*any', to: 'passthrough#pass', via: :all
+
   get 'pizzade_root', to: 'passthrough#pass'
 end
