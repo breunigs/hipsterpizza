@@ -81,6 +81,7 @@ class PassthroughController < ApplicationController
 
     target = map[env['PATH_INFO']]
     path = ActionController::Base.helpers.asset_path(target)
+    no_revalidate_for 24.hours
     redirect_to path, status: 301
 
     true
