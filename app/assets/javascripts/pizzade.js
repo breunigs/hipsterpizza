@@ -154,12 +154,27 @@ var hipster = window.hipster = (function() {
     var currentNav = null;
     var errorMsgs = [];
 
+    function preloadSubPages(arr) {
+      if(isMobileBrowser) return;
+
+      $.each(arr, function(ind, a) {
+        var handler = $(a).attr('onclick');
+        var url = handler.replace(/.*(framek[0-9.]+\.htm).*/, '$1');
+        // it’s enough to extract the filename since pizza.de rewrites
+        // the base href to what we need already.
+        $.get(url);
+      });
+    }
+
+    preloadSubPages(navLinks);
+
     function getPossibleSubLinks() {
       // TODO: does navigation-3-v8 exist?
       // the currently active page has already been parsed when the main
       // category page was loaded/clicked
       subNavLinks = $.makeArray($("#navigation-2-v8 a:not(.firstactiv)"));
       log("replay: “" + getActiveSubPageText() + "”: found " + subNavLinks.length + " subcategories");
+      preloadSubPages(subNavLinks);
     }
 
     // loads the next sub page in the nav links array.
