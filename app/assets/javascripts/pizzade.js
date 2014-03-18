@@ -89,12 +89,16 @@ var hipster = window.hipster = (function() {
     return new jsSHA(addr, "TEXT").getHash("SHA-512", "HEX");
   }
 
+  function textPriceToFloat(text) {
+    return parseFloat(text.replace(/\s/g, "").replace(",", "."));
+  }
+
   function getCartItemsJson() {
     var data = [];
     $(".cartitems").each(function(ind, elm) {
       var prod = $(elm).find(".cartitems-title div").text();
       var price = $(elm).find(".cartitems-itemsum .cartitems-sprice div").text();
-      price = parseFloat(price.replace(/\s/, "").replace(",", "."));
+      price = textPriceToFloat(price);
 
       if($.trim(prod) === "" || isNaN(price)) {
         err("Couldn't detect product properly, maybe the script is broken?");
@@ -110,6 +114,12 @@ var hipster = window.hipster = (function() {
 
       data[ind] = { "price": price, "prod": prod, "extra": extra.sort() };
     });
+
+    var deposit = textPriceToFloat($(".deposit div").text());
+    if(!isNaN(deposit) && deposit > 0) {
+      data[data.length] = { price: deposit, "prod": "Pfand", extra: [] };
+    }
+
     return data;
   }
 
@@ -196,6 +206,9 @@ var hipster = window.hipster = (function() {
       log("replay: searching page “" + getActiveSubPageText() + "” for items");
 
       items = $.grep(items, function (item, ind) {
+        // Deposit is added automatically when selecting the correct products
+        if(item["prod"] === "Pfand") return false;
+
         var link = findLinkWithText(item["prod"]);
         if(link.length === 0) return true; // not found; keep in queue
         if(link.length >= 2) {
@@ -290,7 +303,7 @@ var hipster = window.hipster = (function() {
       var should = parseFloat(window.hipsterReplayFinalSum);
       var have = parseFloat($('.total').text().replace(',', '.'));
       if(should !== have) {
-        errorMsgs.push('Final sum does not match. Should be ' + should + '€, but have ' + have + '€. This may occur if there’s bottle deposit.');
+        errorMsgs.push('Final sum does not match. Should be ' + should + '€, but have ' + have + '€. Check for missing products.');
       }
     }
 
