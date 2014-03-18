@@ -144,9 +144,8 @@ var hipster = window.hipster = (function() {
   }
 
   function getPriceOfLastItem() {
-    var p = $(".cartitems:last .cartitems-itemsum .cartitems-sprice div").text();
-    p = $.trim(p).replace(/\s.*$/, "").replace(",", ".");
-    return parseFloat(p);
+    var p = $(".cartitems:last .cartitems-itemsum .cartitems-sprice div");
+    return textPriceToFloat(p.text());
   }
 
   function getActiveSubPageText() {
@@ -301,7 +300,7 @@ var hipster = window.hipster = (function() {
 
     function checkFinalSum() {
       var should = parseFloat(window.hipsterReplayFinalSum);
-      var have = parseFloat($('.total').text().replace(',', '.'));
+      var have = textPriceToFloat($('.total').text());
       if(should !== have) {
         errorMsgs.push('Final sum does not match. Should be ' + should + '€, but have ' + have + '€. Check for missing products.');
       }
