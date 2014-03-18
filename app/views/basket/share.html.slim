@@ -13,7 +13,7 @@ p
 p.huge
   = link_to basket_with_uid_url(uid), basket_with_uid_url(uid)
   = image_tag basket_with_uid_url(uid) + '.svg'
-
+  link rel="prefetch prerender" href="#{basket_with_uid_url(uid)}"
 
 h2 Submitting Order
 p

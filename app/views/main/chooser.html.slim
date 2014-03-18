@@ -22,6 +22,8 @@ noscript
       | You can still place an order
     |  or mark yourself as having paid.<br>
     a href="#{auto_basket_path}" class="button success" Show Previously Used Basket
+    link rel="prefetch prerender" href="#{auto_basket_path}"
+
 
 h2 New Group Basket
 
@@ -30,6 +32,7 @@ p
   b new
   '  group order. You’ll be able to choose which shop will be used.<br>
   = link_to "Create New Basket", new_basket_path, class: "button primary", data: { no_turbolink: '' }
+  link rel="prefetch prerender" href="#{new_basket_path}"
 
 h2 Participate
 
