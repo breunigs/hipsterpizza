@@ -25,9 +25,8 @@ class ApplicationController < ActionController::Base
   end
 
   def find_order
-    uuid = params[:order_uuid]
-    uuid ||= cookie_get(:order)
-    @order = Order.where(uuid: uuid).first rescue nil
+    @order = Order.where(uuid: params[:order_uuid]).first rescue nil
+    @order ||= Order.where(uuid: cookie_get(:order), basket: @basket).first rescue nil
     @saved_order = SavedOrder.where(uuid: params[:saved_order_uuid]).first rescue nil
   end
 

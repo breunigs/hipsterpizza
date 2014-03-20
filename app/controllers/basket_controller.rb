@@ -42,6 +42,7 @@ class BasketController < ApplicationController
     cookie_set(:action, :share_link)
     cookie_set(:basket, @basket.uid)
     cookie_set(:admin, @basket.uid)
+    cookie_delete(:order)
 
     if PINNING['single_basket_mode']
       redirect_to_basket
