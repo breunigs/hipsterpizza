@@ -75,7 +75,7 @@ module BasketHelper
     ]]
 
     space = "\n#{Prawn::Text::NBSP*4} + "
-    @basket.orders.each do |order|
+    @basket.orders.sorted.each do |order|
       j = order.json_parsed
       j.each do |item|
         prod = item["prod"]
