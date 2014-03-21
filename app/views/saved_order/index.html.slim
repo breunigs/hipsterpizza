@@ -71,10 +71,6 @@ p You can delete anyone’s orders, because it’s not feasible to protect them 
             - if has_nick?
               a href="#{copy_saved_order_path(s.uuid, mode: :insta)}" title="This order will be placed into the group basket instantly with your nick." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
 
-            a href="#{destroy_saved_order_path(s.uuid)}" title="This removes the saved order for all users. Think about it." class="button danger" data-method="delete" data-confirm="STOP! Think about the consequences of removing “#{s.name}”. Continue?" destroy
-
-          - else
-            ' Basket not editable
-
+          a href="#{destroy_saved_order_path(s.uuid)}" title="This removes the saved order for all users. Think about it." class="button danger" data-method="delete" data-confirm="STOP! Think about the consequences of removing “#{s.name}”. Continue?" destroy
 p
   a href="#{auto_basket_path}" class="button" Return To Basket
