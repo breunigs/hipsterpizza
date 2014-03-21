@@ -26,6 +26,7 @@ describe 'Basket' do
     expect(page).not_to have_link 'Submit Group Order'
 
     click_link 'Un-Cancel Group Order'
+    expect(page).to have_link 'Submit Group Order'
   end
 
   it 'is submittable' do

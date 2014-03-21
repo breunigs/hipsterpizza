@@ -1,4 +1,4 @@
-- cache("top_bar_#{admin?}_#{@order.cache_key}") do
+- cache("top_bar_#{admin?}_#{@basket.cache_key}_#{@order.cache_key}") do
   #hipsterTopBar
     - if admin? && (!@order || @order.paid?)
       = render "progress_bars/choose_shop"
