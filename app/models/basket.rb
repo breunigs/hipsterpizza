@@ -43,7 +43,7 @@ class Basket < ActiveRecord::Base
   end
 
   def self.cancel_all_editable
-    self.editable.each { |b| b.update_column(:cancelled, true) }
+    self.editable.each { |b| b.update_attribute(:cancelled, true) }
   end
 
   def self.find_basket_for_single_mode

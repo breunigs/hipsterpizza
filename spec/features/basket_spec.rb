@@ -57,6 +57,22 @@ describe 'Basket' do
     expect(page).to have_link 'Submit Group Order'
   end
 
+  it 'doesn’t show any edit/destroy links after submit' do
+    visit basket_path
+    order_create
+    click_on 'Submit Group Order'
+    visit basket_path
+
+    expect(page).not_to have_link('Edit')
+    expect(page).not_to have_link('Destroy')
+
+    click_on 'Delivery Has Arrived'
+    expect(page).not_to have_link('Edit')
+    expect(page).not_to have_link('Destroy')
+
+    pp page.html
+  end
+
   it 'allows users to become admins' do
     share_url = current_url
     visit basket_path

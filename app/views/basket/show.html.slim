@@ -28,7 +28,7 @@ p
   a href="#{saved_order_index_path}" title="Lists your recent and everyone’s saved orders." class="button" Show Saved/Previous Orders
 
 - if @order
-  - cache @order do
+  - cache("my_order_#{@basket.cache_key}_#{@order.cache_key}") do
     = render "my_order"
 
 

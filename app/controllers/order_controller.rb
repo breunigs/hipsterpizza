@@ -127,7 +127,7 @@ class OrderController < ApplicationController
       cookie_set(:action, :wait)
       "Please take #{vc.euro(pay.abs)} (or #{vc.euro(pay_tip.abs)} if you tipped) from the money pile."
     else
-      @order.update_column(:paid, false)
+      @order.update_attribute(:paid, false)
       cookie_set(:action, :pay_order)
       "You need to pay an additional  #{view_context.sum(pay, pay_tip)}."
     end

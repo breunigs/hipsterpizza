@@ -5,7 +5,7 @@ class BasketSubmitController < ApplicationController
   before_filter :find_basket, only: :submit
 
   def submit
-    @basket.update_column(:submitted, Time.now)
+    @basket.update_attribute(:submitted, Time.now)
     @cfg = load_fax_config
     provider = @cfg['order_by_fax'] ? @cfg['fax_provider'] : nil
 

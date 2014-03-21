@@ -70,20 +70,19 @@ class BasketController < ApplicationController
   end
 
   def unsubmit
-    @basket.update_column(:submitted, nil)
+    @basket.update_attribute(:submitted, nil)
     flash[:info] = 'Basket has been reopened and further orders may be made.'
     redirect_to_basket
   end
 
   def set_submit_time
     cookie_set(:action, :mark_delivery_arrived)
-    @basket.update_column(:submitted, Time.now)
-    @basket.update_column(:sha_address, params[:sha_address])
+    @basket.update!(submitted: Time.now, sha_address: params[:sha_address])
     redirect_to_basket
   end
 
   def delivery_arrived
-    @basket.update_column(:arrival, Time.now)
+    @basket.update_attribute(:arrival, Time.now)
     redirect_to_basket
   end
 
