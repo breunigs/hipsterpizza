@@ -188,9 +188,9 @@ var hipster = window.hipster = (function() {
 
     // loads the next sub page in the nav links array.
     function loadNextSubPage() {
-      log("replay: loading next page");
       isTopLevelLink = subNavLinks.length === 0;
       currentNav = $((isTopLevelLink ? navLinks : subNavLinks).shift());
+      log("replay: loading next page " + currentNav.text());
       // load sub nav links first
       // if an element has this class, the pizza.de JS code avoids
       // loading it. Therefore remove it to ensure the content_ready
@@ -353,7 +353,10 @@ var hipster = window.hipster = (function() {
     var check = function() {
       if(isLoading()) return;
       $("body").unbind("DOMSubtreeModified", check);
-      runAfterLoads();
+      // wait until DOMSubtreeModified event is over to match mutation
+      // observer behaviour. If not done so, events might still fire for
+      // *this* modification, instead of the next one.
+      window.setTimeout(runAfterLoads, 0);
     }
 
     $("body").bind("DOMSubtreeModified", check);
