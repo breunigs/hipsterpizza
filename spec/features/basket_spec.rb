@@ -69,8 +69,6 @@ describe 'Basket' do
     click_on 'Delivery Has Arrived'
     expect(page).not_to have_link('Edit')
     expect(page).not_to have_link('Destroy')
-
-    pp page.html
   end
 
   it 'allows users to become admins' do
