@@ -54,7 +54,7 @@ class Basket < ActiveRecord::Base
     return @basket if @basket
 
     # is there a recently submitted basket in the timeout range?
-    after = PINNING['single_basket_timeout'].minutes.ago
+    after = (PINNING['single_basket_timeout'] || 720).minutes.ago
     @basket = self.find_recent_submitted(after)
     return @basket if @basket
     nil
