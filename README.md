@@ -1,8 +1,8 @@
-# HipsterPizza
+# HipsterPizza – [pizza.yrden.de](https://pizza.yrden.de)
 
 HipsterPizza allows to make group orders on pizza.de. If you don’t want
 to install a copy of HipsterPizza on your own server, you can use the
-public instance at **[pizza.yrden.de](http://pizza.yrden.de)**.
+public instance at **[pizza.yrden.de](https://pizza.yrden.de)**.
 
 ## Status
 
@@ -96,7 +96,7 @@ recent orders.
 
 Once the above setup is done, you should have a public instance of
 HipsterPizza running, just like the one on
-[pizza.yrden.de](http://pizza.yrden.de).
+[pizza.yrden.de](https://pizza.yrden.de).
 
 **config/pinning.yml:**
 ([see example](https://github.com/breunigs/hipsterpizza/blob/master/config/pinning.example.yml))
