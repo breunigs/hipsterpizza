@@ -24,10 +24,6 @@ describe 'Pinning' do
     silence_warnings { PINNING = { } }
   end
 
-  after do
-    PINNING = { }
-  end
-
   context 'with shop url' do
     before { PINNING['shop_url'] = SHOP_URL }
 
