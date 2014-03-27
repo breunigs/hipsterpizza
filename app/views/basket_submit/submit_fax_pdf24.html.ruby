@@ -63,8 +63,8 @@ success
 
 
 a('Adding Fax Number ') ################################################
+a(" (#{@basket.shop_fax}) ")
 faxnum = u @basket.shop_fax
-a(" (#{faxnum}) ")
 
 addfax = m.get("https://faxout.pdf24.org/client.php?action=setTargetNumbers&faxId=#{faxid}&targetNumbers=#{faxnum}")
 
