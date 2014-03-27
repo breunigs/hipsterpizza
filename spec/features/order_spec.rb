@@ -78,6 +78,48 @@ describe 'Order' do
       click_on 'Save My Order'
       wait_until_content('saved ✓')
     end
+
+    context 'that has been paid' do
+      before do
+        click_on 'Mark Order as Paid', match: :first
+        wait_until_content 'You are marked as having paid'
+        click_on 'Edit My Order'
+        wait_until_content 'Summe'
+        accept_nick!
+      end
+
+      it 'keeps order marked as paid if price didn’t change' do
+        click_on 'Update My Order'
+        expect(page).to have_content 'The price didn’t change'
+        expect(page).to have_content 'You are marked as having paid'
+      end
+
+      it 'marks order as not paid if price increases' do
+        click_on('Geflügel')
+        click_on('Chicken Sabzi', match: :first)
+        click_on('Update My Order')
+        expect(page).to have_content 'You need to pay an additional'
+        expect(page).to have_content 'You still need to pay'
+      end
+
+      it 'keeps order marked as paid if price decreases' do
+        # remove previous order
+        remove_button = '#bestellform .btn-v01.btn-remove'
+        first(remove_button).click
+        # wait until the animation is definitely over before going on
+        sleep 0.5
+        expect(page).not_to have_css(remove_button)
+        expect(page).not_to have_css('.cartitems-item')
+
+        click_on('Desserts')
+        sleep 0.5
+        click_on('Mangofrüchte', match: :first)
+        click_on('Update My Order')
+        expect(page).to have_content 'from the money pile'
+        expect(page).to have_content 'You are marked as having paid'
+
+      end
+    end
   end
 
   context 'with existing basket' do
