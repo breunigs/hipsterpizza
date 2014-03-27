@@ -16,13 +16,16 @@ describe 'Pinning' do
     end
   end
 
-
   before do
     # reassign PINNING variable to get rid of the freeze and
     # allow custom assignments. Normally Ruby issues a warning,
     # but in we can ignore it safely in this context.
     silence_warnings { PINNING = { } }
   end
+
+  # after(:all) do
+  #  silence_warnings { PINNING = { }.freeze }
+  # end
 
   context 'with shop url' do
     before { PINNING['shop_url'] = SHOP_URL }
