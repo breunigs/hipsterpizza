@@ -14,4 +14,8 @@ describe 'Passthrough' do
     expect(page).to have_content('Missing Cookie')
   end
 
+  it 'replaces content' do
+    visit root_path + '0_image/pizza-de_logoshop_v8.gif'
+    expect(current_url).to end_with 'hipster/assets/blank.png'
+  end
 end

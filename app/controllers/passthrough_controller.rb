@@ -80,7 +80,9 @@ class PassthroughController < ApplicationController
     return false unless map.keys.include?(env['PATH_INFO'])
 
     target = map[env['PATH_INFO']]
-    path = ActionController::Base.helpers.asset_path(target)
+    # TODO: the next line doesn’t work until 4.1, see rails bug #10051
+    #path = ActionController::Base.helpers.asset_path(target)
+    path = Rails.application.config.assets.prefix + '/' + target
     no_revalidate_for 24.hours
     redirect_to path, status: 301
 
