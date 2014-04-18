@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  before_filter :set_locale
 
   def find_basket
     uid = params[:basket_uid]
@@ -85,4 +86,10 @@ class ApplicationController < ActionController::Base
   def errors_to_fake_list(obj)
     "\n• " + obj.errors.full_messages.join("\n• ")
   end
+
+  def set_locale
+    avail = I18n.available_locales
+    I18n.locale = http_accept_language.compatible_language_from(avail)
+  end
+
 end

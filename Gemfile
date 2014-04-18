@@ -14,6 +14,9 @@ gem 'rqrcode-rails3'
 gem 'possessive'
 gem 'unicode_utils'
 
+# translation
+gem 'http_accept_language'
+
 gem 'mechanize', require: false
 gem 'prawn'
 gem 'prawn-qrcode'

@@ -1,54 +1,49 @@
 #hipsterTopBar
-  h1 HipsterPizza
+  h1 name
 
 noscript
-  h2 Warning: JavaScript disabled
+  h2 main.chooser.nojs.heading
   p
-    | HipsterPizza will not work without JavaScript. Please enable it in
-      order to continue.
+    | main.chooser.nojs.body
 
 = render "shared/flash"
 
 - if @basket
-  h2 Previous Basket Detected
+  h2 main.chooser.prev_basket.heading
   p
-    b Created:
+    b main.chooser.prev_basket.created
     '  #{@basket.created_at.strftime("%Y-%m-%d %H:%M")}<br>
-    b Shop:
+    b main.chooser.prev_basket.shop
     '  #{@basket.shop_name}<br><br>
     - if @basket.submitted?
-      | It has been submitted already, but you can view the details
+      | main.chooser.prev_basket.submitted
     - else
-      | You can still place an order
-    |  or mark yourself as having paid.<br>
-    a href="#{auto_basket_path}" class="button success" Show Previously Used Basket
+      | main.chooser.prev_basket.still_open
+    | main.chooser.prev_basket.mark_as_paid
+    | <br>
+    a href="#{auto_basket_path}" class="button success" .prev_basket.link
     link rel="prefetch prerender" href="#{auto_basket_path}"
 
 
-h2 New Group Basket
+h2 main.chooser.new_basket.heading
 
 p
-  ' Use this if you want to create a
-  b new
-  '  group order. You’ll be able to choose which shop will be used.<br>
-  = link_to "Create New Basket", new_basket_path, class: "button primary", data: { no_turbolink: '' }
+  ' main.chooser.new_basket.body
+  br
+  = link_to t('.new_basket.link'), new_basket_path, class: "button primary", data: { no_turbolink: '' }
 
-h2 Participate
+h2 main.chooser.participate.heading
 
 p
-  | In order to participate in an existing order, simply ask anyone for
-    the link to the group basket. If for some reason copy and pasting is
-    cumbersome, you can enter the basket ID manually here:
+  | main.chooser.participate.body
 
 form method="GET" action="#{basket_path(uid: '')}"
-  input required="required" name="basket_uid" value="#{params[:uid]}" placeholder="Enter Basket UID"
-  input type="submit" class="primary" value="Use Basket"
+  input required="required" name="basket_uid" value="#{params[:uid]}" placeholder="#{t 'main.chooser.participate.field_hint'}"
+  input type="submit" class="primary" value="#{t 'main.chooser.participate.link'}"
 
 
-h2 Privacy / Data Usage
+h2 main.chooser.privacy.heading
 
 p
-  b Summary:
-  '  Whatever you can see on the basket page for up to one year. Cookies are uncritical and your address data is only passed through HipsterPizza through pizza.de.
-  a href="#{privacy_path}" See more detailed description
-  ' .
+  ' main.chooser.privacy.body
+  a href="#{privacy_path}" main.chooser.privacy.link

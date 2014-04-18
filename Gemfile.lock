@@ -125,6 +125,7 @@ GEM
     hike (1.2.3)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
+    http_accept_language (2.0.1)
     http_parser.rb (0.6.0)
     i18n (0.6.9)
     jquery-rails (3.1.0)
@@ -304,6 +305,7 @@ DEPENDENCIES
   guard-rails
   guard-rspec
   guard-shell
+  http_accept_language
   jquery-rails
   mechanize
   parallel_tests

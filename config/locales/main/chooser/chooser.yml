@@ -1,0 +1,66 @@
+en:
+  main:
+    chooser:
+      nojs:
+        heading: 'Warning: JavaScript disabled'
+        body: 'HipsterPizza will not work without JavaScript. Please enable it in order to continue.'
+
+      prev_basket:
+        heading: 'Previous Basket Detected'
+        created: 'Created:'
+        shop: 'Shop:'
+        submitted: 'It has been submitted already, but you can view the details'
+        still_open: 'You can still place an order'
+        mark_as_paid: ' or mark yourself as having paid.'
+        link: 'Show Previously Used Basket'
+
+      new_basket:
+        heading: 'New Group Basket'
+        body: 'Use this if you want to create a <b>new</b> group order. You’ll be able to choose which shop will be used.'
+        link: 'Create New Basket'
+
+      participate:
+        heading: Participate
+        body: 'In order to participate in an existing order, simply ask anyone for the link to the group basket. If for some reason copy and pasting is cumbersome, you can enter the basket ID manually here:'
+        field_hint: Enter Basket-UID
+        link: Use Basket
+
+      privacy:
+        heading: 'Privacy / Data Usage'
+        body: '<b>Summary:</b> Whatever you can see on the basket page for up to one year. Cookies are uncritical and your address is only used when ordering with pizza.de.'
+        link: 'See more detailed description'
+
+
+
+de:
+  main:
+    chooser:
+      nojs:
+        heading: 'Achtung: JavaScript ausgeschaltet'
+        body: 'HipsterPizza funktioniert nur mit eingeschaltetem JavaScript. Bitte aktiviere es, bevor Du fortfährst.'
+
+      prev_basket:
+        heading: 'Letzter Warenkorb'
+        created: 'Erstellt:'
+        shop: 'Lieferservice:'
+        submitted: 'Die Bestellung wurde schon abgeschickt, aber Du kannst Dir die Details ansehen'
+        still_open: 'Du kannst immer noch bestellen'
+        mark_as_paid: ' oder Dich als “bezahlt” markieren.'
+        link: 'Letzten Warenkorb anzeigen'
+
+      new_basket:
+        heading: 'Neuer Warenkorb'
+        body: 'Nutze diese Funktion, wenn Du eine <b>neue</b> Gruppenbestellung machen möchtest. Du kannst auswählen, welcher Lieferservice verwendet werden soll.'
+        link: 'Neuen Warenkorb erstellen'
+
+      participate:
+        heading: Mitbestellen
+        body: 'In order to participate in an existing order, simply ask anyone for the link to the group basket. If for some reason copy and pasting is cumbersome, you can enter the basket ID manually here:'
+        body: 'Um mitzumachen, frage einfach einen Teilnehmer nach dem Link zum gemeinsamen Warenkorb. Wenn es zu anstrengend ist die URL kopieren, kannst Du auch manuell die ID eingeben:'
+        field_hint: Warenkorb-ID eingeben
+        link: Warenkorb nutzen
+
+      privacy:
+        heading: 'Datenschutz'
+        body: '<b>Kurzversion:</b> Alles was auf der Warenkorb Seite zu sehen ist für bis zu ein Jahr. Cookies enthalten nichts Wichtiges und Deine Adresse wird nur für eine Bestellung bei pizza.de verwendet.'
+        link: 'Genauere Beschreibung anzeigen'
