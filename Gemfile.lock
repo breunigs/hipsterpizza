@@ -186,7 +186,7 @@ GEM
       eventmachine_httpserver
       http_parser.rb
       multi_json
-    puma (2.7.1)
+    puma (2.8.2)
       rack (>= 1.1, < 2.0)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
