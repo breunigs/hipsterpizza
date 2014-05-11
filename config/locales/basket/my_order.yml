@@ -28,16 +28,16 @@ de:
       heading: 'Deine Bestellung %{nick}'
 
       edit:
-        text: '✎ Bearbeite meine Bestellung'
+        text: '✎ Bearbeiten'
         title: 'Öffnet Deine Bestellung auf pizza.de, sodass Du Änderungen vornehmen kannst.'
 
       destroy:
-        text: 'Vernichte Meine Bestellung'
+        text: 'Vernichten'
         title: 'Dies löscht Deine Bestellung aus dem Warenkorb'
         confirm: 'Willst Du wirklich verhungern?'
 
       is_saved: 'gespeichert ✓'
-      save: 'Speichere Meine Bestellung'
+      save: 'Speichern'
 
       price:
         with_tips: 'Preis: <b>%{with_tip}</b> (oder <span class="dim">%{without_tip}</span> ohne Trinkgeld).'
