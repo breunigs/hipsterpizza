@@ -10,13 +10,14 @@ class PassthroughController < ApplicationController
   # an element is 3 hours out of date, i.e. when the client requests a
   # page just before it expires in Rails and won’t re-validate it for
   # another 90 minutes.
-  caches_action :pass, expires_in: 90.minutes, if: Proc.new {
+  caches_action :pass, expires_in: 90.minutes, if: proc do
     if short_time_cachable?
       no_revalidate_for(90.minutes)
-      return true
+      true
+    else
+      false
     end
-    false
-  }
+  end
 
   def pass
     if env['PATH_INFO'].include?("reporterror")
