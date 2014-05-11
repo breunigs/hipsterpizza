@@ -1,0 +1,47 @@
+en:
+  basket:
+    my_order:
+      heading: 'Your Order, %{nick}'
+
+      edit:
+        text: '✎ Edit My Order'
+        title: 'Reopen your order on pizza.de, allowing you to make changes.'
+
+      destroy:
+        text: 'Destroy My Order'
+        title: 'This deletes your order.'
+        confirm: 'Do you really want to starve of hunger?'
+
+      is_saved: 'saved ✓'
+      save: 'Save My Order'
+
+      price:
+        with_tips: 'Price: <b>%{with_tip}</b> (or <span class="dim">%{without_tip}</span> without tip).'
+        without_tips: 'Price: <b>%{price}</b>.'
+
+      has_paid: '✓ You are marked as having paid.'
+      has_not_paid: '✗ You still need to pay.'
+
+de:
+  basket:
+    my_order:
+      heading: 'Deine Bestellung %{nick}'
+
+      edit:
+        text: '✎ Bearbeite meine Bestellung'
+        title: 'Öffnet Deine Bestellung auf pizza.de, sodass Du Änderungen vornehmen kannst.'
+
+      destroy:
+        text: 'Vernichte Meine Bestellung'
+        title: 'Dies löscht Deine Bestellung aus dem Warenkorb'
+        confirm: 'Willst Du wirklich verhungern?'
+
+      is_saved: 'gespeichert ✓'
+      save: 'Speichere Meine Bestellung'
+
+      price:
+        with_tips: 'Preis: <b>%{with_tip}</b> (oder <span class="dim">%{without_tip}</span> ohne Trinkgeld).'
+        without_tips: 'Preis: <b>%{price}</b>.'
+
+      has_paid: '✓ Du bist als bezahlt markiert.'
+      has_not_paid: '✗ Du musst noch bezahlen.'

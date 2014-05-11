@@ -1,33 +1,31 @@
 div.highlight
 
-  h2 Your Order, #{@order.nick}
+  h2 = t 'basket.my_order.heading', nick: @order.nick
 
   p
     = render 'toggle_order_paid_button'
 
     - if @basket.editable?
-      a href="#{edit_order_path(@order.uuid)}" title="This reopens your order and you can edit it." class="button" data-no-turbolink="" ✎ Edit My Order
+      a href="#{edit_order_path(@order.uuid)}" title="#{t 'basket.my_order.edit.title'}" class="button" data-no-turbolink="" basket.my_order.edit.text
 
     - if SavedOrder.exists?(cookie_get(:nick), @order)
-      a href="" class="button" saved ✓
+      a href="" class="button" basket.my_order.is_saved
     - else
-      = render "save_order_button", order: @order, text: 'Save My Order'
+      = render "save_order_button", order: @order, text: t('basket.my_order.save')
 
     - if @basket.editable?
-      a href="#{destroy_order_path(@order.uuid)}" title="This deletes your order." class="button danger" data-method="delete" data-confirm="Do you really want to starve of hunger?" Destroy My Order
+      a href="#{destroy_order_path(@order.uuid)}" title="#{t 'basket.my_order.destroy.title'}" class="button danger" data-method="delete" data-confirm="#{t 'basket.my_order.destroy.confirm'}" basket.my_order.destroy.text
 
   p
-    ' Price:
     - if tips?
-      b #{euro(@order.sum_with_tip)}
-      span.dim
-        |  (or #{euro(@order.sum)} without tip)
+      = t('basket.my_order.price.with_tips', with_tip: euro(@order.sum_with_tip), without_tip: euro(@order.sum)).html_safe
     - else
-      b #{euro(@order.sum)}
-    ' .
+      = t('basket.my_order.price.without_tips', price: euro(@order.sum)).html_safe
+    = ' '
+
     - if @order.paid?
-      span.good ✓ You are marked as having paid.
+      span.good basket.my_order.has_paid
     - else
-      span.bad ✗ You still need to pay.
+      span.bad basket.my_order.has_not_paid
 
   = order_details(@order)
