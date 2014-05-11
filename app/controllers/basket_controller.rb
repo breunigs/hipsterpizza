@@ -35,7 +35,7 @@ class BasketController < ApplicationController
 
     if @basket.errors.any?
       msgs = errors_to_fake_list(@basket)
-      flash[:error] = "Could not create basket. Messages: #{msgs}"
+      flash[:error] = t('basket.controller.create.errors', messages: msgs)
       return redirect_to root_path
     end
 
@@ -71,7 +71,7 @@ class BasketController < ApplicationController
 
   def unsubmit
     @basket.update_attribute(:submitted, nil)
-    flash[:info] = 'Basket has been reopened and further orders may be made.'
+    flash[:info] = t 'basket.controller.reopened'
     redirect_to_basket
   end
 
@@ -88,7 +88,7 @@ class BasketController < ApplicationController
 
   def set_admin
     cookie_set(:admin, @basket.uid)
-    flash[:info] = 'You have been set as admin.'
+    flash[:info] = t 'basket.controller.set_admin'
     redirect_to_basket
   end
 
@@ -99,9 +99,9 @@ class BasketController < ApplicationController
   def toggle_cancelled
     @basket.toggle(:cancelled).save
     if @basket.cancelled?
-      flash[:info] = "Group order has been cancelled"
+      flash[:info] = t 'basket.controller.group_order.cancelled'
     else
-      flash[:success] = "Group order has been enabled again"
+      flash[:success] = t 'basket.controller.group_order.reenabled'
     end
     redirect_to_basket
   end
@@ -126,7 +126,7 @@ class BasketController < ApplicationController
 
   def ensure_admin
     unless view_context.admin?
-      flash[:error] = 'You are not an admin, no action taken.'
+      flash[:error] = t 'basket.controller.not_admin'
       redirect_to_basket
     end
   end

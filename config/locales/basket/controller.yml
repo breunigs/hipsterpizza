@@ -1,0 +1,31 @@
+en:
+  basket:
+    controller:
+      reopened: 'Basket has been reopened and further orders may be made.'
+
+      create:
+        errors: 'Could not create basket. Messages: %{msgs}'
+
+
+      set_admin: 'You have been set as admin.'
+      not_admin: 'You are not an admin, no action taken.'
+
+      group_order:
+        cancelled: 'Group order has been cancelled'
+        reenabled: 'Group order has been enabled again'
+
+de:
+  basket:
+    controller:
+      reopened: 'Warenkorb wurde wieder geöffnet, weitere Bestellung sind möglich.'
+
+      create:
+        errors: 'Konnte Warenkorb nicht erstellen. Fehler: %{msgs}'
+
+
+      set_admin: 'Du bist jetzt Admin.'
+      not_admin: 'Du bist kein Admin, keine Änderungen gemacht.'
+
+      group_order:
+        cancelled: 'Gruppenbestellung abgebrochen, keine Bestellungen mehr möglich.'
+        reenabled: 'Gruppenbestellung wieder geöffnet.'
