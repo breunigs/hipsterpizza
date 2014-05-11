@@ -4,7 +4,7 @@ en:
       reopened: 'Basket has been reopened and further orders may be made.'
 
       create:
-        errors: 'Could not create basket. Messages: %{msgs}'
+        errors: 'Could not create basket. Messages: %{messages}'
 
 
       set_admin: 'You have been set as admin.'
@@ -20,7 +20,7 @@ de:
       reopened: 'Warenkorb wurde wieder geöffnet, weitere Bestellung sind möglich.'
 
       create:
-        errors: 'Konnte Warenkorb nicht erstellen. Fehler: %{msgs}'
+        errors: 'Konnte Warenkorb nicht erstellen. Fehler: %{messages}'
 
 
       set_admin: 'Du bist jetzt Admin.'
