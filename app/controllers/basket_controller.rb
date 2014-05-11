@@ -34,7 +34,7 @@ class BasketController < ApplicationController
     @basket = Basket.create(params.permit(:shop_name, :shop_url, :shop_fax))
 
     if @basket.errors.any?
-      msgs = errors_to_fake_list(b)
+      msgs = errors_to_fake_list(@basket)
       flash[:error] = "Could not create basket. Messages: #{msgs}"
       return redirect_to root_path
     end
