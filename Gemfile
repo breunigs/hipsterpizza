@@ -13,6 +13,7 @@ gem 'actionpack-action_caching'
 gem 'rqrcode-rails3'
 gem 'possessive'
 gem 'unicode_utils'
+gem 'rails-i18n'
 
 # translation
 gem 'http_accept_language'

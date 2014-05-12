@@ -16,14 +16,12 @@ module BasketHelper
   end
 
   def time(t)
-    s = t.strftime(t.today? ? '%H:%M' : '%Y-%m-%d %H:%M')
-    s << ' ('
-    happened = t < Time.now
-    s << 'in ' unless happened
-    s << distance_of_time_in_words_to_now(t)
-    s << ' ago' if happened
-    s << ')'
-    s
+    timestamp = t.strftime(t.today? ? '%H:%M' : '%Y-%m-%d %H:%M')
+
+    key = t < Time.now ? 'past' : 'future'
+    relative = t('time.' + key, date: time_ago_in_words(t))
+
+    "#{timestamp} (#{relative})"
   end
 
   def contact_field(field)

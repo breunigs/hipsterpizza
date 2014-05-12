@@ -1,0 +1,11 @@
+en:
+  name: HipsterPizza
+  time:
+    future: 'in %{date}'
+    past: '%{date} ago'
+
+de:
+  name: HipsterPizza
+  time:
+    future: 'in %{date}'
+    past: 'vor %{date}'

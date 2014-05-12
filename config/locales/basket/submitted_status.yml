@@ -5,4 +5,13 @@ en:
       submitted_at: 'The group order has been submitted at %{time}.'
       arrived_at: 'It arrived at %{time}.'
       time_taken: 'Time Taken: %{duration}'
-      estimate: ' Based on %{samples} samples, it will probably arrive at %{time}.'
+      estimate: 'Based on %{samples} samples, it will probably arrive at %{time}.'
+
+de:
+  basket:
+    submitted_status:
+      heading: Status
+      submitted_at: 'Die Gruppenbestellung wurde um %{time} abgeschickt.'
+      arrived_at: 'Sie kam um %{time} an.'
+      time_taken: 'Lieferzeit: %{duration}'
+      estimate: 'Vorraussichtliche Lieferung um %{time}, basierend auf %{samples} vorigen Bestellungen.'
