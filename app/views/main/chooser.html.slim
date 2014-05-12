@@ -1,49 +1,68 @@
-#hipsterTopBar
-  h1 name
+#hipsterTopBar.navbar.navbar-default.navbar-fixed-top role="navigation"
+  .container
+    .navbar-header
+      button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
 
-noscript
-  h2 main.chooser.nojs.heading
-  p
-    | main.chooser.nojs.body
+      a.navbar-brand href=root_path name
 
-= render "shared/flash"
+    .collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li.dropdown
+          a.dropdown-toggle data-toggle="dropdown" href="#"
+            ' Other
+            b.caret
 
-- if @basket
-  h2 main.chooser.prev_basket.heading
-  p
-    b main.chooser.prev_basket.created
-    '  #{@basket.created_at.strftime("%Y-%m-%d %H:%M")}<br>
-    b main.chooser.prev_basket.shop
-    '  #{@basket.shop_name}<br><br>
-    - if @basket.submitted?
-      | main.chooser.prev_basket.submitted
-    - else
-      | main.chooser.prev_basket.still_open
-    | main.chooser.prev_basket.mark_as_paid
-    | <br>
-    a href="#{auto_basket_path}" class="button success" main.chooser.prev_basket.link
+          ul.dropdown-menu
+            li
+              a href=privacy_path main.chooser.privacy.link
+            li
+              a href="https://www.github.com/breunigs/hipsterpizza" GitHub
+
+
+
+.container
+  noscript
+    div.alert.alert-danger
+      strong main.chooser.nojs.heading
+      br main.chooser.nojs.body
+
+  = render "shared/flash"
+
+  - if @basket
+    h2 main.chooser.prev_basket.heading
+    dl.dl-horizontal
+      dt main.chooser.prev_basket.created
+      dd =@basket.created_at.strftime("%Y-%m-%d %H:%M")
+
+      dt main.chooser.prev_basket.shop
+      dd =@basket.shop_name
+
+      dt main.chooser.prev_basket.status
+      dd
+        - if @basket.submitted?
+          | main.chooser.prev_basket.submitted
+        - else
+          | main.chooser.prev_basket.still_open
+        | main.chooser.prev_basket.mark_as_paid
+
+    a.btn.btn-primary href="#{auto_basket_path}" main.chooser.prev_basket.link
     link rel="prefetch prerender" href="#{auto_basket_path}"
 
+  h2 main.chooser.participate.heading
 
-h2 main.chooser.new_basket.heading
+  p main.chooser.participate.body
 
-p
-  ' main.chooser.new_basket.body
-  br
-  = link_to t('.new_basket.link'), new_basket_path, class: "button primary", data: { no_turbolink: '' }
+  form.form-inline method="GET" action=basket_path(uid: '')
+    .form-group>
+      input.form-control required="required" name="basket_uid" value=params[:uid] placeholder=t('main.chooser.participate.field_hint')
 
-h2 main.chooser.participate.heading
-
-p
-  | main.chooser.participate.body
-
-form method="GET" action="#{basket_path(uid: '')}"
-  input required="required" name="basket_uid" value="#{params[:uid]}" placeholder="#{t 'main.chooser.participate.field_hint'}"
-  input type="submit" class="primary" value="#{t 'main.chooser.participate.link'}"
+    button.btn.btn-default type="submit" main.chooser.participate.link
 
 
-h2 main.chooser.privacy.heading
-
-p
-  ' main.chooser.privacy.body
-  a href="#{privacy_path}" main.chooser.privacy.link
+  h2 main.chooser.new_basket.heading
+  p main.chooser.new_basket.body
+  a.btn.btn-primary data-no-turbolink="" href=new_basket_path main.chooser.new_basket.link

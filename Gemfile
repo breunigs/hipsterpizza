@@ -14,6 +14,7 @@ gem 'rqrcode-rails3'
 gem 'possessive'
 gem 'unicode_utils'
 gem 'rails-i18n'
+gem 'bootstrap-sass'
 
 # translation
 gem 'http_accept_language'
