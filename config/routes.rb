@@ -3,6 +3,7 @@ Hipsterpizza::Application.routes.draw do
 
   scope 'hipster' do
     get 'privacy', to: 'main#privacy'
+    get 'clock.svg', to: 'main#clock', ending: 'svg', as: 'clock'
 
     resources :basket, only: [:new, :create]
 

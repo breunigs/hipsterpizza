@@ -13,9 +13,16 @@ p
       br
       ' Time Taken: #{distance_of_time_in_words @basket.duration}
 
+
   - else
     - secs, samples = @basket.estimate
     - unless secs.nil?
       br
       ' Based on #{pluralize(samples, 'sample')}, it will probably arrive at
       = time(@basket.submitted + secs)
+
+  br
+  br
+  object data=clock_path type="image/svg+xml" width="200" height="200"
+    param name="estimate" value=(secs.nil? ? 0 : @basket.submitted + secs)
+    param name="arrival" value=@basket.arrival.to_i
