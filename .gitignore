@@ -21,3 +21,12 @@ db/*.sqlite3
 /config/application.yml
 /config/pinning.yml
 /config/fax.yml
+
+# ctags
+.gemtags
+.tags
+.tags_sorted_by_file
+			
+# sublime
+hipsterpizza.sublime-project
+hipsterpizza.sublime-workspace
