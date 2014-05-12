@@ -1,5 +1,15 @@
+- secs, samples = @basket.estimate
+
+object data=clock_path type="image/svg+xml" width="200" height="200" style="float:right; margin: 1em"
+  param name="estimate" value=(secs.nil? ? 0 : @basket.submitted + secs)
+  param name="arrival" value=@basket.arrival.to_i
+
+
 h2 basket.submitted_status.heading
+
 p
+
+
   = t 'basket.submitted_status.submitted_at', time: time(@basket.submitted)
 
   - if @basket.arrived?
@@ -10,14 +20,6 @@ p
       = t 'basket.submitted_status.time_taken', duration: distance_of_time_in_words(@basket.duration)
 
 
-  - else
-    - secs, samples = @basket.estimate
-    - unless secs.nil?
-      br
-      = t 'basket.submitted_status.estimate', samples: samples, time: time(@basket.submitted + secs)
-
-  br
-  br
-  object data=clock_path type="image/svg+xml" width="200" height="200"
-    param name="estimate" value=(secs.nil? ? 0 : @basket.submitted + secs)
-    param name="arrival" value=@basket.arrival.to_i
+  - elsif !secs.nil?
+    br
+    = t 'basket.submitted_status.estimate', samples: samples, time: time(@basket.submitted + secs)
