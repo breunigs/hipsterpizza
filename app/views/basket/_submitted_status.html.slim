@@ -1,25 +1,20 @@
-h2 Status
+h2 basket.submitted_status.heading
 p
-  ' The group order has been submitted at
-  = time(@basket.submitted)
-  ' .
+  = t 'basket.submitted_status.submitted_at', time: time(@basket.submitted)
 
   - if @basket.arrived?
       br
-      ' It arrived at
-      = time(@basket.arrival)
-      ' .
+      = t 'basket.submitted_status.arrived_at', time: time(@basket.arrival)
 
       br
-      ' Time Taken: #{distance_of_time_in_words @basket.duration}
+      = t 'basket.submitted_status.time_taken', duration: distance_of_time_in_words(@basket.duration)
 
 
   - else
     - secs, samples = @basket.estimate
     - unless secs.nil?
       br
-      ' Based on #{pluralize(samples, 'sample')}, it will probably arrive at
-      = time(@basket.submitted + secs)
+      = t 'basket.submitted_status.estimate', samples: samples, time: time(@basket.submitted + secs)
 
   br
   br

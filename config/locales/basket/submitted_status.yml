@@ -1,0 +1,8 @@
+en:
+  basket:
+    submitted_status:
+      heading: Status
+      submitted_at: 'The group order has been submitted at %{time}.'
+      arrived_at: 'It arrived at %{time}.'
+      time_taken: 'Time Taken: %{duration}'
+      estimate: ' Based on %{samples} samples, it will probably arrive at %{time}.'
