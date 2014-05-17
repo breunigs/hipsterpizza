@@ -1,0 +1,12 @@
+en:
+  basket:
+    share:
+      heading: Share Link (or ID)
+      body: Your group basket has been created. Please share the link or ID with everyone who wants to participate.
+      basket_link: "Goto Group Basket"
+
+      howto:
+        heading: Next Steps
+        own_order: place an order yourself
+        submit_or_cancel: submit or cancel the group order from the admin menu.
+        wait: Wait and eat.

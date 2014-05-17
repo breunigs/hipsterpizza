@@ -1,26 +1,20 @@
 - uid = @basket.uid
+- url = basket_with_uid_url(uid)
 
-#hipsterTopBar
-  = render "progress_bars/choose_shop"
+.container
+  img.qrcode src="#{url}.svg" alt=url
+  h2 basket.share.heading
+  p basket.share.body
 
-h1 Share Link
+  pre.link = basket_with_uid_url(uid)
 
-p
-  | Successfully created new for
-  b  #{@basket.shop_name}
-  | . Please share the link below with everyone who wants to participate.
+  a.btn.btn-primary.btn-lg href=basket_with_uid_path(uid)
+    == t "basket.share.basket_link", uid: uid
 
-p.huge
-  = link_to basket_with_uid_url(uid), basket_with_uid_url(uid)
-  = image_tag basket_with_uid_url(uid) + '.svg'
   link rel="prefetch prerender" href="#{basket_with_uid_url(uid)}"
 
-h2 Submitting Order
-p
-  | You’ve been marked as admin and can submit the basket later. Simply
-    follow above link to place
-  i  your
-  |  order. Use the link below in case you want to share your power or
-    somehow lost them.
-  br
-  = link_to set_admin_basket_url(uid), set_admin_basket_url(uid)
+  h2 basket.share.howto.heading
+  ol
+    li basket.share.howto.own_order
+    li basket.share.howto.submit_or_cancel
+    li basket.share.howto.wait

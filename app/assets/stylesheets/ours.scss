@@ -5,30 +5,68 @@ $font-size-base: 16px;
 $line-height-base: 1.632;
 $font-family-sans-serif: 'Cabin', sans-serif;
 
-@import "bootstrap";
-@import "bootstrap/theme";
+.hipster {
+  @import "bootstrap";
+  @import "bootstrap/theme";
 
-body {
-  background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed #fff;
-}
+  font-family: $font-family-sans-serif;
+  line-height: $line-height-base;
+  font-size: $font-size-base;
 
-body > .container {
-  padding: 15px;
-  padding-top: 0;
-}
-
-.text-muted a {
-  color: #999;
-}
-
-
-dl.dl-horizontal {
-  dt {
-    text-align: left;
-    width: 100px;
+  body {
+    background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed #fff;
   }
 
-  dd {
-    margin-left: 120px;
+  body > .container {
+    padding: 15px;
+    padding-top: 0;
+  }
+
+  .text-muted a {
+    color: #999;
+  }
+
+  p {
+    text-align: justify;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  ol {
+    padding-left: 0;
+    list-style: none;
+    li {
+
+      counter-increment: ordered-list;
+      &:before {
+        content: counter(ordered-list) ". ";
+        display: inline-block;
+        min-width: 1.1em;
+      }
+    }
+  }
+
+
+  dl.dl-horizontal {
+    dt {
+      text-align: left;
+      width: 100px;
+    }
+
+    dd {
+      margin-left: 120px;
+    }
+  }
+
+  pre.link {
+    font-size: 150%;
+  }
+
+  .qrcode {
+    float: right;
+    margin-top: 22px;
+    margin-left: 22px;
   }
 }
+

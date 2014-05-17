@@ -6,10 +6,11 @@
     'new_order'          => 'new_order',
     'edit_order'         => 'new_order' }
 
-#hipsterTopBar
-  /! action=#{c}
+.hipster
+  - content_for :nav do
+    - if action_to_progress.keys.include?(c)
+      = render "progress_bars/#{action_to_progress[c]}"
+    - else
+      = render "shared/missing_cookie"
 
-  - if action_to_progress.keys.include?(c)
-    = render "progress_bars/#{action_to_progress[c]}"
-  - else
-    = render "shared/missing_cookie"
+  = render "nav/main"

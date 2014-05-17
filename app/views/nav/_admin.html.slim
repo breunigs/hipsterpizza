@@ -1,0 +1,17 @@
+li.dropdown
+  a.dropdown-toggle data-toggle="dropdown" href="#"
+    ' Admin
+    b.caret
+
+  ul.dropdown-menu
+    - if !@basket.cancelled?
+      li = render "basket/submit_group_order_button"
+
+      li
+        a href=pdf_basket_path(@basket.uid) Render PDF
+
+    - if !@basket.submitted?
+      = render "basket/toggle_cancel_button"
+
+    li
+      a href=share_basket_path(@basket.uid) data-no-turbolinks="" Share This Basket

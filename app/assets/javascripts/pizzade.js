@@ -1,5 +1,7 @@
 //= require jquery_ujs
 //= require _both
+//= require bootstrap/dropdown
+//= require bootstrap/collapse
 
 var hipster = window.hipster = (function() {
   // CACHES ////////////////////////////////////////////////////////////
@@ -452,7 +454,8 @@ var hipster = window.hipster = (function() {
 
     detectAndSetShop: function() {
       var button = $('#hipsterShopChooser');
-      button.val('Choose ' + hipster.getShopName());
+      button.enable();
+      button.attr("class", "btn btn-primary");
 
       var hidden = $('#hipsterShopCanonicalUrl');
       hidden.val($("link[rel=canonical]").attr('href'));

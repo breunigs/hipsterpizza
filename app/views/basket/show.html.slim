@@ -8,6 +8,11 @@
     - else
       h1 Group Basket
 
+
+- content_for :nav do
+  - if @basket.editable?
+    li = render "place_new_order_button"
+
 = render "shared/flash"
 
 h2 General Options
@@ -18,12 +23,7 @@ p
   - if @basket.submitted?
     = render "delivery_arrived_button"
 
-  - if admin?
-    - if !@basket.cancelled?
-      = render "submit_group_order_button"
 
-    - if !@basket.submitted?
-      = render "toggle_cancel_button"
 
   a href="#{saved_order_index_path}" title="Lists your recent and everyone’s saved orders." class="button" Show Saved/Previous Orders
 

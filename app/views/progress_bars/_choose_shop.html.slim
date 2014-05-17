@@ -1,26 +1,19 @@
 - a = cookie_get(:action).to_s
 - b = cookie_get(:basket).to_s
 
-- progress = { \
-  choose_shop: 'choose food shop',
-  share_link:  'hand out link to everyone',
-  submit_group_order: 'submit group order',
-  mark_delivery_arrived: 'mark delivery arrived' }
-
-= render "progress_bars/bar", locals: { progress: progress }
-
+/! action==#{a}
 
 - if a == 'choose_shop'
-  = form_tag({controller: :basket, action: :create}, method: :post)
-    input type='hidden' id='hipsterShopCanonicalUrl' name='shop_url'
-    input type='hidden' id='hipsterShopName' name='shop_name'
-    input type='hidden' id='hipsterShopFaxNumber' name='shop_fax'
-    = submit_tag 'Choose Shop First', id: :hipsterShopChooser, class: 'button primary pulse', style: 'display: none', data: { disable_with: 'Creating New Group Basket…' }
-    - if PINNING['shop_url']
-      javascript:
-        window.hipsterSubmitAfterShopDetect = true;
+  li
+    = form_tag({controller: :basket, action: :create}, method: :post, style: "margin-top: 5px")
+      input type='hidden' id='hipsterShopCanonicalUrl' name='shop_url'
+      input type='hidden' id='hipsterShopName' name='shop_name'
+      input type='hidden' id='hipsterShopFaxNumber' name='shop_fax'
+      button.btn.btn-link type="submit" id="hipsterShopChooser" disabled="" Select This Shop
 
-  a href="#{root_path}" class="button dim" Cancel Basket Creation
+  - if PINNING['shop_url']
+    javascript:
+      window.hipsterSubmitAfterShopDetect = true;
 
 
 - if a == 'share_link' && controller.action_name != 'share'
@@ -39,5 +32,5 @@
 
   = javascript_include_tag "sha512", async: true
 
-- if a == 'mark_delivery_arrived'
-  = render 'delivery_arrived_button'
+/ - if a == 'mark_delivery_arrived'
+/   = render 'delivery_arrived_button'
