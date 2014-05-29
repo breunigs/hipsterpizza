@@ -1,0 +1,17 @@
+en:
+  nick:
+    form:
+      title: 'Set Your Nickname'
+      placeholder: 'Enter Your Nickname'
+      set_nick: 'Set Nickname'
+      abort: 'Abort'
+      setting_nick: 'Setting Nickname…'
+
+de:
+  nick:
+    form:
+      title: 'Deinen Nickname setzen'
+      placeholder: 'Nickname eingeben'
+      set_nick: 'Nickname setzen'
+      abort: 'Abbrechen'
+      setting_nick: 'Setze Nickname…'

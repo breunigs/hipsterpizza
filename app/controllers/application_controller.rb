@@ -5,34 +5,47 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :set_locale
+  before_action :set_locale
+  before_action :reset_mode_cookie
+  before_action :find_nick
 
+  def reset_mode_cookie
+    cookie_delete(:mode)
+  end
+
+  # reads nick from cookie into @nick
+  def find_nick
+    @nick ||= cookie_get(:nick).to_s
+  end
+
+  # Tries to fill the @basket variable with an appropriate Basket model.
+  # Order of preference:
+  # 1. URL UID
+  # 2. editable basket in single basket mode
+  # 3. recently submitted basket in single basket mode
+  # 4. cookies
   def find_basket
-    uid = params[:basket_uid]
-    uid ||= cookie_get(:basket)
-    uid.downcase! if uid
-    @basket = Basket.where(uid: uid).first rescue nil
+    @basket ||= Basket.friendly.find(params[:id]) rescue nil
+    # if there’s an id, but it’s invalid it should ignore the cookie.
+    return nil unless @basket || params[:id].blank?
 
     @basket ||= Basket.find_basket_for_single_mode
+    @basket ||= Basket.friendly.find(cookie_get(:basket)) rescue nil
+  end
 
-    # ensure cookies and URL match up
-    cookie_set(:basket, @basket ? @basket.uid : nil)
-
-    # handle failure
-    unless @basket
-      flash[:error] = uid ? 'Invalid Basket-ID. Are you sure there are no typos and that it is recent?' : 'Missing Basket-ID. Ask someone to share the link with you or create initiate a new group order.'
-      redirect_to root_path(uid: uid)
-    end
+  # Ensures the @basket variable contains a Basket-model. If all fail, the user
+  # will be redirect to the main page without an error message. Order of
+  # preference is the same as in find_basket.
+  def require_basket
+    find_basket
+    return redirect_to root_path unless @basket
+    cookie_set(:basket, @basket.uid)
   end
 
   def find_order
     @order = Order.where(uuid: params[:order_uuid]).first rescue nil
     @order ||= Order.where(uuid: cookie_get(:order), basket: @basket).first rescue nil
     @saved_order = SavedOrder.where(uuid: params[:saved_order_uuid]).first rescue nil
-  end
-
-  def redirect_to_basket
-    redirect_to basket_with_uid_path(@basket.uid)
   end
 
   def redirect_to_shop

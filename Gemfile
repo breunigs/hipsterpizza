@@ -15,6 +15,7 @@ gem 'possessive'
 gem 'unicode_utils'
 gem 'rails-i18n'
 gem 'bootstrap-sass'
+gem 'friendly_id', '~> 5.0.0'
 
 # translation
 gem 'http_accept_language'

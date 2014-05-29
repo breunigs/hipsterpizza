@@ -6,5 +6,6 @@
 //= require _reload_handler
 //= require bootstrap/dropdown
 //= require bootstrap/collapse
+//= require bootstrap/modal
 
 Turbolinks.enableTransitionCache();

@@ -5,24 +5,23 @@ Hipsterpizza::Application.routes.draw do
     get 'privacy', to: 'main#privacy'
     get 'clock.svg', to: 'main#clock', ending: 'svg', as: 'clock'
 
-    resources :basket, only: [:new, :create]
+    patch 'set_nick', to: 'main#set_nick'
 
-    scope 'basket/:basket_uid' do
-      get '', to: 'basket#show', as: :basket_with_uid
+    patch 'toggle_admin', to: 'main#toggle_admin'
 
-      %w(share set_admin unsubmit pdf).each do |res|
-        get res, to: "basket##{res}", as: "#{res}_basket"
+    resources :basket, only: [:new, :create, :show] do
+      member do
+        get 'share'
+        get 'unsubmit'
+        get 'pdf'
+
+        patch 'toggle_cancelled'
+        patch 'delivery_arrived'
+        patch 'submit'
+
+        post 'set_submit_time'
       end
-
-      %w(toggle_cancelled delivery_arrived).each do |res|
-        put res, to: "basket##{res}", as: "#{res}_basket"
-      end
-
-      put 'submit', to: "basket_submit#submit", as: "submit_basket"
-
-      post 'set_submit_time', to: 'basket#set_submit_time', as: :set_submit_time_basket
     end
-    get 'basket', to: 'basket#find', as: :basket
 
     resources :order, only: [:new, :create]
     scope 'order/:order_uuid' do
@@ -45,7 +44,7 @@ Hipsterpizza::Application.routes.draw do
 
   # catch all for unmatched /hipster/ routes
   get 'hipster', to: 'main#chooser'
-  get 'hipster/*page', to: 'basket#find'
+  get 'hipster/*page', to: 'main#find'
 
   # forward all other requests to pizza.de
 

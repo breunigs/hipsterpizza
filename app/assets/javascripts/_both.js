@@ -1,9 +1,9 @@
-function hipsterAdjustTopBar() {
-  $('body').css('padding-top', $('#hipsterTopBar').height() + 'px');
-}
+// function hipsterAdjustTopBar() {
+//   $('body').css('padding-top', $('#hipsterTopBar').height() + 'px');
+// }
 
-$(document).on('ready page:change', hipsterAdjustTopBar);
-$(window).resize(hipsterAdjustTopBar);
+// $(document).on('ready page:change', hipsterAdjustTopBar);
+// $(window).resize(hipsterAdjustTopBar);
 
 var isMobileBrowser = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|capybara/i.test(navigator.userAgent.toLowerCase()));
 

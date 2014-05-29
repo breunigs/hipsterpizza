@@ -1,49 +1,30 @@
-- cache("top_bar_#{admin?}_#{@basket.cache_key}_#{@order.cache_key}") do
-  #hipsterTopBar
-    - if admin? && (!@order || @order.paid?)
-      = render "progress_bars/choose_shop"
-    - elsif @order
-      /! order=#{@order.uuid}
-      = render "progress_bars/new_order"
-    - else
-      h1 Group Basket
-
-
 - content_for :nav do
   - if @basket.editable?
     li = render "place_new_order_button"
 
-= render "shared/flash"
+  li
+    a.button href=saved_order_index_path title="Lists your recent and everyone’s saved orders." Saved/Previous Orders
 
-h2 General Options
-p
-  - if @basket.editable?
-    = render "place_new_order_button"
+.container
+  = render "shared/flash"
+
+  - if @order
+    = render "my_order"
+  - else
+    = render "no_order"
+
 
   - if @basket.submitted?
-    = render "delivery_arrived_button"
+    = render "submitted_status"
 
 
-
-  a href="#{saved_order_index_path}" title="Lists your recent and everyone’s saved orders." class="button" Show Saved/Previous Orders
-
-- if @order
-  - cache("my_order_#{@basket.cache_key}_#{@order.cache_key}") do
-    = render "my_order"
-
-
-- if @basket.submitted?
-  = render "submitted_status"
-
-
-- cache("money_pile_#{@basket.cache_key}") do
   h2 Money Pile
   = render "money_pile"
 
-h2 Basket
-= render "order_table"
+  h2 Basket
+  = render "order_table"
 
-- if Rails.env.production?
-  - content_for :below_script do
-    javascript:
-      window.doReloadAfterTimeout();
+  - if Rails.env.production?
+    - content_for :below_script do
+      javascript:
+        window.doReloadAfterTimeout();

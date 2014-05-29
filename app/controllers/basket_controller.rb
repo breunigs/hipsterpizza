@@ -3,31 +3,34 @@
 class BasketController < ApplicationController
   include CookieHelper
 
-  before_filter :find_basket, except: [:new, :create]
   before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin, :delivery_arrived, :pdf]
   before_filter :find_order, only: [:show]
-  before_filter :reset_replay
+  before_filter :reset_replay # TODO: move?
+
+
+  before_action :require_basket, except: [:new, :create, :find]
 
   PIZZADE_URL_MODIFIERS = '?knddomain=1&noflash=1'
 
   def new
-    cookie_set(:action, :choose_shop)
-    cookie_delete(:basket)
-    cookie_delete(:admin)
-
-    if PINNING['single_basket_mode'] && @basket = Basket.find_editable
-      return redirect_to_basket
+    # if there’s an editable basket and we are in single basket mode,
+    # redirect directly to basket instead of creating new one
+    if PINNING['single_basket_mode']
+      @basket = Basket.find_editable
+      return redirect_to_basket unless @basket.nil?
     end
 
     fields = %w(name url fax)
     if all_pinned?(fields)
       copy_pinned_to_params(fields)
-      create
-    elsif PINNING['shop_url']
-      redirect_to PINNING['shop_url'] + PIZZADE_URL_MODIFIERS
-    else
-      redirect_to pizzade_root_path + PIZZADE_URL_MODIFIERS
+      return create
     end
+
+    cookie_set(:mode, 'pizzade_choose_shop')
+    cookie_delete(:basket)
+
+    url = PINNING['shop_url'] || pizzade_root_path
+    redirect_to url + PIZZADE_URL_MODIFIERS
   end
 
   def create
@@ -39,10 +42,7 @@ class BasketController < ApplicationController
       return redirect_to root_path
     end
 
-    cookie_set(:action, :share_link)
-    cookie_set(:basket, @basket.uid)
-    cookie_set(:admin, @basket.uid)
-    cookie_delete(:order)
+    cookie_set(:is_admin, true)
 
     if PINNING['single_basket_mode']
       redirect_to_basket
@@ -51,21 +51,15 @@ class BasketController < ApplicationController
     end
   end
 
-  def find
-    redirect_to_basket
-  end
-
   def show
-    if flash.empty?
-      keys = [@basket.cache_key, @order.cache_key, view_context.admin?, @basket.clock_running?]
-      return unless stale?(etag: keys.join(' '))
-    end
-
-    update_action_from_order
+    # if flash.empty?
+    #   keys = [@basket.cache_key, @order.cache_key, view_context.admin?, @basket.clock_running?]
+    #   return unless stale?(etag: keys.join(' '))
+    # end
 
     respond_to do |format|
       format.html
-      format.svg  { render qrcode: basket_with_uid_url(@basket.uid), level: :l, unit: 6, offset: 10 }
+      format.svg  { render qrcode: basket_path(@basket), level: :l, unit: 6, offset: 10 }
     end
   end
 
@@ -93,7 +87,6 @@ class BasketController < ApplicationController
   end
 
   def share
-    cookie_set(:action, :share_link)
   end
 
   def toggle_cancelled
@@ -114,15 +107,6 @@ class BasketController < ApplicationController
   end
 
   private
-  def update_action_from_order
-    admin_action = @basket.submitted? ? :mark_delivery_arrived : :share_link
-    if @order
-      cookie_set(:action, @order.paid? ?  :wait : :pay_order)
-      cookie_set(:action, admin_action) if view_context.admin? && @order.paid?
-    else
-      cookie_set(:action, view_context.admin? ? admin_action : nil)
-    end
-  end
 
   def ensure_admin
     unless view_context.admin?

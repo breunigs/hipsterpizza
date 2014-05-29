@@ -1,0 +1,5 @@
+en:
+  nick:
+    button:
+      different_machine: 'I used another computer'
+      someone_else: 'I’m not %{nick}!'

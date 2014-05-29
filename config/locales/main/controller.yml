@@ -1,0 +1,9 @@
+en:
+  main:
+    controller:
+      invalid_basket_id: 'No group basket with this UID. Are you sure it’s correct?'
+
+de:
+  main:
+    controller:
+      invalid_basket_id: 'Keine Gruppenbestellung mit dieser UID bekannt. Sicher, dass sie stimmt?'

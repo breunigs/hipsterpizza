@@ -1,17 +1,16 @@
-- uid = @basket.uid
-- url = basket_with_uid_url(uid)
+- url = basket_url(@basket)
 
 .container
   img.qrcode src="#{url}.svg" alt=url
   h2 basket.share.heading
   p basket.share.body
 
-  pre.link = basket_with_uid_url(uid)
+  pre.link = url
 
-  a.btn.btn-primary.btn-lg href=basket_with_uid_path(uid)
-    == t "basket.share.basket_link", uid: uid
+  a.btn.btn-primary.btn-lg href=url
+    == t "basket.share.basket_link", uid: @basket.uid
 
-  link rel="prefetch prerender" href="#{basket_with_uid_url(uid)}"
+  link rel="prefetch prerender" href=url
 
   h2 basket.share.howto.heading
   ol

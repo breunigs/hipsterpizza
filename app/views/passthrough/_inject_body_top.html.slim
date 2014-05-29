@@ -1,16 +1,5 @@
-- c = cookie_get(:action)
-
-- action_to_progress = { \
-    'choose_shop'        => 'choose_shop',
-    'submit_group_order' => 'choose_shop',
-    'new_order'          => 'new_order',
-    'edit_order'         => 'new_order' }
-
 .hipster
   - content_for :nav do
-    - if action_to_progress.keys.include?(c)
-      = render "progress_bars/#{action_to_progress[c]}"
-    - else
-      = render "shared/missing_cookie"
+    = render "modes/#{@mode}"
 
   = render "nav/main"

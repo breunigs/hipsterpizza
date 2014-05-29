@@ -1,0 +1,11 @@
+en:
+  modes:
+    choose_shop:
+      title: 'Choose a shop using the regular page’s interface. Afterwards, click here to create a HipsterPizza group basket.'
+      button: 'Choose This Shop'
+
+de:
+  modes:
+    choose_shop:
+      title: 'Wähle einen Lieferanten mit der normalen Bestellseite aus. Anschließend klicke hier um einen gemeinsamen Warenkorb in HipsterPizza zu erstellen.'
+      button: 'Diesen Lieferanten wählen'

@@ -1,0 +1,17 @@
+en:
+  basket:
+    no_order:
+      title:
+        without_nick: 'No Order Yet'
+        with_nick: 'No Order Yet, %{nick}'
+
+      text: 'It appears you don’t have made an order yet. However, you still can!'
+
+de:
+  basket:
+    no_order:
+      title:
+        without_nick: 'Bisher keine Bestellung'
+        with_nick: 'Bisher keine Bestellung, %{nick}'
+
+      text: 'Sieht so aus, als hättest Du bisher keine Bestellung gemacht. Kannste aber noch!'

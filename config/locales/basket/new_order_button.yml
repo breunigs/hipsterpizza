@@ -1,0 +1,14 @@
+en:
+  basket:
+    new_order_button:
+      link: '✚ New Order'
+      existing_order: 'There’s already an order for you. Continue only if this is for someone else (=OK), otherwise edit your old order (=Cancel).'
+      title: 'Allows you to select all items you want to order before placing them in the group basket. You can edit your selection later.'
+
+
+de:
+  basket:
+    new_order_button:
+      link: '✚ Neue Bestellung'
+      existing_order: 'Es gibt bereits eine Bestellung für Dich. Klicke „OK“ wenn Du für jemand anderen bestellen möchtest, ansonsten klicke „Abbrechen“ und bearbeite Deine Bestellung stattdessen.'
+      title: 'Wähle alle Produkte aus die Du bestellen möchtest. Anschließend wird Deine Bestellung in den gemeinsamen Warenkorb gelegt. Du kannst Deine Auswahl später ändern.'

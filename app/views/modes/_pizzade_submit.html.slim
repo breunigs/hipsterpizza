@@ -1,0 +1,11 @@
+li
+  h2 Use pizza.de-UI to submit order  TODO
+
+  = form_tag(set_submit_time_basket_path(b), method: :post, id: :hipsterSetSubmitTime)
+    input type='hidden' id='hipsterShaAddress' name='sha_address'
+    = submit_tag 'Set Submit Time To Now', class: 'button'
+
+
+  a href="#{unsubmit_basket_path(b)}" class="button dim" Cancel Submission
+
+  = javascript_include_tag "sha512", async: true

@@ -1,7 +1,8 @@
-- title = 'Create a new, personal basket to put your items before putting them into the group basket. Ordering works very much like it does normally on pizza.de.'
+- title = t 'basket.new_order_button.title'
+- css = defined?(primary) && primary ? 'btn btn-primary' : ''
 
 - if @order
-  a href=new_order_path title=title data-confirm="There’s already an order for you. Continue only if this is for someone else (=OK), otherwise edit your old order (=Cancel)." data-no-turbolink="" ✚ Place New Order
+  a href=new_order_path title=title data-no-turbolink="" class=css data-confirm=basket.new_order_button.existing_order basket.new_order_button.link
 - else
-  a href=new_order_path title=title data-no-turbolink="" ✚ Place New Order
+  a href=new_order_path title=title data-no-turbolink="" class=css basket.new_order_button.link
   link rel="prefetch prerender" href=new_order_path

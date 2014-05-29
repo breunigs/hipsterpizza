@@ -6,15 +6,6 @@
 p
   a href="#{auto_basket_path}" class="button" Return To Basket
 
-
-- if @nick.blank?
-  h2 Not stalking you or anything, but…
-  p who are you? If I don’t know, I can’t show you your recent orders.
-
-  form method="get"
-    input required="required" name="nick" placeholder="Enter Your Nickname"
-    input type="submit" class="primary" value="Set Nickname"
-
 - else
 
   h2 Your Previous Orders, #{@nick}

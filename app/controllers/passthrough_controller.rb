@@ -1,9 +1,15 @@
 # encoding: utf-8
 
 class PassthroughController < ApplicationController
+  include CookieHelper
+
   @@forwarder = Forwarder.new("pizza.de")
 
   skip_before_action :verify_authenticity_token
+  skip_before_action :reset_mode_cookie
+
+  before_action :resolve_mode
+
   after_filter :add_missing_content_type
 
   # cache some of the probably non-static elements. In the worst case
@@ -35,6 +41,16 @@ class PassthroughController < ApplicationController
   end
 
   private
+
+  # reads the mode cookie and ensures it’s valid. Redirects to root if it isn’t.
+  def resolve_mode
+    @mode = cookie_get(:mode).to_s
+    return if VALID_MODES.include?(@mode)
+
+    flash[:error] = t 'mode.invalid_or_missing'
+    redirect_to root_url
+  end
+
   def add_missing_content_type
     return if headers['Content-Type']
 

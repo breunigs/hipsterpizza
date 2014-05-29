@@ -1,0 +1,20 @@
+/ form#nickForm.modal.fade tabindex="-1" role="dialog" aria-hidden="true" method="post"
+/   = hidden_field_tag :authenticity_token, form_authenticity_token
+= form_tag(set_nick_path, method: :patch, class: 'modal fade', id: 'nickForm', role: 'dialog', tabindex: '-1', aria_hidden: 'true')
+  .modal-dialog.modal-sm
+    .modal-content
+      .modal-header
+        button.close type="button" data-dismiss="modal" aria-hidden="true" &times;
+        h4.modal-title nick.form.title
+
+      .modal-body style="text-align: right"
+        datalist id="nicks"
+          - if @basket
+            - @basket.orders.map(&:nick).each do |nick|
+              option value=nick
+
+        .form-group>
+          input.form-control> required="required" autocomplete="off" list="nicks" name="nick" placeholder=t('nick.form.placeholder')
+
+        button.btn.btn-default> type="button" data-dismiss="modal" aria-hidden="true" nick.form.abort
+        button.btn.btn-primary data-disable-with=t('nick.form.setting_nick') type="submit" nick.form.set_nick

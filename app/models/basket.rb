@@ -1,6 +1,9 @@
 # encoding: utf-8
 
 class Basket < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :uid
+
   has_many :orders, dependent: :destroy
 
   scope :similar, ->(basket) { where(shop_url: basket.shop_url, sha_address: basket.sha_address).where.not(id: basket.id) }
@@ -50,7 +53,7 @@ class Basket < ActiveRecord::Base
     return nil unless PINNING['single_basket_mode']
 
     # is there an editable basket we can forward the user to?
-    @basket = self.find_editable
+    @basket = find_editable
     return @basket if @basket
 
     # is there a recently submitted basket in the timeout range?
@@ -126,6 +129,7 @@ class Basket < ActiveRecord::Base
 
     50.times do
       self.uid = (0...3).map { (65 + 32 + rand(26)).chr }.join
+      next if self.uid == 'new'
       break unless other.include?(self.uid)
     end
 

@@ -1,0 +1,5 @@
+- text = t(@nick.blank? ? 'nick.button.different_machine' : 'nick.button.someone_else', nick: @nick)
+
+button.btn.btn-default data-toggle="modal" data-target="#nickForm"  = text
+
+= render 'nick/form'

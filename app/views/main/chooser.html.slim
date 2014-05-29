@@ -23,16 +23,17 @@
           | main.chooser.prev_basket.still_open
         | main.chooser.prev_basket.mark_as_paid
 
-    a.btn.btn-primary href="#{auto_basket_path}" main.chooser.prev_basket.link
-    link rel="prefetch prerender" href="#{auto_basket_path}"
+    a.btn.btn-primary href=basket_path(@basket) main.chooser.prev_basket.link
+    link rel="prefetch prerender" href=basket_path(@basket)
 
   h2 main.chooser.participate.heading
 
   p main.chooser.participate.body
 
-  form.form-inline method="GET" action=basket_path(uid: '')
+  form.form-inline method="GET" action=basket_path(id: '')
+    = hidden_field_tag :authenticity_token, form_authenticity_token
     .form-group>
-      input.form-control required="required" name="basket_uid" value=params[:uid] placeholder=t('main.chooser.participate.field_hint')
+      input.form-control required="required" name="id" value=params[:id] placeholder=t('main.chooser.participate.field_hint')
 
     button.btn.btn-default type="submit" main.chooser.participate.link
 

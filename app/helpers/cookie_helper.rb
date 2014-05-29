@@ -1,6 +1,6 @@
 module CookieHelper
   def cookie_set(key, value, perma = true)
-    raise "invalid cookie key" unless cookie_valid_key?(key)
+    raise "invalid cookie key: #{key}" unless cookie_valid_key?(key)
 
     key = "_hipsterpizza_#{key}"
     if value.nil?
@@ -12,7 +12,7 @@ module CookieHelper
   end
 
   def cookie_get(key)
-    raise "invalid cookie key" unless cookie_valid_key?(key)
+    raise "invalid cookie key: #{key}" unless cookie_valid_key?(key)
     cookies["_hipsterpizza_#{key}"]
   end
 
@@ -21,6 +21,6 @@ module CookieHelper
   end
 
   def cookie_valid_key?(key)
-    ["basket", "admin", "action", "nick", "order", "replay"].include?(key.to_s)
+    %w(basket is_admin mode nick order replay).include?(key.to_s)
   end
 end

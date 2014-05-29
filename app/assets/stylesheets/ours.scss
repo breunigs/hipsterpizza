@@ -15,11 +15,15 @@ $font-family-sans-serif: 'Cabin', sans-serif;
 
   body {
     background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed #fff;
+    padding-top: 50px; // make room for fixed header
+
+    > .container {
+      padding-bottom: 15px;
+    }
   }
 
-  body > .container {
-    padding: 15px;
-    padding-top: 0;
+  #hipsterTopBar .container {
+    padding: 0;
   }
 
   .text-muted a {
@@ -67,6 +71,10 @@ $font-family-sans-serif: 'Cabin', sans-serif;
     float: right;
     margin-top: 22px;
     margin-left: 22px;
+  }
+
+  .alert {
+    margin-top: 26px;
   }
 }
 

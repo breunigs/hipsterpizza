@@ -105,6 +105,8 @@ GEM
     execjs (2.0.2)
     ffi (1.9.3)
     formatador (0.2.4)
+    friendly_id (5.0.3)
+      activerecord (>= 4.0.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -309,6 +311,7 @@ DEPENDENCIES
   capybara-screenshot!
   capybara-webkit
   coveralls
+  friendly_id (~> 5.0.0)
   guard
   guard-bundler
   guard-livereload
