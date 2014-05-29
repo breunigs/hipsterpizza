@@ -9,3 +9,10 @@
 //= require bootstrap/modal
 
 Turbolinks.enableTransitionCache();
+
+$(document).ready(function() {
+  'use strict';
+  $('.modal').on('shown.bs.modal', function() {
+    $(this).find('input:visible:first').focus();
+  });
+});
