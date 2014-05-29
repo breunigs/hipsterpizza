@@ -21,6 +21,6 @@ module CookieHelper
   end
 
   def cookie_valid_key?(key)
-    %w(basket is_admin mode nick order replay).include?(key.to_s)
+    %w(basket is_admin mode nick replay).include?(key.to_s)
   end
 end

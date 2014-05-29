@@ -1,8 +1,9 @@
 - title = t 'basket.new_order_button.title'
 - css = defined?(primary) && primary ? 'btn btn-primary' : ''
+- url = new_basket_order_path(@basket)
 
 - if @order
-  a href=new_order_path title=title data-no-turbolink="" class=css data-confirm=basket.new_order_button.existing_order basket.new_order_button.link
+  a href=url title=title data-no-turbolink="" class=css data-confirm=t('basket.new_order_button.existing_order') basket.new_order_button.link
 - else
-  a href=new_order_path title=title data-no-turbolink="" class=css basket.new_order_button.link
-  link rel="prefetch prerender" href=new_order_path
+  a href=url title=title data-no-turbolink="" class=css basket.new_order_button.link
+  link rel="prefetch prerender" href=url

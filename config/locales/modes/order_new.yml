@@ -1,0 +1,23 @@
+en:
+  modes:
+    order_new:
+      cancel:
+        title: 'Discard selected items and don’t place anything in group basket'
+        button: 'Cancel Order'
+
+      place:
+        title: 'Places your selected items as a separate order into the group basket. You may edit the selected items later.'
+        disable_with: 'Saving Your Order…'
+        button: 'Place Order In Group Basket'
+
+de:
+  modes:
+    order_new:
+      cancel:
+        title: 'Ausgewählte Produkte verwerfen und nicht im Gruppen-Warenkorb platzieren'
+        button: 'Bestellung abbrechen'
+
+      place:
+        title: 'Places your selected items as a separate order into the group basket. You may edit the selected items later.'
+        disable_with: 'Speichere Bestellung…'
+        button: 'Bestellung in Gruppen-Warenkorb legen'

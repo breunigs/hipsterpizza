@@ -1,31 +1,29 @@
-div.highlight
+h2 = t('basket.my_order.heading', nick: @order.nick)
 
-  h2 = t 'basket.my_order.heading', nick: @order.nick
+p
+  = render 'toggle_order_paid_button'
 
-  p
-    = render 'toggle_order_paid_button'
+  - if @basket.editable?
+    a.btn.btn-default href=url_for([:edit, @basket, @order]) title=t('basket.my_order.edit.title') data-no-turbolink="" basket.my_order.edit.text
 
-    - if @basket.editable?
-      a href="#{edit_order_path(@order.uuid)}" title="#{t 'basket.my_order.edit.title'}" class="button" data-no-turbolink="" basket.my_order.edit.text
+  - if SavedOrder.exists?(cookie_get(:nick), @order)
+    a.btn.btn-default href="" basket.my_order.is_saved
+  - else
+    = render "save_order_button", order: @order, text: t('basket.my_order.save')
 
-    - if SavedOrder.exists?(cookie_get(:nick), @order)
-      a href="" class="button" basket.my_order.is_saved
-    - else
-      = render "save_order_button", order: @order, text: t('basket.my_order.save')
+  - if @basket.editable?
+    a.btn.btn-danger href=url_for([@basket, @order]) title=t('basket.my_order.destroy.title') data-method="delete" data-confirm=t('basket.my_order.destroy.confirm') basket.my_order.destroy.text
 
-    - if @basket.editable?
-      a href="#{destroy_order_path(@order.uuid)}" title="#{t 'basket.my_order.destroy.title'}" class="button danger" data-method="delete" data-confirm="#{t 'basket.my_order.destroy.confirm'}" basket.my_order.destroy.text
+p
+  - if tips?
+    = t('basket.my_order.price.with_tips', with_tip: euro(@order.sum_with_tip), without_tip: euro(@order.sum)).html_safe
+  - else
+    = t('basket.my_order.price.without_tips', price: euro(@order.sum)).html_safe
+  = ' '
 
-  p
-    - if tips?
-      = t('basket.my_order.price.with_tips', with_tip: euro(@order.sum_with_tip), without_tip: euro(@order.sum)).html_safe
-    - else
-      = t('basket.my_order.price.without_tips', price: euro(@order.sum)).html_safe
-    = ' '
+  - if @order.paid?
+    span.good basket.my_order.has_paid
+  - else
+    span.bad basket.my_order.has_not_paid
 
-    - if @order.paid?
-      span.good basket.my_order.has_paid
-    - else
-      span.bad basket.my_order.has_not_paid
-
-  = order_details(@order)
+= order_details(@order)

@@ -24,8 +24,8 @@ var hipster = window.hipster = (function() {
     }
   }
 
-  function getCurrentAction() {
-    return hipsterGetCookie('action');
+  function getCurrentMode() {
+    return hipsterGetCookie('mode');
   }
 
   function getPostalCode() {
@@ -123,6 +123,10 @@ var hipster = window.hipster = (function() {
     }
 
     return data;
+  }
+
+  function getCartItemsCount() {
+    return $('.cartitems').length;
   }
 
   function getUserNick() {
@@ -410,7 +414,7 @@ var hipster = window.hipster = (function() {
   // PUBLIC ////////////////////////////////////////////////////////////
   return {
     hideOrderFieldsAppropriately: function() {
-      if(getCurrentAction() === 'submit_group_order') {
+      if(getCurrentMode() === 'pizzade_basket_submit') {
         log('Not hiding address fields because we want to submit the group basket');
         return;
       }
@@ -542,6 +546,23 @@ var hipster = window.hipster = (function() {
       });
     },
 
+    runItemCountChecker: function self() {
+      if(!isShopPage()) return;
+      var ca = getCurrentMode();
+      if(ca !== 'pizzade_order_new' && ca !== 'pizzade_order_edit') return;
+
+      var btn = getSubmitButton();
+      if(getCartItemsCount() === 0) {
+        btn.attr("class", "btn btn-link");
+        btn.enable(false);
+      } else {
+        btn.attr("class", "btn btn-primary");
+        btn.enable(true);
+      }
+
+      window.setTimeout(self, 1000);
+    },
+
     restoreAddressFields: function() {
       if(!localStorage) return;
 
@@ -584,4 +605,5 @@ hipster.runAfterLoad(function() {
   hipster.restoreAddressFields();
   hipster.attachAddressFieldListener();
   hipster.attachShaAddress();
+  hipster.runItemCountChecker();
 });

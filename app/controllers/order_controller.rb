@@ -3,18 +3,18 @@
 class OrderController < ApplicationController
   include CookieHelper
 
-  before_filter :find_basket
+  before_filter :require_basket
   before_filter :require_order, except: [:new, :create]
   before_filter :ensure_basket_editable, only: [:create, :new, :destroy, :copy, :edit, :update]
   before_filter :reset_replay
 
   def new
-    cookie_set(:action, :new_order)
+    cookie_set(:mode, :pizzade_order_new)
     redirect_to_shop
   end
 
   def edit
-    cookie_set(:action, :edit_order)
+    cookie_set(:mode, :pizzade_replay_nocheck)
     cookie_set(:replay, "order nocheck #{@order.uuid}")
     redirect_to_shop
   end
@@ -48,21 +48,19 @@ class OrderController < ApplicationController
       handle_price_difference(pay, pay_tip)
     end
 
-    redirect_to_basket
+    redirect_to @basket
   end
 
   def create
     @order = o = Order.new(params.permit(:nick, :json))
     o.basket_id = @basket.id
-    o.save!
-    if o.errors.any?
+
+    unless o.save
       flash_error_msgs(o)
     else
-      cookie_set(:order, o.uuid)
-      cookie_set(:action, :pay_order)
       flash[:info] = "Your order has been added. Please put #{view_context.sum} on the money pile."
     end
-    redirect_to_basket
+    redirect_to @basket
   end
 
   def toggle_paid
@@ -70,27 +68,26 @@ class OrderController < ApplicationController
     if request.xhr?
       return render json: { }
     else
-      return redirect_to_basket
+      return redirect_to @basket
     end
   end
 
   def destroy
-    return redirect_to_basket unless @order
+    return redirect_to @basket unless @order
 
-    my_order = cookie_get(:order) == @order.uuid
-    if !my_order && !view_context.admin?
+    my_order = @nick == @order.nick
+    unless my_order || view_context.admin?
       flash[:warn] = 'Only admins can delete other people’s orders.'
-      return redirect_to_basket
+      return redirect_to @basket
     end
 
     sum = @order.paid? ? @order.sum : 0
     @order.destroy!
-    cookie_delete(:order) if my_order
 
     flash[:info] = "#{my_order ? 'Your' : @order.nick.possessive} order has been removed."
     flash[:info] << " Don’t forget to take  #{view_context.sum} from the pile." if sum > 0
 
-    redirect_to_basket
+    redirect_to @basket
   end
 
 
@@ -114,7 +111,7 @@ class OrderController < ApplicationController
     elsif !@basket.submitted.nil?
       flash[:error] = 'This group order has already been submitted. Please talk to whoever ordered the food to add your order manually via phone.'
       # TODO: repeat order here for convenience
-      redirect_to_basket
+      redirect_to @basket
     end
   end
 
@@ -140,10 +137,10 @@ class OrderController < ApplicationController
   end
 
   def require_order
-    find_order
+    @order = Order.friendly.find(params[:id]) rescue nil
     unless @order
-      flash[:error] = 'Could not find order. Maybe the cookie went missing on a browser restart?'
-      return redirect_to_basket
+      flash[:error] = t('order.controller.invalid_uuid')
+      return redirect_to @basket
     end
   end
 end

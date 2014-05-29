@@ -13,7 +13,7 @@
       ul.nav.navbar-nav
         == yield :nav
 
-        - if admin? && @basket
+        - if admin? && @basket && params[:controller] == 'basket'
           = render 'nav/admin'
 
 

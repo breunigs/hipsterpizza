@@ -1,2 +1,2 @@
-a href="#{toggle_paid_order_path(@order.uuid)}" title="#{@order.paid? ? "If you marked your order paid by mistake, you can undo this here." : "Please pay before you mark your order as paid."}" data-method="put" data-remote="true"  data-auto-reload="true" class="button #{@order.paid? ? 'warning' : 'success'}"
+a href=url_for([:toggle_paid, @basket, @order]) title="#{@order.paid? ? "If you marked your order paid by mistake, you can undo this here." : "Please pay before you mark your order as paid."}" data-method="put" data-remote="true"  data-auto-reload="true" class="button #{@order.paid? ? 'warning' : 'success'}"
   '  Mark Order as #{@order.paid? ? "NOT" : ""} Paid

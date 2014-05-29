@@ -1,0 +1,9 @@
+en:
+  order:
+    controller:
+      invalid_uuid: 'Could not find specified order. Are you sure it’s not accidentally been deleted?'
+
+de:
+  order:
+    controller:
+      invalid_uuid: 'Keine Bestellung mit dieser ID gefunden. Wurde sie evtl. zwischenzeitlich gelöscht?'

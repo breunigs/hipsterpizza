@@ -56,7 +56,7 @@ de:
 
       participate:
         heading: Mitbestellen
-        body: 'Um mitzumachen, frage einfach einen Teilnehmer nach dem Link zum gemeinsamen Warenkorb. Wenn es zu anstrengend ist die URL kopieren, kannst Du auch manuell die ID eingeben:'
+        body: 'Um mitzumachen, frage einfach einen Teilnehmer nach dem Link zum Gruppen-Warenkorb. Wenn es zu anstrengend ist die URL kopieren, kannst Du auch manuell die ID eingeben:'
         field_hint: Warenkorb-ID eingeben
         link: Warenkorb nutzen
         enter_id: ID manuell eingeben

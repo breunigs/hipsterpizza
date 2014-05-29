@@ -11,4 +11,4 @@ de:
     new_order_button:
       link: '✚ Neue Bestellung'
       existing_order: 'Es gibt bereits eine Bestellung für Dich. Klicke „OK“ wenn Du für jemand anderen bestellen möchtest, ansonsten klicke „Abbrechen“ und bearbeite Deine Bestellung stattdessen.'
-      title: 'Wähle alle Produkte aus die Du bestellen möchtest. Anschließend wird Deine Bestellung in den gemeinsamen Warenkorb gelegt. Du kannst Deine Auswahl später ändern.'
+      title: 'Wähle alle Produkte aus die Du bestellen möchtest. Anschließend wird Deine Bestellung in den Gruppen-Warenkorb gelegt. Du kannst Deine Auswahl später ändern.'

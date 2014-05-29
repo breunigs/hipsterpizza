@@ -42,13 +42,16 @@ class PassthroughController < ApplicationController
 
   private
 
-  # reads the mode cookie and ensures it’s valid. Redirects to root if it isn’t.
+  # Reads the mode cookies and ensures it’s valid and all dependencies are, too.
+  # If something is wrong, it redirects to the start page with an error message.
   def resolve_mode
     @mode = cookie_get(:mode).to_s
-    return if VALID_MODES.include?(@mode)
+    unless VALID_MODES.include?(@mode)
+      flash[:error] = t 'mode.invalid_or_missing'
+      return redirect_to root_url
+    end
 
-    flash[:error] = t 'mode.invalid_or_missing'
-    redirect_to root_url
+    require_basket if @mode.include?('_order_')
   end
 
   def add_missing_content_type

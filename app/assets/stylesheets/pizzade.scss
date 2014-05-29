@@ -5,6 +5,10 @@
   top: 57px !important;
 }
 
+body {
+  padding-top: 50px; // make room for HipsterPizza header
+}
+
 body.hideOrderFields {
   // address fields, minimal required price, pizza.de submit button
   #permkv8, .cart-minorderhint, #button-2012 {

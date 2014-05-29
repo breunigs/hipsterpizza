@@ -1,6 +1,9 @@
 # encoding: utf-8
 
 class Order < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :uuid
+
   belongs_to :basket, touch: true
 
   validates :uuid, presence: true, uniqueness: true
@@ -11,7 +14,6 @@ class Order < ActiveRecord::Base
   scope :paid, -> { where(paid: true) }
   scope :unpaid, -> { where(paid: false) }
   scope :sorted, -> { order('lower(nick) asc') }
-
 
   before_validation(on: :create) do
     create_uuid

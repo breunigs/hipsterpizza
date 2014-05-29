@@ -7,5 +7,5 @@ en:
 de:
   modes:
     choose_shop:
-      title: 'Wähle einen Lieferanten mit der normalen Bestellseite aus. Anschließend klicke hier um einen gemeinsamen Warenkorb in HipsterPizza zu erstellen.'
+      title: 'Wähle einen Lieferanten mit der normalen Bestellseite aus. Anschließend klicke hier um einen Gruppen-Warenkorb in HipsterPizza zu erstellen.'
       button: 'Diesen Lieferanten wählen'

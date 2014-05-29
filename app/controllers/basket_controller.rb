@@ -4,7 +4,6 @@ class BasketController < ApplicationController
   include CookieHelper
 
   before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin, :delivery_arrived, :pdf]
-  before_filter :find_order, only: [:show]
   before_filter :reset_replay # TODO: move?
 
 
@@ -26,8 +25,7 @@ class BasketController < ApplicationController
       return create
     end
 
-    cookie_set(:mode, 'pizzade_choose_shop')
-    cookie_delete(:basket)
+    cookie_set(:mode, :pizzade_basket_new)
 
     url = PINNING['shop_url'] || pizzade_root_path
     redirect_to url + PIZZADE_URL_MODIFIERS
@@ -56,6 +54,7 @@ class BasketController < ApplicationController
     #   keys = [@basket.cache_key, @order.cache_key, view_context.admin?, @basket.clock_running?]
     #   return unless stale?(etag: keys.join(' '))
     # end
+    @order = Order.where(basket_id: @basket.id, nick: @nick).first
 
     respond_to do |format|
       format.html

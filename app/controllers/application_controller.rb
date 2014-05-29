@@ -25,9 +25,10 @@ class ApplicationController < ActionController::Base
   # 3. recently submitted basket in single basket mode
   # 4. cookies
   def find_basket
-    @basket ||= Basket.friendly.find(params[:id]) rescue nil
+    basket_id = params[:basket_id] || params[:id]
+    @basket ||= Basket.friendly.find(basket_id) rescue nil
     # if there’s an id, but it’s invalid it should ignore the cookie.
-    return nil unless @basket || params[:id].blank?
+    return nil unless @basket || basket_id.blank?
 
     @basket ||= Basket.find_basket_for_single_mode
     @basket ||= Basket.friendly.find(cookie_get(:basket)) rescue nil
@@ -40,12 +41,6 @@ class ApplicationController < ActionController::Base
     find_basket
     return redirect_to root_path unless @basket
     cookie_set(:basket, @basket.uid)
-  end
-
-  def find_order
-    @order = Order.where(uuid: params[:order_uuid]).first rescue nil
-    @order ||= Order.where(uuid: cookie_get(:order), basket: @basket).first rescue nil
-    @saved_order = SavedOrder.where(uuid: params[:saved_order_uuid]).first rescue nil
   end
 
   def redirect_to_shop

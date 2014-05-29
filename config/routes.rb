@@ -21,16 +21,15 @@ Hipsterpizza::Application.routes.draw do
 
         post 'set_submit_time'
       end
-    end
 
-    resources :order, only: [:new, :create]
-    scope 'order/:order_uuid' do
-      put 'toggle_paid', to: 'order#toggle_paid', as: :toggle_paid_order
-      delete 'destroy', to: 'order#destroy', as: :destroy_order
-      post 'update', to: 'order#update', as: :update_order
-      post 'save', to: 'order#save', as: :save_order
-      get 'edit', to: 'order#edit', as: :edit_order
-      put 'copy', to: 'order#copy', as: :copy_order
+
+      resources :order, except: :index do
+        member do
+          patch 'toggle_paid'
+          post 'save'
+          put 'copy'
+        end
+      end
     end
 
     resources :saved_order, only: [:index]
