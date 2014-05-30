@@ -14,12 +14,12 @@ div
           a href=url_for([:edit, @basket, @order]) title=t('basket.my_order.edit.title') data-no-turbolink="" basket.my_order.edit.text
 
         li
-          = render "save_order_button", order: @order, mine: true
+          = render "save_order_button", order: @order, mine: true, css: ''
 
         li.danger
           a href=url_for([@basket, @order]) title=t('basket.my_order.destroy.title') data-method="delete" data-confirm=t('basket.my_order.destroy.confirm') basket.my_order.destroy.text
   - else
-    => render "save_order_button", order: @order, mine: true, klass: 'btn btn-default'
+    => render "save_order_button", order: @order, mine: true
 
   = render 'nick/button'
 

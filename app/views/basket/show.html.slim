@@ -2,7 +2,7 @@
   - if @basket.editable?
     li = render "button/place_new_order"
 
-  li = render "button/saved_prev_orders"
+  li = render "button/saved_prev_orders", css: ''
 
 .container
   = render "shared/flash"

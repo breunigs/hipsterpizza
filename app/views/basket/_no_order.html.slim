@@ -5,5 +5,5 @@ h2 = t("basket.no_order.title.with#{@nick.blank? ? 'out' : ''}_nick", nick: @nic
 
   => render 'button/place_new_order', primary: true
 
-- if @nick
-  = render 'nick/button'
+= render 'button/saved_prev_orders'
+= render 'nick/button'
