@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   # 4. cookies
   def find_basket
     basket_id = params[:basket_id] || params[:id]
-    @basket ||= Basket.friendly.find(basket_id) rescue nil
+    @basket ||= Basket.friendly.find(basket_id.downcase) rescue nil
     # if there’s an id, but it’s invalid it should ignore the cookie.
     return nil unless @basket || basket_id.blank?
 

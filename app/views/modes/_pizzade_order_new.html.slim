@@ -1,11 +1,14 @@
-li
-  / TODO: why doesn’t form_for([@basket, @basket.orders.build]) create the correct path?
-  = form_tag basket_order_index_path(@basket) do
-    input#hipsterOrderJson type='hidden' name='json'
-    input#hipsterOrderNick type='hidden' name='nick'
+- content_for :nav_no_collapse do
+  li
+    / TODO: why doesn’t form_for([@basket, @basket.orders.build]) create the correct path?
+    = form_tag basket_order_index_url(@basket) do
+      input#hipsterOrderJson type='hidden' name='json'
+      input#hipsterOrderNick type='hidden' name='nick'
 
-
-    button#hipsterOrderSubmitButton.btn.btn-link type="submit" disabled="" title=t('modes.order_new.place.title') data-disable-with=t('modes.order_new.place.disable_with') modes.order_new.place.button
+      button#hipsterOrderSubmitButton.btn.btn-link.navbar-btn type="submit" disabled="" title=t('modes.order_new.place.title') data-disable-with=t('modes.order_new.place.disable_with') modes.order_new.place.button
 
 li
   a href=url_for(@basket) title=t('modes.order_new.cancel.title') modes.order_new.cancel.button
+
+li.visible-xs
+  a onclick="$('#hipsterTopBar .navbar-collapse').collapse('hide');$('html, body').scrollTop(9999999)" modes.order_new.view_basket

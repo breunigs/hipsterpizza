@@ -553,11 +553,11 @@ var hipster = window.hipster = (function() {
 
       var btn = getSubmitButton();
       if(getCartItemsCount() === 0) {
-        btn.attr("class", "btn btn-link");
-        btn.enable(false);
+        if(btn.is(':enabled'))
+          btn.attr("class", "btn btn-link navbar-btn").enable(false);
       } else {
-        btn.attr("class", "btn btn-primary");
-        btn.enable(true);
+        if(btn.is(':disabled'))
+          btn.attr("class", "btn btn-primary navbar-btn").enable(true);
       }
 
       window.setTimeout(self, 1000);

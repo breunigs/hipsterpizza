@@ -1,5 +1,6 @@
 en:
   name: HipsterPizza
+
   mode:
     invalid_or_missing: 'Missing or invalid mode. HipsterPizza uses cookies to control the flow when showing external sites. Please ensure you have cookies enabled.'
   time:
@@ -8,6 +9,7 @@ en:
 
 de:
   name: HipsterPizza
+
   mode:
     invalid_or_missing: 'Fehlender oder ungültiger Modus. HipsterPizza nutzt Cookies zur Steuerung auf externen Seiten. Bitte stelle sicher, dass Du Cookies aktiviert hast.'
   time:

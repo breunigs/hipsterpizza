@@ -10,6 +10,8 @@ en:
         disable_with: 'Saving Your Order…'
         button: 'Place Order In Group Basket'
 
+      view_basket: 'Show My Items'
+
 de:
   modes:
     order_new:
@@ -20,4 +22,6 @@ de:
       place:
         title: 'Places your selected items as a separate order into the group basket. You may edit the selected items later.'
         disable_with: 'Speichere Bestellung…'
-        button: 'Bestellung in Gruppen-Warenkorb legen'
+        button: 'Bestellung in Gruppenkorb legen'
+
+      view_basket: 'Zeige meine Artikel'

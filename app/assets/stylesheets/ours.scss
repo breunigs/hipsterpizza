@@ -14,7 +14,12 @@ $font-family-sans-serif: 'Cabin', sans-serif;
   font-size: $font-size-base;
 
   body {
-    background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed #fff;
+    background-color: #fff;
+
+    @media (min-width: $screen-sm-min) {
+      background: url(image-path('large_glasses_bg.png')) no-repeat bottom right fixed #fff;
+    }
+
     padding-top: 50px; // make room for fixed header
 
     > .container {
@@ -22,13 +27,34 @@ $font-family-sans-serif: 'Cabin', sans-serif;
     }
   }
 
-  #hipsterTopBar .container {
-    padding: 0;
+  .spacer {
+    width: 15px;
+    overflow: hidden;
+    float: left;
   }
 
-  #hipsterTopBar li form {
-    margin-top: 5px;
+  @media (min-width: $screen-sm-min) {
+    .navbar-brand {
+      padding-left: 0;
+    }
   }
+
+  @media (max-width: $screen-xs-max) {
+    .navbar-header .navbar-nav {
+      margin: 0;
+
+      li {
+        display: inline-block;
+      }
+    }
+  }
+
+  .navbar form .navbar-btn {
+    margin-top: 8px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
 
   .text-muted a {
     color: #999;
@@ -122,6 +148,34 @@ $font-family-sans-serif: 'Cabin', sans-serif;
     background: none;
     box-shadow: none;
     color: $text-color;
+  }
+
+  .button-overflow {
+    .btn {
+      margin-bottom: $padding-base-vertical;
+      width: 100%;
+
+      @media (min-width: $screen-sm-min) {
+        width: auto;
+        margin-bottom: 0;
+      }
+    }
+
+    .dropdown-menu {
+      width: 100%;
+      a {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+
+      @media (min-width: $screen-sm-min) {
+        width: auto;
+        a {
+          padding-top: 3px;
+          padding-bottom: 3px;
+        }
+      }
+    }
   }
 }
 

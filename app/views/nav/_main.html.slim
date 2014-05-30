@@ -7,7 +7,16 @@
         span.icon-bar
         span.icon-bar
 
-      a.navbar-brand href=root_path name
+      / Show brand name on larger devices by default. On smaller ones (i.e.
+      / phones) only do so when there’s no non-collapsible items to be shown.
+      a.navbar-brand.hidden-xs href=root_path name
+      ul.nav.navbar-nav
+        - if yield(:nav_no_collapse).empty?
+          a.navbar-brand.visible-xs href=root_path name
+        - else
+          div.visible-xs.spacer &nbsp;
+          == yield :nav_no_collapse
+
 
     .collapse.navbar-collapse
       ul.nav.navbar-nav
@@ -23,6 +32,9 @@
             b.caret
 
           ul.dropdown-menu
+            li.visible-xs
+              a href=root_path name
+
             li
               a href=privacy_path main.chooser.privacy.link
             li

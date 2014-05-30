@@ -1,6 +1,6 @@
 h2 = t('basket.my_order.heading', nick: @order.nick)
 
-div style="margin-bottom: 13px"
+div.button-overflow style="margin-bottom: 13px"
   = render 'button/toggle_order_paid'
 
   - if @basket.editable?

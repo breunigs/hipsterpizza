@@ -16,3 +16,4 @@ $(document).ready(function() {
     $(this).find('input:visible:first').focus();
   });
 });
+
