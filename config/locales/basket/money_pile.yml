@@ -1,0 +1,19 @@
+en:
+  basket:
+    money_pile:
+      title: 'Money Pile'
+      total: 'Total: %{sum}.'
+      change: 'It’s totally okay to use the pile for money exchange.'
+
+      togo: '%{amount} still needs to be paid'
+      pile: '%{amount} should already be on the money pile'
+
+de:
+  basket:
+    money_pile:
+      title: 'Geld Haufen'
+      total: 'Gesamt: %{sum}.'
+      change: 'Du kannst den Haufen zum Geldwechseln nutzen.'
+
+      togo: '%{amount} müssen noch bezahlt werden'
+      pile: '%{amount} sollten schon auf dem Haufen sein'

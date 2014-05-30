@@ -1,10 +1,19 @@
-.pile
-  div
-    span pile
-    ' #{euro(@basket.sum_paid)}
-  div.dim
-    span ∑
-    ' #{euro(@basket.sum)}
-  div.dim
-    span 2go
-    ' #{euro(@basket.sum_unpaid)}
+- sum = euro(@basket.sum)
+- pile = euro(@basket.sum_paid)
+- togo = euro(@basket.sum_unpaid)
+
+- paid = pile.to_f / sum.to_f * 100
+
+h2 basket.money_pile.title
+
+p
+  b> = t('basket.money_pile.total', sum: sum, pile: pile, togo: togo)
+  = t('basket.money_pile.change')
+
+.progress
+  .progress-bar.progress-bar-success style="width: #{paid}%" title=t('basket.money_pile.pile', amount: pile)
+    = pile
+
+  .progress-bar class="progress-bar-#{@basket.submitted? ? 'danger' : 'transparent'}" style="width: #{100 - paid}%" title=t('basket.money_pile.togo', amount: togo)
+    = togo
+
