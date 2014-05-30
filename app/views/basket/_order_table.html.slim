@@ -37,7 +37,7 @@
           - if admin?
             a href=url_for([:toggle_paid, @basket, order]) class="button #{order.paid? ? 'warning' : 'success'}" data-method="put" mark #{order.paid? ? "NOT" : ""} paid
 
-            = render "save_order_button", order: order, text: 'save'
+            = render "save_order_button", order: order, mine: false
 
 - else
   p No orders yet.

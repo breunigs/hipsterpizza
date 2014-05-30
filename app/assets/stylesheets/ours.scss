@@ -80,5 +80,26 @@ $font-family-sans-serif: 'Cabin', sans-serif;
   .alert {
     margin-top: 26px;
   }
+
+  .dropdown .danger a {
+    background: $state-danger-bg;
+    color: $state-danger-text !important;
+
+    &:hover {
+      @include gradient-vertical($start-color: darken($state-danger-bg, 2%), $end-color: darken($state-danger-bg, 7%));
+      background-color: darken($state-danger-bg, 7%);
+    }
+  }
+
+
+  .dropdown .warning a {
+    background: $state-warning-bg;
+    color: $state-warning-text !important;
+
+    &:hover {
+      @include gradient-vertical($start-color: darken($state-warning-bg, 2%), $end-color: darken($state-warning-bg, 7%));
+      background-color: darken($state-warning-bg, 7%);
+    }
+  }
 }
 

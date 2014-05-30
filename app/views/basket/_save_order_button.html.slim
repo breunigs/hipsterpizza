@@ -1,12 +1,19 @@
-= link_to text,
-  url_for([:save, @basket, order]),
-  class: :button,
-  title: "Saves your order for next time, in case you – or others – want to order the same again (saved orders can be seen and used by everyone).",
-  method: :post,
-  remote: true,
-  data: { \
-    inject_response: true,
-    prompt: { \
-      message: 'How to name your order? (Include your nick, unless it’s something general)',
-      default: "#{cookie_get(:nick)}: ",
-      param: 'name' } }
+- c = defined?(klass) ? klass : ''
+- nick = mine ? @nick : order.nick
+
+- if SavedOrder.exists?(nick, order)
+  a data-target="#" href="" class=c button.save_order.link.saved
+- else
+  - tt = defined?(mine) && mine ? 'my' : 'others'
+  = link_to t('button.save_order.link' + tt),
+    url_for([:save, @basket, order]),
+    title: t('button.save_order.title'),
+    method: :post,
+    remote: true,
+    class: c,
+    data: { \
+      inject_response: true,
+      prompt: { \
+        message: t('button.save_order.prompt.message'),
+        default: "#{nick}: ",
+        param: 'name' } }

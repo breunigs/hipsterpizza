@@ -1,0 +1,19 @@
+en:
+  button:
+    toggle_paid:
+      not_paid:
+        button: Mark Order As Paid
+        title: 'Put the specified amount on the money pile and mark yourself as having paid afterwards, by clicking here.'
+      paid:
+        button: Toggle Paid Status
+        title: 'Mark yourself as not having paid by clicking here.'
+
+de:
+  button:
+    toggle_paid:
+      not_paid:
+        button: Bestellung als bezahlt setzen
+        title: 'Zuerst den angegebenen Betrag auf den Geldhaufen werfen, danach hier klicken um Deine Bestellung als bezahlt zu markieren.'
+      paid:
+        button: Bezahlt-Status umschalten
+        title: 'Setze Deine Bestellung auf „doch nicht bezahlt“.'

@@ -1,2 +1,6 @@
-a href=url_for([:toggle_paid, @basket, @order]) title="#{@order.paid? ? "If you marked your order paid by mistake, you can undo this here." : "Please pay before you mark your order as paid."}" data-method="put" data-remote="true"  data-auto-reload="true" class="button #{@order.paid? ? 'warning' : 'success'}"
-  '  Mark Order as #{@order.paid? ? "NOT" : ""} Paid
+- url = url_for([:toggle_paid, @basket, @order])
+
+- if @order.paid?
+  a.btn.btn-default> href=url data-method="patch" data-remote="true" data-auto-reload="true" title=t('button.toggle_paid.paid.title') button.toggle_paid.paid.button
+- else
+  a.btn.btn-primary> href=url data-method="patch" data-remote="true" data-auto-reload="true" title=t('button.toggle_paid.not_paid.title') button.toggle_paid.not_paid.button

@@ -1,0 +1,25 @@
+en:
+  button:
+    save_order:
+      title: "Saves your order for next time, in case you – or others – want to order the same again (saved orders can be seen and used by everyone)."
+
+      prompt:
+        message: 'How to name your order? (Include your nick, unless it’s something general)'
+
+      link:
+        my: '☐ Save…'
+        others: '☐ Save Order…'
+        saved: '☑ Saved'
+
+de:
+  button:
+    save_order:
+      title: 'Speichert Deine Bestellung für die nächsten Male, um den Vorgang zu beschleunigen wenn das gleiche bestellt werden soll. Gespeicherte Bestellungen können von jedem eingesehen werden.'
+
+      prompt:
+        message: 'Wie soll die Bestellung heißen? (Lass Deinen Nick drin, wenn es nichts Allgemeines ist)'
+
+      link:
+        my: '☐ Speichern…'
+        others: '☐ Bestellung speichern…'
+        saved: '☑ Gespeichert'
