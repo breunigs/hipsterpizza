@@ -1,7 +1,7 @@
 h2 = t('basket.my_order.heading', nick: @order.nick)
 
 div
-  = render 'toggle_order_paid_button'
+  = render 'button/toggle_order_paid'
 
   - if @basket.editable?
     .dropdown> style="display: inline"
@@ -19,7 +19,7 @@ div
         li.danger
           a href=url_for([@basket, @order]) title=t('basket.my_order.destroy.title') data-method="delete" data-confirm=t('basket.my_order.destroy.confirm') basket.my_order.destroy.text
   - else
-    = render "save_order_button", order: @order, mine: true, klass: 'btn btn-default'
+    => render "save_order_button", order: @order, mine: true, klass: 'btn btn-default'
 
   = render 'nick/button'
 

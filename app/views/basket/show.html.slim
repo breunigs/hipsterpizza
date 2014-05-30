@@ -1,9 +1,8 @@
 - content_for :nav do
   - if @basket.editable?
-    li = render "place_new_order_button"
+    li = render "button/place_new_order"
 
-  li
-    a.button href=saved_order_index_path title="Lists your recent and everyone’s saved orders." Saved/Previous Orders
+  li = render "button/saved_prev_orders"
 
 .container
   = render "shared/flash"

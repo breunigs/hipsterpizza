@@ -27,7 +27,7 @@
             a href=url_for([:copy, @basket, order]) title="Copies this order. You can edit it before you place it into the group basket." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" copy
 
           - if has_nick? && @basket.editable?
-            a href=url_for([:copy, @basket, @order, mode: :insta]) title="Copies this order with your nick and adds it instantly to the group basket." class="button" data-method="put"  data-confirm="#{overwrite_order_confirm}" insta-copy
+            a href=url_for([:copy, @basket, order, mode: :insta]) title="Copies this order with your nick and adds it instantly to the group basket." class="button" data-method="put"  data-confirm="#{overwrite_order_confirm}" insta-copy
 
           - if admin? && @basket.editable?
             a href=url_for([:edit, @basket, order]) class="button" data-no-turbolink="" edit
@@ -37,7 +37,7 @@
           - if admin?
             a href=url_for([:toggle_paid, @basket, order]) class="button #{order.paid? ? 'warning' : 'success'}" data-method="put" mark #{order.paid? ? "NOT" : ""} paid
 
-            = render "save_order_button", order: order, mine: false
+            = render "button/save_order", order: order, mine: false
 
 - else
   p No orders yet.

@@ -1,0 +1,11 @@
+en:
+  button:
+    saved_prev_orders:
+      title: 'Lists your recent and everyone’s saved orders.'
+      link: 'Saved/Previous Orders'
+
+de:
+  button:
+    saved_prev_orders:
+      title: 'Zeigt Deine kürzlichen und alle gespeicherten Bestellungen an.'
+      link: 'Gespeicherte/Vorige Bestellungen'

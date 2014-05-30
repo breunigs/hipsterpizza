@@ -5,13 +5,13 @@ li.dropdown
 
   ul.dropdown-menu
     - if !@basket.cancelled?
-      li = render "basket/submit_group_order_button"
+      li = render "button/submit_group_order"
 
       li
         a href=pdf_basket_path(@basket.uid) Render PDF
 
     - if !@basket.submitted?
-      = render "basket/toggle_cancel_button"
+      = render "button/toggle_cancel"
 
     li
       a href=share_basket_path(@basket.uid) data-no-turbolinks="" Share This Basket
