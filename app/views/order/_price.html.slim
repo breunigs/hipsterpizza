@@ -1,0 +1,8 @@
+- o = defined?(order) ? order : @order
+- wo_tip = euro(@order.sum).html_safe
+
+- if tips?
+  - w_tip = euro(@order.sum_with_tip).html_safe
+  == t('basket.my_order.price.with_tips', with_tip: w_tip, without_tip: wo_tip)
+- else
+  == t('basket.my_order.price.without_tips', price: wo_tip)

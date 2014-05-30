@@ -39,6 +39,10 @@ $font-family-sans-serif: 'Cabin', sans-serif;
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto;
+
+    &.lead {
+      margin: 13px 0;
+    }
   }
 
   ol {
@@ -53,6 +57,10 @@ $font-family-sans-serif: 'Cabin', sans-serif;
         min-width: 1.1em;
       }
     }
+  }
+
+  ul {
+    padding-left: 1em;
   }
 
 

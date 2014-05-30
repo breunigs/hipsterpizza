@@ -13,8 +13,8 @@ en:
         confirm: 'Do you really want to starve of hunger?'
 
       price:
-        with_tips: 'Price: <b>%{with_tip}</b> (or <span class="dim">%{without_tip}</span> without tip).'
-        without_tips: 'Price: <b>%{price}</b>.'
+        with_tips: '<b>%{with_tip}</b> (or <span class="dim">%{without_tip}</span> without tip).'
+        without_tips: '<b>%{price}</b>.'
 
       has_paid: '✓ You are marked as having paid.'
       has_not_paid: '✗ You still need to pay.'
@@ -35,8 +35,8 @@ de:
         confirm: 'Willst Du wirklich verhungern?'
 
       price:
-        with_tips: 'Preis: <b>%{with_tip}</b> (oder <span class="dim">%{without_tip}</span> ohne Trinkgeld).'
-        without_tips: 'Preis: <b>%{price}</b>.'
+        with_tips: '<b>%{with_tip}</b> (oder <span class="dim">%{without_tip}</span> ohne Trinkgeld).'
+        without_tips: '<b>%{price}</b>.'
 
       has_paid: '✓ Du bist als bezahlt markiert.'
       has_not_paid: '✗ Du musst noch bezahlen.'

@@ -26,7 +26,7 @@ class OrderController < ApplicationController
     so.shop_url = @order.basket.shop_url
     so.json = @order.json
     if so.save
-      render json: { text: 'saved ✓', disable: true }
+      render json: { text: t('button.savew_order.link_saved'), disable: true }
     else
       render json: { text: 'error ☹', error: so.errors }
     end
@@ -58,7 +58,7 @@ class OrderController < ApplicationController
     unless o.save
       flash_error_msgs(o)
     else
-      flash[:info] = "Your order has been added. Please put #{view_context.sum} on the money pile."
+      flash[:info] = "Your order has been added. Please put #{view_context.sum} on the money pile." # TODO: render order/price instead
     end
     redirect_to @basket
   end

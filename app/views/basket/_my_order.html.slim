@@ -1,6 +1,6 @@
 h2 = t('basket.my_order.heading', nick: @order.nick)
 
-div
+div style="margin-bottom: 13px"
   = render 'button/toggle_order_paid'
 
   - if @basket.editable?
@@ -14,7 +14,7 @@ div
           a href=url_for([:edit, @basket, @order]) title=t('basket.my_order.edit.title') data-no-turbolink="" basket.my_order.edit.text
 
         li
-          = render "save_order_button", order: @order, mine: true, css: ''
+          = render "button/save_order", order: @order, mine: true, css: ''
 
         li.danger
           a href=url_for([@basket, @order]) title=t('basket.my_order.destroy.title') data-method="delete" data-confirm=t('basket.my_order.destroy.confirm') basket.my_order.destroy.text
@@ -23,17 +23,13 @@ div
 
   = render 'nick/button'
 
-
-p
-  - if tips?
-    = t('basket.my_order.price.with_tips', with_tip: euro(@order.sum_with_tip), without_tip: euro(@order.sum)).html_safe
-  - else
-    = t('basket.my_order.price.without_tips', price: euro(@order.sum)).html_safe
-  = ' '
-
+p.lead
   - if @order.paid?
-    span.good basket.my_order.has_paid
+    span.text-success basket.my_order.has_paid
   - else
-    span.bad basket.my_order.has_not_paid
+    span.text-danger basket.my_order.has_not_paid
+  br
+  small = render 'order/price'
+
 
 = order_details(@order)

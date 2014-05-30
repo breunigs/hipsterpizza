@@ -5,7 +5,7 @@
   a data-target="#" href="" class=c button.save_order.link.saved
 - else
   - tt = defined?(mine) && mine ? 'my' : 'others'
-  = link_to t('button.save_order.link' + tt),
+  = link_to t('button.save_order.link.' + tt),
     url_for([:save, @basket, order]),
     title: t('button.save_order.title'),
     method: :post,
