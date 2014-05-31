@@ -1,5 +1,4 @@
 //= require _both
-//= require _flash
 
 $font-size-base: 16px;
 $line-height-base: 1.632;
@@ -31,6 +30,13 @@ $font-family-sans-serif: 'Cabin', sans-serif;
     width: 15px;
     overflow: hidden;
     float: left;
+  }
+
+  .nick-id-float {
+    float:right;
+    color: #E6E6E6;
+    font-size: 600%;
+    cursor: help;
   }
 
   @media (min-width: $screen-sm-min) {
@@ -161,6 +167,15 @@ $font-family-sans-serif: 'Cabin', sans-serif;
       }
     }
 
+    .dropdown {
+      width: 100%;
+      display: inline-block;
+
+      @media (min-width: $screen-sm-min) {
+        width: auto;
+      }
+    }
+
     .dropdown-menu {
       width: 100%;
       a {
@@ -176,6 +191,29 @@ $font-family-sans-serif: 'Cabin', sans-serif;
         }
       }
     }
+  }
+
+  table ul {
+    margin-bottom: 0;
+  }
+
+  table.table {
+    td:last-child {
+      // align action button in order table vertically. Also avoids increasing
+      // the size of the table slightly.
+      padding-top: 5px;
+    }
+  }
+
+  .anti-troll {
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .wrap-ok {
+    min-width: 200px;
+    white-space: normal !important;
   }
 }
 

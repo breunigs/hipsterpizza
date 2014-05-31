@@ -1,0 +1,39 @@
+.dropdown
+  button.btn.btn-default.btn-xs role="button" data-toggle="dropdown"
+    ' order_table.menu
+    .caret
+
+  ul.dropdown-menu.dropdown-menu-right role="menu"
+    - if @basket.editable?
+      li = render 'button/copy_order', order: order, css: ''
+      li = render 'button/insta_copy_order', order: order, css: ''
+
+    li = render "button/save_order", order: order, mine: false, css: ''
+
+    - if admin?
+      li.divider
+      li.dropdown-header order_table.admin.header
+
+      li
+        a href=url_for([:toggle_paid, @basket, order]) data-method="put"
+          - if order.paid?
+            ' button.toggle_paid.paid.button
+          - else
+            ' button.toggle_paid.not_paid.button
+
+      - if @basket.editable?
+        li
+          a href=url_for([:edit, @basket, order]) data-no-turbolink="" basket.my_order.edit.text
+
+        li.danger
+          a href=url_for([@basket, order]) data-method="delete" data-confirm=t('order_table.admin.delete_confirm', nick: order.nick.possessive) basket.my_order.destroy.text
+
+
+/             - if @basket.editable?
+/               a href=url_for([:copy, @basket, order]) title="Copies this order. You can edit it before you place it into the group basket." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" copy
+
+/             - if has_nick? && @basket.editable?
+/               a href=url_for([:copy, @basket, order, mode: :insta]) title="Copies this order with your nick and adds it instantly to the group basket." class="button" data-method="put"  data-confirm="#{overwrite_order_confirm}" insta-copy
+
+
+/          = render "button/save_order", order: order, mine: false

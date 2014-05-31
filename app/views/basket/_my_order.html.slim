@@ -1,11 +1,14 @@
 h2 = t('basket.my_order.heading', nick: @order.nick)
 
+- if nick_ids?
+  div.hidden-xs.nick-id-float title==t('basket.my_order.nick_id_creed') = @order.nick_id
+
 div.button-overflow style="margin-bottom: 13px"
   = render 'button/toggle_order_paid'
 
   - if @basket.editable?
-    .dropdown> style="display: inline"
-      a#myOrderMenu.btn.btn-default role="button" data-toggle="dropdown" data-target="#" href=""
+    .dropdown>
+      button#myOrderMenu.btn.btn-default role="button" data-toggle="dropdown"
         ' basket.my_order.dropdown
         .caret
 
@@ -30,6 +33,5 @@ p.lead
     span.text-danger basket.my_order.has_not_paid
   br
   small = render 'order/price'
-
 
 = order_details(@order)

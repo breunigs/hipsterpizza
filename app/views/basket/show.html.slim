@@ -19,8 +19,7 @@
 
   = render "money_pile"
 
-  h2 Basket
-  = render "order_table"
+  = render "order_table/table"
 
   - if Rails.env.production?
     - content_for :below_script do

@@ -20,6 +20,10 @@ en:
       has_not_paid: '✗ You still need to pay.'
 
       dropdown: 'My Order…'
+
+      nick_id: 'Your ID:'
+      nick_id_creed: 'Look/Listen out for this ID on delivery.&#010;&#010;This is my ID. There are many like it, but this one is mine.&#010;My ID is my best friend. It is my life. I must master it as I must master my life.'
+
 de:
   basket:
     my_order:
@@ -35,10 +39,18 @@ de:
         confirm: 'Willst Du wirklich verhungern?'
 
       price:
-        with_tips: '<b>%{with_tip}</b> (oder <span class="dim">%{without_tip}</span> ohne Trinkgeld).'
+        with_tips: '<b>%{with_tip}</b> (oder %{without_tip} ohne Trinkgeld).'
         without_tips: '<b>%{price}</b>.'
 
       has_paid: '✓ Du bist als bezahlt markiert.'
       has_not_paid: '✗ Du musst noch bezahlen.'
 
       dropdown: 'Meine Bestellung…'
+
+      nick_id: 'Deine ID:'
+      nick_id_creed: 'Achte auf diese ID bei der Lieferung.&#010;&#010;Dies ist meine ID. Es gibt viele wie diese, aber diese ist meine.&#010;Meine ID ist mein bester Freund. Sie ist mein Leben. Ich muss sie meistern, so wie ich mein Leben meistern muss.'
+
+
+
+
+

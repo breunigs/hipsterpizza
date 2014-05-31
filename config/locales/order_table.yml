@@ -1,0 +1,36 @@
+en:
+  order_table:
+    # http://en.wikipedia.org/wiki/The_Lives_of_Others
+    heading: The Orders of Others
+
+    id: ID
+    nick: Nick
+    order_details: Order
+    actions: Actions
+
+    paid_orders: PAID
+    unpaid_orders: OUTSTANDING
+
+    menu: Actions
+
+    admin:
+      header: Admin Actions
+      delete_confirm: 'Really delete %{nick} order?'
+
+de:
+  order_table:
+    heading: Die Bestellungen der Anderen
+
+    id: ID
+    nick: Nick
+    order_details: Bestellung
+    actions: Aktionen
+
+    paid_orders: BEZAHLT
+    unpaid_orders: "NOCH&nbsp;OFFEN"
+
+    menu: Aktionen
+
+    admin:
+      header: Admin Aktionen
+      delete_confirm: '%{nick} wirklich löschen?'

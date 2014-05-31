@@ -7,6 +7,12 @@ en:
     future: 'in %{date}'
     past: '%{date} ago'
 
+
+  toggle_nav: Toggle Navigation
+  
+  other: 'Other'
+  
+
 de:
   name: HipsterPizza
 
@@ -15,3 +21,8 @@ de:
   time:
     future: 'in %{date}'
     past: 'vor %{date}'
+
+  
+  toggle_nav: 'Navigation auf/zuklappen'
+
+  other: 'Andere'

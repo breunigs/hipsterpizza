@@ -22,4 +22,8 @@ module ApplicationHelper
   def tips?
     defined?(CONFIG['tip_percent']) && CONFIG['tip_percent'] > 0
   end
+
+  def nick_ids?
+    defined?(CONFIG['show_nick_ids']) && CONFIG['show_nick_ids']
+  end
 end

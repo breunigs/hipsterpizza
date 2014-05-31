@@ -1,3 +1,8 @@
 # This controls how many percent users shall tip. The price incl. tip will be
 # rounded to 10 cents. 0 disables tip proposals.
 tip_percent: 5
+
+# show nick IDs to users? This only makes sense when you order by fax or some
+# other way to let the food delivery service know the IDs. Ordering via pizza.de
+# does not support nicks.
+show_nick_ids: true

@@ -11,7 +11,7 @@ en:
 de:
   basket:
     money_pile:
-      title: 'Geld Haufen'
+      title: 'Geldhaufen'
       total: 'Gesamt: %{sum}.'
       change: 'Du kannst den Haufen zum Geldwechseln nutzen.'
 

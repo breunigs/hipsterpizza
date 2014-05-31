@@ -1,0 +1,11 @@
+en:
+  button:
+    copy_order:
+      title: 'Copies these items into your basket. You may edit the items before putting your order into the group basket.'
+      button: 'Copy & Edit'
+
+de:
+  button:
+    copy_order:
+      title: 'Kopiert diese Artikel in Deinen Warenkorb. Du kannst die genaue Zusammenstellung ändern, bevor Du sie in den Gruppen-Warenkorb packst.'
+      button: 'Kopieren & Bearbeiten'

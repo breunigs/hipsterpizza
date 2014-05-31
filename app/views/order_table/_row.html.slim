@@ -1,0 +1,7 @@
+tr
+  - if nick_ids?
+    td = order.nick_id
+  td.anti-troll = order.nick
+  td.text-right = number_to_currency(order.sum, unit: '')
+  td.wrap-ok = order_details(order)
+  td.text-right = render 'order_table/menu', order: order

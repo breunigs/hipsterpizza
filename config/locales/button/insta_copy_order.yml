@@ -1,0 +1,11 @@
+en:
+  button:
+    insta_copy_order:
+      title: 'Makes an exact copy of this order, changing only the nickname. The order will be directly committed into the group basket.'
+      button: '1:1 Copy'
+
+de:
+  button:
+    insta_copy_order:
+      title: 'Macht eine exakte Kopie dieser Bestellung, abgesehen vom Nicknamen. Die Bestellung wird direkt in den Gruppen-Warenkorb gelegt.'
+      button: '1:1 Kopie'
