@@ -9,9 +9,11 @@ en:
 
 
   toggle_nav: Toggle Navigation
-  
+
   other: 'Other'
-  
+
+  please_wait: '…please wait…'
+
 
 de:
   name: HipsterPizza
@@ -22,7 +24,9 @@ de:
     future: 'in %{date}'
     past: 'vor %{date}'
 
-  
+
   toggle_nav: 'Navigation auf/zuklappen'
 
   other: 'Andere'
+
+  please_wait: '…bitte warten…'

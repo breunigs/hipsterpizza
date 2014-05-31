@@ -24,7 +24,7 @@ body.wait {
   }
 }
 
-#hipsterProgress {
+#hipster-progress {
   z-index: 9999;
   background: rgba(0, 0, 0, 0.7);
   width: 100%;
@@ -34,12 +34,15 @@ body.wait {
   left: 0;
   text-align: center;
 
-  progress {
-    margin-top: 200px;
-    width: 40%;
-    height: 30px;
-    box-shadow: 0 0 50px rgba(255, 255, 255, 0.6);
-  }
+  line-height: 300px;
+  font-size: 40px;
+  color: white;
+  text-shadow:
+    -1px -1px 0 #000,
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000,
+     0 0 50px #fff;
 }
 
 // fix broken pizza.de styles for duplicate/remove buttons in Chrome

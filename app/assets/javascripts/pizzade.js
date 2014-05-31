@@ -318,7 +318,8 @@ var hipster = window.hipster = (function() {
       checkFinalSum();
       $('#inhalt').unbind('content_ready', process);
       $("body").removeClass("wait");
-      $("#hipsterProgress").hide();
+      $("#hipster-progress").hide();
+      setSubmitButtonState(true);
       $.fx.off = false;
 
       if(typeof finishCallback === 'function') {
@@ -336,6 +337,17 @@ var hipster = window.hipster = (function() {
 
   function getSubmitButton() {
     return $('#hipsterOrderSubmitButton');
+  }
+
+  function setSubmitButtonState(enabled) {
+    var btn = getSubmitButton();
+    if(enabled) {
+      if(btn.is(':disabled'))
+        btn.attr("class", "btn btn-primary navbar-btn").enable(true);
+    } else {
+      if(btn.is(':enabled'))
+        btn.attr("class", "btn btn-link navbar-btn").enable(false);
+    }
   }
 
   function runAfterLoads() {
@@ -546,19 +558,12 @@ var hipster = window.hipster = (function() {
       });
     },
 
-    runItemCountChecker: function self() {
+    runItemCountChecker: function self(once) {
       if(!isShopPage()) return;
       var ca = getCurrentMode();
       if(ca !== 'pizzade_order_new' && ca !== 'pizzade_order_edit') return;
 
-      var btn = getSubmitButton();
-      if(getCartItemsCount() === 0) {
-        if(btn.is(':enabled'))
-          btn.attr("class", "btn btn-link navbar-btn").enable(false);
-      } else {
-        if(btn.is(':disabled'))
-          btn.attr("class", "btn btn-primary navbar-btn").enable(true);
-      }
+      setSubmitButtonState(getCartItemsCount() !== 0);
 
       window.setTimeout(self, 1000);
     },
