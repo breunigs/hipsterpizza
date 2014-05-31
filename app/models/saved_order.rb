@@ -1,6 +1,9 @@
 # encoding: utf-8
 
 class SavedOrder < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :uuid
+
   validates :json, presence: true, json: true
   validates :nick, presence: true
   validates :shop_url, presence: true,

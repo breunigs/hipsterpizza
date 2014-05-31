@@ -32,10 +32,10 @@ Hipsterpizza::Application.routes.draw do
       end
     end
 
-    resources :saved_order, only: [:index]
-    scope 'saved_order/:saved_order_uuid' do
-      delete 'destroy', to: 'saved_order#destroy', as: :destroy_saved_order
-      put 'copy', to: 'saved_order#copy', as: :copy_saved_order
+    resources :saved_order, only: [:index, :destroy] do
+      member do
+        put 'copy'
+      end
     end
 
     get 'streaming_test', to: "basket_submit#test"

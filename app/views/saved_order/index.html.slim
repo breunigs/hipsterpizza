@@ -66,4 +66,4 @@
                 = render 'button/copy_order', order: s, css: 'btn btn-default btn-xs'
                 = render 'button/insta_copy_order', order: s, css: 'btn btn-default btn-xs'
 
-                a.btn.btn-danger.btn-xs href=destroy_saved_order_path(s.uuid) title=t('saved_order.index.saved_orders.destroy.title') data-method="delete" data-confirm=t('saved_order.index.saved_orders.destroy.confirm', name: s.name) saved_order.index.saved_orders.destroy.button
+                a.btn.btn-danger.btn-xs href=saved_order_path(s) title=t('saved_order.index.saved_orders.destroy.title') data-method="delete" data-confirm=t('saved_order.index.saved_orders.destroy.confirm', name: s.name) saved_order.index.saved_orders.destroy.button

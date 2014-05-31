@@ -1,0 +1,11 @@
+en:
+  saved_order:
+    model:
+      destroyed: '“%{name}” has been removed from the saved orders.'
+      destroy_failed: '“%{name}” could not be removed. That shouldn’t happen. Ask an admin.'
+
+de:
+  saved_order:
+    model:
+      destroyed: '“%{name}” wurde aus den gespeicherten Bestellungen entfernt.'
+      destroy_failed: '“%{name}” konnte nicht entfernt werden. Das sollte nicht passieren. Frag einen Admin.'
