@@ -317,10 +317,18 @@ var hipster = window.hipster = (function() {
       missingItemsToErrors();
       checkFinalSum();
       $('#inhalt').unbind('content_ready', process);
-      $("body").removeClass("wait");
-      $("#hipster-progress").hide();
-      setSubmitButtonState(true);
-      $.fx.off = false;
+
+      // avoid content changes on insta mode because the form is submitted
+      // immediately anyway.
+      if(window.hipsterReplayMode !== 'insta') {
+        $("body").removeClass("wait");
+        $("#hipster-progress").hide();
+        setSubmitButtonState(true);
+        $.fx.off = false;
+      } else {
+        // allow form submission
+        getSubmitButton().enable(true);
+      }
 
       if(typeof finishCallback === 'function') {
         log('replay: running callback');
@@ -558,14 +566,15 @@ var hipster = window.hipster = (function() {
       });
     },
 
-    runItemCountChecker: function self(once) {
+    runItemCountChecker: function(once) {
       if(!isShopPage()) return;
       var ca = getCurrentMode();
       if(ca !== 'pizzade_order_new' && ca !== 'pizzade_order_edit') return;
+      if(window.hipsterReplayMode === 'insta') return;
 
-      setSubmitButtonState(getCartItemsCount() !== 0);
-
-      window.setTimeout(self, 1000);
+      window.setTimeout(function() {
+        setSubmitButtonState(getCartItemsCount() !== 0);
+      }, 1000);
     },
 
     restoreAddressFields: function() {
