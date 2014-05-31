@@ -9,7 +9,7 @@ class OrderController < ApplicationController
   before_filter :reset_replay
 
   def new
-    cookie_set(:mode, :pizzade_order_new)
+    cookie_set(:mode, :pizzade_order_edit)
     redirect_to_shop
   end
 
@@ -21,7 +21,7 @@ class OrderController < ApplicationController
 
   def save
     so = SavedOrder.new(params.permit(:name))
-    so.nick = cookie_get(:nick).strip
+    so.nick = @nick.strip
     so.nick = 'not specified' if so.nick.blank?
     so.shop_url = @order.basket.shop_url
     so.json = @order.json
