@@ -1,0 +1,35 @@
+en:
+  saved_order:
+    index:
+      previous_orders:
+        heading: Previous Orders
+        none: No previous orders found for this shop and nickname.
+      specify_nick: Please set your nickname to view your previous orders.
+
+      saved_orders:
+        heading: Saved Orders
+        none: There are no saved orders for this shop yet.
+        name: Name
+
+        destroy:
+          title: 'Remove this saved order for all users.'
+          confirm: 'Deleting the saved order “%{name}”. Continue?'
+          button: '✖'
+
+de:
+  saved_order:
+    index:
+      previous_orders:
+        heading: Vorherigen Bestellungen
+        none: Keine vorigen Bestellungen für diesen Nick und Lieferanten gefunden.
+      specify_nick: 'Bitte setzte Deinen Nickname um Deine vorigen Bestellungen zu sehen.'
+
+      saved_orders:
+        heading: Gespeicherte Bestellungen
+        none: 'Es gibt noch keine gespeicherten Bestellungen für diesen Lieferanten.'
+        name: Name
+
+        destroy:
+          title: 'Entfernt diese gespeicherte Bestellung für alle Nutzer.'
+          confirm: 'Lösche die gespeicherte Bestellung „%{name}“. Fortfahren?'
+          button: '✖'

@@ -45,6 +45,10 @@ body.wait {
      0 0 50px #fff;
 }
 
+#hipsterTopBar {
+  z-index: 10000;
+}
+
 // fix broken pizza.de styles for duplicate/remove buttons in Chrome
 .cartitems-btns .btn-v01 {
   vertical-align: middle;

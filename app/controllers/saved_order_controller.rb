@@ -3,8 +3,7 @@
 class SavedOrderController < ApplicationController
   include CookieHelper
 
-  before_filter :find_basket
-  before_filter :find_order
+  before_filter :require_basket
 
   def index
     @nick = cookie_get(:nick)

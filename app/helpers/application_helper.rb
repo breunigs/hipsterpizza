@@ -26,4 +26,12 @@ module ApplicationHelper
   def nick_ids?
     defined?(CONFIG['show_nick_ids']) && CONFIG['show_nick_ids']
   end
+
+  def show_insta_order?
+    # insta mode requires nick for streamlined copying. If there’s already an
+    # order for that nick, there’ll be two orders with the same nick. There’s no
+    # way to choose which of those is “my order”, requiring admin rights for
+    # proper handling. Thus, avoid it.
+    has_nick? && @order.nil?
+  end
 end

@@ -1,8 +1,13 @@
+- c = defined?(css) ? css : 'btn btn-default'
+
 - if @nick.blank?
-  - text = t('nick.button.different_machine')
+  - if params[:controller] == 'saved_order'
+    - text = t('nick.button.manually')
+  - else
+    - text = t('nick.button.different_machine')
 - else
   - text = t('nick.button.someone_else', nick: @nick)
 
-button.btn.btn-default data-toggle="modal" data-target="#nickForm"  = text
+button class=c data-toggle="modal" data-target="#nickForm"  = text
 
 = render 'nick/form'

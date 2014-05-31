@@ -6,14 +6,13 @@ en:
   time:
     future: 'in %{date}'
     past: '%{date} ago'
+    date: 'Date'
+    never: 'never'
 
 
-  toggle_nav: Toggle Navigation
-
+  toggle_nav: 'Toggle Navigation'
   other: 'Other'
-
   please_wait: '…please wait…'
-
 
 de:
   name: HipsterPizza
@@ -23,10 +22,9 @@ de:
   time:
     future: 'in %{date}'
     past: 'vor %{date}'
-
+    date: 'Datum'
+    never: 'nie'
 
   toggle_nav: 'Navigation auf/zuklappen'
-
-  other: 'Andere'
-
+  other: 'Sonstige'
   please_wait: '…bitte warten…'

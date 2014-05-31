@@ -45,7 +45,7 @@ class Order < ActiveRecord::Base
   # returns the date the order was actually submitted, i.e. the basket
   # submit time.
   def date
-    basket.submitted.strftime('%Y-%m-%d') rescue 'never'
+    basket.submitted.strftime('%Y-%m-%d') rescue I18n.t('time.never')
   end
 
   private

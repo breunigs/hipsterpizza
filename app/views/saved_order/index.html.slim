@@ -1,67 +1,69 @@
-#hipsterTopBar
-  h1 Saved and Previous Orders for #{@basket.shop_name}
+- content_for :nav do
+  - if @basket.editable?
+    li = render "button/place_new_order"
 
-= render "shared/flash"
+  li = render "button/to_basket", css: ''
 
-p
-  a href="#{auto_basket_path}" class="button" Return To Basket
+.container
+  = render "shared/flash"
 
-- else
+  h2
+    ' saved_order.index.previous_orders.heading
+    small
+      ' (#{@nick})
+    span.pull-right = render 'nick/button', css: 'btn btn-default btn-sm'
 
-  h2 Your Previous Orders, #{@nick}
-
-  - if @previous_orders.empty?
-    p You haven’t previously ordered from this shop.
+  - unless has_nick?
+    p saved_order.index.specify_nick
+    = render 'nick/button'
 
   - else
-    table
-      tr
-        th.hideOnPressure Date
-        th Order
-        th Actions
+    - if @previous_orders.empty?
+      p saved_order.index.previous_orders.none
 
-      - @previous_orders.each do |po|
-        tr
-          td.hideOnPressure = po.date
-          td = order_details(po)
-          td
+    - else
+      .table-responsive
+        table.table
+          tr.active
+            th time.date
+            th order_table.order_details
             - if @basket.editable?
-              a href="#{copy_order_path(po.uuid, mode: :nocheck)}" title="You can edit this order before you place it into the group basket." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
+              th
 
-              - if has_nick?
-                a href="#{copy_order_path(po.uuid, mode: :insta)}" title="This order will be placed into the group basket instantly with your nick." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
-            - else
-              ' Basket not editable
+          - @previous_orders.each do |po|
+            tr
+              td = po.date
+              td.wrap-ok = order_details(po)
+              - if @basket.editable?
+                td.text-right
+                  .btn-group
+                    = render 'button/copy_order', order: po, css: 'btn btn-default btn-xs'
+                    = render 'button/insta_copy_order', order: po, css: 'btn btn-default btn-xs'
 
 
-h2 Saved Orders
+  h2
+    ' saved_order.index.saved_orders.heading
+    small
+      | (#{@basket.shop_name})
 
-p You can delete anyone’s orders, because it’s not feasible to protect them properly. Please be careful and don’t go dictator on others. Thanks.
+  - if @saved.none?
+    p saved_order.index.saved_orders.none
 
-- if @saved.none?
+  - else
+    .table-responsive
+      table.table
+        tr.active
+          th saved_order.index.saved_orders.name
+          th order_table.order_details
+          th
 
-  p No saved orders yet.
+        - @saved.each do |s|
+          tr
+            td = s.name
+            td.wrap-ok = order_details(s)
+            td.text-right
+              .btn-group
+                = render 'button/copy_order', order: s, css: 'btn btn-default btn-xs'
+                = render 'button/insta_copy_order', order: s, css: 'btn btn-default btn-xs'
 
-- else
-
-  table
-    tr
-      th Name
-      th.hideOnPressure Order
-      th Actions
-
-    - @saved.each do |s|
-      tr
-        td = s.name
-        td.hideOnPressure = order_details(s)
-
-        td
-          - if @basket.editable?
-            a href="#{copy_saved_order_path(s.uuid, mode: :nocheck)}" title="You can edit this order before you place it into the group basket." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" order this
-
-            - if has_nick?
-              a href="#{copy_saved_order_path(s.uuid, mode: :insta)}" title="This order will be placed into the group basket instantly with your nick." class="button" data-method="put" data-confirm="#{overwrite_order_confirm}" insta order this
-
-          a href="#{destroy_saved_order_path(s.uuid)}" title="This removes the saved order for all users. Think about it." class="button danger" data-method="delete" data-confirm="STOP! Think about the consequences of removing “#{s.name}”. Continue?" destroy
-p
-  a href="#{auto_basket_path}" class="button" Return To Basket
+                a.btn.btn-danger.btn-xs href=destroy_saved_order_path(s.uuid) title=t('saved_order.index.saved_orders.destroy.title') data-method="delete" data-confirm=t('saved_order.index.saved_orders.destroy.confirm', name: s.name) saved_order.index.saved_orders.destroy.button

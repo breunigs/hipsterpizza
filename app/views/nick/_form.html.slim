@@ -1,14 +1,14 @@
-= form_tag(set_nick_path, method: :patch, class: 'modal fade', id: 'nickForm', role: 'dialog', tabindex: '-1', aria_hidden: 'true')
+= form_tag(set_nick_path, method: :patch, class: 'modal fade text-left', id: 'nickForm', role: 'dialog', tabindex: '-1', aria_hidden: 'true')
   .modal-dialog.modal-sm
     .modal-content
       .modal-header
         button.close type="button" data-dismiss="modal" aria-hidden="true" &times;
         h4.modal-title nick.form.title
 
-      .modal-body style="text-align: right"
+      .modal-body.text-right
         datalist id="nicks"
           - if @basket
-            - @basket.orders.map(&:nick).each do |nick|
+            - @basket.orders.map(&:nick).uniq.each do |nick|
               option value=nick
 
         .form-group>

@@ -1,4 +1,9 @@
 - c = defined?(css) ? css : 'btn btn-default'
 
-a href=url_for([:copy, @basket, order]) title=t('button.copy_order.title') data-method="put" data-confirm=overwrite_order_confirm button.copy_order.button
+- if order.is_a?(SavedOrder)
+  - u = [:copy, order, mode: :nocheck]
+- else
+  - u = [:copy, @basket, order]
+
+a href=url_for(u) title=t('button.copy_order.title') class=c data-method="put" data-confirm=overwrite_order_confirm button.copy_order.button
 
