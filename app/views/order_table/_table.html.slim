@@ -8,11 +8,11 @@ h2 order_table.heading
   .table-responsive
     table.table
       - if unpaid.any?
-        = render 'order_table/head', desc: t('order_table.unpaid_orders')
+        = render 'order_table/head', desc: t('order_table.unpaid_orders'), desc_css: 'text-danger'
         = render partial: 'order_table/row', collection: unpaid, as: :order
 
       - if paid.any?
-        = render 'order_table/head', desc: t('order_table.paid_orders')
+        = render 'order_table/head', desc: t('order_table.paid_orders'), desc_css: 'text-success'
         = render partial: 'order_table/row', collection: paid, as: :order
 
 
