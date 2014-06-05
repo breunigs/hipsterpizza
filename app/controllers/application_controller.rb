@@ -6,11 +6,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :set_locale
-  before_action :reset_mode_cookie
+  before_action :reset_flow_cookies
   before_action :find_nick
 
-  def reset_mode_cookie
+  def reset_flow_cookies
     cookie_delete(:mode)
+    cookie_delete(:replay)
   end
 
   # reads nick from cookie into @nick
@@ -56,10 +57,6 @@ class ApplicationController < ActionController::Base
     modes.last
   end
 
-  def reset_replay
-    cookie_delete(:replay)
-  end
-
   def stream(template)
     response.headers['X-Accel-Buffering'] = 'no'
 
@@ -84,7 +81,7 @@ class ApplicationController < ActionController::Base
     # FIXME: this is an ugly hack because there doesn’t seem to be an
     # easy way to have a normal layout *and* stream the content
     # generated here. Use render_to_body instead of render_to_string
-    # becuase the latter overwrites response.stream somehow, breaking
+    # because the latter overwrites response.stream somehow, breaking
     # the streaming (https://github.com/rails/rails/pull/11623)
     layout = render_to_body(file: '/layouts/application', layout: false)
     layout = layout.partition('</body>')
@@ -99,5 +96,4 @@ class ApplicationController < ActionController::Base
     avail = I18n.available_locales
     I18n.locale = http_accept_language.compatible_language_from(avail)
   end
-
 end

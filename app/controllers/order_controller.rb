@@ -6,7 +6,6 @@ class OrderController < ApplicationController
   before_filter :require_basket
   before_filter :require_order, except: [:new, :create]
   before_filter :ensure_basket_editable, only: [:create, :new, :destroy, :copy, :edit, :update]
-  before_filter :reset_replay
 
   def new
     cookie_set(:mode, :pizzade_order_new)
@@ -14,7 +13,7 @@ class OrderController < ApplicationController
   end
 
   def edit
-    cookie_set(:mode, :pizzade_replay_nocheck)
+    cookie_set(:mode, :pizzade_order_edit)
     cookie_set(:replay, "order nocheck #{@order.uuid}")
     redirect_to_shop
   end
@@ -124,14 +123,11 @@ class OrderController < ApplicationController
   def handle_price_difference(pay, pay_tip)
     vc = view_context
     flash[:info] = 'Your order has been updated. ' + if pay == 0
-      cookie_set(:action, :wait)
       'The price didn’t change, so no worries here.'
     elsif pay < 0
-      cookie_set(:action, :wait)
       "Please take #{vc.euro(pay.abs)} (or #{vc.euro(pay_tip.abs)} if you tipped) from the money pile."
     else
       @order.update_attribute(:paid, false)
-      cookie_set(:action, :pay_order)
       "You need to pay an additional  #{view_context.sum(pay, pay_tip)}."
     end
   end

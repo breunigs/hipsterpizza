@@ -1,0 +1,16 @@
+- content_for :nav_no_collapse do
+  li
+    / Only the basket is resolved everywhere automatically. Since order handling
+    / differs slightly between functions, resolve it here. This breaks the MVC
+    / concept.
+    - uuid = cookie_get(:replay).split(' ').last rescue nil
+    = form_tag(basket_order_path(@basket.uid, uuid), method: :patch) do
+      input#hipsterOrderJson type='hidden' name='json'
+
+      button#hipsterOrderSubmitButton.btn.btn-link.navbar-btn type="submit" disabled="" title=t('modes.order_edit.place.title') data-disable-with=t('modes.order_edit.place.disable_with') modes.order_edit.place.button
+
+li
+  a href=url_for(@basket) title=t('modes.order_edit.cancel.title') modes.order_edit.cancel.button
+
+li.visible-xs
+  a onclick="$('#hipsterTopBar .navbar-collapse').collapse('hide');$('html, body').scrollTop(9999999)" modes.order_new.view_basket

@@ -4,8 +4,6 @@ class BasketController < ApplicationController
   include CookieHelper
 
   before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin, :delivery_arrived, :pdf]
-  before_filter :reset_replay # TODO: move?
-
 
   before_action :require_basket, except: [:new, :create, :find]
 

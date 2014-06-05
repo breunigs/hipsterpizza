@@ -507,7 +507,7 @@ var hipster = window.hipster = (function() {
         $('#hipsterOrderJson').val(JSON.stringify(items));
 
         // do not ask for user’s nick if editing an order
-        if(hipsterGetCookie('action') === 'edit_order') {
+        if(hipsterGetCookie('mode') === 'pizzade_order_edit') {
           return true;
         }
 

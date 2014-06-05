@@ -1,0 +1,24 @@
+en:
+  modes:
+    order_edit:
+      place:
+        title: 'Saves changes made to your current order and update your paid status accordingly.'
+        disable_with: 'Updating Your Order…'
+        button: 'Save Changed Order'
+
+      cancel:
+        title: 'Discard all changes you may have made and keep your original order.'
+        button: 'Discard Changes'
+
+de:
+  modes:
+    order_edit:
+      place:
+        title: 'Speichert alle gemachten Änderungen an Deiner Bestellung und passt ggf. auch Deinen Bezahlt-Status an.'
+        disable_with: 'Ändere Deine Bestellung…'
+        button: 'Änderungen speichern'
+
+      cancel:
+        title: 'Alle gemachten Änderungen verwerfen und die ursprüngliche Bestellung beibehalten.'
+        button: 'Änderungen verwerfen'
+

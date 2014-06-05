@@ -6,7 +6,7 @@ class PassthroughController < ApplicationController
   @@forwarder = Forwarder.new("pizza.de")
 
   skip_before_action :verify_authenticity_token
-  skip_before_action :reset_mode_cookie
+  skip_before_action :reset_flow_cookies
 
   before_action :resolve_mode
 
