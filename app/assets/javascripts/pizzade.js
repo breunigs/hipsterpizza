@@ -572,7 +572,7 @@ var hipster = window.hipster = (function() {
       if(ca !== 'pizzade_order_new' && ca !== 'pizzade_order_edit') return;
       if(window.hipsterReplayMode === 'insta') return;
 
-      window.setTimeout(function() {
+      window.setInterval(function() {
         setSubmitButtonState(getCartItemsCount() !== 0);
       }, 1000);
     },
