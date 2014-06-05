@@ -9,7 +9,7 @@ class OrderController < ApplicationController
   before_filter :reset_replay
 
   def new
-    cookie_set(:mode, :pizzade_order_edit)
+    cookie_set(:mode, :pizzade_order_new)
     redirect_to_shop
   end
 
