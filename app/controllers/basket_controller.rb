@@ -3,7 +3,8 @@
 class BasketController < ApplicationController
   include CookieHelper
 
-  before_filter :ensure_admin, except: [:new, :create, :find, :show, :share, :set_admin, :delivery_arrived, :pdf]
+  before_filter :ensure_admin, except: [:new, :create, :find, :show, :share,
+                                        :set_admin, :delivery_arrived, :pdf]
 
   before_action :require_basket, except: [:new, :create, :find]
 
@@ -14,7 +15,7 @@ class BasketController < ApplicationController
     # redirect directly to basket instead of creating new one
     if PINNING['single_basket_mode']
       @basket = Basket.find_editable
-      return redirect_to_basket unless @basket.nil?
+      return redirect_to @basket unless @basket.nil?
     end
 
     fields = %w(name url fax)
@@ -41,7 +42,7 @@ class BasketController < ApplicationController
     cookie_set(:is_admin, true)
 
     if PINNING['single_basket_mode']
-      redirect_to_basket
+      redirect_to @basket
     else
       redirect_to share_basket_path(@basket.uid)
     end
@@ -56,31 +57,33 @@ class BasketController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.svg  { render qrcode: basket_path(@basket), level: :l, unit: 6, offset: 10 }
+      format.svg  do
+        render qrcode: basket_path(@basket), level: :l, unit: 6, offset: 10
+      end
     end
   end
 
   def unsubmit
     @basket.update_attribute(:submitted, nil)
     flash[:info] = t 'basket.controller.reopened'
-    redirect_to_basket
+    redirect_to @basket
   end
 
   def set_submit_time
     cookie_set(:action, :mark_delivery_arrived)
     @basket.update!(submitted: Time.now, sha_address: params[:sha_address])
-    redirect_to_basket
+    redirect_to @basket
   end
 
   def delivery_arrived
     @basket.update_attribute(:arrival, Time.now)
-    redirect_to_basket
+    redirect_to @basket
   end
 
   def set_admin
     cookie_set(:admin, @basket.uid)
     flash[:info] = t 'basket.controller.set_admin'
-    redirect_to_basket
+    redirect_to @basket
   end
 
   def share
@@ -98,7 +101,8 @@ class BasketController < ApplicationController
 
   def pdf
     @cfg = load_fax_config
-    response.headers['Content-Disposition'] = %|INLINE; FILENAME="#{@basket.fax_filename}"|
+    fn = @basket.fax_filename
+    response.headers['Content-Disposition'] = %(INLINE; FILENAME="#{fn}")
     response.headers['Content-Type'] = 'application/pdf'
     render 'fax.pdf'
   end
@@ -106,10 +110,9 @@ class BasketController < ApplicationController
   private
 
   def ensure_admin
-    unless view_context.admin?
-      flash[:error] = t 'basket.controller.not_admin'
-      redirect_to_basket
-    end
+    return if view_context.admin?
+    flash[:error] = t 'basket.controller.not_admin'
+    redirect_to @basket
   end
 
   def all_pinned?(fields)

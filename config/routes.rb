@@ -17,11 +17,10 @@ Hipsterpizza::Application.routes.draw do
 
         patch 'toggle_cancelled'
         patch 'delivery_arrived'
-        patch 'submit'
+        patch 'submit', to: 'basket_submit#submit'
 
         post 'set_submit_time'
       end
-
 
       resources :order, except: :index do
         member do
@@ -38,7 +37,7 @@ Hipsterpizza::Application.routes.draw do
       end
     end
 
-    get 'streaming_test', to: "basket_submit#test"
+    get 'streaming_test', to: 'basket_submit#test'
   end
 
   # catch all for unmatched /hipster/ routes

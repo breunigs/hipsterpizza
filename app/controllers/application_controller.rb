@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   before_action :find_nick
 
   def reset_flow_cookies
+    # TODO: only do this in dev, as otherwise one cannot have an 'edit' page
+    # open while keeping tabs on the order page
     cookie_delete(:mode)
     cookie_delete(:replay)
   end

@@ -26,18 +26,17 @@ class PassthroughController < ApplicationController
   }
 
   def pass
-    if env['PATH_INFO'].include?("reporterror")
-      render text: "withheld error from pizza.de"
+    if env['PATH_INFO'].include?('reporterror')
+      render text: 'withheld error from pizza.de'
     else
       rewrite
     end
   end
 
-
   caches_action :pass_cached, expires_in: 24.hours
   def pass_cached
     no_revalidate_for(24.hours)
-    return rewrite
+    rewrite
   end
 
   private
@@ -51,7 +50,7 @@ class PassthroughController < ApplicationController
       return redirect_to root_url
     end
 
-    require_basket if @mode.include?('_order_')
+    require_basket unless @mode.end_with?('_basket_new')
   end
 
   def add_missing_content_type
