@@ -22,15 +22,21 @@ div.button-overflow style="margin-bottom: 13px"
         li.danger
           a href=url_for([@basket, @order]) title=t('basket.my_order.destroy.title') data-method="delete" data-confirm=t('basket.my_order.destroy.confirm') basket.my_order.destroy.text
   - else
-    => render "save_order_button", order: @order, mine: true
+    => render 'button/save_order', order: @order, mine: true
 
   = render 'nick/button'
 
 p.lead
-  - if @order.paid?
-    span.text-success basket.my_order.has_paid
+  - if @basket.cancelled?
+    - if @order.paid?
+      span.text-danger basket.cancelled.take_money
+    - else
+       span basket.cancelled.do_not_pay
   - else
-    span.text-danger basket.my_order.has_not_paid
+    - if @order.paid?
+      span.text-success basket.my_order.has_paid
+    - else
+      span.text-danger basket.my_order.has_not_paid
   br
   small = render 'order/price'
 

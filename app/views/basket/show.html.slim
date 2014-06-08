@@ -1,25 +1,28 @@
 - content_for :nav do
   - if @basket.editable?
-    li = render "button/place_new_order"
+    li = render 'button/place_new_order'
 
-  li = render "button/saved_prev_orders", css: ''
+  li = render 'button/saved_prev_orders', css: ''
 
 .container
-  = render "shared/flash"
+  = render 'shared/flash'
+
+  - if @basket.cancelled?
+    = render 'cancelled'
 
   - if @order
-    = render "my_order"
+    = render 'my_order'
   - else
-    = render "no_order"
+    = render 'no_order'
 
 
   - if @basket.submitted?
-    = render "submitted_status"
+    = render 'submitted_status'
 
 
-  = render "money_pile"
+  = render 'money_pile'
 
-  = render "order_table/table"
+  = render 'order_table/table'
 
   - if Rails.env.production?
     - content_for :below_script do

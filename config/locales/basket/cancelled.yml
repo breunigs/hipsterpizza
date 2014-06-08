@@ -1,0 +1,18 @@
+en:
+  basket:
+    cancelled:
+      heading: 'Group Order Cancelled'
+      body: 'This group order has been cancelled. There are various reasons why this could be, so please ask around what’s going on. You cannot edit your order nor delete it. If you have paid already, please remember to take your money from the money pile and toggle your paid status.'
+      
+      take_money: 'Please take your money from the pile.'
+      do_not_pay: 'Group order cancelled, do not pay!'
+      
+    
+de:
+  basket:
+    cancelled:
+      heading: 'Gruppenbestellung abgebrochen'
+      body: 'Die Gruppenbestellung wurde abgebrochen. Es gibt etliche Gründe dafür, also frage am besten rum, was los ist. Du kannst Deine Bestellung nicht mehr bearbeiten oder löschen. Wenn Du schon bezahlt hast, nimm Dir bitte Dein Geld vom Geldhaufen und stelle Dich auf „nicht bezahlt“ um.'
+      
+      take_money: 'Bitte nimm Dein Geld vom Haufen.'
+      do_not_pay: 'Gruppenbestellung abgebrochen, nicht bezahlen!'

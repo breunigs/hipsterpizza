@@ -55,15 +55,17 @@
         tr.active
           th saved_order.index.saved_orders.name
           th order_table.order_details
-          th
+          - if @basket.editable?
+           th
 
         - @saved.each do |s|
           tr
             td = s.name
             td.wrap-ok = order_details(s)
-            td.text-right
-              .btn-group
-                = render 'button/copy_order', order: s, css: 'btn btn-default btn-xs'
-                = render 'button/insta_copy_order', order: s, css: 'btn btn-default btn-xs'
+            - if @basket.editable?
+              td.text-right
+                .btn-group
+                  = render 'button/copy_order', order: s, css: 'btn btn-default btn-xs'
+                  = render 'button/insta_copy_order', order: s, css: 'btn btn-default btn-xs'
 
-                a.btn.btn-danger.btn-xs href=saved_order_path(s) title=t('saved_order.index.saved_orders.destroy.title') data-method="delete" data-confirm=t('saved_order.index.saved_orders.destroy.confirm', name: s.name) saved_order.index.saved_orders.destroy.button
+                  a.btn.btn-danger.btn-xs href=saved_order_path(s) title=t('saved_order.index.saved_orders.destroy.title') data-method="delete" data-confirm=t('saved_order.index.saved_orders.destroy.confirm', name: s.name) saved_order.index.saved_orders.destroy.button
