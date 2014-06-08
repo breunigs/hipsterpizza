@@ -1,10 +1,6 @@
 # encoding: utf-8
 
 module BasketHelper
-  def admin?
-    cookie_get(:is_admin).to_s == 'true'
-  end
-
   def order_details(order)
     content_tag(:ul) do
       order.json_parsed.each do |item|

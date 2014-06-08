@@ -2,6 +2,7 @@ en:
   order:
     controller:
       invalid_uuid: 'Could not find specified order. Are you sure it’s not accidentally been deleted?'
+      failure: 'Couldn’t carry out your instructions. Very sorry. Hopefully helpful messages: %{msgs}'
       
       create: 'Your order has been added. Please put %{price} on the money pile.'
       
@@ -11,14 +12,43 @@ en:
         my_order: 'Your order has been removed from the group basket.'
         other_order: '%{nick} order has been removed from the group basket.'
         
-      update: 'The changes to your order have been saved.'
+      update: 'The order has been modified.'
 
       money:
         take: 'Don’t forget to take %{price} from the money pile.'
         no_change: 'The price didn’t change, so no worries here.'
         give: 'Please add %{price} to the money pile.'
+        
+      cancelled: 'This group order was cancelled. Please ask around what’s going on.'
+      already_submitted:
+        main: 'This group order has already been submitted. Please talk to whoever submitted the order and phone the delivery service.'
+        has_order: '<br>Here’s what you wanted to order:<br>%{order}'
+        
+      
+      
 de:
   order:
     controller:
       invalid_uuid: 'Keine Bestellung mit dieser ID gefunden. Wurde sie evtl. zwischenzeitlich gelöscht?'
+      failure: 'Änderungen fehlgeschlagen, sorry. Hoffentlich helfen Dir das: %{msgs}'
+      
       create: 'Deine Bestellung wurde hinzugefügt. Bitte lege %{price} auf den Geldhaufen.'
+      
+      destroy:
+        admin_required: 'Du musst Admin sein um fremde Bestellungen löschen zu können.'
+        
+        my_order: 'Deine Bestellung wurde aus dem Gruppen-Warenkorb entfernt.'
+        other_order: '%{nick} Bestellung wurde aus dem Gruppen-Warenkorb entfernt.'
+        
+      update: 'Die Bestellung wurde geändert.'
+
+      money:
+        take: 'Denk daran Deine %{price} vom Geldhaufen zu nehmen.'
+        no_change: 'Der Preis ist gleichgeblieben, also alles beim Alten.'
+        give: 'Bitte lege noch %{price} auf den Geldhaufen.'
+        
+      cancelled: 'Diese Gruppenbestellung wurde abgebrochen. Bitte frag rum was passiert ist.'
+      already_submitted:
+        main: 'Diese Gruppenbestellung wurde bereits abgeschickt. Bitte rede mit der/dem Verantwortlichen und rufe den Lieferservice an.'
+
+        has_order: '<br>Hier ist nochmal was Du bestellen wolltest:<br>%{order}'

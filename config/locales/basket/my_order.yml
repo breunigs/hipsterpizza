@@ -13,8 +13,8 @@ en:
         confirm: 'Do you really want to starve of hunger?'
 
       price:
-        with_tips: '<b>%{with_tip}</b> (or <span class="dim">%{without_tip}</span> without tip).'
-        without_tips: '<b>%{price}</b>.'
+        with_tips: '<b>%{with_tip}</b> (or <span class="dim">%{without_tip}</span> without tip)'
+        without_tips: '<b>%{price}</b>'
 
       has_paid: '✓ You are marked as having paid.'
       has_not_paid: '✗ You still need to pay.'

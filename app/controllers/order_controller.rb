@@ -5,7 +5,8 @@ class OrderController < ApplicationController
 
   before_filter :require_basket
   before_filter :require_order, except: [:new, :create]
-  before_filter :ensure_basket_editable, only: [:create, :new, :destroy, :copy, :edit, :update]
+  before_filter :ensure_basket_editable,
+                only: [:create, :new, :destroy, :copy, :edit, :update]
 
   def new
     cookie_set(:mode, :pizzade_order_new)
@@ -32,33 +33,32 @@ class OrderController < ApplicationController
   end
 
   def update
-    pay     = @order.paid? ? @order.sum : 0
-    pay_tip = @order.paid? ? @order.sum_with_tip : 0
+    old_pay     = @order.paid? ? @order.sum : 0
+    old_pay_tip = @order.paid? ? @order.sum_with_tip : 0
 
     @order.json = params[:json]
-    @order.save!
 
-    if @order.errors.any?
-      flash_error_msgs(@order)
-    else
-      pay = @order.sum - pay
-      pay_tip = @order.sum_with_tip - pay_tip
+    if @order.save
+      pay = @order.sum - old_pay
+      pay_tip = @order.sum_with_tip - old_pay_tip
 
       handle_price_difference(pay, pay_tip)
+    else
+      flash_error_msgs(@order)
     end
 
     redirect_to @basket
   end
 
   def create
-    @order = o = Order.new(params.permit(:nick, :json))
-    o.basket_id = @basket.id
+    @order = Order.new(params.permit(:nick, :json))
+    @order.basket_id = @basket.id
 
-    unless o.save
-      flash_error_msgs(o)
-    else
+    if @order.save
       price = render_to_string 'order/_price', layout: false
       flash[:info] = t('order.controller.create', price: price).html_safe
+    else
+      flash_error_msgs(@order)
     end
     redirect_to @basket
   end
@@ -66,34 +66,29 @@ class OrderController < ApplicationController
   def toggle_paid
     @order.toggle(:paid).save
     if request.xhr?
-      return render json: { }
+      return render json: {}
     else
       return redirect_to @basket
     end
   end
 
   def destroy
-    return redirect_to @basket unless @order
-
-    my_order = @nick == @order.nick
-    unless my_order || view_context.admin?
+    unless view_context.my_order? || view_context.admin?
       flash[:warn] = I18n.t('order.controller.destroy.admin_required')
       return redirect_to @basket
     end
 
-    price = render_to_string 'order/_price', layout: false if @order.paid?
-    @order.destroy!
-
     i18n_key = my_order ? 'my_order' : 'other_order'
     flash[:info] = I18n.t("order.controller.destroy.#{i18n_key}")
+
     if @order.paid?
-      flash[:info] << ' '
-      flash[:info] << I18n.t('order.controller.money.take', price: price)
+      price = render_to_string 'order/_price', layout: false
+      flash[:info] << ' ' << I18n.t('order.controller.money.take', price: price)
     end
 
+    @order.destroy!
     redirect_to @basket
   end
-
 
   def copy
     if @order.updated_at > 1.hour.ago && get_replay_mode == 'insta'
@@ -108,13 +103,15 @@ class OrderController < ApplicationController
   end
 
   private
+
   def ensure_basket_editable
     if @basket.cancelled?
-      flash[:error] = 'This group order has been cancelled. Please ask someone for the new link.'
+      flash[:error] = I18n.t('order.controller.cancelled')
       redirect_to basket_path
-    elsif !@basket.submitted.nil?
-      flash[:error] = 'This group order has already been submitted. Please talk to whoever ordered the food to add your order manually via phone.'
-      # TODO: repeat order here for convenience
+    elsif @basket.submitted?
+      prefix = 'order.controller.already_submitted'
+      flash[:error] = I18n.t("#{prefix}.main")
+      flash[:error] << I18n.t("#{prefix}.has_order", order: @order) if @order
       redirect_to @basket
     end
   end
@@ -122,7 +119,7 @@ class OrderController < ApplicationController
   def flash_error_msgs(order)
     return if order.errors.none?
     msgs = errors_to_fake_list(order)
-    flash[:error] = "Could not create order. Messages: #{msgs}"
+    flash[:error] = I18n.t('order.controller.failure', msgs: msgs)
   end
 
   def handle_price_difference(pay, pay_tip)
@@ -135,10 +132,7 @@ class OrderController < ApplicationController
       'give'
     end
 
-    # TODO FIXME continue here by generating fake Order object with pay/pay_tip
-    # as sum/sum_with_tip
     fake = OpenStruct.new(sum: pay, sum_with_tip: pay_tip)
-
     price = render_to_string 'order/_price', layout: false, order: fake
 
     flash[:info] = I18n.t('order.controller.update') << ' '
@@ -147,9 +141,8 @@ class OrderController < ApplicationController
 
   def require_order
     @order = Order.friendly.find(params[:id]) rescue nil
-    unless @order
-      flash[:error] = t('order.controller.invalid_uuid')
-      return redirect_to @basket
-    end
+    return if @order
+    flash[:error] = t('order.controller.invalid_uuid')
+    redirect_to @basket
   end
 end

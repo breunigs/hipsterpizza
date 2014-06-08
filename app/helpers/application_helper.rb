@@ -34,4 +34,14 @@ module ApplicationHelper
     # proper handling. Thus, avoid it.
     has_nick? && @order.nil?
   end
+
+  def admin?
+    cookie_get(:is_admin).to_s == 'true'
+  end
+
+  def my_order?
+    n = cookie_get(:nick).to_s
+    return false if @order.nil? || n.blank?
+    n == @order.nick
+  end
 end
