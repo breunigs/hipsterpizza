@@ -57,7 +57,8 @@ class OrderController < ApplicationController
     unless o.save
       flash_error_msgs(o)
     else
-      flash[:info] = "Your order has been added. Please put #{view_context.sum} on the money pile." # TODO: render order/price instead
+      price = render_to_string 'order/_price', layout: false
+      flash[:info] = t('order.controller.create', price: price).html_safe
     end
     redirect_to @basket
   end
@@ -76,15 +77,19 @@ class OrderController < ApplicationController
 
     my_order = @nick == @order.nick
     unless my_order || view_context.admin?
-      flash[:warn] = 'Only admins can delete other people’s orders.'
+      flash[:warn] = I18n.t('order.controller.destroy.admin_required')
       return redirect_to @basket
     end
 
-    sum = @order.paid? ? @order.sum : 0
+    price = render_to_string 'order/_price', layout: false if @order.paid?
     @order.destroy!
 
-    flash[:info] = "#{my_order ? 'Your' : @order.nick.possessive} order has been removed."
-    flash[:info] << " Don’t forget to take  #{view_context.sum} from the pile." if sum > 0
+    i18n_key = my_order ? 'my_order' : 'other_order'
+    flash[:info] = I18n.t("order.controller.destroy.#{i18n_key}")
+    if @order.paid?
+      flash[:info] << ' '
+      flash[:info] << I18n.t('order.controller.money.take', price: price)
+    end
 
     redirect_to @basket
   end
@@ -121,15 +126,23 @@ class OrderController < ApplicationController
   end
 
   def handle_price_difference(pay, pay_tip)
-    vc = view_context
-    flash[:info] = 'Your order has been updated. ' + if pay == 0
-      'The price didn’t change, so no worries here.'
+    i18n_key = if pay == 0
+      'no_change'
     elsif pay < 0
-      "Please take #{vc.euro(pay.abs)} (or #{vc.euro(pay_tip.abs)} if you tipped) from the money pile."
+      'take'
     else
       @order.update_attribute(:paid, false)
-      "You need to pay an additional  #{view_context.sum(pay, pay_tip)}."
+      'give'
     end
+
+    # TODO FIXME continue here by generating fake Order object with pay/pay_tip
+    # as sum/sum_with_tip
+    fake = OpenStruct.new(sum: pay, sum_with_tip: pay_tip)
+
+    price = render_to_string 'order/_price', layout: false, order: fake
+
+    flash[:info] = I18n.t('order.controller.update') << ' '
+    flash[:info] << I18n.t("order.controller.money.#{i18n_key}", price: price)
   end
 
   def require_order

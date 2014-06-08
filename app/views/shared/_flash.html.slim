@@ -1,8 +1,8 @@
 - if flash[:error]
-  .alert.alert-danger #{flash[:error]}
+  .alert.alert-danger == flash[:error]
 - if flash[:warn]
-  .alert.alert-warning #{flash[:warn]}
+  .alert.alert-warning == flash[:warn]
 - if flash[:success]
-  .alert.alert-success #{flash[:success]}
+  .alert.alert-success == flash[:success]
 - if flash[:info]
-  .alert.alert-info #{flash[:info]}
+  .alert.alert-info == flash[:info]

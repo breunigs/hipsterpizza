@@ -2,8 +2,23 @@ en:
   order:
     controller:
       invalid_uuid: 'Could not find specified order. Are you sure it’s not accidentally been deleted?'
+      
+      create: 'Your order has been added. Please put %{price} on the money pile.'
+      
+      destroy:
+        admin_required: 'You need to be admin if you want to delete other people’s orders.'
+        
+        my_order: 'Your order has been removed from the group basket.'
+        other_order: '%{nick} order has been removed from the group basket.'
+        
+      update: 'The changes to your order have been saved.'
 
+      money:
+        take: 'Don’t forget to take %{price} from the money pile.'
+        no_change: 'The price didn’t change, so no worries here.'
+        give: 'Please add %{price} to the money pile.'
 de:
   order:
     controller:
       invalid_uuid: 'Keine Bestellung mit dieser ID gefunden. Wurde sie evtl. zwischenzeitlich gelöscht?'
+      create: 'Deine Bestellung wurde hinzugefügt. Bitte lege %{price} auf den Geldhaufen.'
