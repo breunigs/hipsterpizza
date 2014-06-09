@@ -1,25 +1,37 @@
-- secs, samples = @basket.estimate
+- if @basket.arrived?
+  h2 basket.submitted_status.heading_arrived
+- else
+  h2 basket.submitted_status.heading
 
-object data=clock_path type="image/svg+xml" width="200" height="200" style="float:right; margin: 1em"
-  param name="estimate" value=(secs.nil? ? 0 : @basket.submitted + secs)
-  param name="arrival" value=@basket.arrival.to_i
+= render 'button/delivery_arrived'
 
+- tt = TimeTracker.new(@basket)
 
-h2 basket.submitted_status.heading
+- if tt.samples == 0
+  p basket.submitted_status.no_estimate
 
-p
+- else
+  dl.dl-horizontal
+    dt basket.submitted_status.submitted
+    dd = time(tt.submitted)
 
+    dt basket.submitted_status.estimate
+    dd = time(tt.estimate)
 
-  = t 'basket.submitted_status.submitted_at', time: time(@basket.submitted)
+    - if tt.arrived?
+      dt basket.submitted_status.arrived
+      dd = time(tt.arrival)
 
-  - if @basket.arrived?
-      br
-      = t 'basket.submitted_status.arrived_at', time: time(@basket.arrival)
+  .progress title==t('basket.submitted_status.bar.tooltip', time: tt.estimate_arrival)
+    .progress-bar-center
+      - if tt.arrived?
+       = t('basket.submitted_status.bar.done', duration: distance_of_time_in_words(@basket.duration))
+      - elsif tt.overdue?
+        = t('basket.submitted_status.bar.overdue', minutes: tt.overdue_minutes)
+      - else
+        = t('basket.submitted_status.bar.togo', minutes: tt.togo_minutes)
 
-      br
-      = t 'basket.submitted_status.time_taken', duration: distance_of_time_in_words(@basket.duration)
+    .progress-bar.progress-bar-success style="width:#{tt.undue_percent}%"
 
+    .progress-bar.progress-bar-warning style="width:#{tt.overdue_percent}%"
 
-  - elsif !secs.nil?
-    br
-    = t 'basket.submitted_status.estimate', samples: samples, time: time(@basket.submitted + secs)

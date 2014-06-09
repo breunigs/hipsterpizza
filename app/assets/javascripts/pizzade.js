@@ -479,7 +479,7 @@ var hipster = window.hipster = (function() {
     detectAndSetShop: function() {
       var button = $('#hipsterShopChooser');
       button.enable();
-      button.attr("class", "btn btn-primary");
+      button.attr("class", "btn btn-primary navbar-btn");
 
       var hidden = $('#hipsterShopCanonicalUrl');
       hidden.val($("link[rel=canonical]").attr('href'));

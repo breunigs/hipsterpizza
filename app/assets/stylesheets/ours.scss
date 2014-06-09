@@ -146,16 +146,45 @@ $font-family-sans-serif: 'Cabin', sans-serif;
 
   .progress {
     font-weight: bold;
-  }
-
-  .progress-bar {
-    overflow: hidden;
+    position: relative;
+    color: #fff;
+    text-shadow:
+    -1px -1px 0 rgba(0,0,0, 0.5),
+     1px -1px 0 rgba(0,0,0, 0.5),
+    -1px  1px 0 rgba(0,0,0, 0.5),
+     1px  1px 0 rgba(0,0,0, 0.5),
+     0 0 3px #fff;
   }
 
   .progress-bar-transparent {
     background: none;
     box-shadow: none;
     color: $text-color;
+  }
+
+  .progress-bar-center {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    line-height: 26px - 2px;
+  }
+
+  .progress-bar-marker {
+    position: absolute;
+    border: rgba(0,0,0,0.5) solid 1px;
+    width: 0;
+    height: 26px;
+    display: block;
+    cursor: help;
+    line-height: 26px - 2*2*1px; // border
+
+    span {
+      display: inline-block;
+      width: 200px;
+      margin-left: -200px;
+      padding: 0 6px;
+      text-align: right;
+    }
   }
 
   .button-overflow {
@@ -225,6 +254,11 @@ $font-family-sans-serif: 'Cabin', sans-serif;
     .btn {
       float: none;
     }
+  }
+
+  time {
+    min-width: 4em;
+    display: inline-block;
   }
 }
 

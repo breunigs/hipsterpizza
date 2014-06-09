@@ -101,7 +101,7 @@ class Basket < ActiveRecord::Base
 
   def estimate
     similar = Basket.similar(self).with_duration
-    dur_per_euro = similar.map { |b| b.duration_per_euro }.compact
+    dur_per_euro = similar.map(&:duration_per_euro).compact
     return nil, 0 if dur_per_euro.empty?
 
     avg = dur_per_euro.sum.to_f / dur_per_euro.size.to_f

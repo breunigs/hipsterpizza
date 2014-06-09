@@ -70,7 +70,6 @@ class BasketController < ApplicationController
   end
 
   def set_submit_time
-    cookie_set(:action, :mark_delivery_arrived)
     @basket.update!(submitted: Time.now, sha_address: params[:sha_address])
     redirect_to @basket
   end
