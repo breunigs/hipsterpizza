@@ -1,0 +1,13 @@
+en:
+  button:
+    delivery_arrived:
+      button: 'Set Arrival Time'
+      prompt: 'Please enter the approximate time when the order arrived or hit enter for “now”:'
+      title: 'Once the order has arrived, click here to feed the estimate algorithm. Preferably with data, but you can try to shove pizza at your computer.'
+
+de:
+  button:
+    delivery_arrived:
+      button: 'Ankunftszeit setzen'
+      prompt: 'Bitte gib den ungefähren Lieferzeitpunkt ein oder drücke Enter für “jetzt”:'
+      title: 'Klicke hier sobald die Bestellung angekommen ist, um den Vorhersage Algorithmus zu füttern. Vorzugsweise mit Datenpunkten, aber Du kannst auch versuchen Pizza in den Rechner zu stopfen.'

@@ -1,0 +1,10 @@
+- c = defined?(css) ? css : 'btn btn-default'
+
+a[href=url_for([:delivery_arrived, @basket])
+  title=t('button.delivery_arrived.title')
+  class=c
+  data-method="patch"
+  data-remote="true"
+  data-inject-response="true"
+  data-prompt=%({ "message": "#{t('button.delivery_arrived.prompt')}", "param": "arrival", "default": "#{@basket.arrival || Time.now}" })
+ ] button.delivery_arrived.button

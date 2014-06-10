@@ -28,7 +28,7 @@ class OrderController < ApplicationController
     if so.save
       render json: { text: t('button.save_order.link_saved'), disable: true }
     else
-      render json: { text: 'error ☹', error: so.errors }
+      render json: { error: so.errors }
     end
   end
 

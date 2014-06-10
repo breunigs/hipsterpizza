@@ -3,7 +3,11 @@
 - else
   h2 basket.submitted_status.heading
 
-= render 'button/delivery_arrived'
+/ the height: 0 hack is used to allow the button to share the same horizontal
+/ space as the dd list. Latter clears floats to achieve its looks, which would
+/ also take the height of the button into account.
+.pull-right style="height:0"
+  = render 'button/delivery_arrived'
 
 - tt = TimeTracker.new(@basket)
 

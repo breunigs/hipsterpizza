@@ -14,6 +14,7 @@ en:
         cancelled: 'Group order has been cancelled'
         reenabled: 'Group order has been enabled again'
 
+      invalid_time: 'Could not parse given time string, arrival time not updated.'
 
 de:
   basket:
@@ -30,3 +31,5 @@ de:
       group_order:
         cancelled: 'Gruppenbestellung abgebrochen, keine Bestellungen mehr möglich.'
         reenabled: 'Gruppenbestellung wieder geöffnet.'
+
+      invalid_time: 'Konnte gegebenes Zeitformat nicht lesen. Ankunftszeit wurde nicht aktualisiert.'

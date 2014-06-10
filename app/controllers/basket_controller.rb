@@ -75,8 +75,13 @@ class BasketController < ApplicationController
   end
 
   def delivery_arrived
-    @basket.update_attribute(:arrival, Time.now)
-    redirect_to @basket
+    begin
+      @basket.update_attribute(:arrival, Time.parse(params[:arrival]))
+      render json: { reload: true, disable: true }
+    rescue ArgumentError
+      flash[:error] = t 'basket.controller.invalid_time'
+      render json: { error: so.errors }
+    end
   end
 
   def set_admin
