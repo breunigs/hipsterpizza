@@ -10,9 +10,10 @@ p
   b> = t('basket.money_pile.total', sum: sum, pile: pile, togo: togo)
   span.text-muted = t('basket.money_pile.change')
 
-.progress
-  .progress-bar.progress-bar-success style="width: #{paid}%" title=t('basket.money_pile.pile', amount: pile)
-    = pile
+- if @basket.sum > 0
+  .progress
+    .progress-bar.progress-bar-success style="width: #{paid}%" title=t('basket.money_pile.pile', amount: pile)
+      = pile
 
-  .progress-bar class="progress-bar-#{@basket.submitted? ? 'danger' : 'transparent'}" style="width: #{100 - paid}%" title=t('basket.money_pile.togo', amount: togo)
-    = togo
+    .progress-bar class="progress-bar-#{@basket.submitted? ? 'danger' : 'transparent'}" style="width: #{100 - paid}%" title=t('basket.money_pile.togo', amount: togo)
+      = togo

@@ -156,10 +156,13 @@ $font-family-sans-serif: 'Cabin', sans-serif;
      0 0 3px #fff;
   }
 
+  .progress-bar {
+    overflow: hidden;
+  }
+
   .progress-bar-transparent {
     background: none;
     box-shadow: none;
-    color: $text-color;
   }
 
   .progress-bar-center {
