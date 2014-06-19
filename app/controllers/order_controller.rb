@@ -26,7 +26,7 @@ class OrderController < ApplicationController
     so.shop_url = @order.basket.shop_url
     so.json = @order.json
     if so.save
-      render json: { text: t('button.save_order.link_saved'), disable: true }
+      render json: { text: t('button.save_order.link.saved'), disable: true }
     else
       render json: { error: so.errors }
     end
