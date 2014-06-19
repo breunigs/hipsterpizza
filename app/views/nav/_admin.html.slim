@@ -1,6 +1,6 @@
 li.dropdown
   a.dropdown-toggle data-toggle="dropdown" href="#"
-    ' Admin
+    ' nav.admin.admin
     b.caret
 
   ul.dropdown-menu
@@ -8,10 +8,10 @@ li.dropdown
       li = render "button/submit_group_order"
 
       li
-        a href=pdf_basket_path(@basket.uid) Render PDF
+        a data-no-turbolink="" href=pdf_basket_path(@basket.uid) nav.admin.render_pdf
 
     - if !@basket.submitted?
       = render "button/toggle_cancel"
 
     li
-      a href=share_basket_path(@basket.uid) data-no-turbolinks="" Share This Basket
+      a href=share_basket_path(@basket.uid) nav.admin.share_basket

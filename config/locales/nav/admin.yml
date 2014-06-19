@@ -1,0 +1,14 @@
+en:
+  nav:
+    admin:
+      share_basket: 'Share This Basket'
+      render_pdf: 'Render as PDF'
+      admin: 'Admin'
+
+de:
+  nav:
+    admin:
+      share_basket: 'Mitbesteller einladen'
+      render_pdf: 'Als PDF anzeigen'
+      admin: 'Admin'
+
