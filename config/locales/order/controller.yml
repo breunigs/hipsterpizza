@@ -24,7 +24,10 @@ en:
         main: 'This group order has already been submitted. Please talk to whoever submitted the order and phone the delivery service.'
         has_order: '<br>Here’s what you wanted to order:<br>%{order}'
         
-      
+
+      toggle_paid:
+        is_paid: '%{nick} order is now marked as paid. Nice!'
+        not_paid: '%{nick} order is now marked AS NOT PAID.'
       
 de:
   order:
@@ -52,3 +55,8 @@ de:
         main: 'Diese Gruppenbestellung wurde bereits abgeschickt. Bitte rede mit der/dem Verantwortlichen und rufe den Lieferservice an.'
 
         has_order: '<br>Hier ist nochmal was Du bestellen wolltest:<br>%{order}'
+
+
+      toggle_paid:
+        is_paid: '%{nick} Bestellung ist jetzt als „bezahlt“ markiert. Nice.'
+        not_paid: '%{nick} Bestellung ist jetzt als NICHT BEZAHLT markiert.'

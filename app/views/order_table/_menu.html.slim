@@ -17,7 +17,7 @@
       li.dropdown-header order_table.admin.header
 
       li
-        a href=url_for([:toggle_paid, @basket, order]) data-method="put"
+        a href=url_for([:toggle_paid, @basket, order]) data-method="patch"
           - if order.paid?
             ' button.toggle_paid.paid.button
           - else

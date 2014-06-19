@@ -68,6 +68,8 @@ class OrderController < ApplicationController
     if request.xhr?
       return render json: {}
     else
+      key = "order.controller.toggle_paid.#{@order.paid? ? 'is' : 'not'}_paid"
+      flash[:info] = t(key, nick: @order.nick.possessive)
       return redirect_to @basket
     end
   end
