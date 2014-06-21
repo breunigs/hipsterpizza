@@ -237,6 +237,15 @@ $font-family-sans-serif: 'Cabin', sans-serif;
       // the size of the table slightly.
       padding-top: 5px;
     }
+
+    // the rgba translates to #f5f5f5 on a white background, the default.
+    // Transparency is only needed to make the glasses in the bottom right
+    // corner shine through, so avoid it on small devices.
+    @media (min-width: $screen-sm-min) {
+      tr.active th {
+        background-color: rgba(242, 242, 242, 0.8);
+      }
+    }
   }
 
   .anti-troll {
