@@ -1,0 +1,23 @@
+<% if @basket_changed %>
+  <%= update_via_js('#reCancelled', @basket.cancelled? ? 'cancelled' : nil) %>
+  <%= update_via_js('#reSubmitted', @basket.submitted? ? 'submitted_status' : nil) %>
+  <%= update_via_js('#reMoney', 'money_pile') %>
+  <%= update_via_js('#reTable', 'order_table/table') %>
+<% end %>
+
+<% if @order_changed %>
+  <%= update_via_js('#reOrder', @order ? 'my_order' : 'no_order') %>
+<% end %>
+
+window.lastUpdates = {
+  basket: <%= @basket.updated_at.to_i %>,
+  order: <%= @order.updated_at.to_i rescue 0 %>
+};
+
+// # // TODO: how to implement?
+// # // - content_for :nav do
+// # //   - if @basket.editable?
+// # //     li = render 'button/place_new_order'
+
+// # //   li = render 'button/saved_prev_orders', css: ''
+

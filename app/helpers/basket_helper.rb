@@ -1,6 +1,11 @@
 # encoding: utf-8
 
 module BasketHelper
+  def update_via_js(selector, template)
+    js = escape_javascript(render *template) unless template.nil?
+    %($('#{selector}').html("#{js}")\n).html_safe
+  end
+
   def order_details(order)
     content_tag(:ul) do
       order.json_parsed.each do |item|

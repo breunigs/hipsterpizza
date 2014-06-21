@@ -1,4 +1,5 @@
 - content_for :nav do
+
   - if @basket.editable?
     li = render 'button/place_new_order'
 
@@ -7,24 +8,31 @@
 .container
   = render 'shared/flash'
 
-  - if @basket.cancelled?
-    = render 'cancelled'
+  #reCancelled
+    - if @basket.cancelled?
+      = render 'cancelled'
 
-  - if @order
-    = render 'my_order'
-  - else
-    = render 'no_order'
+  #reOrder
+    - if @order
+      = render 'my_order'
+    - else
+      = render 'no_order'
 
+  #reSubmitted
+    - if @basket.submitted?
+      = render 'submitted_status'
 
-  - if @basket.submitted?
-    = render 'submitted_status'
+  #reMoney
+    = render 'money_pile'
 
+  #reTable
+    = render 'order_table/table'
 
-  = render 'money_pile'
+  - content_for :below_script do
+    javascript:
+      window.lastUpdates = {
+        basket: #{@basket.updated_at.to_i},
+        order: #{@order.updated_at.to_i rescue 0}
+      };
 
-  = render 'order_table/table'
-
-  - if Rails.env.production?
-    - content_for :below_script do
-      javascript:
-        window.doReloadAfterTimeout();
+      window.refreshWithAjax();

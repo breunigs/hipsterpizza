@@ -1,17 +1,19 @@
-window.doReload = function() {
-  if(window.reloadTimeout) {
-    window.clearTimeout(window.reloadTimeout);
+window.refreshWithAjax = function() {
+  'use strict';
+
+  function refresh() {
+    var params = '?ts_basket=' + window.lastUpdates.basket;
+    params += '&ts_order=' + window.lastUpdates.order;
+
+    $.ajax(window.location.href + '.js' + params, {
+      dataType: 'script',
+      complete: timeout,
+    });
   }
-  Turbolinks.visit(window.location.href);
+
+  function timeout() {
+    window.setTimeout(refresh, 10*1000);
+  }
+
+  timeout();
 };
-
-window.doReloadAfterTimeout = function() {
-  var t = document.getElementsByClassName('flash').length == 0 ? 6 : 30;
-  console.log('Reloading in ' + t + 'seconds');
-  window.reloadTimeout = window.setTimeout(window.doReload, t*1000);
-}
-
-$(document).on('ajax:success', '[data-auto-reload=true]', function() {
-  console.log('Turbolink reloading now');
-  window.doReload();
-});

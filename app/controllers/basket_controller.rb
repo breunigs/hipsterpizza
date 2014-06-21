@@ -49,14 +49,16 @@ class BasketController < ApplicationController
   end
 
   def show
-    # if flash.empty?
-    #   keys = [@basket.cache_key, @order.cache_key, view_context.admin?, @basket.clock_running?]
-    #   return unless stale?(etag: keys.join(' '))
-    # end
     @order = Order.where(basket_id: @basket.id, nick: @nick).first
 
     respond_to do |format|
       format.html
+
+      format.js do
+        find_changes
+        head :no_content unless @basket_changed || @order_changed
+      end
+
       format.svg  do
         render qrcode: basket_path(@basket), level: :l, unit: 6, offset: 10
       end
@@ -128,5 +130,18 @@ class BasketController < ApplicationController
       f = "shop_#{f}"
       params[f.to_sym] = PINNING[f]
     end
+  end
+
+  # detects if @basket or @order have been changed compared to the timestamps
+  # in the params (ts_basket and ts_order). It considers a deleted order as
+  # newer if it was present before.
+  def find_changes
+    ts_basket = (params[:ts_basket] || 0).to_i
+    @basket_changed = ts_basket < @basket.updated_at.to_i
+
+    ts_option = (params[:ts_order] || 0).to_i
+    order_deleted = @order.nil? && ts_option != 0
+    order_updated = @order && ts_option < @order.updated_at.to_i
+    @order_changed = order_deleted || order_updated
   end
 end

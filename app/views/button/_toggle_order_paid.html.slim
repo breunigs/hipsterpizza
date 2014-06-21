@@ -2,6 +2,6 @@
 - url = url_for([:toggle_paid, @basket, @order])
 
 - if @order.paid?
-  a.btn.btn-default> class=c href=url data-method="patch" data-remote="true" data-auto-reload="true" title=t('button.toggle_paid.paid.title') button.toggle_paid.paid.button
+  a.btn.btn-default> class=c href=url data-method="patch" title=t('button.toggle_paid.paid.title') button.toggle_paid.paid.button
 - else
-  a.btn.btn-primary> class=c href=url data-method="patch" data-remote="true" data-auto-reload="true" title=t('button.toggle_paid.not_paid.title') button.toggle_paid.not_paid.button
+  a.btn.btn-primary> class=c href=url data-method="patch" title=t('button.toggle_paid.not_paid.title') button.toggle_paid.not_paid.button
