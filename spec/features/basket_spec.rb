@@ -7,7 +7,6 @@ describe 'Basket' do
     @basket = basket_create
   end
 
-
   it 'can be created' do
     expect(page).to have_content 'Share Link'
     expect(page).to have_link basket_with_uid_path('')
@@ -77,20 +76,19 @@ describe 'Basket' do
   end
 
   it 'allows users to become admins' do
-    share_url = current_url
-    visit basket_path
-    basket_url = current_url # now contains basket uid
-    expect(page).to have_link 'Submit Group Order'
+    # we’re on the share basket page
+    click_on I18n.t('basket.share.basket_link')
+    basket_url = current_url
+    expect(page).to have_link I18n.t('nav.admin.admin')
 
     Capybara.reset_sessions!
     visit basket_url
-    expect(page).not_to have_link 'Submit Group Order'
+    expect(page).not_to have_link I18n.t('nav.admin.admin')
 
-    visit share_url
-    click_on 'set_admin'
+    click_on I18n.t('other')
+    click_on I18n.t('nav.main.other.become_admin.link')
 
-    expect(page).to have_content 'You have been set as admin'
-    expect(page).to have_link 'Submit Group Order'
+    expect(page).to have_link I18n.t('nav.admin.admin')
   end
 
   it 'doesn’t show submit button to users' do

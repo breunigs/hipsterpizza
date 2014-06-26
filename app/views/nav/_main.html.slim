@@ -35,7 +35,14 @@
             li.visible-xs
               a href=root_path name
 
+            - if @basket
+              li
+                - if admin?
+                  a href=toggle_admin_path data-method="patch" data-remote="true"  data-inject-response="true" nav.main.other.unbecome_admin
+                - else
+                  a href=toggle_admin_path data-method="patch" data-remote="true"  data-inject-response="true" data-confirm=t('nav.main.other.become_admin.confirm') nav.main.other.become_admin.link
+
             li
-              a href=privacy_path main.chooser.privacy.link
+              a href=privacy_path nav.main.other.privacy
             li
               a href="https://www.github.com/breunigs/hipsterpizza" GitHub

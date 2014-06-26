@@ -9,7 +9,7 @@ module FeatureHelpers
 
   def basket_create
     visit root_path
-    click_link 'Create New Basket'
+    click_on I18n.t('main.chooser.new_basket.link')
 
     expect(page).to have_content('Pizza Lieferservice und Pizzaservice')
 
@@ -25,8 +25,8 @@ module FeatureHelpers
 
     visit root_path + '/' + plz
 
-    expect(page).to have_content('pizza.de-Bewertungen in PLZ 12347 Britz')
-    click_link 'Indian Curry'
+    expect(page).to have_content('pizza.de-Bewertungen in PLZ 12347')
+    click_link 'Indian Curry', match: :first
 
     # wait for page load, reduce breakage
     expect(page).to have_content('Warenkorb')

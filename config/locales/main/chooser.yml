@@ -27,10 +27,6 @@ en:
         link: Use Basket
         enter_id: Manually Enter ID
 
-      privacy:
-        link: 'Privacy / Data Usage'
-
-
 
 de:
   main:
@@ -60,6 +56,3 @@ de:
         field_hint: Warenkorb-ID eingeben
         link: Warenkorb nutzen
         enter_id: ID manuell eingeben
-
-      privacy:
-        link: 'Datenschutz'

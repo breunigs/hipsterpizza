@@ -1,0 +1,23 @@
+en:
+  nav:
+    main:
+      other:
+        privacy: 'Privacy / Data Usage'
+        
+        become_admin:
+          link: 'Become Admin'
+          confirm: 'With great power comes great responsibility. Are you sure you can withstand the pressure of the dark side?'
+          
+        unbecome_admin: 'Disable Admin-Powers'
+
+de:
+  nav:
+    main:
+      other:
+        privacy: 'Datenschutz'
+        
+        become_admin:
+          link: 'Admin werden'
+          confirm: 'Als Admin bist Du super-mächtig und musst super-verantwortungsvoll sei. Willst Du das wirklich auf Dich nehmen?'
+
+        unbecome_admin: 'Admin-Rechte deaktivieren'

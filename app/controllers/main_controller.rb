@@ -17,17 +17,16 @@ class MainController < ApplicationController
     render 'chooser'
   end
 
-  def clock
-    expires_in 1.day
-    headers["Content-Type"] = "image/svg+xml"
-    render 'clock.svg', layout: false
-  end
-
   def set_nick
     cookie_set(:nick, params[:nick])
     target = request.referer || @basket || root_path
     logger.warn target
 
     redirect_to target
+  end
+
+  def toggle_admin
+    cookie_set(:is_admin, !view_context.admin?)
+    render json: { reload: true }
   end
 end
