@@ -18,10 +18,10 @@ module FeatureHelpers
     # This code fails very often in CI. Instead of testing pizza.de UI
     # we simply hope for the best and visit the shop-list page for the
     # given postal code directly.
-    #~　plzort = plz + ' Berlin'
-    #~　fill_in 'plzsearch_input', with: plz
-    #~　expect(page).to have_content(plzort)
-    #~　first('.suggest_entry_active, .suggest_entry').click
+    # plzort = plz + ' Berlin'
+    # fill_in 'plzsearch_input', with: plz
+    # expect(page).to have_content(plzort)
+    # first('.suggest_entry_active, .suggest_entry').click
 
     visit root_path + '/' + plz
 
@@ -31,10 +31,13 @@ module FeatureHelpers
     # wait for page load, reduce breakage
     expect(page).to have_content('Warenkorb')
     within('#hipsterTopBar') do
-      click_on 'Choose Indian Curry'
+      click_on I18n.t('modes.choose_shop.button')
     end
 
     expect(page).to have_content('Share Link')
+
+    basket_uid = current_url[-9..-7]
+    Basket.friendly.find(basket_uid)
   end
 
   def order_create
@@ -57,6 +60,10 @@ module FeatureHelpers
 
   def reload
     visit(current_url)
+  end
+
+  def open_admin_menu
+    click_on I18n.t('nav.admin.admin')
   end
 
   def shot(name)

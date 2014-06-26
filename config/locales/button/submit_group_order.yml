@@ -1,0 +1,21 @@
+en:
+  button:
+    submit_group_order:
+      first_time:
+        confirm: '⚠ Blocks further orders – better ask around if everyone is finished. Continue?'
+        text: '⎙ Submit Group Order'
+        
+      retry:
+        confirm: 'The basket has already been submitted. Do you really want to submit it again?'
+        text: '⎙ Submit Again'
+
+de:
+  button:
+    submit_group_order:
+      first_time:
+        confirm: '⚠ Verhindert weitere Bestellungen – frag besser, ob jeder fertig ist. Fortfahren?'
+        text: 'Gruppenbestellung absenden'
+        
+      retry:
+        confirm: 'Die Gruppenbestellung wurde schon abgeschickt. Willst Du sie wirklich nochmal absenden?'
+        text: '⎙ Nochmal Abschicken'

@@ -12,7 +12,7 @@ describe 'Pinning' do
     click_link 'Indian Curry'
     wait_until_content('Warenkorb')
     within('#hipsterTopBar') do
-      click_on 'Choose Indian Curry'
+      click_on I18n.t('modes.choose_shop.button')
     end
   end
 

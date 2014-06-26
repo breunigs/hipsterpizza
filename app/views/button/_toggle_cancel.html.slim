@@ -1,7 +1,7 @@
 - if @basket.cancelled?
   li
-    a href=toggle_cancelled_basket_path(@basket.uid) data-method="patch" Un-Cancel Group Order
+    a href=toggle_cancelled_basket_path(@basket.uid) data-method="patch" button.cancel.undo
 
 - else
   li.warning
-    a href=toggle_cancelled_basket_path(@basket.uid) data-method="patch" data-confirm="⚠ Blocks further orders and prevents basket from being submitted." Cancel Group Order
+    a href=toggle_cancelled_basket_path(@basket.uid) data-method="patch" data-confirm="⚠ Blocks further orders and prevents basket from being submitted." button.cancel.do

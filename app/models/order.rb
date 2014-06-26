@@ -31,12 +31,12 @@ class Order < ActiveRecord::Base
     # gets 'tip_percent' from the config and prevents negative values
     tip_percent = [0, CONFIG['tip_percent'].to_i].max
     # round to nearest 10 cents
-    (sum * (tip_percent/100.0 + 1)).round(1)
+    (sum * (tip_percent / 100.0 + 1)).round(1)
   end
 
   def nick_id
     n = UnicodeUtils.canonical_decomposition(nick)
-    n = n.gsub(/[^a-z0-9]/i, "").upcase[0..2]
+    n = n.gsub(/[^a-z0-9]/i, '').upcase[0..2]
     n[1] ||= '~'
     n[2] ||= '~'
     n
@@ -49,12 +49,13 @@ class Order < ActiveRecord::Base
   end
 
   private
+
   def create_uuid
-    raise 'Order has already an UUID'  if self.uuid
+    raise 'Order has already an UUID' if uuid
     other = Order.pluck(:uuid)
     2.times do
       self.uuid = SecureRandom.uuid
-      break unless other.include?(self.uuid)
+      break unless other.include?(uuid)
     end
   end
 end

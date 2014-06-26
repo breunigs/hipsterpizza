@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe 'Basket' do
   before do
-    basket_create
+    @basket = basket_create
   end
 
 
@@ -18,15 +18,19 @@ describe 'Basket' do
   end
 
   it 'can be cancelled' do
-    visit basket_path
-    click_link 'Cancel Group Order'
+    visit basket_path(@basket)
+    click_on I18n.t('nav.admin.admin')
+    click_link I18n.t('button.cancel.do')
 
-    expect(page).to have_content 'has been cancelled'
-    expect(page).to have_link 'Un-Cancel Group Order'
-    expect(page).not_to have_link 'Submit Group Order'
+    expect(page).to have_content I18n.t('basket.controller.group_order.cancelled')
+    open_admin_menu
+    expect(page).to have_link I18n.t('button.cancel.undo')
+    expect(page).not_to have_link I18n.t('button.submit_group_order.first_time.text')
 
-    click_link 'Un-Cancel Group Order'
-    expect(page).to have_link 'Submit Group Order'
+    click_link I18n.t('button.cancel.undo')
+
+    open_admin_menu
+    expect(page).to have_link I18n.t('button.submit_group_order.first_time.text')
   end
 
   it 'is submittable' do

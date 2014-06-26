@@ -98,7 +98,7 @@ class BasketController < ApplicationController
   def toggle_cancelled
     @basket.toggle(:cancelled).save
     if @basket.cancelled?
-      flash[:warning] = t 'basket.controller.group_order.cancelled'
+      flash[:warn] = t 'basket.controller.group_order.cancelled'
     else
       flash[:success] = t 'basket.controller.group_order.reenabled'
     end

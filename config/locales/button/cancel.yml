@@ -1,0 +1,11 @@
+en:
+  button:
+    cancel:
+      do: 'Cancel Group Order'
+      undo: 'Un-Cancel Group Order'
+
+de:
+  button:
+    cancel:
+      do: 'Gruppenbestellung abbrechen'
+      undo: 'Gruppenbestellung doch fortfahren'

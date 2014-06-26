@@ -6,3 +6,10 @@
   .alert.alert-success == flash[:success]
 - if flash[:info]
   .alert.alert-info == flash[:info]
+
+ruby:
+  unless Rails.env.production?
+    # XXX: flash is not a simple hash. keys returns entries as string array
+    invalid = flash.keys - %w(error warn success info)
+    raise "Invalid flash keys: #{invalid.join(', ')}" unless invalid.empty?
+  end
