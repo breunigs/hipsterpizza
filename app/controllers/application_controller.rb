@@ -30,8 +30,9 @@ class ApplicationController < ActionController::Base
   def find_basket
     basket_id = params[:basket_id] || params[:id]
     @basket ||= Basket.friendly.find(basket_id.downcase) rescue nil
-    # if there’s an id, but it’s invalid it should ignore the cookie.
-    return nil unless @basket || params[:basket_id].blank?
+    # if there’s an id, but it’s invalid it should ignore the cookie. This
+    # happens with the participate form on the main page, for example.
+    return nil unless @basket || params[:id].blank?
 
     @basket ||= Basket.find_basket_for_single_mode
     @basket ||= Basket.friendly.find(cookie_get(:basket)) rescue nil
