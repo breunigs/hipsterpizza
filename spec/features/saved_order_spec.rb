@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'SavedOrder' do
-  SAVED_ORDER_NAME = "Tėst 42: Pizza Mo"
+  SAVED_ORDER_NAME = 'Tėst 42: Pizza Mo'
 
   before do
     basket_with_order_create

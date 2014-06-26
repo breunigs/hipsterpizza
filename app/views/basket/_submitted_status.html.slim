@@ -3,29 +3,32 @@
 - else
   h2 basket.submitted_status.heading
 
-/ the height: 0 hack is used to allow the button to share the same horizontal
+/ the height: 25px hack is used to allow the button to share the same horizontal
 / space as the dd list. Latter clears floats to achieve its looks, which would
 / also take the height of the button into account.
-.pull-right style="height:0"
+.pull-right style="height:25px"
   = render 'button/delivery_arrived'
 
 - tt = TimeTracker.new(@basket)
 
 - if tt.samples == 0
-  p basket.submitted_status.no_estimate
+  / leave enough space for the delivery_arrived button and make the text align
+  / better with the data-list below. Value is mostly guessed.
+  p style="max-width: 70%" basket.submitted_status.no_estimate
 
-- else
-  dl.dl-horizontal
-    dt basket.submitted_status.submitted
-    dd = time(tt.submitted)
+dl.dl-horizontal
+  dt basket.submitted_status.submitted
+  dd = time(tt.submitted)
 
+  - if tt.samples > 0
     dt basket.submitted_status.estimate
     dd = time(tt.estimate)
 
-    - if tt.arrived?
-      dt basket.submitted_status.arrived
-      dd = time(tt.arrival)
+  - if tt.arrived?
+    dt basket.submitted_status.arrived
+    dd = time(tt.arrival)
 
+- if tt.samples > 0
   .progress title==t('basket.submitted_status.bar.tooltip', time: tt.estimate_arrival)
     .progress-bar-center
       - if tt.arrived?

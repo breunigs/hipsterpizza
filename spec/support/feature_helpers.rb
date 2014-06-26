@@ -1,9 +1,7 @@
-# encoding: utf-8
-
 module FeatureHelpers
   def basket_with_order_create
-    basket_create
-    visit basket_path
+    @basket = basket_create
+    visit basket_path(@basket)
     order_create
   end
 
@@ -41,20 +39,21 @@ module FeatureHelpers
   end
 
   def order_create
-    click_on 'Place New Order'
+    click_on I18n.t('basket.new_order_button.link'), match: :first
     click_on 'Chicken Curry', match: :first
 
+    # wait for page to recognize non-empty basket
+    sleep 1.1
     accept_nick!
+    click_on I18n.t('modes.order_new.place.button')
 
-    click_on 'Place My Order in Group Basket'
-
-    expect(page).to have_content 'You still need to pay'
+    expect(page).to have_content I18n.t('basket.my_order.has_not_paid')
     expect(page).to have_content 'Chicken Curry'
     expect(page).to have_content 'Tėst Ñiçk 1_2-3'
   end
 
   def accept_nick!
-    page.driver.js_prompt_input = "Tėst Ñiçk 1_2-3"
+    page.driver.js_prompt_input = 'Tėst Ñiçk 1_2-3'
     page.driver.accept_js_prompts!
   end
 
@@ -62,8 +61,11 @@ module FeatureHelpers
     visit(current_url)
   end
 
-  def open_admin_menu
-    click_on I18n.t('nav.admin.admin')
+  def open_admin_menu(admin_link = nil)
+    within('#hipsterTopBar') do
+      click_on I18n.t('nav.admin.admin')
+      click_on admin_link unless admin_link.nil?
+    end
   end
 
   def shot(name)
@@ -80,7 +82,7 @@ module FeatureHelpers
   end
 
   def visit_basket_as_new_user
-    visit basket_path
+    visit basket_path(@basket)
     expect(page).not_to have_css('div.flash')
 
     url = Capybara.current_url
@@ -99,6 +101,13 @@ module FeatureHelpers
       return if (has_content?(c) rescue nil)
     end
     expect(page).to have_content(c)
+  end
+
+  def wait_for_progress_done
+    15.times do
+      break unless has_css?('#hipster-progress')
+      sleep 0.1
+    end
   end
 end
 

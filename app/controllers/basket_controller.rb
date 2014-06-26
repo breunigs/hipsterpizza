@@ -80,9 +80,10 @@ class BasketController < ApplicationController
     begin
       @basket.update_attribute(:arrival, Time.parse(params[:arrival]))
       render json: { reload: true, disable: true }
-    rescue ArgumentError
+    rescue ArgumentError, TypeError
+      @basket.update_attribute(:arrival, Time.now)
       flash[:error] = t 'basket.controller.invalid_time'
-      render json: { error: so.errors }
+      render json: { error: flash[:error] }
     end
   end
 
