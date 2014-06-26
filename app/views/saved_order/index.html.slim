@@ -9,9 +9,10 @@
 
   h2
     ' saved_order.index.previous_orders.heading
-    small
-      ' (#{@nick})
-    span.pull-right = render 'nick/button', css: 'btn btn-default btn-sm'
+    - if has_nick?
+      small
+        ' (#{@nick})
+      span.pull-right = render 'nick/button', css: 'btn btn-default btn-sm'
 
   - unless has_nick?
     p saved_order.index.specify_nick

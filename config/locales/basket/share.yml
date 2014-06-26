@@ -10,3 +10,16 @@ en:
         own_order: place an order yourself
         submit_or_cancel: submit or cancel the group order from the admin menu.
         wait: Wait and eat.
+
+de:
+  basket:
+    share:
+      heading: Link (oder ID) weitergeben
+      body: Der Gruppen-Warenkorb wurde erstellt. Bitte gibt den Link oder die ID an alle weiter, die teilnehmen wollen.
+      basket_link: Zum Gruppen-Warenkorb
+
+      howto:
+        heading: Nächste Schritte
+        own_order: selbst eine Bestellung machen
+        submit_or_cancel: die Gruppen-Bestellung vom Admin-Menü entweder abbrechen oder abschicken
+        wait: warten und essen

@@ -4,13 +4,15 @@ require 'spec_helper'
 
 describe 'SavedOrder' do
   SAVED_ORDER_NAME = 'Tėst 42: Pizza Mo'
+  PREV_ORDERS = I18n.t('saved_order.index.previous_orders.heading')
 
   before do
     basket_with_order_create
     page.driver.js_prompt_input = SAVED_ORDER_NAME
     page.driver.accept_js_prompts!
-    click_on 'Save My Order'
-    wait_until_content 'saved ✓'
+    click_on I18n.t('basket.my_order.dropdown')
+    click_on I18n.t('button.save_order.link.my')
+    wait_until_content I18n.t('button.save_order.link.saved')
   end
 
   it 'shows saved orders' do
@@ -20,29 +22,29 @@ describe 'SavedOrder' do
 
   it 'shows previous orders for current user' do
     visit saved_order_index_path
-    expect(page).to have_content('Your Previous Orders, Tėst Ñiçk 1_2-3')
-    # i.e. never in date column because the basket hasn’t been
-    # submitted.
-    expect(page).to have_content('never')
+    expect(page).to have_content(PREV_ORDERS)
+    # i.e. never in date column because the basket hasn’t been submitted.
+    expect(page).to have_content(I18n.t('time.never'))
   end
 
   it 'doesn’t show previous orders for current user' do
     visit_basket_as_new_user
-    expect(page).not_to have_content('Your Previous Orders, Tėst Ñiçk 1_2-3')
+    visit saved_order_index_path
+    expect(page).to have_content(I18n.t('saved_order.index.specify_nick'))
   end
 
   it 'offers new users to identify by nick' do
     visit_basket_as_new_user
     visit saved_order_index_path
-    expect(page).to have_button('Set Nickname')
+    expect(page).to have_button(I18n.t('nick.button.manually'))
   end
 
   it 'allows saved orders to be destroyed' do
     visit saved_order_index_path
-    click_on 'destroy'
+    click_on I18n.t('saved_order.index.saved_orders.destroy.button')
     # it keeps the previous orders intact
     expect(page).to have_content('Chicken Curry')
-    expect(page).to have_content('No saved orders yet')
+    expect(page).to have_content(I18n.t('saved_order.index.saved_orders.none'))
 
     within('table') do
       expect(page).not_to have_content(SAVED_ORDER_NAME)
@@ -50,12 +52,17 @@ describe 'SavedOrder' do
   end
 
   it 'can be copied' do
+    nick = 'new user'
     visit_basket_as_new_user
     visit saved_order_index_path
-    fill_in 'nick', with: 'new user'
-    click_on 'Set Nickname'
-    click_on 'insta order this'
-    wait_until_content 'General Options'
-    expect(page).to have_content 'Your Order, new user'
+    click_on I18n.t('nick.button.manually')
+    within('.modal-dialog') do
+      fill_in 'nick', with: nick
+      click_on I18n.t('nick.form.set_nick')
+    end
+    click_on I18n.t('button.insta_copy_order.button'), match: :first
+    # i.e. insta-copy is done and we are back on the group basket view
+    wait_until_content I18n.t('order_table.heading')
+    expect(page).to have_content I18n.t('basket.my_order.heading', nick: nick)
   end
 end

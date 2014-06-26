@@ -17,6 +17,8 @@ en:
       header: Admin Actions
       delete_confirm: 'Really delete %{nick} order?'
 
+    no_orders_yet: 'No orders yet.'
+
 de:
   order_table:
     heading: Die Bestellungen der Anderen
@@ -34,3 +36,5 @@ de:
     admin:
       header: Admin Aktionen
       delete_confirm: '%{nick} wirklich löschen?'
+
+    no_orders_yet: 'Bisher noch keine Bestellungen.'

@@ -6,23 +6,18 @@ $(document).on('ajax:success', '[data-inject-response=true]', function(xhr, data
   if(data['text']) {
     $(this).html(data['text']);
   }
-  
+
   if(data['error']) {
     alert(data['error']);
   }
-  
+
   if(data['disable']) {
     console.log('disabling');
     $(this).attr('disabled', 'disabled');
   }
-  
+
   if(data['reload']) {
-    try {
-      Turbolinks.visit(window.location.href);
-    } catch(e) {
-      console.log('Turbolinks not loaded, executing normal reload.');
-      window.location.reload();
-    }
+    window.location.reload();
   }
 });
 
