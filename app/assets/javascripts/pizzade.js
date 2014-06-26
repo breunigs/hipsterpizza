@@ -4,6 +4,8 @@
 //= require bootstrap/collapse
 
 var hipster = window.hipster = (function() {
+  'use strict';
+
   // CACHES ////////////////////////////////////////////////////////////
   var _isShop = null;
   var _isLoading = true;
@@ -39,7 +41,7 @@ var hipster = window.hipster = (function() {
       log('Reverse Geocoding Result:');
       log(data);
       if(isInputEmpty()) {
-        input.val(data['address']['postcode']);
+        input.val(data.address.postcode);
         input.focus();
       }
     }
@@ -88,38 +90,38 @@ var hipster = window.hipster = (function() {
       return null;
     }
 
-    return new jsSHA(addr, "TEXT").getHash("SHA-512", "HEX");
+    return new jsSHA(addr, 'TEXT').getHash('SHA-512', 'HEX');
   }
 
   function textPriceToFloat(text) {
-    return parseFloat(text.replace(/\s/g, "").replace(",", "."));
+    return parseFloat(text.replace(/\s/g, '').replace(',', '.'));
   }
 
   function getCartItemsJson() {
     var data = [];
-    $(".cartitems").each(function(ind, elm) {
-      var prod = $(elm).find(".cartitems-title div").text();
-      var price = $(elm).find(".cartitems-itemsum .cartitems-sprice div").text();
+    $('.cartitems').each(function(ind, elm) {
+      var prod = $(elm).find('.cartitems-title div').text();
+      var price = $(elm).find('.cartitems-itemsum .cartitems-sprice div').text();
       price = textPriceToFloat(price);
 
-      if($.trim(prod) === "" || isNaN(price)) {
-        err("Couldn't detect product properly, maybe the script is broken?");
+      if($.trim(prod) === '' || isNaN(price)) {
+        err('Couldn’t detect product properly, maybe the script is broken?');
         return;
       }
 
       var extra = [];
       // subitems = additional toppings, subsubitems = salad dressing in menus
-      var finder = ".cartitems-subitem .cartitems-subtitle a, .cartitems-subsubitem .cartitems-subtitle a"
+      var finder = '.cartitems-subitem .cartitems-subtitle a, .cartitems-subsubitem .cartitems-subtitle a';
       $(elm).find(finder).each(function(ind, ingred) {
         extra[ind] = $(ingred).text();
       });
 
-      data[ind] = { "price": price, "prod": prod, "extra": extra.sort() };
+      data[ind] = { 'price': price, 'prod': prod, 'extra': extra.sort() };
     });
 
-    var deposit = textPriceToFloat($(".deposit div").text());
+    var deposit = textPriceToFloat($('.deposit div').text());
     if(!isNaN(deposit) && deposit > 0) {
-      data[data.length] = { price: deposit, "prod": "Pfand", extra: [] };
+      data[data.length] = { price: deposit, 'prod': 'Pfand', extra: [] };
     }
 
     return data;
@@ -150,20 +152,20 @@ var hipster = window.hipster = (function() {
   }
 
   function getPriceOfLastItem() {
-    var p = $(".cartitems:last .cartitems-itemsum .cartitems-sprice div");
+    var p = $('.cartitems:last .cartitems-itemsum .cartitems-sprice div');
     return textPriceToFloat(p.text());
   }
 
   function getActiveSubPageText() {
-    return $(".navbars a.activ").text();
+    return $('.navbars a.activ').text();
   }
 
   function replay(items, finishCallback) {
     // setup
-    log("replay: setup started");
+    log('replay: setup started');
     $.fx.off = true;
-    $("body").addClass("wait");
-    var navLinks = $.makeArray($(".navbars a"));
+    $('body').addClass('wait');
+    var navLinks = $.makeArray($('.navbars a'));
     var subNavLinks = [];
     var isTopLevelLink = true;
     var currentNav = null;
@@ -187,8 +189,8 @@ var hipster = window.hipster = (function() {
       // TODO: does navigation-3-v8 exist?
       // the currently active page has already been parsed when the main
       // category page was loaded/clicked
-      subNavLinks = $.makeArray($("#navigation-2-v8 a:not(.firstactiv)"));
-      log("replay: “" + getActiveSubPageText() + "”: found " + subNavLinks.length + " subcategories");
+      subNavLinks = $.makeArray($('#navigation-2-v8 a:not(.firstactiv)'));
+      log('replay: “' + getActiveSubPageText() + '”: found ' + subNavLinks.length + ' subcategories');
       preloadSubPages(subNavLinks);
     }
 
@@ -196,7 +198,7 @@ var hipster = window.hipster = (function() {
     function loadNextSubPage() {
       isTopLevelLink = subNavLinks.length === 0;
       currentNav = $((isTopLevelLink ? navLinks : subNavLinks).shift());
-      log("replay: loading next page " + currentNav.text());
+      log('replay: loading next page ' + currentNav.text());
       // load sub nav links first
       // if an element has this class, the pizza.de JS code avoids
       // loading it. Therefore remove it to ensure the content_ready
@@ -208,38 +210,38 @@ var hipster = window.hipster = (function() {
     // searches current sub page and adds found items to basket. The
     // items get removed from the "to go" list
     function addItemsToBasket() {
-      log("replay: searching page “" + getActiveSubPageText() + "” for items");
+      log('replay: searching page “' + getActiveSubPageText() + '” for items');
 
       items = $.grep(items, function (item, ind) {
         // Deposit is added automatically when selecting the correct products
-        if(item["prod"] === "Pfand") return false;
+        if(item.prod === 'Pfand') return false;
 
-        var link = findLinkWithText(item["prod"]);
+        var link = findLinkWithText(item.prod);
         if(link.length === 0) return true; // not found; keep in queue
         if(link.length >= 2) {
-          errorMsgs.push("ITEM #"+ind+" AMBIGUOUS: " + item["prod"]);
+          errorMsgs.push('ITEM #' + ind + ' AMBIGUOUS: ' + item.prod);
           // keep item, so it may be added manually later
           return true;
         }
 
-        log("replay: found item “" + item["prod"] + "”");
+        log('replay: found item “' + item.prod + '”');
 
-        var errmsg = "product="+item["prod"]+"  | ";
+        var errmsg = 'product='+item.prod+'  | ';
         // exactly one link found. Add it to cart or open extra
         // ingredients popup. If an item can't have extra ingredients
         // this will immediately put the item in the cart.
         link.click();
         // add extra ingredients, if any.
-        $.each(item["extra"], function(ind, extra) {
+        $.each(item.extra, function(ind, extra) {
           // .shop-dialog == the popup
           // .dlg-nodes-addition == the "add items part". Required if
           // an ingredient should be added multiple times. Otherwise
           // the remove item link would be catched as well.
-          var ingred = $(".shop-dialog .dlg-nodes-addition a:contains('"+extra+"')");
+          var ingred = $('.shop-dialog .dlg-nodes-addition a:contains('+extra+')');
           if(ingred.length === 0) {
-            errorMsgs.push(errmsg + " EXTRA NOT FOUND: " + extra);
+            errorMsgs.push(errmsg + ' EXTRA NOT FOUND: ' + extra);
           } else if(ingred.length >= 2) {
-            errorMsgs.push(errmsg + " EXTRA AMBIGUOUS: " + extra);
+            errorMsgs.push(errmsg + ' EXTRA AMBIGUOUS: ' + extra);
           } else {
             ingred.click();
           }
@@ -251,8 +253,8 @@ var hipster = window.hipster = (function() {
         $(".shop-dialog a:contains('in den Warenkorb'):first").click();
 
         // comparing prices as sanity check
-        if(getPriceOfLastItem() !== item["price"]) {
-          var msg = errmsg + "Prices do not match. Expected: " + item["price"] + "   Actual price: " + getPriceOfLastItem();
+        if(getPriceOfLastItem() !== item.price) {
+          var msg = errmsg + 'Prices do not match. Expected: ' + item.price + '   Actual price: ' + getPriceOfLastItem();
           console.warn(msg);
           errorMsgs.push(msg);
         }
@@ -296,10 +298,10 @@ var hipster = window.hipster = (function() {
     function missingItemsToErrors() {
       if(items.length > 0) {
         var list = $.map(items, function(item) {
-          var m = item['prod'];
-          if(item['extra'].length > 0) m += ' + ' + item["extra"].join(" + ");
+          var m = item.prod;
+          if(item.extra.length > 0) m += ' + ' + item.extra.join(' + ');
           return m;
-        }).join('\n  – ')
+        }).join('\n  – ');
         errorMsgs.push('Missing Items:\n  – ' + list);
       }
     }
@@ -321,8 +323,8 @@ var hipster = window.hipster = (function() {
       // avoid content changes on insta mode because the form is submitted
       // immediately anyway.
       if(window.hipsterReplayMode !== 'insta') {
-        $("body").removeClass("wait");
-        $("#hipster-progress").hide();
+        $('body').removeClass('wait');
+        $('#hipster-progress').hide();
         setSubmitButtonState(true);
         $.fx.off = false;
       } else {
@@ -351,10 +353,10 @@ var hipster = window.hipster = (function() {
     var btn = getSubmitButton();
     if(enabled) {
       if(btn.is(':disabled'))
-        btn.attr("class", "btn btn-primary navbar-btn").enable(true);
+        btn.attr('class', 'btn btn-primary navbar-btn').enable(true);
     } else {
       if(btn.is(':enabled'))
-        btn.attr("class", "btn btn-link navbar-btn").enable(false);
+        btn.attr('class', 'btn btn-link navbar-btn').enable(false);
     }
   }
 
@@ -378,14 +380,14 @@ var hipster = window.hipster = (function() {
   function setupLegacyObserver() {
     var check = function() {
       if(isLoading()) return;
-      $("body").unbind("DOMSubtreeModified", check);
+      $('body').unbind('DOMSubtreeModified', check);
       // wait until DOMSubtreeModified event is over to match mutation
       // observer behaviour. If not done so, events might still fire for
       // *this* modification, instead of the next one.
       window.setTimeout(runAfterLoads, 0);
     }
 
-    $("body").bind("DOMSubtreeModified", check);
+    $('body').bind('DOMSubtreeModified', check);
   }
 
   function restorePrefilledAddress(elm) {
@@ -466,7 +468,7 @@ var hipster = window.hipster = (function() {
         return null;
       }
 
-      return $("title").text();
+      return $('title').text();
     },
 
     getShopFaxNumber: function() {
@@ -479,10 +481,10 @@ var hipster = window.hipster = (function() {
     detectAndSetShop: function() {
       var button = $('#hipsterShopChooser');
       button.enable();
-      button.attr("class", "btn btn-primary navbar-btn");
+      button.attr('class', 'btn btn-primary navbar-btn');
 
       var hidden = $('#hipsterShopCanonicalUrl');
-      hidden.val($("link[rel=canonical]").attr('href'));
+      hidden.val($('link[rel=canonical]').attr('href'));
 
       hidden = $('#hipsterShopName');
       hidden.val(hipster.getShopName());
@@ -529,7 +531,7 @@ var hipster = window.hipster = (function() {
 
       switch(mode) {
         case 'check':
-          log("Replaying with error checking");
+          log('Replaying with error checking');
           replay(data, function(err) {
             if(err.length === 0) return;
             alert('There have been errors replaying the data: \n– ' + err.join('\n– '));
@@ -566,7 +568,7 @@ var hipster = window.hipster = (function() {
       });
     },
 
-    runItemCountChecker: function(once) {
+    runItemCountChecker: function() {
       if(!isShopPage()) return;
       var ca = getCurrentMode();
       if(ca !== 'pizzade_order_new' && ca !== 'pizzade_order_edit') return;
@@ -612,6 +614,8 @@ hipster.autoFillPostalCode();
 
 
 hipster.runAfterLoad(function() {
+  'use strict';
+
   hipster.replayData();
   hipster.detectAndSetShop();
   hipster.hideOrderFieldsAppropriately();
