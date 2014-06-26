@@ -52,11 +52,11 @@ class ApplicationController < ActionController::Base
     redirect_to @basket.shop_url + '?knddomain=1&noflash=1'
   end
 
-  def get_replay_mode
-    modes = ['insta', 'nocheck', 'check']
+  def replay_mode
+    modes = %w(insta nocheck check)
     p = params[:mode]
     return p if modes.include?(p)
-    logger.warn "Invalid Replay Mode: #{p}" unless p.blank?
+    logger.warn 'Invalid Replay Mode: #{p}' unless p.blank?
     modes.last
   end
 
@@ -65,9 +65,9 @@ class ApplicationController < ActionController::Base
 
     # via http://stackoverflow.com/a/748646/1684530
     # ensure that streamed pages are never cached
-    response.headers["Cache-Control"] = "no-cache, no-store, max-age=0, must-revalidate"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "Fri, 01 Jan 1990 00:00:00 GMT"
+    response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = 'Fri, 01 Jan 1990 00:00:00 GMT'
 
     begin
       @stream = response.stream
@@ -80,6 +80,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
   def splitted_app_layout
     # FIXME: this is an ugly hack because there doesn’t seem to be an
     # easy way to have a normal layout *and* stream the content
@@ -93,7 +94,7 @@ class ApplicationController < ActionController::Base
 
   # TODO: deprecate. Should use view instead
   def errors_to_fake_list(obj)
-    "\n• " + obj.errors.full_messages.join("\n• ")
+    '\n• ' + obj.errors.full_messages.join('\n• ')
   end
 
   def set_locale

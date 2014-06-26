@@ -28,7 +28,7 @@ class SavedOrderController < ApplicationController
   end
 
   def copy
-    cookie_set(:replay, "savedorder #{get_replay_mode} #{@saved_order.uuid}")
+    cookie_set(:replay, "savedorder #{replay_mode} #{@saved_order.uuid}")
     cookie_set(:mode, :pizzade_order_new)
     redirect_to_shop
   end

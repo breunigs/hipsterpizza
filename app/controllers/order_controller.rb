@@ -93,12 +93,12 @@ class OrderController < ApplicationController
   end
 
   def copy
-    if @order.updated_at > 1.hour.ago && get_replay_mode == 'insta'
+    if @order.updated_at > 1.hour.ago && replay_mode == 'insta'
       params[:json] = @order.json
       params[:nick] = @nick
       return create
     else
-      cookie_set(:replay, "order #{get_replay_mode} #{@order.uuid}")
+      cookie_set(:replay, "order #{replay_mode} #{@order.uuid}")
       cookie_set(:mode, :pizzade_order_new)
       redirect_to_shop
     end

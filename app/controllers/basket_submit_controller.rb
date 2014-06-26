@@ -15,7 +15,7 @@ class BasketSubmitController < ApplicationController
     when 'pdf24' then
       stream('submit_fax_pdf24')
     else
-      cookie_set(:replay, "basket #{get_replay_mode} #{@basket.uid}")
+      cookie_set(:replay, "basket #{replay_mode} #{@basket.uid}")
       cookie_set(:mode, :pizzade_basket_submit)
       redirect_to_shop
     end
