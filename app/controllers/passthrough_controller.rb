@@ -57,7 +57,7 @@ class PassthroughController < ApplicationController
     return if headers['Content-Type']
 
     content = mime_type_by_ending
-    content << "; charset=utf-8" if content.include?("text")
+    content << '; charset=utf-8' if content.include?('text')
     headers['Content-Type'] ||= content
     logger.debug "Detected content type: #{content}. Final header: #{headers['Content-Type']}"
   end
