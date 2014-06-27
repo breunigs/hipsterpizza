@@ -14,15 +14,14 @@ describe 'Submitting with provider' do
     basket_with_order_create
   end
 
-
   context '“manual”' do
     before do
       fax_config['fax_provider'] = 'manual'
     end
 
     it 'redirects to PDF on submit' do
-      visit basket_path
-      click_on 'Submit Group Order', match: :first
+      visit basket_path(@basket)
+      open_admin_menu(I18n.t('button.submit_group_order.first_time.text'))
       wait_until_content '%PDF-1.3'
       expect(current_url).to end_with '/pdf'
     end
@@ -36,8 +35,8 @@ describe 'Submitting with provider' do
     end
 
     it 'tries to submit via PDF24' do
-      visit basket_path
-      click_on 'Submit Group Order', match: :first
+      visit basket_path(@basket)
+      open_admin_menu(I18n.t('button.submit_group_order.first_time.text'))
       wait_until_content 'Loading landing page'
       wait_until_content 'Uploading PDF'
       wait_until_content 'Logging In'

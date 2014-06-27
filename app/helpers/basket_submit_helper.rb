@@ -15,7 +15,7 @@ module BasketSubmitHelper
 
   def log
     l = @log.get.map { |x| h(x.join[0..200].strip) }
-    append_raw(%|<!--\n#{l.join("\n")}\n-->\n|)
+    append_raw(%(<!--\n#{l.join("\n")}\n-->\n))
   end
 
   def success
@@ -32,7 +32,7 @@ module BasketSubmitHelper
   end
 
   def basket_link
-    %|<a href="#{auto_basket_path}" class="button">Return To Basket</a>|
+    %(<a href="#{basket_path(@basket)}" class="btn btn-default">Return To Basket</a>)
   end
 
   def json_or_fail(raw)
