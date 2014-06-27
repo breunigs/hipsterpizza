@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module FeatureHelpers
   def basket_with_order_create
     @basket = basket_create
