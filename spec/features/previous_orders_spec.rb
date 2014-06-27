@@ -1,29 +1,28 @@
 # encoding: utf-8
 
 require 'spec_helper'
-require 'pp'
 
 describe 'Previous Order' do
   context 'in current basket' do
-    it 'asks for nickname if not set' do
-      basket_create
-      visit basket_path
-      click_on 'Show Saved/Previous Orders'
-      expect(page).to have_button 'Set Nickname'
+    it 'offers to set nickname if not done so' do
+      @basket = basket_create
+      visit basket_path(@basket)
+      click_on I18n.t('button.saved_prev_orders.link'), match: :first
+      expect(page).to have_button I18n.t('nick.button.manually')
     end
 
     it 'is shown immediately after ordering' do
       basket_with_order_create
-      click_on 'Show Saved/Previous Orders'
+      click_on I18n.t('button.saved_prev_orders.link'), match: :first
       expect(page).to have_content 'Chicken Curry'
-      expect(page).to have_content 'never'
+      expect(page).to have_content I18n.t('time.never')
     end
 
     it 'can be replayed' do
       basket_with_order_create
-      click_on 'Show Saved/Previous Orders'
-      click_on 'insta order this'
-      wait_until_content 'Your order has been added'
+      click_on I18n.t('button.saved_prev_orders.link'), match: :first
+      click_on I18n.t('button.insta_copy_order.button')
+      wait_until_content I18n.t('order_table.heading')
       # 3 = two times in list, once in 'Your Order'
       expect(page).to have_content('Chicken Curry', count: 3)
     end
@@ -32,22 +31,21 @@ describe 'Previous Order' do
   context 'in previous basket' do
     before do
       basket_with_order_create
-      #visit root_path
-      basket_create
-      visit basket_path
+      @basket = basket_create
+      visit basket_path(@basket)
       # ensure we’re in a new basket
       expect(page).not_to have_content 'Your Order'
     end
 
     it 'shows previous order from same shop' do
-      click_on 'Show Saved/Previous Orders'
+      click_on I18n.t('button.saved_prev_orders.link'), match: :first
       expect(page).to have_content 'Chicken Curry'
     end
 
     it 'can be replayed' do
-      click_on 'Show Saved/Previous Orders'
-      click_on 'insta order this'
-      wait_until_content 'Your order has been added'
+      click_on I18n.t('button.saved_prev_orders.link'), match: :first
+      click_on I18n.t('button.insta_copy_order.button')
+      wait_until_content I18n.t('order_table.heading')
       # 2 = once in list, once in 'Your Order'
       expect(page).to have_content('Chicken Curry', count: 2)
     end
