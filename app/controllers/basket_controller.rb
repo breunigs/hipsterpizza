@@ -4,7 +4,7 @@ class BasketController < ApplicationController
   include CookieHelper
 
   before_filter :ensure_admin, except: [:new, :create, :find, :show, :share,
-                                        :set_admin, :delivery_arrived, :pdf]
+                                        :delivery_arrived, :pdf]
 
   before_action :require_basket, except: [:new, :create, :find]
 
@@ -87,12 +87,6 @@ class BasketController < ApplicationController
       flash[:error] = t 'basket.controller.invalid_time'
       render json: { error: flash[:error] }
     end
-  end
-
-  def set_admin
-    cookie_set(:admin, @basket.uid)
-    flash[:info] = t 'basket.controller.set_admin'
-    redirect_to @basket
   end
 
   def share
