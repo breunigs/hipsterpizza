@@ -93,6 +93,8 @@ describe 'Basket' do
     click_on I18n.t('other')
     click_on I18n.t('nav.main.other.become_admin.link')
 
+    wait_until_content(I18n.t('order_table.heading'))
+
     expect(page).to have_link I18n.t('nav.admin.admin')
   end
 
@@ -113,9 +115,6 @@ describe 'Basket' do
     click_delivery_arrived_button
     reload
     wait_until_content I18n.t('basket.submitted_status.arrived')
-    # actually this would be basket.submitted_status.bar.done, but since the
-    # string includes a variable, manually match it here
-    expect(page).to have_content 'NOM NOM NOM!'
 
     # second basket, should be able to print an estimate now
     basket_with_order_create

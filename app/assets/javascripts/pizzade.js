@@ -200,11 +200,10 @@ var hipster = window.hipster = (function() {
       currentNav = $((isTopLevelLink ? navLinks : subNavLinks).shift());
       log('replay: loading next page ' + currentNav.text());
       // load sub nav links first
-      // if an element has this class, the pizza.de JS code avoids
-      // loading it. Therefore remove it to ensure the content_ready
-      // event fires.
-      currentNav.removeClass('activ');
-      currentNav.click();
+      // if an element has the “activ” class, the pizza.de JS code avoids
+      // loading it. Therefore remove it to ensure the content_ready event
+      // fires.
+      currentNav.removeClass('activ').click();
     }
 
     // searches current sub page and adds found items to basket. The
@@ -262,6 +261,8 @@ var hipster = window.hipster = (function() {
         // remove item from list
         return false;
       });
+
+      log('ITEM IN BASKET COUNT: ' + getCartItemsCount());
     }
 
 

@@ -80,7 +80,7 @@ class OrderController < ApplicationController
       return redirect_to @basket
     end
 
-    i18n_key = my_order ? 'my_order' : 'other_order'
+    i18n_key = view_context.my_order? ? 'my_order' : 'other_order'
     flash[:info] = I18n.t("order.controller.destroy.#{i18n_key}")
 
     if @order.paid?
@@ -109,7 +109,7 @@ class OrderController < ApplicationController
   def ensure_basket_editable
     if @basket.cancelled?
       flash[:error] = I18n.t('order.controller.cancelled')
-      redirect_to basket_path
+      redirect_to @basket
     elsif @basket.submitted?
       prefix = 'order.controller.already_submitted'
       flash[:error] = I18n.t("#{prefix}.main")

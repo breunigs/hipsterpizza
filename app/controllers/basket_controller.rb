@@ -55,6 +55,8 @@ class BasketController < ApplicationController
       format.html
 
       format.js do
+        # avoid DOM modification with capybara
+        return head :no_content if Rails.env.test?
         find_changes
         head :no_content unless @basket_changed || @order_changed
       end
