@@ -89,6 +89,7 @@ describe 'Order' do
         wait_until_content I18n.t('basket.my_order.has_paid')
         click_on I18n.t('basket.my_order.dropdown')
         click_on I18n.t('basket.my_order.edit.text')
+        wait_for_progress_done
         wait_until_content 'Summe'
         accept_nick!
       end
