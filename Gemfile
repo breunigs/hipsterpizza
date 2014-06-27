@@ -49,3 +49,7 @@ group :test do
   gem 'capybara-screenshot', git: 'git://github.com/mattheworiordan/capybara-screenshot.git'
   gem 'puffing-billy', '0.2.3'
 end
+
+group :assets do
+  gem 'coffee-rails'
+end

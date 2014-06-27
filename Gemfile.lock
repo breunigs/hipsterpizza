@@ -308,6 +308,7 @@ DEPENDENCIES
   bootstrap-sass
   capybara-screenshot!
   capybara-webkit
+  coffee-rails
   coveralls
   friendly_id (~> 5.0.0)
   guard
