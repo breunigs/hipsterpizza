@@ -1,3 +1,5 @@
+# NOTE: restart HipsterPizza after changes in pinning.yml
+
 # this pins the shop to use and disallows the creation of any other
 # baskets. The URL is the one in the given in <link rel="canonical" …>
 # on the shop’s site. Alternatively, create a basket first and retrieve
