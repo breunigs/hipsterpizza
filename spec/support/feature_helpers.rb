@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 module FeatureHelpers
+  TEST_NICK = 'Tėst Ñiçk 1_2-3'
+
   def basket_with_order_create
     @basket = basket_create
     visit basket_path(@basket)
@@ -51,11 +53,11 @@ module FeatureHelpers
 
     expect(page).to have_content I18n.t('basket.my_order.has_not_paid')
     expect(page).to have_content 'Chicken Curry'
-    expect(page).to have_content 'Tėst Ñiçk 1_2-3'
+    expect(page).to have_content TEST_NICK
   end
 
   def accept_nick!
-    page.driver.js_prompt_input = 'Tėst Ñiçk 1_2-3'
+    page.driver.js_prompt_input = TEST_NICK
     page.driver.accept_js_prompts!
   end
 
