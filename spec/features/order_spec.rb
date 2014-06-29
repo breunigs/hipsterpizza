@@ -31,6 +31,18 @@ describe 'Order' do
       expect(page).not_to have_content 'Chicken Curry'
     end
 
+    it 'shows hint on destruction when already paid' do
+      click_on I18n.t('button.toggle_paid.not_paid.button')
+      expect(page).to have_content I18n.t('basket.my_order.has_paid')
+      click_on I18n.t('basket.my_order.dropdown')
+      click_on I18n.t('basket.my_order.destroy.text')
+
+      expect(page).to have_content I18n.t('order.controller.destroy.my_order')
+      price_text = I18n.t('order.controller.money.take', price: 'XXXX')
+      price_text = price_text.split('XXXX').first
+      expect(page).to have_content price_text
+    end
+
     it 'can be edited' do
       click_on I18n.t('basket.my_order.dropdown')
       click_on I18n.t('basket.my_order.edit.text')
