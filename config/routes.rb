@@ -22,7 +22,7 @@ Hipsterpizza::Application.routes.draw do
         post 'set_submit_time'
       end
 
-      resources :order, except: :index do
+      resources :order, except: :index, param: :order_id do
         member do
           patch 'toggle_paid'
           post 'save'
@@ -31,7 +31,7 @@ Hipsterpizza::Application.routes.draw do
       end
     end
 
-    resources :saved_order, only: [:index, :destroy] do
+    resources :saved_order, only: [:index, :destroy], param: :saved_order_id do
       member do
         put 'copy'
       end

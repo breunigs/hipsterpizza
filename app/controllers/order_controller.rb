@@ -142,7 +142,7 @@ class OrderController < ApplicationController
   end
 
   def require_order
-    @order = Order.friendly.find(params[:id]) rescue nil
+    @order = Order.friendly.find(params[:order_id]) rescue nil
     return if @order
     flash[:error] = t('order.controller.invalid_uuid')
     redirect_to @basket

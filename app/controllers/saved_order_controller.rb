@@ -36,7 +36,7 @@ class SavedOrderController < ApplicationController
   private
 
   def require_saved_order
-    @saved_order = SavedOrder.friendly.find(params[:id])
+    @saved_order = SavedOrder.friendly.find(params[:saved_order_id])
     redirect_to saved_order_index_path unless @saved_order
   end
 end

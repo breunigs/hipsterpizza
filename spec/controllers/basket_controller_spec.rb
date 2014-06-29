@@ -54,7 +54,6 @@ describe BasketController do
         expect(BC.instance_variable_get(:@order_changed)).to be_true
       end
 
-
       it 'doesn’t report older @order timestamp as change' do
         BC.params = { ts_order: (Time.now + 1.minute).to_i }
         BC.send(:find_changes)
