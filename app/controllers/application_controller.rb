@@ -50,6 +50,8 @@ class ApplicationController < ActionController::Base
   def require_basket
     find_basket
     return redirect_to root_path unless @basket
+
+    return if cookie_get(:basket) == @basket.uid
     cookie_set(:basket, @basket.uid)
   end
 
