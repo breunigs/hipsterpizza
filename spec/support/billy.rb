@@ -42,3 +42,8 @@ Billy.configure do |c|
   c.persist_cache = true
   c.cache_path = 'tmp/billy-reqs/'
 end
+
+# ensure Billy’s cache directory exists
+Dir.chdir(File.join(File.dirname(__FILE__), '..', '..')) do
+  FileUtils.mkdir_p(Billy.config.cache_path)
+end
