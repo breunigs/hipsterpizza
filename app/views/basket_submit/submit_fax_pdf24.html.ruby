@@ -94,7 +94,6 @@ append_raw <<END
 END
 # FIXME: set address from fax.yml data
 
-cookie_set(:action, :mark_delivery_arrived)
 @basket.update_attribute(:sha_address, contact_sha_address)
 
 append_raw(@footer)
