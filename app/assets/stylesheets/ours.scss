@@ -110,6 +110,26 @@ $font-family-sans-serif: 'Cabin', sans-serif;
     }
   }
 
+
+  .delivery-arrived-button {
+    @media (min-width: $screen-xs-min) {
+      margin-left: 15px;
+      // the height: 25px hack is used to allow the button to share the same
+      // horizontal space as the dd list. Latter clears floats to achieve its
+      // looks, which would also take the height of the button into account.
+      height: 25px;
+      float: right;
+    }
+
+    float: none;
+
+    // Obviously, the hack is only required if the button is directly next to
+    // the list.
+    &.with-text {
+      height: auto;
+    }
+  }
+
   pre.link {
     font-size: 150%;
   }

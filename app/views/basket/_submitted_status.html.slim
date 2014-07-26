@@ -5,19 +5,14 @@
 
 - tt = TimeTracker.new(@basket)
 
-/ the height: 25px hack is used to allow the button to share the same horizontal
-/ space as the dd list. Latter clears floats to achieve its looks, which would
-/ also take the height of the button into account. The hack is only needed if the button is right next to the list.
-.pull-right style="#{tt.samples == 0 ? '' : 'height:25px;'}margin-left:15px"
+.delivery-arrived-button class="#{tt.samples == 0 ? 'with-text' : ''}"
   = render 'button/delivery_arrived'
+
 
 - if tt.samples == 0
   p basket.submitted_status.no_estimate
 
 dl.dl-horizontal
-  dt basket.submitted_status.submitted
-  dd = time(tt.submitted)
-
   dt basket.submitted_status.submitted
   dd = time(tt.submitted)
 
