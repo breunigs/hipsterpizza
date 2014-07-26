@@ -14,13 +14,13 @@ gem 'possessive'
 gem 'unicode_utils'
 gem 'rails-i18n'
 gem 'bootstrap-sass'
-gem 'friendly_id', '~> 5.0.0'
+gem 'friendly_id'
 
 # translation
 gem 'http_accept_language'
 
 gem 'mechanize', require: false
-gem 'prawn'
+gem 'prawn', '1.0.0'
 gem 'prawn-qrcode'
 gem 'prawn-rails', git: 'git://github.com/cortiz/prawn-rails.git'
 
@@ -35,11 +35,10 @@ group :development do
   gem 'guard-livereload',   require: false
   gem 'rack-livereload'
   gem 'quiet_assets'
-  gem 'parallel_tests'
 end
 
 group :development, :test do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.99'
 end
 
 group :test do

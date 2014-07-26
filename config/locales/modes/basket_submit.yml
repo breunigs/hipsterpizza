@@ -3,9 +3,9 @@ en:
     basket_submit:
       update_time:
         button: 'Set Submit Time To Now'
-        disable: 'Setting Submit Time…' 
+        disable: 'Setting Submit Time…'
         confirm: 'Have you submitted the order using the normal site’s controls?'
-        
+
       cancel:
         button: 'Cancel Submission'
         disable: 'Reopening Basket…'
@@ -15,9 +15,9 @@ de:
     basket_submit:
       update_time:
         button: 'Absende-Zeit auf „jetzt“'
-        disable: 'Setze Absende-Zeit…' 
+        disable: 'Setze Absende-Zeit…'
         confirm: 'Hast Du die Bestellung mit Hilfe der normalen Seite abgeschickt?'
-        
+
       cancel:
         button: 'Absenden abbrechen'
         disable: 'Öffne Gruppen-Warenkorb…'
