@@ -111,7 +111,9 @@ var hipster = window.hipster = (function() {
 
       var extra = [];
       // subitems = additional toppings, subsubitems = salad dressing in menus
-      var finder = '.cartitems-subitem .cartitems-subtitle a, .cartitems-subsubitem .cartitems-subtitle a';
+      // do not filter for the <a> element, as items part of a menu won’t be
+      // links.
+      var finder = '.cartitems-subitem .cartitems-subtitle, .cartitems-subsubitem .cartitems-subtitle';
       $(elm).find(finder).each(function(ind, ingred) {
         extra[ind] = $(ingred).text();
       });
@@ -147,7 +149,7 @@ var hipster = window.hipster = (function() {
   function findLinkWithText(text) {
     return $('#framek a').filter(function() {
       var el = $(this);
-      return el.attr('title') === text;
+      return el.text() === text;
     });
   }
 
@@ -206,6 +208,14 @@ var hipster = window.hipster = (function() {
       currentNav.removeClass('activ').click();
     }
 
+    function orderDetailsHasMoreSteps() {
+      return $('.shop-dialog a:contains("nächster Schritt")').length > 0;
+    }
+
+    function orderDetailsGotoNextStep() {
+      $('.shop-dialog a:contains("nächster Schritt"):first').click();
+    }
+
     // searches current sub page and adds found items to basket. The
     // items get removed from the "to go" list
     function addItemsToBasket() {
@@ -231,20 +241,53 @@ var hipster = window.hipster = (function() {
         // this will immediately put the item in the cart.
         link.click();
         // add extra ingredients, if any.
-        $.each(item.extra, function(ind, extra) {
-          // .shop-dialog == the popup
-          // .dlg-nodes-addition == the "add items part". Required if
-          // an ingredient should be added multiple times. Otherwise
-          // the remove item link would be catched as well.
-          var ingred = $('.shop-dialog .dlg-nodes-addition a:contains('+extra+')');
-          if(ingred.length === 0) {
-            errorMsgs.push(errmsg + ' EXTRA NOT FOUND: ' + extra);
-          } else if(ingred.length >= 2) {
-            errorMsgs.push(errmsg + ' EXTRA AMBIGUOUS: ' + extra);
-          } else {
+        var lookAgain = false;
+        do {
+          item.extra = $.grep(item.extra, function(extra, ind) {
+            // .shop-dialog == the popup
+            // .dlg-nodes == the "add items part". Required if
+            // an ingredient should be added multiple times. Otherwise
+            // the remove item link would be catched as well.
+            // .
+            var ingred = $('.shop-dialog .dlg-nodes a:contains('+extra+')');
+
+            if(ingred.length === 0) {
+              return true; // keep extra item for later
+            }
+
+            if(ingred.length >= 2) {
+              errorMsgs.push(errmsg + ' EXTRA AMBIGUOUS: ' + extra);
+              return false; // remove item from list
+            }
+
             ingred.click();
-          }
+            return false;
+          });
+
+          lookAgain = item.extra.length > 0 && orderDetailsHasMoreSteps();
+          if(lookAgain) orderDetailsGotoNextStep();
+
+        } while(lookAgain);
+
+        if(item.extra.length > 0) {
+          // not all subitems were found. See if they were included by pizza.de
+          // magic and assume they are included.
+          var completeItem = $('.shop-dialog .dlg-head').text();
+          item.extra = $.grep(item.extra, function(extra, ind) {
+            var found = completeItem.indexOf(extra) >= 0;
+            if(found) {
+              log('removing subitem ' + extra + ' because it appears it was auto-added.');
+              return false;
+            }
+            return true;
+          });
+        }
+
+        $.each(item.extra, function(ind, extra) {
+          errorMsgs.push(errmsg + ' EXTRA NOT FOUND: ' + extra);
         });
+
+
         // If there was an extra ingredients popup: close it and put
         // finalized item into cart.
         // If there wasn't an extra igredients popup; will not match
