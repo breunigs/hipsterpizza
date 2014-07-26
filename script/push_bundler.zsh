@@ -5,10 +5,7 @@ cd ..
 
 source ~/.rvm/scripts/rvm
 
-rvm use 2.1.0
-bundle install --without development --deployment --jobs 4
-
-rvm use 1.9.3
+rvm use 2.1.2
 bundle install --without development --deployment --jobs 4
 
 rm -rf vendor/bundle/**/gems/nokogiri-*/ext/nokogiri/tmp
