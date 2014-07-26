@@ -22,7 +22,7 @@ var hipster = window.hipster = (function() {
     if(window.console && window.console.error) {
       window.console.error(text);
     } else {
-      alert(text);
+      window.alert(text);
     }
   }
 
@@ -50,7 +50,7 @@ var hipster = window.hipster = (function() {
       var url = 'http://nominatim.openstreetmap.org/reverse?format=json&zoom=18';
       var c = pos.coords;
       var coords = '&lat='+c.latitude+'&lon='+c.longitude;
-      console.log('Querying Nominatim at ' + coords);
+      log('Querying Nominatim at ' + coords);
       $.getJSON(url + coords, checkPostalCode);
     }
 
@@ -62,7 +62,9 @@ var hipster = window.hipster = (function() {
   }
 
   function isShopPage() {
-    if(_isShop !== null) return _isShop;
+    if(_isShop !== null) {
+      return _isShop;
+    }
 
     _isShop = $('body:contains("Warenkorb")').length === 1;
     return _isShop;
@@ -136,7 +138,7 @@ var hipster = window.hipster = (function() {
   function getUserNick() {
     var nick = hipsterGetCookie('nick');
     do {
-      nick = prompt('Your Nick:', nick === null ? '' : nick);
+      nick = window.prompt('Your Nick:', nick === null ? '' : nick);
       // user clicked cancel
       if(nick === null) {
         return null;
@@ -174,7 +176,9 @@ var hipster = window.hipster = (function() {
     var errorMsgs = [];
 
     function preloadSubPages(arr) {
-      if(isMobileBrowser) return;
+      if(isMobileBrowser) {
+        return;
+      }
 
       $.each(arr, function(ind, a) {
         var handler = $(a).attr('onclick');
@@ -216,6 +220,35 @@ var hipster = window.hipster = (function() {
       $('.shop-dialog a:contains("nächster Schritt"):first').click();
     }
 
+    // Closes order details (like extra ingredients or menu items) if present.
+    function orderDetailsClose() {
+      $('.shop-dialog a:contains("in den Warenkorb"):first').click();
+    }
+
+    function orderDetailsRemoveAutoAddedExtras(extras) {
+      if(extras.length === 0) {
+        return;
+      }
+
+      // See if they were included by pizza.de magic and assume they are included
+      var completeItem = $('.shop-dialog .dlg-head').text();
+      extras = $.grep(extras, function(extra) {
+        var found = completeItem.indexOf(extra) >= 0;
+        if(found) {
+          log('removing subitem ' + extra + ' because it appears it was auto-added.');
+          return false;
+        }
+        return true;
+      });
+
+
+      $.each(extras, function(ind, extra) {
+        errorMsgs.push(errmsg + ' EXTRA NOT FOUND: ' + extra);
+      });
+
+      return extras;
+    }
+
     // searches current sub page and adds found items to basket. The
     // items get removed from the "to go" list
     function addItemsToBasket() {
@@ -223,10 +256,15 @@ var hipster = window.hipster = (function() {
 
       items = $.grep(items, function (item, ind) {
         // Deposit is added automatically when selecting the correct products
-        if(item.prod === 'Pfand') return false;
+        if(item.prod === 'Pfand') {
+          return false;
+        }
 
         var link = findLinkWithText(item.prod);
-        if(link.length === 0) return true; // not found; keep in queue
+        if(link.length === 0) {
+          // not found; keep in queue
+          return true;
+        }
         if(link.length >= 2) {
           errorMsgs.push('ITEM #' + ind + ' AMBIGUOUS: ' + item.prod);
           // keep item, so it may be added manually later
@@ -243,7 +281,7 @@ var hipster = window.hipster = (function() {
         // add extra ingredients, if any.
         var lookAgain = false;
         do {
-          item.extra = $.grep(item.extra, function(extra, ind) {
+          item.extra = $.grep(item.extra, function(extra) {
             // .shop-dialog == the popup
             // .dlg-nodes == the "add items part". Required if
             // an ingredient should be added multiple times. Otherwise
@@ -265,34 +303,15 @@ var hipster = window.hipster = (function() {
           });
 
           lookAgain = item.extra.length > 0 && orderDetailsHasMoreSteps();
-          if(lookAgain) orderDetailsGotoNextStep();
+          if(lookAgain) {
+            orderDetailsGotoNextStep();
+          }
 
         } while(lookAgain);
 
-        if(item.extra.length > 0) {
-          // not all subitems were found. See if they were included by pizza.de
-          // magic and assume they are included.
-          var completeItem = $('.shop-dialog .dlg-head').text();
-          item.extra = $.grep(item.extra, function(extra, ind) {
-            var found = completeItem.indexOf(extra) >= 0;
-            if(found) {
-              log('removing subitem ' + extra + ' because it appears it was auto-added.');
-              return false;
-            }
-            return true;
-          });
-        }
+        item.extra = orderDetailsRemoveAutoAddedExtras(item.extra);
 
-        $.each(item.extra, function(ind, extra) {
-          errorMsgs.push(errmsg + ' EXTRA NOT FOUND: ' + extra);
-        });
-
-
-        // If there was an extra ingredients popup: close it and put
-        // finalized item into cart.
-        // If there wasn't an extra igredients popup; will not match
-        // anything and thus not execute.
-        $(".shop-dialog a:contains('in den Warenkorb'):first").click();
+        orderDetailsClose();
 
         // comparing prices as sanity check
         if(getPriceOfLastItem() !== item.price) {
@@ -320,8 +339,9 @@ var hipster = window.hipster = (function() {
     // repeats until all items are found or there are no more sub pages.
     function process() {
       var endOfCats = navLinks.length === 0 && subNavLinks.length === 0;
-      if(items.length === 0 || (currentNav === null && endOfCats))
+      if(items.length === 0 || (currentNav === null && endOfCats)) {
         return tearDown();
+      }
 
       if(currentNav === null) {
         loadNextSubPage();
@@ -332,7 +352,9 @@ var hipster = window.hipster = (function() {
         // check if there are any subpages which also need processing
         // before going to the next category. Only do this on top level
         // links, otherwise this would cause infinite loops.
-        if(isTopLevelLink) getPossibleSubLinks();
+        if(isTopLevelLink) {
+          getPossibleSubLinks();
+        }
 
         // continue with next step
         process();
@@ -343,7 +365,9 @@ var hipster = window.hipster = (function() {
       if(items.length > 0) {
         var list = $.map(items, function(item) {
           var m = item.prod;
-          if(item.extra.length > 0) m += ' + ' + item.extra.join(' + ');
+          if(item.extra.length > 0) {
+            m += ' + ' + item.extra.join(' + ');
+          }
           return m;
         }).join('\n  – ');
         errorMsgs.push('Missing Items:\n  – ' + list);
@@ -396,11 +420,13 @@ var hipster = window.hipster = (function() {
   function setSubmitButtonState(enabled) {
     var btn = getSubmitButton();
     if(enabled) {
-      if(btn.is(':disabled'))
+      if(btn.is(':disabled')) {
         btn.attr('class', 'btn btn-primary navbar-btn').enable(true);
+      }
     } else {
-      if(btn.is(':enabled'))
+      if(btn.is(':enabled')) {
         btn.attr('class', 'btn btn-link navbar-btn').enable(false);
+      }
     }
   }
 
@@ -414,7 +440,9 @@ var hipster = window.hipster = (function() {
   function setupMutationObserver() {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
     var waitForLoad = new MutationObserver(function(mutations, observer) {
-      if(isLoading()) return;
+      if(isLoading()) {
+        return;
+      }
       observer.disconnect();
       runAfterLoads();
     });
@@ -423,13 +451,15 @@ var hipster = window.hipster = (function() {
 
   function setupLegacyObserver() {
     var check = function() {
-      if(isLoading()) return;
+      if(isLoading()) {
+        return;
+      }
       $('body').unbind('DOMSubtreeModified', check);
       // wait until DOMSubtreeModified event is over to match mutation
       // observer behaviour. If not done so, events might still fire for
       // *this* modification, instead of the next one.
       window.setTimeout(runAfterLoads, 0);
-    }
+    };
 
     $('body').bind('DOMSubtreeModified', check);
   }
@@ -472,8 +502,8 @@ var hipster = window.hipster = (function() {
 
   try {
     setupMutationObserver();
-  } catch(err) {
-    console.log('Using legacy observer (DomSubtreeModified) because MutationObserver seems broken.');
+  } catch(error) {
+    log('Using legacy observer (DomSubtreeModified) because MutationObserver seems broken.');
     setupLegacyObserver();
   }
 
@@ -494,7 +524,7 @@ var hipster = window.hipster = (function() {
       }
 
       // URLs without &knddomain=1 switch
-      window.cart.check4DeliveryArea = function() {}
+      window.cart.check4DeliveryArea = function() {};
       // URLs with that switch
       window.cart.config.behavior.checkDeliveryAreaOnCustDomains = 0;
     },
@@ -547,7 +577,7 @@ var hipster = window.hipster = (function() {
       form.submit(function() {
         var items = getCartItemsJson();
         if(items.length === 0) {
-          alert('You need to select at least one item.');
+          window.alert('You need to select at least one item.');
           return false;
         }
         $('#hipsterOrderJson').val(JSON.stringify(items));
@@ -577,8 +607,10 @@ var hipster = window.hipster = (function() {
         case 'check':
           log('Replaying with error checking');
           replay(data, function(err) {
-            if(err.length === 0) return;
-            alert('There have been errors replaying the data: \n– ' + err.join('\n– '));
+            if(err.length === 0) {
+              return;
+            }
+            window.alert('There have been errors replaying the data: \n– ' + err.join('\n– '));
           });
           break;
 
@@ -587,8 +619,7 @@ var hipster = window.hipster = (function() {
           break;
 
         case 'insta':
-          // if a nickname is already set, simply re-use it without
-          // asking.
+          // if a nickname is already set, simply re-use it without asking.
           var curNick = hipsterGetCookie('nick');
           if(curNick !== '' && curNick !== null) {
             getUserNick = function() { return curNick; };
@@ -602,8 +633,9 @@ var hipster = window.hipster = (function() {
     },
 
     attachAddressFieldListener: function() {
-      if(!localStorage) return;
-      if(window.hipsterPrefillAddress) return;
+      if(!localStorage || window.hipsterPrefillAddress) {
+        return;
+      }
 
       // pizza.de replaces the whole sidebar when adding/removing items.
       // Therefore this broad delegate is needed.
@@ -613,10 +645,14 @@ var hipster = window.hipster = (function() {
     },
 
     runItemCountChecker: function() {
-      if(!isShopPage()) return;
+      if(!isShopPage() || window.hipsterReplayMode === 'insta') {
+        return;
+      }
+
       var ca = getCurrentMode();
-      if(ca !== 'pizzade_order_new' && ca !== 'pizzade_order_edit') return;
-      if(window.hipsterReplayMode === 'insta') return;
+      if(ca !== 'pizzade_order_new' && ca !== 'pizzade_order_edit') {
+        return;
+      }
 
       window.setInterval(function() {
         setSubmitButtonState(getCartItemsCount() !== 0);
@@ -624,7 +660,9 @@ var hipster = window.hipster = (function() {
     },
 
     restoreAddressFields: function() {
-      if(!localStorage) return;
+      if(!localStorage) {
+        return;
+      }
 
       $('form#bestellform input, form#bestellform textarea').each(function(idx, elm) {
         if(window.hipsterPrefillAddress) {

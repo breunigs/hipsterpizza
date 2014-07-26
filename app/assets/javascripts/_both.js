@@ -1,10 +1,3 @@
-// function hipsterAdjustTopBar() {
-//   $('body').css('padding-top', $('#hipsterTopBar').height() + 'px');
-// }
-
-// $(document).on('ready page:change', hipsterAdjustTopBar);
-// $(window).resize(hipsterAdjustTopBar);
-
 var isMobileBrowser = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|capybara/i.test(navigator.userAgent.toLowerCase()));
 
 // turn off any FX because they are too slow on mobile the way they are
@@ -13,6 +6,8 @@ var isMobileBrowser = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera
 $.fx.off = isMobileBrowser;
 
 function hipsterGetCookie(name) {
+  'use strict';
+
   name = '_hipsterpizza_' + name + '=';
   var cookies = document.cookie.split(/;\s*/);
   for(var i=0; i< cookies.length; i++) {
@@ -26,6 +21,8 @@ function hipsterGetCookie(name) {
 }
 
 function hipsterSetCookie(name, value) {
+  'use strict';
+
   if(!(new RegExp('^[a-z-]+$').test(name))) {
     err('Cookie Name contains invalid characters');
     return;
