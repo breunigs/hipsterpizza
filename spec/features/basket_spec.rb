@@ -126,15 +126,9 @@ describe 'Basket' do
 
   it 'sets correct submit time' do
     visit basket_path(@basket)
-    order_create
 
     open_admin_menu(submit_link)
-    shot 1
     click_on I18n.t('modes.basket_submit.update_time.button')
-    pp I18n.t('modes.basket_submit.update_time.button')
-    shot 2
-    sleep 3.5
-    shot 3
     expect(page).to have_content 'less than a minute ago'
   end
 

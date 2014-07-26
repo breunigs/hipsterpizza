@@ -5,7 +5,9 @@
     = form_tag(set_submit_time_basket_path(@basket), method: :post, id: :hipsterSetSubmitTime)
       input type='hidden' id='hipsterShaAddress' name='sha_address'
 
-      button.btn.btn-link.navbar-btn type='submit' data-disable-with=t('modes.basket_submit.update_time.disable') data-confirm=t('modes.basket_submit.update_time.confirm') modes.basket_submit.update_time.button
+      / TODO: Rail’s UJS data-confirm doesn’t work properly on pizza.de, so
+      / manually do it here.
+      button.btn.btn-link.navbar-btn type='submit' data-disable-with=t('modes.basket_submit.update_time.disable') onclick="return confirm('#{j t('modes.basket_submit.update_time.confirm')}')" modes.basket_submit.update_time.button
 
 li
   a href=unsubmit_basket_path(@basket) data-disable-with=t('modes.basket_submit.cancel.disable') modes.basket_submit.cancel.button
