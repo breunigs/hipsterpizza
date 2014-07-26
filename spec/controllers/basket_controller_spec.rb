@@ -18,25 +18,25 @@ describe BasketController do
     it 'reports newer @basket timestamp as change' do
       BC.params = { ts_basket: (Time.now - 1.minute).to_i }
       BC.send(:find_changes)
-      expect(BC.instance_variable_get(:@basket_changed)).to be_true
+      expect(BC.instance_variable_get(:@basket_changed)).to be true
     end
 
     it 'doesn’t report equal @basket timestamp as change' do
       BC.params = { ts_basket: @basket.updated_at.to_i }
       BC.send(:find_changes)
-      expect(BC.instance_variable_get(:@basket_changed)).to be_false
+      expect(BC.instance_variable_get(:@basket_changed)).to be false
     end
 
     it 'doesn’t report older @basket timestamp as change' do
       BC.params = { ts_basket: (Time.now + 1.minute).to_i }
       BC.send(:find_changes)
-      expect(BC.instance_variable_get(:@basket_changed)).to be_false
+      expect(BC.instance_variable_get(:@basket_changed)).to be false
     end
 
     it 'reports deleted @order as change' do
       BC.params = { ts_order: Time.now.to_i }
       BC.send(:find_changes)
-      expect(BC.instance_variable_get(:@order_changed)).to be_true
+      expect(BC.instance_variable_get(:@order_changed)).to be true
     end
 
     context 'with @order' do
@@ -51,13 +51,13 @@ describe BasketController do
 
       it 'reports new @order as change' do
         BC.send(:find_changes)
-        expect(BC.instance_variable_get(:@order_changed)).to be_true
+        expect(BC.instance_variable_get(:@order_changed)).to be true
       end
 
       it 'doesn’t report older @order timestamp as change' do
         BC.params = { ts_order: (Time.now + 1.minute).to_i }
         BC.send(:find_changes)
-        expect(BC.instance_variable_get(:@order_changed)).to be_false
+        expect(BC.instance_variable_get(:@order_changed)).to be false
       end
     end
   end

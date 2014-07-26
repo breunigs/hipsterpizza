@@ -21,16 +21,16 @@ describe TimeTracker do
   describe '#overdue?' do
     it 'is false, if there’s still time left' do
       @basket.submitted = Time.now - 1.minutes
-      expect(tt.overdue?).to be_false
+      expect(tt.overdue?).to be false
     end
 
     it 'is true, if it’s taken longer than the estimate' do
-      expect(tt.overdue?).to be_true
+      expect(tt.overdue?).to be true
     end
 
     it 'is true, if it’s taken longer than the estimate, even after arrival' do
       @basket.arrival = Time.now
-      expect(tt.overdue?).to be_true
+      expect(tt.overdue?).to be true
     end
   end
 
