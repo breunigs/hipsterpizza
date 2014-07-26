@@ -1,15 +1,12 @@
 if ENV["COVERAGE"]
   require 'simplecov'
-
-  if ENV["COVERALLS"]
-    require 'coveralls'
-    SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-      SimpleCov::Formatter::HTMLFormatter,
-      Coveralls::SimpleCov::Formatter
-    ]
-  end
-
-  SimpleCov.start 'rails' do
-    add_filter 'vendor'
+  
+  if ENV['CODECLIMATE_REPO_TOKEN']
+    require "codeclimate-test-reporter"
+    CodeClimate::TestReporter.start
+  else
+    SimpleCov.start 'rails' do
+      add_filter 'vendor'
+    end
   end
 end
