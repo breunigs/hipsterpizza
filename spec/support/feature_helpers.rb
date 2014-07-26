@@ -27,7 +27,7 @@ module FeatureHelpers
 
     visit root_path + '/' + plz
 
-    expect(page).to have_content('pizza.de-Bewertungen in PLZ 12347')
+    expect(page).to have_content('Postleitzahl-Bereich 12347')
     click_link 'Indian Curry', match: :first
 
     # wait for page load, reduce breakage
