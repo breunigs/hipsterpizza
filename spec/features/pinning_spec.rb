@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'pp'
 
-describe 'Pinning' do
+describe 'Pinning', type: :feature do
   SHOP_URL = '/indian-curry-berlin-bruesseler-str-17'
 
   # shortened basket creation scheme, with less checking.

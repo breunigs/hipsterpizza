@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Order' do
+describe 'Order', type: :feature do
   context 'with existing order' do
     before do
       basket_with_order_create

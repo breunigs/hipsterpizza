@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Basket' do
+describe 'Basket', type: :feature do
   submit_link = I18n.t('button.submit_group_order.first_time.text')
 
   before do

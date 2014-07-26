@@ -6,7 +6,7 @@ def is_puffing_billy?
   Capybara.current_driver.to_s.include?('_billy')
 end
 
-describe 'BasketSubmit' do
+describe 'BasketSubmit', type: :feature do
   before do
     page.driver.browser.clear_proxy if is_puffing_billy?
   end

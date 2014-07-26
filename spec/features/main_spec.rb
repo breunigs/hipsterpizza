@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Main' do
+describe 'Main', type: :feature do
   it 'warns when given invalid basket uid' do
     visit root_path
     fill_in 'id', with: 'asd'

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Passthrough' do
+describe 'Passthrough', type: :feature do
   before do
     visit root_path
     click_on I18n.t('main.chooser.new_basket.link')

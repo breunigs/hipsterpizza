@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'Previous Order' do
+describe 'Previous Order', type: :feature do
   context 'in current basket' do
     it 'offers to set nickname if not done so' do
       @basket = basket_create
