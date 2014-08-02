@@ -15,8 +15,27 @@ pdf.table(d, column_widths: { 0 => 80 }) do
 end
 
 
+pdf.move_down 15
+pdf.text "Summe: #{euro_de(@basket.sum)}", size: 18, style: :bold
 
-pdf.move_down 20
+
+if @cfg['lat'] && @cfg['lon']
+  vpos = pdf.cursor + 108
+
+  lat = @cfg['lat']
+  lon = @cfg['lon']
+
+  osm = "http://www.osm.org/?mlat=#{lat}&mlon=#{lon}#map=17/#{lat}/#{@cfg['lon']}"
+  gmaps = "https://maps.google.de/maps?q=#{lat},#{lon}&num=1&t=m&z=18"
+
+  size = 100
+  right = pdf.bounds.right
+  pdf.print_qr_code(gmaps, extent: size, stroke: false, pos: [right-size+10, vpos])
+  pdf.print_qr_code(osm, extent: size, stroke: false, pos: [right-2*size-39, vpos])
+  pdf.text "Open Street Map#{' '*20}Google Maps#{Prawn::Text::NBSP*3}", align: :right
+end
+
+pdf.move_down 5
 
 
 
@@ -35,32 +54,6 @@ pdf.table(o, column_widths: [380, 65, 90], header: true) do
 
   row(0).font_style = :bold
 end
-
-
-
-
-below_table = pdf.cursor - 10
-pdf.move_down 20
-pdf.text "Summe: #{euro_de(@basket.sum)}", size: 20, style: :bold
-
-pdf.move_down 10
-pdf.text "Erstellt: #{Time.now.strftime("%H:%M Uhr %d.%m.%Y")}"
-
-if @cfg['lat'] && @cfg['lon']
-  lat = @cfg['lat']
-  lon = @cfg['lon']
-
-  osm = "http://www.osm.org/?mlat=#{lat}&mlon=#{lon}#map=17/#{lat}/#{@cfg['lon']}"
-  gmaps = "https://maps.google.de/maps?q=#{lat},#{lon}&num=1&t=m&z=18"
-
-  size = 100
-  right = pdf.bounds.right
-  pdf.print_qr_code(gmaps, extent: size, stroke: false, pos: [right-size+10, below_table])
-  pdf.print_qr_code(osm, extent: size, stroke: false, pos: [right-2*size-70, below_table])
-  pdf.text "Open Street Map#{' '*29}Google Maps#{Prawn::Text::NBSP*3}", align: :right
-end
-
-
 
 
 pdf.number_pages "Seite <page> von <total>", {at: [pdf.bounds.right - 150, 0], width: 150, align: :right }

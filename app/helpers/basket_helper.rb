@@ -63,6 +63,7 @@ module BasketHelper
     phone = get(:areacode).to_s + get(:local_number).to_s
     add!(data, 'Telefon',   phone.scan(/.{1,4}/).join(' '))
     add!(data, 'E-Mail',    get(:email))
+    add!(data, 'Erstellt',  Time.now.strftime("%H:%M Uhr %d.%m.%Y"))
     if get(:details)
       data << ['Bemerkung', '']
       data << [{content: get(:details), colspan: 2}]
