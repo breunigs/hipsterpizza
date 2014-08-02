@@ -88,9 +88,9 @@ success
 
 n
 append_raw <<END
-    <br><br>
+    <div class="alert alert-info">
     It appears the fax has been queued successfully. You should receive a mail from PDF24 at #{h @cfg['pdf24_mail']} shortly. It will tell you if the fax has been transmitted successfully.
-    <br><br>
+    </div>
     #{basket_link}
 END
 # FIXME: set address from fax.yml data
