@@ -14,8 +14,14 @@ module BasketSubmitHelper
   end
 
   def log
-    l = @log.get.map { |x| h(x.join[0..200].strip) }
-    append_raw(%(<!--\n#{l.join("\n")}\n-->\n))
+    l = @log.get.map { |x| x.join[0..200].strip }
+
+    html_safe = l.map { |x| h(x) }.join("\n")
+    append_raw(%(<!--\n#{html_safe}\n-->\n))
+
+    Rails.logger.info '==='*15 << '  FAX LOGGING FOLLOWS ' << '==='*15
+    l.each { |x| Rails.logger.info "FAX: #{x}"}
+    Rails.logger.info '---'*15 << '   FAX LOGGING ENDED  ' << '---'*15
   end
 
   def success
