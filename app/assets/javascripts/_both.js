@@ -11,7 +11,7 @@ function hipsterGetCookie(name) {
   name = '_hipsterpizza_' + name + '=';
   var cookies = document.cookie.split(/;\s*/);
   for(var i=0; i< cookies.length; i++) {
-    c = cookies[i];
+    var c = cookies[i];
     if(c.indexOf(name) === 0) {
       var x = c.substring(name.length, c.length);
       return decodeURIComponent(x.split('+').join(' '));
