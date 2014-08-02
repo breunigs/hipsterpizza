@@ -1,3 +1,5 @@
+pdf.font_size 11
+
 if @cfg['logo']
   pdf.image @cfg['logo'], position: :right, width: 200, at: [pdf.bounds.right-200, pdf.bounds.top]
 end
@@ -16,7 +18,7 @@ end
 
 
 pdf.move_down 15
-pdf.text "Summe: #{euro_de(@basket.sum)}", size: 18, style: :bold
+pdf.text "Summe: #{euro_de(@basket.sum)}", size: 16, style: :bold
 
 
 if @cfg['lat'] && @cfg['lon']
@@ -32,7 +34,7 @@ if @cfg['lat'] && @cfg['lon']
   right = pdf.bounds.right
   pdf.print_qr_code(gmaps, extent: size, stroke: false, pos: [right-size+10, vpos])
   pdf.print_qr_code(osm, extent: size, stroke: false, pos: [right-2*size-39, vpos])
-  pdf.text "Open Street Map#{' '*20}Google Maps#{Prawn::Text::NBSP*3}", align: :right
+  pdf.text "Open Street Map#{' '*24}Google Maps#{Prawn::Text::NBSP*4}", align: :right
 end
 
 pdf.move_down 5
