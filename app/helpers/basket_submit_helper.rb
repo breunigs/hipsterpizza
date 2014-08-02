@@ -25,8 +25,11 @@ module BasketSubmitHelper
   end
 
   def fail(msg)
-    n('✗ – ' + msg + '. See this page’s source code for detailed logs.')
+    n('✗')
+    append_raw('<div class="alert alert-danger">')
+    n(msg + '. See this page’s source code for detailed logs.')
     log
+    append_raw('</div>')
     append_raw basket_link
     exit
   end
