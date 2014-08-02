@@ -7,12 +7,13 @@ m.log = Logger.new(@log)
 
 append_raw(@header)
 append_raw <<END
+<div class="container">
   <div id="hipsterTopBar">
     <h1>Transmitting Fax</h1>
   </div>
   <p>
 END
-@footer = '</p>' + @footer
+@footer = '</p></div>' + @footer
 
 
 a('Loading landing page ') #############################################
