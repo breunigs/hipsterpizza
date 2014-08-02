@@ -14,6 +14,8 @@ en:
   other: 'Other'
   please_wait: '…please wait…'
 
+  toggle_failed: 'Could not carry out your actions for unknown reasons. Ask a developer.'
+
 de:
   name: HipsterPizza
 
@@ -28,3 +30,5 @@ de:
   toggle_nav: 'Navigation auf/zuklappen'
   other: 'Sonstige'
   please_wait: '…bitte warten…'
+
+  toggle_failed: 'Konnte die gewünschte Aktion nicht durchführen. Frage einen Entwickler.'
