@@ -148,11 +148,28 @@ var hipster = window.hipster = (function() {
     return nick;
   }
 
+  function elementHasText(el, text) {
+    var el = $(el);
+    return el.text() === text || el.attr('title') === text;
+  }
+
   function findLinkWithText(text) {
-    return $('#framek a').filter(function() {
-      var el = $(this);
-      return el.text() === text;
+    // a row *may* link to the same item more than once. Don’t count these as
+    // ambiguous items.
+    var matches = $([]);
+    $('#framek tr').each(function() {
+      var candidates = $(this).find('a').filter(function() {
+        return elementHasText(this, text);
+      });
+
+      if(candidates.length === 0) {
+        return;
+      }
+
+      matches.push(candidates.first());
     });
+
+    return matches;
   }
 
   function getPriceOfLastItem() {
