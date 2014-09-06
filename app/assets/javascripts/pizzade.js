@@ -2,9 +2,13 @@
 //= require _both
 //= require bootstrap/dropdown
 //= require bootstrap/collapse
+//= require _static_tools
+
 
 var hipster = window.hipster = (function() {
   'use strict';
+
+  var my = HIPSTER;
 
   // CACHES ////////////////////////////////////////////////////////////
   var _isShop = null;
@@ -12,53 +16,9 @@ var hipster = window.hipster = (function() {
   var _runAfterLoad = [];
 
   // PRIVATE ///////////////////////////////////////////////////////////
-  function log(text) {
-    if(window.console && window.console.log) {
-      window.console.log(text);
-    }
-  }
-
-  function err(text) {
-    if(window.console && window.console.error) {
-      window.console.error(text);
-    } else {
-      window.alert(text);
-    }
-  }
-
-  function getCurrentMode() {
-    return hipsterGetCookie('mode');
-  }
 
   function getPostalCode() {
-    var input = $('#plzsearch_input');
-
-    function isInputEmpty() {
-      return $.trim(input.val()) === '';
-    }
-
-    function checkPostalCode(data) {
-      log('Reverse Geocoding Result:');
-      log(data);
-      if(isInputEmpty()) {
-        input.val(data.address.postcode);
-        input.focus();
-      }
-    }
-
-    function queryNominatim(pos) {
-      var url = 'http://nominatim.openstreetmap.org/reverse?format=json&zoom=18';
-      var c = pos.coords;
-      var coords = '&lat='+c.latitude+'&lon='+c.longitude;
-      log('Querying Nominatim at ' + coords);
-      $.getJSON(url + coords, checkPostalCode);
-    }
-
-
-
-    if(navigator.geolocation && input.length > 0 && isInputEmpty()) {
-      navigator.geolocation.getCurrentPosition(queryNominatim);
-    }
+    my.guessPostcode('#plzsearch_input');
   }
 
   function isShopPage() {
@@ -95,19 +55,15 @@ var hipster = window.hipster = (function() {
     return new jsSHA(addr, 'TEXT').getHash('SHA-512', 'HEX');
   }
 
-  function textPriceToFloat(text) {
-    return parseFloat(text.replace(/\s/g, '').replace(',', '.'));
-  }
-
   function getCartItemsJson() {
     var data = [];
     $('.cartitems').each(function(ind, elm) {
       var prod = $(elm).find('.cartitems-title div').text();
       var price = $(elm).find('.cartitems-itemsum .cartitems-sprice div').text();
-      price = textPriceToFloat(price);
+      price = my.textPriceToFloat(price);
 
       if($.trim(prod) === '' || isNaN(price)) {
-        err('Couldn’t detect product properly, maybe the script is broken?');
+        my.err('Couldn’t detect product properly, maybe the script is broken?');
         return;
       }
 
@@ -123,7 +79,7 @@ var hipster = window.hipster = (function() {
       data[ind] = { 'price': price, 'prod': prod, 'extra': extra.sort() };
     });
 
-    var deposit = textPriceToFloat($('.deposit div').text());
+    var deposit = my.textPriceToFloat($('.deposit div').text());
     if(!isNaN(deposit) && deposit > 0) {
       data[data.length] = { price: deposit, 'prod': 'Pfand', extra: [] };
     }
@@ -174,7 +130,7 @@ var hipster = window.hipster = (function() {
 
   function getPriceOfLastItem() {
     var p = $('.cartitems:last .cartitems-itemsum .cartitems-sprice div');
-    return textPriceToFloat(p.text());
+    return my.textPriceToFloat(p.text());
   }
 
   function getActiveSubPageText() {
@@ -183,7 +139,7 @@ var hipster = window.hipster = (function() {
 
   function replay(items, finishCallback) {
     // setup
-    log('replay: setup started');
+    my.log('replay: setup started');
     $.fx.off = true;
     $('body').addClass('wait');
     var navLinks = $.makeArray($('.navbars a'));
@@ -213,7 +169,7 @@ var hipster = window.hipster = (function() {
       // the currently active page has already been parsed when the main
       // category page was loaded/clicked
       subNavLinks = $.makeArray($('#navigation-2-v8 a:not(.firstactiv)'));
-      log('replay: “' + getActiveSubPageText() + '”: found ' + subNavLinks.length + ' subcategories');
+      my.log('replay: “' + getActiveSubPageText() + '”: found ' + subNavLinks.length + ' subcategories');
       preloadSubPages(subNavLinks);
     }
 
@@ -221,7 +177,7 @@ var hipster = window.hipster = (function() {
     function loadNextSubPage() {
       isTopLevelLink = subNavLinks.length === 0;
       currentNav = $((isTopLevelLink ? navLinks : subNavLinks).shift());
-      log('replay: loading next page ' + currentNav.text());
+      my.log('replay: loading next page ' + currentNav.text());
       // load sub nav links first
       // if an element has the “activ” class, the pizza.de JS code avoids
       // loading it. Therefore remove it to ensure the content_ready event
@@ -252,7 +208,7 @@ var hipster = window.hipster = (function() {
       extras = $.grep(extras, function(extra) {
         var found = completeItem.indexOf(extra) >= 0;
         if(found) {
-          log('removing subitem ' + extra + ' because it appears it was auto-added.');
+          my.log('removing subitem ' + extra + ' because it appears it was auto-added.');
           return false;
         }
         return true;
@@ -269,7 +225,7 @@ var hipster = window.hipster = (function() {
     // searches current sub page and adds found items to basket. The
     // items get removed from the "to go" list
     function addItemsToBasket() {
-      log('replay: searching page “' + getActiveSubPageText() + '” for items');
+      my.log('replay: searching page “' + getActiveSubPageText() + '” for items');
 
       items = $.grep(items, function (item, ind) {
         // Deposit is added automatically when selecting the correct products
@@ -288,7 +244,7 @@ var hipster = window.hipster = (function() {
           return true;
         }
 
-        log('replay: found item “' + item.prod + '”');
+        my.log('replay: found item “' + item.prod + '”');
 
         var errmsg = 'product='+item.prod+'  | ';
         // exactly one link found. Add it to cart or open extra
@@ -341,7 +297,7 @@ var hipster = window.hipster = (function() {
         return false;
       });
 
-      log('ITEM IN BASKET COUNT: ' + getCartItemsCount());
+      my.log('ITEM IN BASKET COUNT: ' + getCartItemsCount());
     }
 
 
@@ -393,14 +349,14 @@ var hipster = window.hipster = (function() {
 
     function checkFinalSum() {
       var should = parseFloat(window.hipsterReplayFinalSum);
-      var have = textPriceToFloat($('.total').text());
+      var have = my.textPriceToFloat($('.total').text());
       if(should !== have) {
         errorMsgs.push('Final sum does not match. Should be ' + should + '€, but have ' + have + '€. Check for missing products.');
       }
     }
 
     function tearDown() {
-      log('replay: tear down');
+      my.log('replay: tear down');
       missingItemsToErrors();
       checkFinalSum();
       $('#inhalt').unbind('content_ready', process);
@@ -418,7 +374,7 @@ var hipster = window.hipster = (function() {
       }
 
       if(typeof finishCallback === 'function') {
-        log('replay: running callback');
+        my.log('replay: running callback');
         finishCallback(errorMsgs);
       }
     }
@@ -513,22 +469,22 @@ var hipster = window.hipster = (function() {
     if(v === '') {
       v = null;
     }
-    log('storing: ' + elm.attr('name') + ' = ' + v);
+    my.log('storing: ' + elm.attr('name') + ' = ' + v);
     localStorage['hipsterpizza_' + elm.attr('name')] = v;
   }
 
   try {
     setupMutationObserver();
   } catch(error) {
-    log('Using legacy observer (DomSubtreeModified) because MutationObserver seems broken.');
+    my.log('Using legacy observer (DomSubtreeModified) because MutationObserver seems broken.');
     setupLegacyObserver();
   }
 
   // PUBLIC ////////////////////////////////////////////////////////////
   return {
     hideOrderFieldsAppropriately: function() {
-      if(getCurrentMode() === 'pizzade_basket_submit') {
-        log('Not hiding address fields because we want to submit the group basket');
+      if(my.getCurrentMode() === 'pizzade_basket_submit') {
+        my.log('Not hiding address fields because we want to submit the group basket');
         return;
       }
 
@@ -622,7 +578,7 @@ var hipster = window.hipster = (function() {
 
       switch(mode) {
         case 'check':
-          log('Replaying with error checking');
+          my.log('Replaying with error checking');
           replay(data, function(err) {
             if(err.length === 0) {
               return;
@@ -645,7 +601,7 @@ var hipster = window.hipster = (function() {
           break;
 
         default:
-          err('Invalid replay mode, no action taken');
+          my.err('Invalid replay mode, no action taken');
       }
     },
 
@@ -666,7 +622,7 @@ var hipster = window.hipster = (function() {
         return;
       }
 
-      var ca = getCurrentMode();
+      var ca = my.getCurrentMode();
       if(ca !== 'pizzade_order_new' && ca !== 'pizzade_order_edit') {
         return;
       }
