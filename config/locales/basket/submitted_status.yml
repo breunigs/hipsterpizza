@@ -30,7 +30,7 @@ de:
       estimate: 'Vorhersage'
            
       bar:
-        tooltip: 'The Bestellung wird voraussichtlich etwa um %{time} ankommen.&#010;&#010;Die farbigen Balken zeigen die vergangene Zeit an.&#010;grün: vergangene Zeit vor dem vermutlichen Lieferzeitpunkt&#010;gelb: vergangene Zeit nach dem vermutlichen Lieferzeitpunkt&#010;grau: verbleibende Zeit zum vermutlichen Lieferzeitpunkt'
+        tooltip: 'Die Bestellung wird voraussichtlich etwa um %{time} ankommen.&#010;&#010;Die farbigen Balken zeigen die vergangene Zeit an.&#010;grün: vergangene Zeit vor dem vermutlichen Lieferzeitpunkt&#010;gelb: vergangene Zeit nach dem vermutlichen Lieferzeitpunkt&#010;grau: verbleibende Zeit zum vermutlichen Lieferzeitpunkt'
         togo: '≈ noch %{minutes} Minuten'
         overdue: '≈ %{minutes} Minuten überfällig'
         done: 'NOM NOM NOM! (dauerte %{duration})'
