@@ -198,7 +198,7 @@ var hipster = window.hipster = (function() {
       $('.shop-dialog a:contains("in den Warenkorb"):first').click();
     }
 
-    function orderDetailsRemoveAutoAddedExtras(extras) {
+    function orderDetailsRemoveAutoAddedExtras(extras, errmsg) {
       if(extras.length === 0) {
         return;
       }
@@ -282,7 +282,7 @@ var hipster = window.hipster = (function() {
 
         } while(lookAgain);
 
-        item.extra = orderDetailsRemoveAutoAddedExtras(item.extra);
+        item.extra = orderDetailsRemoveAutoAddedExtras(item.extra, errmsg);
 
         orderDetailsClose();
 
