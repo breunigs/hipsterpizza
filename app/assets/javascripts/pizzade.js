@@ -185,12 +185,16 @@ var hipster = window.hipster = (function() {
       currentNav.removeClass('activ').click();
     }
 
+    function orderDetailsNextStepElements() {
+      return $('.shop-dialog a:contains("nächster Schritt"), .shop-dialog a:contains("Extras")');
+    }
+
     function orderDetailsHasMoreSteps() {
-      return $('.shop-dialog a:contains("nächster Schritt")').length > 0;
+      return orderDetailsNextStepElements().length > 0;
     }
 
     function orderDetailsGotoNextStep() {
-      $('.shop-dialog a:contains("nächster Schritt"):first').click();
+      orderDetailsNextStepElements().first().click();
     }
 
     // Closes order details (like extra ingredients or menu items) if present.
