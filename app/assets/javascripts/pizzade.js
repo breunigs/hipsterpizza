@@ -194,7 +194,8 @@ var hipster = window.hipster = (function() {
     }
 
     function orderDetailsGotoNextStep() {
-      orderDetailsNextStepElements().first().click();
+      var elem = orderDetailsNextStepElements().first();
+      elem.click().remove();
     }
 
     // Closes order details (like extra ingredients or menu items) if present.
@@ -281,6 +282,7 @@ var hipster = window.hipster = (function() {
 
           lookAgain = item.extra.length > 0 && orderDetailsHasMoreSteps();
           if(lookAgain) {
+            my.log('replay: missing extra, going to next step. Extras: ' + item.extra.join(', '));
             orderDetailsGotoNextStep();
           }
 
