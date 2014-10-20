@@ -187,11 +187,9 @@ var hipster = window.hipster = (function() {
       currentNav = $((isTopLevelLink ? navLinks : subNavLinks).shift());
       my.log('replay: loading next page ' + $.trim(currentNav.text()), currentNav);
 
-      // don’t try to reload currently selected subpages:
-      // 1. it increases replay times
-      // 2. pizza.de doesn’t fire the event we listen to (again)
       if(navLinkIsSelected(currentNav)) {
-        window.setTimeout(process, 5);
+        my.log('replay: skipping initially selected page, has been processed already.', currentNav);
+        window.setTimeout(loadNextSubPage, 5);
       } else {
         currentNav.click();
       }
@@ -416,6 +414,7 @@ var hipster = window.hipster = (function() {
     $('#inhalt').bind('content_ready', process);
 
     // start processing
+    currentNav = 'currentlyLoadedPage';
     process();
   }
 
@@ -704,10 +703,10 @@ hipster.autoFillPostalCode();
 hipster.runAfterLoad(function() {
   'use strict';
 
+  hipster.bindSubmitButton();
   hipster.replayData();
   hipster.detectAndSetShop();
   hipster.hideOrderFieldsAppropriately();
-  hipster.bindSubmitButton();
   hipster.restoreAddressFields();
   hipster.attachAddressFieldListener();
   hipster.attachShaAddress();
