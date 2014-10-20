@@ -14,6 +14,11 @@ body.hideOrderFields {
   #permkv8, .cart-minorderhint, #button-2012 {
     display: none !important;
   }
+
+  // special Joey’s Pizza fields for preferred payment method
+  div.opt_payment_method {
+    display: none;
+  }
 }
 
 body.wait {

@@ -104,6 +104,11 @@ var hipster = window.hipster = (function() {
     return nick;
   }
 
+  function navLinkIsSelected(navLink) {
+    // first is normal pizza.de clients, 2nd variant is Joey’s Pizza
+    return navLink.hasClass('activ') || navLink.find('span').hasClass('ausgewaehlt');
+  }
+
   function elementHasText(el, text) {
     var el = $(el);
     return el.text() === text || el.attr('title') === text;
@@ -134,7 +139,7 @@ var hipster = window.hipster = (function() {
   }
 
   function getActiveSubPageText() {
-    return $('.navbars a.activ').text();
+    return $('.navbars a.activ, .navbars span.ausgewaehlt').text();
   }
 
   function replay(items, finishCallback) {
@@ -143,10 +148,12 @@ var hipster = window.hipster = (function() {
     $.fx.off = true;
     $('body').addClass('wait');
     var navLinks = $.makeArray($('.navbars a'));
+
     var subNavLinks = [];
     var isTopLevelLink = true;
     var currentNav = null;
     var errorMsgs = [];
+    var loadingWatchdog = null;
 
     function preloadSubPages(arr) {
       if(isMobileBrowser) {
@@ -175,14 +182,31 @@ var hipster = window.hipster = (function() {
 
     // loads the next sub page in the nav links array.
     function loadNextSubPage() {
+      // load sub nav links first
       isTopLevelLink = subNavLinks.length === 0;
       currentNav = $((isTopLevelLink ? navLinks : subNavLinks).shift());
-      my.log('replay: loading next page ' + currentNav.text());
-      // load sub nav links first
-      // if an element has the “activ” class, the pizza.de JS code avoids
-      // loading it. Therefore remove it to ensure the content_ready event
-      // fires.
-      currentNav.removeClass('activ').click();
+      my.log('replay: loading next page ' + $.trim(currentNav.text()), currentNav);
+
+      // don’t try to reload currently selected subpages:
+      // 1. it increases replay times
+      // 2. pizza.de doesn’t fire the event we listen to (again)
+      if(navLinkIsSelected(currentNav)) {
+        window.setTimeout(process, 5);
+      } else {
+        currentNav.click();
+      }
+    }
+
+    function activateLoadingWatchdog() {
+      var limit = 30;
+      loadingWatchdog = window.setTimeout(function() {
+        my.log(limit + 's have passed and it seems the page hasn’t loaded. Will pretend it has and continue normally.');
+        process();
+      }, limit*1000);
+    }
+
+    function deactivateLoadingWatchdog() {
+      window.clearTimeout(loadingWatchdog);
     }
 
     function orderDetailsNextStepElements() {
@@ -324,7 +348,9 @@ var hipster = window.hipster = (function() {
 
       if(currentNav === null) {
         loadNextSubPage();
+        activateLoadingWatchdog();
       } else {
+        deactivateLoadingWatchdog();
         // reset sub page
         currentNav = null;
         addItemsToBasket();
@@ -366,6 +392,7 @@ var hipster = window.hipster = (function() {
       missingItemsToErrors();
       checkFinalSum();
       $('#inhalt').unbind('content_ready', process);
+      deactivateLoadingWatchdog();
 
       // avoid content changes on insta mode because the form is submitted
       // immediately anyway.

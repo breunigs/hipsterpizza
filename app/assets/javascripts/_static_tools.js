@@ -4,9 +4,10 @@ var HIPSTER = (function (my) {
   // PRIVATE ///////////////////////////////////////////////////////////////////
   // PUBLIC ////////////////////////////////////////////////////////////////////
 
-  my.log = function(text) {
+  my.log = function() {
     if(window.console && window.console.log) {
-      window.console.log(text);
+      // window.console.log(arguments);
+      window.console.log.apply(window.console, arguments);
     }
   };
 
