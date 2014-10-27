@@ -35,6 +35,8 @@ class Forwarder
     [res.code, Rack::Utils::HeaderHash.new(res_hash), [res.body]]
   end
 
+  attr_reader :host
+
   private
 
   def guess_charset(res_hash)

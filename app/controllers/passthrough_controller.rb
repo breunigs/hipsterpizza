@@ -126,9 +126,17 @@ class PassthroughController < ApplicationController
   end
 
   def fix_urls!(ret)
-    ret[2].first.gsub!("http://pizza.de", "")
-    ret[2].first.gsub!("https://pizza.de", "")
+    host = @@forwarder.host
+
+    ret[2].first.gsub!("http://#{host}", "")
+    ret[2].first.gsub!("https://#{host}", "")
     ret[2].first.gsub!("window.location.hostname", "window.location.host")
+
+    # let JS believe the page was simply reloaded. Also replace our host with
+    # the expected one.
+    js_current_url_with_fixed_host = "(window.location.protocol + '//' + '#{host}' + window.location.pathname + window.location.search)"
+    ret[2].first.gsub!("document.referrer", js_current_url_with_fixed_host)
+
   end
 
   def get_view(where)
