@@ -570,6 +570,30 @@ var hipster = window.hipster = (function() {
       }
     },
 
+    // Disables annoying popups for common users like “shop closed, preorder?”.
+    // This also disables the PLZ/delivery area selector popup. The popup is
+    // required to properly set up pizza.de for submission. If the
+    // shop_url_params were set properly, the “popup” only contains a JavaScript
+    // snippet which sets the required values automatically. See issue #23
+    // starting from this comment:
+    // https://github.com/breunigs/hipsterpizza/issues/23#issuecomment-60237891
+    disableAnnoyingPopups: function() {
+      if(!window.cart) {
+        return;
+      }
+
+      if(my.getCurrentMode() === 'pizzade_basket_submit') {
+        my.log('Not hiding annoying popups because we want to submit the group basket');
+        return;
+      }
+
+      // URLs without &knddomain=1 switch
+      window.cart.check4DeliveryArea = function() {};
+      // URLs with that switch
+      window.cart.config.behavior.checkDeliveryAreaOnCustDomains = 0;
+    },
+
+
     bindSubmitButton: function() {
       var form = getSubmitButton().parents('form');
       form.submit(function() {
@@ -688,7 +712,7 @@ var hipster = window.hipster = (function() {
   };
 })();
 
-
+hipster.disableAnnoyingPopups();
 hipster.autoFillPostalCode();
 
 
