@@ -3,6 +3,7 @@
 //= require bootstrap/dropdown
 //= require bootstrap/collapse
 //= require _static_tools
+//= require _guess_postcode
 
 
 var hipster = window.hipster = (function() {
