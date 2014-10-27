@@ -38,6 +38,18 @@ class Basket < ActiveRecord::Base
     create_uid
   end
 
+  # returns the complete URL, i.e. canonical URL plus any additional query
+  # parameters present when originally creating the basket. Adds arguments as
+  # extra params.
+  def full_url(*extra_params)
+    query = shop_url_params_hash.merge(extra_params.first).to_param
+    shop_url + '?' + query
+  end
+
+  def shop_url_params_hash
+    return {} if shop_url_params.blank?
+    Rack::Utils.parse_nested_query(shop_url_params[1..-1])
+  end
 
   def self.find_editable(exclude = nil)
     self.editable.where.not(id: exclude).order(created_at: :desc).first

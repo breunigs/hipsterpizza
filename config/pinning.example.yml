@@ -8,7 +8,8 @@ shop_url: '/indian-curry-berlin-bruesseler-str-17'
 
 # this pins the delivery area. If not given (or empty) pizza.de will
 # open a popup each time asking for it. This is used to determine values
-# like minimal required amount, delivery costs, etc.
+# like minimal required amount, delivery costs, etc. Must start with a
+# question mark.
 shop_url_params: '?lgs=102261&ed=506912'
 
 # If you only pin the shop URL the name and fax number will be deter-

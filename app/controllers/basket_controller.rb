@@ -8,7 +8,7 @@ class BasketController < ApplicationController
 
   before_action :require_basket, except: [:new, :create, :find]
 
-  PIZZADE_URL_MODIFIERS = '?knddomain=1&noflash=1'
+  PIZZADE_URL_MODIFIERS = { knddomain: 1, noflash: 1 }
 
   def new
     # if there’s an editable basket and we are in single basket mode,
@@ -27,7 +27,12 @@ class BasketController < ApplicationController
     cookie_set(:mode, :pizzade_basket_new)
 
     url = PINNING['shop_url'] || pizzade_root_path
-    redirect_to url + PIZZADE_URL_MODIFIERS
+
+    without_question_mark = PINNING['shop_url_params'].to_s.sub(/\A\?/, '')
+    query = Rack::Utils.parse_nested_query(without_question_mark)
+    query = params.merge(PIZZADE_URL_MODIFIERS)
+
+    redirect_to url + query.to_param
   end
 
   def create
