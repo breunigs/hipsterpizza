@@ -102,10 +102,15 @@ class Forwarder
 
   def headers(env)
     h = Rack::Utils::HeaderHash.new
+
     env.each do |key, value|
-      next if key == 'HTTP_REFERER'
       h[$1] = value if key =~ /HTTP_(.*)/
     end
+
+    # fake headers depending on host
+    escaped_host = Regexp.escape h['HOST']
+    h['HOST'] = @host
+    h['REFERER'].sub!(%r{\A(https?://)#{escaped_host}}, "\\1#{@host}") if h['REFERER']
 
     # do net send hipsterpizza cookies to pizza.de
     if h["COOKIE"]
