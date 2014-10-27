@@ -524,17 +524,6 @@ var hipster = window.hipster = (function() {
       $('body').addClass('hideOrderFields');
     },
 
-    disableAreaCodePopup: function() {
-      if(!window.cart) {
-        return;
-      }
-
-      // URLs without &knddomain=1 switch
-      window.cart.check4DeliveryArea = function() {};
-      // URLs with that switch
-      window.cart.config.behavior.checkDeliveryAreaOnCustDomains = 0;
-    },
-
     runAfterLoad: function(func) {
       if(!isLoading()) {
         func();
@@ -571,6 +560,9 @@ var hipster = window.hipster = (function() {
 
       hidden = $('#hipsterShopFaxNumber');
       hidden.val(hipster.getShopFaxNumber());
+
+      hiden = $('#hipsterShopUrlParams');
+      hidden.val(window.location.search);
 
       button.show();
       if(window.hipsterSubmitAfterShopDetect) {
@@ -697,7 +689,6 @@ var hipster = window.hipster = (function() {
 })();
 
 
-hipster.disableAreaCodePopup();
 hipster.autoFillPostalCode();
 
 

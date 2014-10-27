@@ -6,6 +6,11 @@
 # this URL in a `rails console` via `puts Basket.last.shop_url`.
 shop_url: '/indian-curry-berlin-bruesseler-str-17'
 
+# this pins the delivery area. If not given (or empty) pizza.de will
+# open a popup each time asking for it. This is used to determine values
+# like minimal required amount, delivery costs, etc.
+shop_url_params: '?lgs=102261&ed=506912'
+
 # If you only pin the shop URL the name and fax number will be deter-
 # mined when visiting the shop page. This means that whoever creates a
 # new basket, needs to visit the shop page. Everything is handled auto-
