@@ -561,7 +561,7 @@ var hipster = window.hipster = (function() {
       hidden = $('#hipsterShopFaxNumber');
       hidden.val(hipster.getShopFaxNumber());
 
-      hiden = $('#hipsterShopUrlParams');
+      hidden = $('#hipsterShopUrlParams');
       hidden.val(window.location.search);
 
       button.show();
