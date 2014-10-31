@@ -32,7 +32,7 @@ class BasketController < ApplicationController
     query = Rack::Utils.parse_nested_query(without_question_mark)
     query = params.merge(PIZZADE_URL_MODIFIERS)
 
-    redirect_to url + query.to_param
+    redirect_to "#{url}?#{query.to_param}"
   end
 
   def create
