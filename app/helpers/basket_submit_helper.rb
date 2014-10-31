@@ -31,9 +31,10 @@ module BasketSubmitHelper
   end
 
   def fail(msg)
+    msg_utf8 = msg.encode('UTF-8', invalid: :replace, undef: :replace)
     n('✗')
     append_raw('<div class="alert alert-danger">')
-    n(msg + '. See this page’s source code for detailed logs.')
+    n(msg_utf8 + '. See this page’s source code for detailed logs.')
     log
     append_raw('</div>')
     append_raw basket_link
