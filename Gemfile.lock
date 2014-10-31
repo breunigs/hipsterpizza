@@ -314,6 +314,7 @@ DEPENDENCIES
   prawn (= 1.0.0)
   prawn-qrcode
   prawn-rails!
+  pry
   puffing-billy (= 0.2.3)
   puma
   quiet_assets
