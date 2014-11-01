@@ -25,7 +25,7 @@ su www-data
 Next, install the required dependencies and run HipsterPizza:
 ```bash
 gem install rake bundler
-bundle install
+bundle --deployment --without development test
 rake hipster:setup_production
 ```
 
