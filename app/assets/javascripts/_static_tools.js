@@ -31,5 +31,11 @@ var HIPSTER = (function (my) {
       return $.trim(input.val()) === '';
   };
 
+  my.isBlank = function(input) {
+    if(typeof input === 'undefined' || input === null || input === '') return true;
+    if(typeof input === 'string' && input.match(/^\s+$/)) return true;
+    return false;
+  };
+
   return my;
 }(HIPSTER || {}));

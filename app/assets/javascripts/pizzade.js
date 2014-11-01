@@ -49,7 +49,7 @@ var hipster = window.hipster = (function() {
     addr += localStorage[prefix + 'street_no'];
     addr = $.trim(addr).toLowerCase().replace(/[^a-z0-9]/g, '');
 
-    if(addr === '') {
+    if(my.isBlank(addr)) {
       return null;
     }
 
@@ -63,7 +63,7 @@ var hipster = window.hipster = (function() {
       var price = $(elm).find('.cartitems-itemsum .cartitems-sprice div').text();
       price = my.textPriceToFloat(price);
 
-      if($.trim(prod) === '' || isNaN(price)) {
+      if(my.isBlank(prod) || isNaN(price)) {
         my.err('Couldn’t detect product properly, maybe the script is broken?');
         return;
       }
@@ -95,12 +95,12 @@ var hipster = window.hipster = (function() {
   function getUserNick() {
     var nick = hipsterGetCookie('nick');
     do {
-      nick = window.prompt('Your Nick:', nick === null ? '' : nick);
+      nick = window.prompt('Your Nick:', my.isBlank(nick) ? '' : nick);
       // user clicked cancel
       if(nick === null) {
         return null;
       }
-    } while(nick === '');
+    } while(my.isBlank(nick));
     hipsterSetCookie('nick', nick);
     return nick;
   }
@@ -484,7 +484,7 @@ var hipster = window.hipster = (function() {
   function restoreLocalStorage(elm) {
     elm = $(elm);
     var v = localStorage['hipsterpizza_' + elm.attr('name')];
-    if(typeof v === 'undefined' || v === null || v === '') {
+    if(my.isBlank(v)) {
       return;
     }
 
@@ -643,7 +643,7 @@ var hipster = window.hipster = (function() {
         case 'insta':
           // if a nickname is already set, simply re-use it without asking.
           var curNick = hipsterGetCookie('nick');
-          if(curNick !== '' && curNick !== null) {
+          if(!my.isBlank(curNick)) {
             getUserNick = function() { return curNick; };
           }
           replay(data, function() { getSubmitButton().click(); });
