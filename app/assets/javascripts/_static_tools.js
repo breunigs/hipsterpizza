@@ -20,7 +20,7 @@ var HIPSTER = (function (my) {
   };
 
   my.getCurrentMode = function() {
-    return hipsterGetCookie('mode');
+    return my.getCookie('mode');
   };
 
   my.textPriceToFloat = function(text) {

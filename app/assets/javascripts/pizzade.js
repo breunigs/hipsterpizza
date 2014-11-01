@@ -4,7 +4,7 @@
 //= require bootstrap/collapse
 //= require _static_tools
 //= require _guess_postcode
-
+//= require _cookie
 
 var hipster = window.hipster = (function() {
   'use strict';
@@ -93,7 +93,7 @@ var hipster = window.hipster = (function() {
   }
 
   function getUserNick() {
-    var nick = hipsterGetCookie('nick');
+    var nick = my.getCookie('nick');
     do {
       nick = window.prompt('Your Nick:', my.isBlank(nick) ? '' : nick);
       // user clicked cancel
@@ -101,7 +101,7 @@ var hipster = window.hipster = (function() {
         return null;
       }
     } while(my.isBlank(nick));
-    hipsterSetCookie('nick', nick);
+    my.setCookie('nick', nick);
     return nick;
   }
 
@@ -605,7 +605,7 @@ var hipster = window.hipster = (function() {
         $('#hipsterOrderJson').val(JSON.stringify(items));
 
         // do not ask for user’s nick if editing an order
-        if(hipsterGetCookie('mode') === 'pizzade_order_edit') {
+        if(my.getCookie('mode') === 'pizzade_order_edit') {
           return true;
         }
 
@@ -642,7 +642,7 @@ var hipster = window.hipster = (function() {
 
         case 'insta':
           // if a nickname is already set, simply re-use it without asking.
-          var curNick = hipsterGetCookie('nick');
+          var curNick = my.getCookie('nick');
           if(!my.isBlank(curNick)) {
             getUserNick = function() { return curNick; };
           }
