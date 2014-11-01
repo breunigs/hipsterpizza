@@ -1,7 +1,11 @@
 h2 = t("basket.no_order.title.with#{@nick.blank? ? 'out' : ''}_nick", nick: @nick)
 
 - if @basket.editable?
-  p basket.no_order.text
+  p
+    ' basket.no_order.text
+    ' basket.no_order.selected_shop
+    abbr title=@basket.shop_name =@basket.shop_name_short
+
 
 div.button-overflow
   - if @basket.editable?

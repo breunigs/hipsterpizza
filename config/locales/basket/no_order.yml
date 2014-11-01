@@ -7,6 +7,8 @@ en:
 
       text: 'It appears you haven’t made an order yet. However, you still can!'
 
+      selected_shop: 'Selected delivery service:'
+
 de:
   basket:
     no_order:
@@ -15,3 +17,5 @@ de:
         with_nick: 'Bisher keine Bestellung, %{nick}'
 
       text: 'Sieht so aus, als hättest Du bisher keine Bestellung gemacht. Kannste aber noch!'
+
+      selected_shop: 'Ausgewählter Lieferdienst:'

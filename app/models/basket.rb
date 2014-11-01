@@ -134,6 +134,10 @@ class Basket < ActiveRecord::Base
     submitted? && !arrived?
   end
 
+  def shop_name_short
+    shop_name.split(',', 2).first
+  end
+
   private
 
   def create_uid
