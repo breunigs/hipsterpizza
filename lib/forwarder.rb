@@ -14,20 +14,19 @@ class Forwarder
   def call(env)
     req = request(env)
 
-    if Rails && Rails.logger
-      Rails.logger.info "remote loading #{req.path}"
-    end
+    debug "remote loading #{req.path}"
 
     begin
       res = http.request(req)
+    rescue SocketError => e
+      err = "Received socket error when trying to connect to remote host. Do you have internet?\nerror: #{e.inspect}"
+      debug err
+      return [504, {}, [err]]
     rescue Net::HTTPBadResponse => e
-      puts "="*30
-      pp req.path
-      pp e
-      pp caller
-      puts "="*30
+      err = "Received weird response:\npath: #{req.path}\nerror: #{e.inspect}\ncaller: #{caller.inspect}"
+      debug err
+      return [502, {}, [err]]
     end
-
 
     res_hash = res.to_hash
     fix_encoding!(res, res_hash)
@@ -38,6 +37,14 @@ class Forwarder
   attr_reader :host
 
   private
+
+  def debug(text)
+    if Rails && Rails.logger
+      Rails.logger.debug(text)
+    else
+      puts text
+    end
+  end
 
   def guess_charset(res_hash)
     res_hash["content-type"].join(" ").match(/charset=([^\s]+)/)[1].downcase rescue nil
