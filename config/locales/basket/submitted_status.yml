@@ -4,7 +4,7 @@ en:
       heading: Delivery Status
       heading_arrived: 'Delivery Status: ARRIVED!'
  
-      no_estimate: 'Unable to estimate delivery time. There are no previous orders known for this ship to your current location.'
+      no_estimate: 'Unable to estimate delivery time. There are no previous orders known for this shop to your current location.'
  
       submitted: 'Submitted'     
       arrived: 'Arrived'
