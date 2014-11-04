@@ -11,8 +11,8 @@ module PassthroughHelper
       else nil
     end
 
-    json = obj ? obj.json : nil
-    sum = obj.respond_to?(:sum) ? obj.sum : 0.0
+    json = obj.try(:json)
+    sum = obj.try(:sum) || 0.0
 
     return c[1], json, sum
   end
