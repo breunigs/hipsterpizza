@@ -8,9 +8,9 @@ source ~/.rvm/scripts/rvm
 rvm use 2.1.2
 bundle install --without development --deployment --jobs 4
 
-rm -rf vendor/bundle/**/gems/nokogiri-*/ext/nokogiri/tmp
-rm -rf vendor/bundle/**/gems/nokogiri-*/ports/*/libxml2/*/share/*doc
-rm -rf vendor/bundle/**/gems/capybara-webkit-*/src/webkit_server.gch/c++
+rm -rf vendor/bundle/**/cache/*.gem
+rm -rf vendor/bundle/**/nokogiri-*
+rm -rf vendor/bundle/**/capybara-webkit-*
 tar cf pack_bundler.tar vendor/bundle
 
 # reset to dev mode
