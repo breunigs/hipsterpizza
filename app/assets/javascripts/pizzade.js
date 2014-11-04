@@ -154,7 +154,7 @@ var hipster = window.hipster = (function() {
     var isTopLevelLink = true;
     var currentNav = null;
     var errorMsgs = [];
-    var loadingWatchdog = null;
+    var loadingWatchdog = new my.Watchdog(30, process);
 
     function preloadSubPages(arr) {
       if(isMobileBrowser) {
@@ -194,18 +194,6 @@ var hipster = window.hipster = (function() {
       } else {
         currentNav.click();
       }
-    }
-
-    function activateLoadingWatchdog() {
-      var limit = 30;
-      loadingWatchdog = window.setTimeout(function() {
-        my.log(limit + 's have passed and it seems the page hasn’t loaded. Will pretend it has and continue normally.');
-        process();
-      }, limit*1000);
-    }
-
-    function deactivateLoadingWatchdog() {
-      window.clearTimeout(loadingWatchdog);
     }
 
     function orderDetailsNextStepElements() {
@@ -347,9 +335,9 @@ var hipster = window.hipster = (function() {
 
       if(currentNav === null) {
         loadNextSubPage();
-        activateLoadingWatchdog();
+        loadingWatchdog.begin();
       } else {
-        deactivateLoadingWatchdog();
+        loadingWatchdog.end();
         // reset sub page
         currentNav = null;
         addItemsToBasket();
@@ -391,7 +379,7 @@ var hipster = window.hipster = (function() {
       missingItemsToErrors();
       checkFinalSum();
       $('#inhalt').unbind('content_ready', process);
-      deactivateLoadingWatchdog();
+      loadingWatchdog.end();
 
       // avoid content changes on insta mode because the form is submitted
       // immediately anyway.
