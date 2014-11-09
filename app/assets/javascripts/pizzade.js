@@ -5,6 +5,7 @@
 //= require _static_tools
 //= require _guess_postcode
 //= require _cookie
+//= require _watchdog
 
 var hipster = window.hipster = (function() {
   'use strict';
@@ -154,7 +155,7 @@ var hipster = window.hipster = (function() {
     var isTopLevelLink = true;
     var currentNav = null;
     var errorMsgs = [];
-    var loadingWatchdog = new my.Watchdog(30, process);
+    var loadingWatchdog = my.Watchdog(30, process);
 
     function preloadSubPages(arr) {
       if(isMobileBrowser) {
