@@ -3,8 +3,6 @@
 class PassthroughController < ApplicationController
   include CookieHelper
 
-  @@forwarder = Forwarder.new("pizza.de")
-
   skip_before_action :verify_authenticity_token
   skip_before_action :reset_flow_cookies
 
@@ -80,16 +78,19 @@ class PassthroughController < ApplicationController
 
     fix_host!(env['rack.input'].string) if request.post?
 
-    ret = @@forwarder.call(env)
-    inject!(ret)
-    fix_urls!(ret)
+    ret = forwarder.call(env)
+    body = ret[2].first
+    if body.encoding.to_s == 'UTF-8'
+      inject!(body)
+      fix_urls!(body)
+    end
 
     type = ret[1]["content-type"].first rescue 'text/plain'
 
     # send_data does not include the headers from the response object,
     # so include them manually. Required for e.g. CSP.
     headers.merge!(response.headers)
-    send_data ret[2].first, type: type, disposition: 'inline', status: ret[0]
+    send_data body, type: type, disposition: 'inline', status: ret[0]
   end
 
   def replace
@@ -108,34 +109,31 @@ class PassthroughController < ApplicationController
     true
   end
 
-  def inject!(ret)
+  def inject!(body)
     # heuristic: assume if the last part contains a dot, it’s not a
     # HTML resource. If it contains more than one slash, it’s a sub page
     # in which we don’t want to inject.
     return if env['PATH_INFO'].count("/") > 1
     return if env['PATH_INFO'].last(5).include?(".")
 
+    body.sub!("<head>", "<head>\n#{get_view(:head_top)}")
+    body.sub!(/<body([^>]*)>/, "<body\\1>\n#{get_view(:body_top)}")
 
-    b = ret[2].first
-
-    b.sub!("<head>", "<head>\n#{get_view(:head_top)}")
-    b.sub!(/<body([^>]*)>/, "<body\\1>\n#{get_view(:body_top)}")
-
-    b.sub!("</head>", "#{get_view(:head_bottom)}\n</head>")
-    b.sub!("</body>", "#{get_view(:body_bottom)}\n</body>")
+    body.sub!("</head>", "#{get_view(:head_bottom)}\n</head>")
+    body.sub!("</body>", "#{get_view(:body_bottom)}\n</body>")
   end
 
-  def fix_urls!(ret)
-    host = @@forwarder.host
+  def fix_urls!(body)
+    host = forwarder.host
 
-    ret[2].first.gsub!("http://#{host}/", '/')
-    ret[2].first.gsub!("https://#{host}/", '/')
-    ret[2].first.gsub!('window.location.hostname', 'window.location.host')
+    body.gsub!("http://#{host}/", '/')
+    body.gsub!("https://#{host}/", '/')
+    body.gsub!('window.location.hostname', 'window.location.host')
 
     # let JS believe the page was simply reloaded. Also replace our host with
     # the expected one.
     js_current_url_with_fixed_host = "(window.location.protocol + '//' + '#{host}' + window.location.pathname + window.location.search)"
-    ret[2].first.gsub!("document.referrer", js_current_url_with_fixed_host)
+    body.gsub!("document.referrer", js_current_url_with_fixed_host)
 
   end
 
@@ -159,5 +157,9 @@ class PassthroughController < ApplicationController
 
   def no_revalidate_for(max_age)
     headers['Cache-Control'] = "public, max-age=#{max_age}"
+  end
+
+  def forwarder
+    @forwarder = Forwarder.new("pizza.de")
   end
 end
