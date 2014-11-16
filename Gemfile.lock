@@ -301,12 +301,6 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails
   friendly_id
-  guard
-  guard-bundler
-  guard-livereload
-  guard-rails
-  guard-rspec
-  guard-shell
   http_accept_language
   jquery-rails
   mechanize

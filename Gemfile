@@ -27,12 +27,6 @@ gem 'prawn-rails', git: 'git://github.com/cortiz/prawn-rails.git'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'guard',              require: false
-  gem 'guard-bundler',      require: false
-  gem 'guard-rails',        require: false
-  gem 'guard-shell',        require: false
-  gem 'guard-rspec',        require: false
-  gem 'guard-livereload',   require: false
   gem 'rack-livereload'
   gem 'quiet_assets'
 end
