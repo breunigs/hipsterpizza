@@ -98,9 +98,9 @@ class Forwarder
     path = rackreq.fullpath.blank? ? "/" : rackreq.fullpath
 
     case m
-    when "GET", "HEAD", "DELETE", "OPTIONS", "TRACE"
+    when 'GET', 'HEAD', 'DELETE', 'OPTIONS', 'TRACE'
       req = Net::HTTP.const_get(m.capitalize).new(path, headers(env))
-    when "PUT", "POST"
+    when 'PUT', 'POST'
       req = Net::HTTP.const_get(m.capitalize).new(path, headers(env))
       req.body = rackreq.body.to_s
     else
