@@ -37,6 +37,8 @@ Hipsterpizza::Application.routes.draw do
       end
     end
 
+    get 'root/:service', to: 'passthrough#pass_root', as: 'root_service'
+
     get 'streaming_test', to: 'basket_submit#test'
   end
 
@@ -47,5 +49,4 @@ Hipsterpizza::Application.routes.draw do
   # forward all other requests
   match '*any', to: 'passthrough#pass', via: :all
 
-  get 'pizzade_root', to: 'passthrough#pass'
 end

@@ -18,6 +18,11 @@ class PassthroughController < ApplicationController
     end
   end
 
+  def pass_root
+    env['PATH_INFO'] = "/"
+    rewrite
+  end
+
   private
 
   # Reads the mode cookies and ensures it’s valid and all dependencies are, too.
@@ -53,8 +58,6 @@ class PassthroughController < ApplicationController
   end
 
   def rewrite
-    env['PATH_INFO'] = "/" if env['PATH_INFO'] == "/pizzade_root"
-
     return if replace
 
     fix_host!(env['rack.input'].string) if request.post?

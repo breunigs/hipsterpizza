@@ -12,9 +12,21 @@ class Forwarder
   end
 
   def call(env)
+    store.fetch(env) { remote_load(env) }
+  end
+
+  attr_reader :host
+
+  private
+
+  def debug(text)
+    Rails.logger.debug(text)
+  end
+
+  def remote_load(env)
     req = request(env)
 
-    debug "remote loading #{req.path}"
+    debug "remote loading: #{req.method} #{req.path}"
 
     begin
       res = http.request(req)
@@ -34,20 +46,8 @@ class Forwarder
     [res.code, Rack::Utils::HeaderHash.new(res_hash), [res.body]]
   end
 
-  attr_reader :host
-
-  private
-
-  def debug(text)
-    if Rails && Rails.logger
-      Rails.logger.debug(text)
-    else
-      puts text
-    end
-  end
-
   def guess_charset(res_hash)
-    res_hash["content-type"].join(" ").match(/charset=([^\s]+)/)[1].downcase rescue nil
+    res_hash["content-type"].join(" ").match(/charset=([^\s]+)/)[1].upcase rescue nil
   end
 
   def is_text?(res_hash)
@@ -58,25 +58,26 @@ class Forwarder
   def fix_encoding!(resource, res_hash)
     return unless is_text?(res_hash)
 
-    charset = guess_charset(res_hash)
-    if charset == 'utf-8'
-      resource.body.encode!('utf-8', 'utf-8')
-      return
-    end
-
-
     # if it’s a text resource without given encoding, it’s most likely
     # encoded in iso-8859-1. This may change if pizza.de updates their
     # code.
-    charset ||= 'iso-8859-1'
-    # convert to UTF-8 and update HTML headers as well as embedded meta-
-    # tags.
-    resource.body.encode!('utf-8', charset, invalid: :replace, undef: :replace, :replace => '♥')
-    res_hash['content-type'].each { |x| x.sub!(charset, 'utf-8') }
+    charset = guess_charset(res_hash) || 'ISO-8859-1'
+
+    body = resource.body.encode('UTF-8', charset, invalid: :replace, undef: :replace)
+    return unless body.valid_encoding?
+
+    resource.body = body
+    convert_headers_to_utf8(resource, res_hash, charset)
+  end
+
+  def convert_headers_to_utf8(resource, res_hash, from_charset)
+    return from_charset == 'UTF-8'
+
+    res_hash['content-type'].each { |x| x.sub!(from_charset, 'UTF-8') }
     # HTML meta tags
-    resource.body.sub!(/content="text\/html; charset=[^"]+"/, 'content="text/html; charset=utf-8"')
+    resource.body.sub!(/content="text\/html; charset=[^"]+"/, 'content="text/html; charset=UTF-8"')
     # XML
-    resource.body.sub!(/encoding="#{charset}"/i, 'encoding="utf-8"')
+    resource.body.sub!(/encoding="#{from_charset}"/i, 'encoding="UTF-8"')
   end
 
   def http
@@ -128,5 +129,9 @@ class Forwarder
 
     h['HOST'] = "#{@host}:#{@port}"
     h
+  end
+
+  def store
+    @store ||= Store.new(host)
   end
 end
