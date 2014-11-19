@@ -26,13 +26,15 @@ class BasketController < ApplicationController
 
     cookie_set(:mode, :pizzade_basket_new)
 
-    url = PINNING['shop_url'] || pizzade_root_path
+    if PINNING['shop_url']
+      without_question_mark = PINNING['shop_url_params'].to_s.sub(/\A\?/, '')
+      query = Rack::Utils.parse_nested_query(without_question_mark)
+      query = query.merge(PIZZADE_URL_MODIFIERS)
 
-    without_question_mark = PINNING['shop_url_params'].to_s.sub(/\A\?/, '')
-    query = Rack::Utils.parse_nested_query(without_question_mark)
-    query = params.merge(PIZZADE_URL_MODIFIERS)
-
-    redirect_to "#{url}?#{query.to_param}"
+      redirect_to "#{PINNING['shop_url']}?#{query.to_param}"
+    else
+      redirect_to root_service_path(:pizzade)
+    end
   end
 
   def create
