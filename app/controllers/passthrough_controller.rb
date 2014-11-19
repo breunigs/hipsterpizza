@@ -10,31 +10,12 @@ class PassthroughController < ApplicationController
 
   after_filter :add_missing_content_type
 
-  # cache some of the probably non-static elements. In the worst case
-  # an element is 3 hours out of date, i.e. when the client requests a
-  # page just before it expires in Rails and won’t re-validate it for
-  # another 90 minutes.
-  caches_action :pass, expires_in: 90.minutes, if: Proc.new {
-    if short_time_cachable?
-      no_revalidate_for(90.minutes)
-      true
-    else
-      false
-    end
-  }
-
   def pass
     if env['PATH_INFO'].include?('reporterror')
       render text: 'withheld error from pizza.de'
     else
       rewrite
     end
-  end
-
-  caches_action :pass_cached, expires_in: 24.hours
-  def pass_cached
-    no_revalidate_for(24.hours)
-    rewrite
   end
 
   private
