@@ -3,13 +3,13 @@ class Store
     @host = host
   end
 
-  def fetch(env, &block)
-    return block.call unless storable?(env)
+  def fetch(env)
+    return yield unless storable?(env)
 
     k = key(env)
     return backend.read(k) if backend.exist?(k)
 
-    r = block.call
+    r = yield
     if response_successful?(r)
       backend.write(k, r)
     else
@@ -30,11 +30,18 @@ class Store
   end
 
   def storable?(env)
-    env['REQUEST_METHOD'] == 'GET'
+    env['REQUEST_METHOD'] == 'GET' || Rails.env.test?
   end
 
   def key(env)
-    "#{@host}#{env['PATH_INFO']}"
+    key = "#{@host}#{env['PATH_INFO']}"
+    key << "/#{body_sha(env)}" if env['REQUEST_METHOD'] != 'GET'
+    key
+  end
+
+  def body_sha(env)
+    env['rack.input'].rewind
+    Digest::SHA256.hexdigest(env['rack.input'].read)
   end
 
   def location
