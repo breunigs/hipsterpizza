@@ -6,17 +6,18 @@ class Store
   def fetch(env)
     return yield unless storable?(env)
 
+    expires = { expires_in: guess_expiry(env) }
     k = key(env)
-    return backend.read(k) if backend.exist?(k)
+    return backend.read(k) if backend.exist?(k, expires)
 
     r = yield
     if response_successful?(r)
-      backend.write(k, r)
+      backend.write(k, r, expires)
     else
       Rails.logger.debug "Cannot store #{k} because response_code=#{response_code(r)}"
     end
 
-    response
+    r
   end
 
   private
@@ -42,6 +43,12 @@ class Store
   def body_sha(env)
     env['rack.input'].rewind
     Digest::SHA256.hexdigest(env['rack.input'].read)
+  end
+
+  def guess_expiry(env)
+    return 1.week if Rails.env.test?
+    return 1.day if env['PATH_INFO'].end_with?(*%w(.js .css .png .jpg))
+    1.hour
   end
 
   def location
