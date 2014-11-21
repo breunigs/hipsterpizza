@@ -37,6 +37,7 @@ class Order < ActiveRecord::Base
   def nick_id
     n = UnicodeUtils.canonical_decomposition(nick)
     n = n.gsub(/[^a-z0-9]/i, '').upcase[0..2]
+    n[0] ||= '~'
     n[1] ||= '~'
     n[2] ||= '~'
     n
