@@ -137,10 +137,12 @@ describe 'Basket', type: :feature do
     order_create
 
     open_admin_menu(I18n.t('nav.admin.render_pdf'))
-    expect(page.html).to start_with('%PDF-1')
-    # This is always true due to a bug in Rails. See
-    # https://github.com/rails/rails/pull/14000
+
     expect(page.status_code).to eql(200)
+    expect(page.response_headers).to include('Content-Type' => 'application/pdf')
+    # TODO: Poltergeist appears to download the PDF instead and does not
+    # update the body. Therefore, the old content is still visible.
+    # expect(page.html).to start_with('%PDF-1')
   end
 
   private

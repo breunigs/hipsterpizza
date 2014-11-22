@@ -50,8 +50,6 @@ class ApplicationController < ActionController::Base
   def require_basket
     find_basket
     return redirect_to root_path unless @basket
-
-    return if cookie_get(:basket) == @basket.uid
     cookie_set(:basket, @basket.uid)
   end
 
@@ -106,6 +104,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
+    if Rails.env.test?
+      # Poltergeist sometimes resets the accept header to its default
+      # value. Force the locale here instead.
+      return I18n.locale = :en
+    end
+
     avail = I18n.available_locales
     I18n.locale = http_accept_language.compatible_language_from(avail)
   end

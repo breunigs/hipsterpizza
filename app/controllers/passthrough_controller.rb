@@ -48,10 +48,7 @@ class PassthroughController < ApplicationController
 
   def mime_type_by_ending
     ending = request.path.split('.').last
-    if ending.size > 4
-      logger.debug "Could not detect content type, skipping #{request.path}"
-      return 'text/html'
-    end
+    return 'text/html' if ending.size > 4
 
     ending = 'html' if ending == 'htm'
     Mime::Type.lookup_by_extension(ending).to_s.dup
@@ -144,6 +141,6 @@ class PassthroughController < ApplicationController
   end
 
   def forwarder
-    @forwarder = Forwarder.new("pizza.de")
+    @forwarder ||= Forwarder.new("pizza.de")
   end
 end

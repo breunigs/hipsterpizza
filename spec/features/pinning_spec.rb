@@ -21,7 +21,7 @@ describe 'Pinning', type: :feature do
   before do
     # reassign PINNING variable to get rid of the freeze and
     # allow custom assignments. Normally Ruby issues a warning,
-    # but in we can ignore it safely in this context.
+    # but we can ignore it safely in this context.
     silence_warnings { PINNING = { } }
   end
 

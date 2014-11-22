@@ -31,10 +31,8 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.before(:each) do
-    next unless Capybara
-    next unless Capybara.current_driver.to_s.include?('no_imgs')
     next unless defined?(page)
-    page.driver.browser.set_skip_image_loading true
+    page.try(:driver).try(:add_header, 'ACCEPT-LANGUAGE', 'en')
   end
 end
 

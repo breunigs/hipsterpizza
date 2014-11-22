@@ -10,6 +10,8 @@ module FeatureHelpers
   end
 
   def basket_create
+    Rails.logger.debug '---- CREATING NEW BASKET ----'
+
     visit root_path
     click_on I18n.t('main.chooser.new_basket.link')
 

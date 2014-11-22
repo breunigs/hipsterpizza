@@ -22,8 +22,12 @@ describe 'Submitting with provider', type: :feature do
     it 'redirects to PDF on submit' do
       visit basket_path(@basket)
       open_admin_menu(I18n.t('button.submit_group_order.first_time.text'))
-      wait_until_content '%PDF-1.3'
-      expect(current_url).to end_with '/pdf'
+
+      expect(page.response_headers).to include('Content-Type' => 'application/pdf')
+      # TODO: Poltergeist appears to download the PDF instead and does not
+      # update the body. Therefore, the old content is still visible.
+      # wait_until_content '%PDF-1.3'
+      # expect(current_url).to end_with '/pdf'
     end
   end
 

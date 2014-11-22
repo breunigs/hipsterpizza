@@ -39,8 +39,8 @@ end
 group :test do
   gem 'simplecov',  require: false
   gem 'codeclimate-test-reporter', require: nil
-  gem 'capybara-webkit'
-  gem 'capybara-screenshot', git: 'git://github.com/mattheworiordan/capybara-screenshot.git'
+  gem 'poltergeist', git: 'git://github.com/teampoltergeist/poltergeist.git'
+  gem 'capybara-screenshot'
 end
 
 group :assets do
