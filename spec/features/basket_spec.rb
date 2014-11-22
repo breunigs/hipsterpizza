@@ -146,8 +146,8 @@ describe 'Basket', type: :feature do
   private
 
   def click_delivery_arrived_button
-    page.driver.js_prompt_input = Time.now
-    page.driver.accept_js_prompts!
-    click_on I18n.t('button.delivery_arrived.button')
+    accept_prompt(with: Time.now) do
+      click_on I18n.t('button.delivery_arrived.button')
+    end
   end
 end
