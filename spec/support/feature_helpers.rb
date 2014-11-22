@@ -48,17 +48,15 @@ module FeatureHelpers
 
     # wait for page to recognize non-empty basket
     sleep 1.1
-    accept_nick!
-    click_on I18n.t('modes.order_new.place.button')
+    accept_nick { click_on I18n.t('modes.order_new.place.button') }
 
     expect(page).to have_content I18n.t('basket.my_order.has_not_paid')
     expect(page).to have_content 'Chicken Curry'
     expect(page).to have_content TEST_NICK
   end
 
-  def accept_nick!
-    page.driver.js_prompt_input = TEST_NICK
-    page.driver.accept_js_prompts!
+  def accept_nick(&block)
+    accept_prompt(with: TEST_NICK, &block)
   end
 
   def reload

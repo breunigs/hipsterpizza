@@ -24,9 +24,10 @@ describe 'Order', type: :feature do
     end
 
     it 'can be destroyed' do
-      page.driver.accept_js_confirms!
       click_on I18n.t('basket.my_order.dropdown')
-      click_on I18n.t('basket.my_order.destroy.text')
+      accept_confirm_from do
+        click_on I18n.t('basket.my_order.destroy.text')
+      end
       expect(page).to have_content I18n.t('order.controller.destroy.my_order')
       expect(page).not_to have_content 'Chicken Curry'
     end
@@ -60,8 +61,7 @@ describe 'Order', type: :feature do
       click_on('Geflügel')
       click_on('Chicken Sabzi', match: :first)
 
-      accept_nick!
-      click_on I18n.t('modes.order_edit.place.button')
+      accept_nick { click_on I18n.t('modes.order_edit.place.button') }
       expect(page).to have_content 'Chicken Sabzi'
       expect(page).not_to have_content 'Chicken Curry'
 
@@ -79,8 +79,8 @@ describe 'Order', type: :feature do
       click_link I18n.t('button.copy_order.button')
       # wait for page to recognize non-empty basket
       sleep 1.1
-      accept_nick!
-      click_on I18n.t('modes.order_new.place.button')
+
+      accept_nick { click_on I18n.t('modes.order_new.place.button') }
 
       # three = two table entries + user’s own display
       expect(page).to have_content('Chicken Curry', count: 3)
@@ -103,11 +103,10 @@ describe 'Order', type: :feature do
         click_on I18n.t('basket.my_order.edit.text')
         wait_for_progress_done
         wait_until_content 'Summe'
-        accept_nick!
       end
 
       it 'keeps order marked as paid if price didn’t change' do
-        click_on I18n.t('modes.order_edit.place.button')
+        accept_nick { click_on I18n.t('modes.order_edit.place.button') }
         expect(page).to have_content I18n.t('order.controller.update')
         expect(page).to have_content I18n.t('order.controller.money.no_change')
         expect(page).to have_content I18n.t('basket.my_order.has_paid')
@@ -116,7 +115,7 @@ describe 'Order', type: :feature do
       it 'marks order as not paid if price increases' do
         click_on('Geflügel')
         click_on('Chicken Sabzi', match: :first)
-        click_on I18n.t('modes.order_edit.place.button')
+        accept_nick { click_on I18n.t('modes.order_edit.place.button') }
         expect(page).to have_content I18n.t('order.controller.update')
         # is actually: I18n.t('order.controller.money.give')
         expect(page).to have_content 'Please add'
@@ -137,7 +136,7 @@ describe 'Order', type: :feature do
         click_on('Mangofrüchte', match: :first)
         sleep 0.5 # wait for animation to finish
         sleep 1.1 # wait for page to recognize non-empty basket
-        click_on I18n.t('modes.order_edit.place.button')
+        accept_nick { click_on I18n.t('modes.order_edit.place.button') }
         expect(page).to have_content I18n.t('order.controller.update')
         # is actually: I18n.t('order.controller.money.take')
         expect(page).to have_content 'Don’t forget to take'
@@ -160,21 +159,20 @@ describe 'Order', type: :feature do
       click_on 'Cocktails'
       sleep 0.5; wait_until_content('Ananassaft')
       click_on 'Pina Colada', match: :first
-      accept_nick!
       # wait for page to recognize non-empty basket
       sleep 1.1
-      click_on I18n.t('modes.order_new.place.button')
+      accept_nick { click_on I18n.t('modes.order_new.place.button') }
 
       # copy this order
       # visit_basket_as_new_user
-      page.driver.accept_js_confirms!
       click_on I18n.t('order_table.menu')
-      click_link I18n.t('button.copy_order.button')
+      accept_confirm_from do
+        click_link I18n.t('button.copy_order.button')
+      end
       wait_for_progress_done
       # wait for page to recognize non-empty basket
       sleep 1.1
-      accept_nick!
-      click_on I18n.t('modes.order_new.place.button')
+      accept_nick { click_on I18n.t('modes.order_new.place.button') }
       wait_until_content I18n.t('order_table.heading')
 
       # three = twice in list, once in basket

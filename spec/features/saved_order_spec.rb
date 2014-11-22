@@ -8,10 +8,10 @@ describe 'SavedOrder', type: :feature do
 
   before do
     basket_with_order_create
-    page.driver.js_prompt_input = SAVED_ORDER_NAME
-    page.driver.accept_js_prompts!
     click_on I18n.t('basket.my_order.dropdown')
-    click_on I18n.t('button.save_order.link.my')
+    accept_prompt(with: SAVED_ORDER_NAME) do
+      click_on I18n.t('button.save_order.link.my')
+    end
     wait_until_content I18n.t('button.save_order.link.saved')
   end
 
