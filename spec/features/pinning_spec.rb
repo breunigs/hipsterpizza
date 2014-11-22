@@ -8,6 +8,8 @@ describe 'Pinning', type: :feature do
 
   # shortened basket creation scheme, with less checking.
   def basket_create
+    visit root_path
+    click_on I18n.t('main.chooser.new_basket.link')
     visit root_path + '/12347'
     click_link 'Indian Curry', match: :first
     wait_until_content('Warenkorb')
