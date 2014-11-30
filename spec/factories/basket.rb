@@ -4,7 +4,7 @@ FactoryGirl.define do
     shop_url '/hipster/fake'
 
     factory :basket_with_orders do
-      after(:create) do |basket, evaluator|
+      after(:create) do |basket|
         create_list(:order, 2, basket: basket)
       end
     end
