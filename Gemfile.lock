@@ -6,6 +6,16 @@ GIT
       prawn
       rails (>= 3.1.0)
 
+GIT
+  remote: git://github.com/teampoltergeist/poltergeist.git
+  revision: f394c984af7e6db72f284900b59c715975cb0621
+  specs:
+    poltergeist (1.5.1)
+      capybara (~> 2.4)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -57,9 +67,7 @@ GEM
       capybara (>= 1.0, < 3)
       colored
       launchy
-    capybara-webkit (1.3.1)
-      capybara (>= 2.0.2, < 2.5.0)
-      json
+    cliver (0.3.2)
     codeclimate-test-reporter (0.3.0)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -221,6 +229,7 @@ GEM
     unf_ext (0.0.6)
     unicode_utils (1.4.0)
     webrobots (0.1.1)
+    websocket-driver (0.4.0)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -233,13 +242,13 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass
   capybara-screenshot
-  capybara-webkit
   codeclimate-test-reporter
   coffee-rails
   friendly_id
   http_accept_language
   jquery-rails
   mechanize
+  poltergeist!
   possessive
   prawn (= 1.0.0)
   prawn-qrcode

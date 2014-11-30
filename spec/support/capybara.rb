@@ -4,12 +4,7 @@ debug = false
 
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
-
-Capybara.register_driver :webkit_no_imgs do |app|
-  driver = Capybara::Webkit::Driver.new(app)
-  driver.browser.set_skip_image_loading true
-  driver
-end
+require 'capybara/poltergeist'
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
@@ -31,7 +26,6 @@ end
 
 driver = "poltergeist#{debug ? "" : "_no_debug"}"
 driver = driver.to_sym
-driver= :webkit_no_imgs
 Capybara.current_driver = driver
 Capybara.default_driver = driver
 Capybara.javascript_driver = driver

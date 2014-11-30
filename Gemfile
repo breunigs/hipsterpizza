@@ -39,7 +39,7 @@ end
 group :test do
   gem 'simplecov',  require: false
   gem 'codeclimate-test-reporter', require: nil
-  gem 'capybara-webkit'
+  gem 'poltergeist', git: 'git://github.com/teampoltergeist/poltergeist.git'
   gem 'capybara-screenshot'
 end
 
