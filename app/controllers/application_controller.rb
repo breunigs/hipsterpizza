@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
 
   def redirect_to_shop
     # knddomain=1 hides pizza.de related branding and logins
-    redirect_to @basket.full_url(knddomain: 1, noflash: 1)
+    redirect_to @basket.full_path(knddomain: 1, noflash: 1)
   end
 
   def replay_mode

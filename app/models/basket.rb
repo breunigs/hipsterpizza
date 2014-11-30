@@ -41,8 +41,8 @@ class Basket < ActiveRecord::Base
   # returns the complete URL, i.e. canonical URL plus any additional query
   # parameters present when originally creating the basket. Adds arguments as
   # extra params.
-  def full_url(*extra_params)
-    query = shop_url_params_hash.merge(extra_params.first).to_param
+  def full_path(extra_params = {})
+    query = shop_url_params_hash.merge(extra_params).to_param
     shop_url + '?' + query
   end
 
@@ -135,7 +135,7 @@ class Basket < ActiveRecord::Base
   end
 
   def shop_name_short
-    shop_name.split(',', 2).first
+    shop_name.split(',', 2).first.strip
   end
 
   private
