@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class Order < ActiveRecord::Base
   extend FriendlyId
   friendly_id :uuid
@@ -46,7 +44,7 @@ class Order < ActiveRecord::Base
   # returns the date the order was actually submitted, i.e. the basket
   # submit time.
   def date
-    basket.submitted.strftime('%Y-%m-%d') rescue I18n.t('time.never')
+    basket.submitted.try(:strftime, '%Y-%m-%d') || I18n.t('time.never')
   end
 
   private
