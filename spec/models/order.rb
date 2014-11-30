@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Order do
+describe Order, type: :model do
   let(:o) { FactoryGirl.build(:order) }
 
   it 'can be created' do

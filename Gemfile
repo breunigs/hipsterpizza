@@ -38,7 +38,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'simplecov',  require: false
+  gem 'simplecov', require: false
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist', git: 'git://github.com/teampoltergeist/poltergeist.git'
   gem 'capybara-screenshot'

@@ -78,7 +78,7 @@ class Basket < ActiveRecord::Base
   end
 
   def arrived?
-    !arrival.nil?
+    arrival.present?
   end
 
   def duration
@@ -94,7 +94,7 @@ class Basket < ActiveRecord::Base
   end
 
   def editable?
-    submitted == nil && !cancelled?
+    submitted.nil? && !cancelled?
   end
 
   def sum

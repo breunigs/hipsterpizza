@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 debug = false
 
 require 'capybara/rspec'
