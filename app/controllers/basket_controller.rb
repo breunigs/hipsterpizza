@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class BasketController < ApplicationController
   include CookieHelper
 
@@ -38,10 +36,10 @@ class BasketController < ApplicationController
   end
 
   def create
-    @basket = Basket.create(params.permit(:shop_name, :shop_url, :shop_fax, :shop_url_params))
+    basket = Basket.create(params.permit(:shop_name, :shop_url, :shop_fax, :shop_url_params))
 
-    if @basket.errors.any?
-      msgs = errors_to_fake_list(@basket)
+    if basket.errors.any?
+      msgs = errors_to_fake_list(basket)
       flash[:error] = t('basket.controller.create.errors', messages: msgs)
       return redirect_to root_path
     end
@@ -49,9 +47,9 @@ class BasketController < ApplicationController
     cookie_set(:is_admin, true)
 
     if PINNING['single_basket_mode']
-      redirect_to @basket
+      redirect_to basket
     else
-      redirect_to share_basket_path(@basket.uid)
+      redirect_to share_basket_path(basket.uid)
     end
   end
 

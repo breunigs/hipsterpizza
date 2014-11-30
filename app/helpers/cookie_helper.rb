@@ -10,7 +10,7 @@ module CookieHelper
       cookies.delete key
     else
       c = perma ? cookies.permanent : cookies
-      c[key] = value
+      c[key] = value.to_s
     end
   end
 

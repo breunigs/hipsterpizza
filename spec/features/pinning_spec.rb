@@ -29,37 +29,9 @@ xdescribe 'Pinning', type: :feature do
     silence_warnings { PINNING = { }.freeze }
   end
 
-  context 'with shop url' do
-    before { PINNING['shop_url'] = SHOP_URL }
-
-    it 'skips shop selection' do
-      visit root_path
-      click_link 'Create New Basket'
-      expect(page).to have_content 'Share Link'
-    end
-
-    context 'and shop fax and shop name' do
-      before do
-        PINNING['shop_fax'] = '+49000000000'
-        PINNING['shop_name'] = 'TestShop'
-      end
-
-      it 'skips shop selection' do
-        visit root_path
-        click_link 'Create New Basket'
-        expect(page).to have_content 'Share Link'
-      end
-    end
-  end
-
   context 'with single shop mode' do
     before { PINNING['single_basket_mode'] = true }
 
-    it 'skips share page on basket creation' do
-      basket_create
-      expect(page).to have_content('Money Pile')
-      expect(page).not_to have_content('Share')
-    end
 
     it 'redirects front page to existing basket' do
       basket_create
