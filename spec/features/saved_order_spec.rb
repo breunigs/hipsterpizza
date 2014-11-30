@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'SavedOrder', type: :feature do
+xdescribe 'SavedOrder', type: :feature do
   SAVED_ORDER_NAME = 'Tėst 42: Pizza Mo'
   PREV_ORDERS = I18n.t('saved_order.index.previous_orders.heading')
 

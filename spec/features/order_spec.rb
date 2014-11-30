@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe 'Order', type: :feature do
-  context 'with existing order' do
+  xcontext 'with existing order' do
     before do
       basket_with_order_create
     end
@@ -80,6 +80,8 @@ describe 'Order', type: :feature do
       # wait for page to recognize non-empty basket
       sleep 1.1
 
+      save_and_open_page
+      binding.pry
       accept_nick { click_on I18n.t('modes.order_new.place.button') }
 
       # three = two table entries + user’s own display
@@ -144,7 +146,7 @@ describe 'Order', type: :feature do
     end
   end
 
-  context 'with existing basket' do
+  xcontext 'with existing basket' do
     before do
       @basket = basket_create
       visit basket_path(@basket)

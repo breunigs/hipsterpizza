@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
-APP_PATH = File.expand_path('../../config/application',  __FILE__)
-require_relative '../config/boot'
-require 'rails/commands'
+begin
+  load File.expand_path("../spring", __FILE__)
+rescue LoadError
+end
+require 'bundler/setup'
+load Gem.bin_path('rails', 'rails')

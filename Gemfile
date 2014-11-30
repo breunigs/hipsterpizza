@@ -27,8 +27,9 @@ gem 'prawn-rails', git: 'git://github.com/cortiz/prawn-rails.git'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'rack-livereload'
   gem 'quiet_assets'
+  gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :development, :test do
@@ -41,8 +42,10 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'poltergeist', git: 'git://github.com/teampoltergeist/poltergeist.git'
   gem 'capybara-screenshot'
+  gem 'database_cleaner'
 end
 
 group :assets do
   gem 'coffee-rails'
 end
+

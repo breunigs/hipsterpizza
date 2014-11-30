@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'pp'
 
-describe 'Submitting with provider', type: :feature do
+xdescribe 'Submitting with provider', type: :feature do
   fax_config = {}
 
   before do
