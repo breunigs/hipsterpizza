@@ -12,7 +12,8 @@ class PassthroughController < ApplicationController
 
   def pass
     if env['PATH_INFO'].include?('reporterror')
-      render text: 'withheld error from pizza.de'
+      logger.warn "Blocked reporterror: #{env['PATH_INFO']}"
+      render text: 'withheld error from pizza.de', status: 500
     else
       rewrite
     end
@@ -128,12 +129,6 @@ class PassthroughController < ApplicationController
     our << "%3A#{request.port}" if request.host != 80
 
     str.gsub!(our, '%3A%2F%2Fpizza.de')
-  end
-
-  def short_time_cachable?
-    return true if request.url.match(%r{^/0_static/})
-    return true if request.url.match(/framek(?:[0-9]{3}\.)+htm$/)
-    false
   end
 
   def no_revalidate_for(max_age)

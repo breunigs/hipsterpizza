@@ -43,6 +43,7 @@ group :test do
   gem 'poltergeist', git: 'git://github.com/teampoltergeist/poltergeist.git'
   gem 'capybara-screenshot'
   gem 'database_cleaner'
+  gem 'factory_girl_rails'
 end
 
 group :assets do

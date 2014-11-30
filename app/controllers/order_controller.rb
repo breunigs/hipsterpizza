@@ -21,8 +21,7 @@ class OrderController < ApplicationController
 
   def save
     so = SavedOrder.new(params.permit(:name))
-    so.nick = @nick.strip
-    so.nick = 'not specified' if so.nick.blank?
+    so.nick = @nick.strip.presence || 'not specified'
     so.shop_url = @order.basket.shop_url
     so.json = @order.json
     if so.save

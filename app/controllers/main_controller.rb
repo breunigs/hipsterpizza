@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class MainController < ApplicationController
   include CookieHelper
 
@@ -20,8 +18,6 @@ class MainController < ApplicationController
   def set_nick
     cookie_set(:nick, params[:nick])
     target = request.referer || @basket || root_path
-    logger.warn target
-
     redirect_to target
   end
 
