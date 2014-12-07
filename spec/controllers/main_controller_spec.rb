@@ -53,4 +53,51 @@ describe MainController, type: :controller do
       expect(response.body).to include('reload')
     end
   end
+
+  describe '#chooser' do
+    it 'renders chooser page' do
+      get :chooser
+      expect(response).to render_template 'chooser'
+    end
+
+    context 'pinning' do
+      include_context 'pinning'
+
+      it 'redirects to existing, editable basket' do
+        PINNING['single_basket_mode'] = true
+        expect(basket.editable?).to eql true
+
+        get :chooser
+
+        expect(response).to redirect_to basket
+      end
+    end
+  end
+
+  describe '#find' do
+    it 'redirects to basket present in URL param' do
+      get :find, page: 'derp', basket_id: basket.uid
+      expect(response).to redirect_to basket
+    end
+
+    it 'redirects to basket present in cookie' do
+      cookies['_hipsterpizza_basket'] = basket.uid
+      get :find, page: 'derp'
+      expect(response).to redirect_to basket
+    end
+
+    it 'shows an error if no basket could be found' do
+      get :find, page: 'derp'
+      expect(flash[:error]).to be_present
+      expect(response).to render_template :chooser
+    end
+  end
+
+  describe '#privacy' do
+    it 'renders' do
+      get :privacy
+      expect(response.status).to eql 200
+      expect(response).to render_template :privacy
+    end
+  end
 end

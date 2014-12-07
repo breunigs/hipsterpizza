@@ -19,7 +19,7 @@ describe BasketController, type: :controller do
 
         get :new
 
-        expect(response).to redirect_to basket_path(basket)
+        expect(response).to redirect_to basket
       end
 
       it 'directly creates new basket if all needed fields are pinned' do
