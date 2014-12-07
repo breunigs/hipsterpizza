@@ -2,6 +2,12 @@ require 'spec_helper'
 
 describe BasketController, type: :controller do
   let(:basket) { FactoryGirl.create(:basket) }
+  let(:order) do
+    o = FactoryGirl.build(:order)
+    o.basket = basket
+    o.save
+    o
+  end
 
   describe '#new' do
     context 'pinning' do
@@ -83,7 +89,30 @@ describe BasketController, type: :controller do
   end
 
   describe '#show' do
-    pending
+    it 'finds order if present' do
+      cookies['_hipsterpizza_nick'] = order.nick
+      get :show, id: basket.uid
+      expect(assigns(:order)).to eq(order)
+    end
+
+    it 'renders basket overview' do
+      get :show, id: basket.uid
+      expect(response).to render_template :show
+    end
+
+    it 'renders a SVG QR Code' do
+      get :show, id: basket.uid, format: 'svg'
+      expect(response.body).to include '<svg'
+      expect(response.body).to include '<?xml'
+    end
+
+    it 'renders only when updating on XHR' do
+      xhr :get, :show, id: basket.uid
+      expect(response.status).to eql 200
+
+      xhr :get, :show, id: basket.uid, ts_basket: Time.now.to_i
+      expect(response.status).to eql 204
+    end
   end
 
   describe '#unsubmit' do
