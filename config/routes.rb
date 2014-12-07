@@ -12,7 +12,7 @@ Hipsterpizza::Application.routes.draw do
     resources :basket, only: [:new, :create, :show] do
       member do
         get 'share'
-        get 'unsubmit'
+        get 'unsubmit' # TODO: why get?
         get 'pdf'
 
         patch 'toggle_cancelled'

@@ -1,10 +1,10 @@
 class BasketController < ApplicationController
   include CookieHelper
 
+  before_action :require_basket, except: [:new, :create, :find]
   before_filter :ensure_admin, except: [:new, :create, :find, :show, :share,
                                         :delivery_arrived, :pdf]
 
-  before_action :require_basket, except: [:new, :create, :find]
 
   PIZZADE_URL_MODIFIERS = { knddomain: 1, noflash: 1 }
 

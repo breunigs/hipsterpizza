@@ -116,27 +116,168 @@ describe BasketController, type: :controller do
   end
 
   describe '#unsubmit' do
-    pending
+    it 'requires admin rights' do
+      get :unsubmit, id: basket.uid
+      expect(flash[:error]).to be_present
+      expect(response).to redirect_to basket
+    end
+
+    context 'as admin' do
+      include_context 'admin'
+
+      it 'redirects back to basket' do
+        get :unsubmit, id: basket.uid
+        expect(response).to redirect_to basket
+      end
+
+      it 'resets the basket’s submitted time' do
+        basket.submitted = Time.now
+        basket.save
+
+        get :unsubmit, id: basket.uid
+
+        basket.reload
+        expect(basket.submitted?).to eq false
+      end
+
+      it 'shows an info message' do
+        get :unsubmit, id: basket.uid
+        expect(flash[:info]).to be_present
+      end
+    end
   end
 
   describe '#set_submit_time' do
-    pending
+    it 'requires admin rights' do
+      post :set_submit_time, id: basket.uid
+      expect(flash[:error]).to be_present
+      expect(response).to redirect_to basket
+    end
+
+    context 'as admin' do
+      include_context 'admin'
+
+      it 'updates submitted timestamp' do
+        post :set_submit_time, id: basket.uid
+
+        basket.reload
+        expect(basket.submitted).not_to be_nil
+      end
+
+      it 'accepts and stores SHA addresses' do
+        post :set_submit_time, id: basket.uid, sha_address: 'sha123'
+
+        basket.reload
+        expect(basket.sha_address).to eql 'sha123'
+      end
+    end
   end
 
   describe '#delivery_arrived' do
-    pending
+    let(:time) { Time.now }
+
+    it 'updates arrival time' do
+      xhr :patch, :delivery_arrived, id: basket.uid, arrival: time
+      basket.reload
+      expect(basket.arrival.to_i).to eql time.to_i
+    end
+
+    it 'instructs JS to reload page' do
+      xhr :patch, :delivery_arrived, id: basket.uid, arrival: time
+      expect(response.body).to include('reload')
+    end
+
+    it 'sets arrival time to “now” if time string is invalid' do
+      old = Time.now
+      xhr :patch, :delivery_arrived, id: basket.uid, arrival: "timely wimely"
+
+      basket.reload
+      expect(basket.arrival.to_i).to be_between(old.to_i, Time.now.to_i)
+    end
+
+    it 'shows an error if time string is invalid' do
+      xhr :patch, :delivery_arrived, id: basket.uid, arrival: "timely wimely"
+
+      expect(flash[:error]).to be_present
+    end
   end
 
   describe '#share' do
-    pending
+    it 'renders' do
+      get :share, id: basket.uid
+      expect(response).to render_template :share
+      expect(response.status).to eql 200
+    end
   end
 
   describe '#toggle_cancelled' do
-    pending
+    it 'requires admin rights' do
+      patch :toggle_cancelled, id: basket.uid
+      expect(flash[:error]).to be_present
+      expect(response).to redirect_to basket
+    end
+
+    context 'as admin' do
+      include_context 'admin'
+
+      it 'redirects to basket' do
+        patch :toggle_cancelled, id: basket.uid
+        expect(response).to redirect_to basket
+      end
+
+      it 'shows an error if status could not be toggled' do
+        allow_any_instance_of(Basket).to receive(:save).and_return(false)
+        patch :toggle_cancelled, id: basket.uid
+        expect(flash[:error]).to be_present
+      end
+
+      context 'not cancelled' do
+        it 'shows a warning on cancelling' do
+          patch :toggle_cancelled, id: basket.uid
+          expect(flash[:warn]).to be_present
+        end
+
+        it 'updates the basket to be cancelled' do
+          patch :toggle_cancelled, id: basket.uid
+          basket.reload
+          expect(basket.cancelled?).to eql true
+        end
+      end
+
+      context 'already cancelled' do
+        before do
+          basket.cancelled = true
+          basket.save
+        end
+
+         it 'shows a success message on re-enabling' do
+          patch :toggle_cancelled, id: basket.uid
+          expect(flash[:success]).to be_present
+        end
+
+        it 'updates the basket to not be canceled anymore' do
+          patch :toggle_cancelled, id: basket.uid
+          basket.reload
+          expect(basket.cancelled?).to eql false
+        end
+      end
+    end
   end
 
   describe '#pdf' do
-    pending
+    before { get :pdf, id: basket.uid }
+
+    it 'renders' do
+      expect(response.status).to eql 200
+    end
+
+    it 'sets correct content type' do
+      expect(response.headers['Content-Type']).to eql 'application/pdf'
+    end
+
+    it 'appears to be a PDF' do
+      expect(response.body).to start_with '%PDF-1.'
+    end
   end
 
   describe '#find_changes' do
