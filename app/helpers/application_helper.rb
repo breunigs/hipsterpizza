@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def has_nick?
-    !cookie_get(:nick).blank?
+    cookie_get(:nick).present?
   end
 
   def tips?

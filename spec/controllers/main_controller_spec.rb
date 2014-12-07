@@ -29,11 +29,13 @@ describe MainController, type: :controller do
 
   describe '#toggle_admin' do
     it 'stores state in a cookie' do
+      get :chooser
       now = cookies['_hipsterpizza_is_admin']
 
       patch :toggle_admin
 
-      expect(now).not_to eql cookies['_hipsterpizza_is_admin']
+      expect(cookies['_hipsterpizza_is_admin']).not_to eql now
+      expect(cookies['_hipsterpizza_is_admin']).to eql 'true'
     end
 
     it 'executing it twice is a no-op' do

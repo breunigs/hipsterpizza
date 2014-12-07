@@ -9,15 +9,6 @@ xdescribe 'Basket', type: :feature do
     @basket = basket_create
   end
 
-  it 'can be created' do
-    expect(page).to have_content I18n.t('basket.share.heading')
-    expect(page).to have_content basket_path(@basket)
-
-    click_on I18n.t('basket.share.basket_link')
-    expect(page).to have_link I18n.t('basket.new_order_button.link')
-    expect(page).to have_link I18n.t('nav.admin.admin')
-  end
-
   it 'can be cancelled' do
     visit basket_path(@basket)
     click_on I18n.t('nav.admin.admin')
@@ -80,24 +71,6 @@ xdescribe 'Basket', type: :feature do
     check_links
   end
 
-  it 'allows users to become admins' do
-    # we’re on the share basket page
-    click_on I18n.t('basket.share.basket_link')
-    basket_url = current_url
-    expect(page).to have_link I18n.t('nav.admin.admin')
-
-    Capybara.reset_sessions!
-    visit basket_url
-    expect(page).not_to have_link I18n.t('nav.admin.admin')
-
-    click_on I18n.t('other')
-    click_on I18n.t('nav.main.other.become_admin.link')
-
-    wait_until_content(I18n.t('order_table.heading'))
-
-    expect(page).to have_link I18n.t('nav.admin.admin')
-  end
-
   it 'doesn’t show admin menu to users' do
     visit_basket_as_new_user
     expect(page).not_to have_content I18n.t('nav.admin.admin')
@@ -122,27 +95,6 @@ xdescribe 'Basket', type: :feature do
     open_admin_menu(submit_link)
     visit basket_path(@basket)
     expect(page).to have_content I18n.t('basket.submitted_status.estimate')
-  end
-
-  it 'sets correct submit time' do
-    visit basket_path(@basket)
-
-    open_admin_menu(submit_link)
-    click_on I18n.t('modes.basket_submit.update_time.button')
-    expect(page).to have_content 'less than a minute ago'
-  end
-
-  it 'can render a pdf' do
-    visit basket_path(@basket)
-    order_create
-
-    open_admin_menu(I18n.t('nav.admin.render_pdf'))
-
-    expect(page.status_code).to eql(200)
-    expect(page.response_headers).to include('Content-Type' => 'application/pdf')
-    # TODO: Poltergeist appears to download the PDF instead and does not
-    # update the body. Therefore, the old content is still visible.
-    # expect(page.html).to start_with('%PDF-1')
   end
 
   private
