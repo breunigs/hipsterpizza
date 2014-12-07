@@ -1,6 +1,7 @@
 language: ruby
 rvm:
   - 2.1.2
+  - 2.1.5
 script:
   - ./bin/rake db:migrate RAILS_ENV=test
   - ./bin/rspec
