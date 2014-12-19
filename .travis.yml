@@ -14,3 +14,4 @@ before_install:
 after_failure:
   - "./script/share_images.sh"
 bundler_args: --without development --deployment --jobs 4
+sudo: false
