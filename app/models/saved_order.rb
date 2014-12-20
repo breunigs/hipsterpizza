@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class SavedOrder < ActiveRecord::Base
   extend FriendlyId
   friendly_id :uuid
@@ -25,8 +23,9 @@ class SavedOrder < ActiveRecord::Base
   end
 
   private
+
   def create_uuid
-    raise 'Order has already an UUID'  if self.uuid
+    raise 'Order has already an UUID' if self.uuid
     self.uuid = SecureRandom.uuid
   end
 end

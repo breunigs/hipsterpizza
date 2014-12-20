@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class SavedOrderController < ApplicationController
   include CookieHelper
 
@@ -9,10 +7,7 @@ class SavedOrderController < ApplicationController
   def index
     @nick = cookie_get(:nick)
     @saved = SavedOrder.where(shop_url: @basket.shop_url).sorted
-    @previous_orders = Order
-      .joins(:basket)
-      .where(nick: @nick, baskets: { shop_url: @basket.shop_url })
-      .order('baskets.submitted DESC').limit(5)
+    @previous_orders = find_previous_orders
   end
 
   def destroy
@@ -38,5 +33,12 @@ class SavedOrderController < ApplicationController
   def require_saved_order
     @saved_order = SavedOrder.friendly.find(params[:saved_order_id])
     redirect_to saved_order_index_path unless @saved_order
+  end
+
+  def find_previous_orders
+    Order
+      .joins(:basket)
+      .where(nick: @nick, baskets: { shop_url: @basket.shop_url })
+      .order('baskets.submitted DESC').limit(5)
   end
 end

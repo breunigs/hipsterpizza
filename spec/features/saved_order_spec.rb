@@ -15,42 +15,6 @@ xdescribe 'SavedOrder', type: :feature do
     wait_until_content I18n.t('button.save_order.link.saved')
   end
 
-  it 'shows saved orders' do
-    visit saved_order_index_path
-    expect(page).to have_content(SAVED_ORDER_NAME)
-  end
-
-  it 'shows previous orders for current user' do
-    visit saved_order_index_path
-    expect(page).to have_content(PREV_ORDERS)
-    # i.e. never in date column because the basket hasn’t been submitted.
-    expect(page).to have_content(I18n.t('time.never'))
-  end
-
-  it 'doesn’t show previous orders for current user' do
-    visit_basket_as_new_user
-    visit saved_order_index_path
-    expect(page).to have_content(I18n.t('saved_order.index.specify_nick'))
-  end
-
-  it 'offers new users to identify by nick' do
-    visit_basket_as_new_user
-    visit saved_order_index_path
-    expect(page).to have_button(I18n.t('nick.button.manually'))
-  end
-
-  it 'allows saved orders to be destroyed' do
-    visit saved_order_index_path
-    click_on I18n.t('saved_order.index.saved_orders.destroy.button')
-    # it keeps the previous orders intact
-    expect(page).to have_content('Chicken Curry')
-    expect(page).to have_content(I18n.t('saved_order.index.saved_orders.none'))
-
-    within('table') do
-      expect(page).not_to have_content(SAVED_ORDER_NAME)
-    end
-  end
-
   it 'can be copied' do
     nick = 'new user'
     visit_basket_as_new_user
