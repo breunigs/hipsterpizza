@@ -4,20 +4,6 @@ require 'spec_helper'
 
 xdescribe 'Previous Order', type: :feature do
   context 'in current basket' do
-    it 'offers to set nickname if not done so' do
-      @basket = basket_create
-      visit basket_path(@basket)
-      click_on I18n.t('button.saved_prev_orders.link'), match: :first
-      expect(page).to have_button I18n.t('nick.button.manually')
-    end
-
-    it 'is shown immediately after ordering' do
-      basket_with_order_create
-      click_on I18n.t('button.saved_prev_orders.link'), match: :first
-      expect(page).to have_content 'Chicken Curry'
-      expect(page).to have_content I18n.t('time.never')
-    end
-
     it 'can be replayed' do
       basket_with_order_create
       click_on I18n.t('button.saved_prev_orders.link'), match: :first
@@ -35,11 +21,6 @@ xdescribe 'Previous Order', type: :feature do
       visit basket_path(@basket)
       # ensure we’re in a new basket
       expect(page).not_to have_content 'Your Order'
-    end
-
-    it 'shows previous order from same shop' do
-      click_on I18n.t('button.saved_prev_orders.link'), match: :first
-      expect(page).to have_content 'Chicken Curry'
     end
 
     it 'can be replayed' do

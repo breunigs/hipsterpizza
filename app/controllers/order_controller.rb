@@ -29,6 +29,8 @@ class OrderController < ApplicationController
     else
       render json: { error: so.errors }
     end
+  rescue JSON::ParserError => e
+    render json: { error: "JSON Parse Error: #{e.message}" }
   end
 
   def update

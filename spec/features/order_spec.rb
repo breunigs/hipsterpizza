@@ -88,14 +88,6 @@ describe 'Order', type: :feature do
       expect(page).to have_content('Chicken Curry', count: 3)
     end
 
-    it 'can be saved' do
-      click_on I18n.t('order_table.menu')
-      accept_prompt(with: 'Tėst 42: Pizza Mo') do
-        click_on I18n.t('button.save_order.link.others')
-      end
-      wait_until_content I18n.t('button.save_order.link.saved')
-    end
-
     context 'that has been paid' do
       before do
         click_on I18n.t('button.toggle_paid.not_paid.button'), match: :first
