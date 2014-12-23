@@ -3,14 +3,7 @@ require 'spec_helper'
 describe OrderController, type: :controller do
   let(:basket) { FactoryGirl.create(:basket_with_orders) }
   let(:order) { basket.orders.first }
-
-  def get_with_params(resource)
-    get resource, basket_id: basket.uid, order_id: order.uuid
-  end
-
-  def post_with_params(resource)
-    get resource, basket_id: basket.uid, order_id: order.uuid
-  end
+  let(:common_params) { {basket_id: basket.uid, order_id: order.uuid} }
 
   describe '#new' do
     it 'redirects to shop' do
@@ -28,17 +21,17 @@ describe OrderController, type: :controller do
 
   describe '#edit' do
     it 'sets mode cookie' do
-      get_with_params :edit
+      get :edit, common_params
       expect(cookies['_hipsterpizza_mode']).to include 'order_edit'
     end
 
     it 'sets replay cookie' do
-      get_with_params :edit
+      get :edit, common_params
       expect(cookies['_hipsterpizza_replay']).to eql "order nocheck #{order.uuid}"
     end
 
     it 'redirects to shop' do
-      get_with_params :edit
+      get :edit, common_params
       # TODO: clean up once "redirect_to_shop" does not include pizza.de
       # specific parameters
       expect(response.redirect_url).to include basket.full_path
@@ -49,93 +42,174 @@ describe OrderController, type: :controller do
   describe '#save' do
     it 'creates a saved order' do
       expect {
-        post_with_params :save
+        post :save, common_params
       }.to change { SavedOrder.count }.by(1)
     end
 
     it 'stores nick in saved order if available' do
       cookies['_hipsterpizza_nick'] = 'Derpina'
-      post_with_params :save
+      post :save, common_params
       expect(SavedOrder.first.nick).to eql 'Derpina'
     end
 
     it 'instructs JS to disable the button' do
-      post_with_params :save
-      expect(JSON.parse(response.body)).to include("disable" => true)
+      post :save, common_params
+      expect(JSON.parse(response.body)).to include('disable' => true)
     end
 
     it 'creates a saved order with matching JSON' do
-      post_with_params :save
+      post :save, common_params
       expect(SavedOrder.first.json).to eql order.json
     end
 
     it 'reports an error if JSON is invalid' do
       order.json = ' { incorrect'
       order.save(validate: false)
-      post_with_params :save
-      expect(JSON.parse(response.body)).to include("error")
+      post :save, common_params
+      expect(JSON.parse(response.body)).to include('error')
     end
   end
 
-  # def update
-  #   old_pay     = @order.paid? ? @order.sum : 0
-  #   old_pay_tip = @order.paid? ? @order.sum_with_tip : 0
+  describe '#update' do
+    it 'reports an error of JSON is invalid' do
+      invalid_json = ' { incorrect'
+      patch :update, common_params, json: invalid_json
+      expect(flash[:error]).not_to be_empty
+    end
 
-  #   @order.json = params[:json]
+    it 'handles price difference' do
+      expect(controller).to receive(:handle_price_difference)
+      patch :update, { json: order.json }.merge(common_params)
+    end
 
-  #   if @order.save
-  #     pay = @order.sum - old_pay
-  #     pay_tip = @order.sum_with_tip - old_pay_tip
+    it 'redirects to basket' do
+      patch :update, common_params
+      expect(response).to redirect_to basket
+    end
+  end
 
-  #     handle_price_difference(pay, pay_tip)
-  #   else
-  #     flash_error_msgs(@order)
-  #   end
+  describe '#create' do
+    let!(:params_for_order) do
+      { basket_id: basket.id }.merge(FactoryGirl.attributes_for(:order))
+    end
 
-  #   redirect_to @basket
-  # end
+    it 'stores order to DB' do
+      expect {
+        post :create, params_for_order
+      }.to change { Order.count }.by(1)
+    end
 
-  # def create
-  #   @order = Order.new(params.permit(:nick, :json))
-  #   @order.basket_id = @basket.id
+    it 'order is associated with basket' do
+      expect {
+        post :create, params_for_order
+      }.to change { basket.orders.count }.by(1)
+    end
 
-  #   if @order.save
-  #     price = render_to_string 'order/_price', layout: false
-  #     flash[:info] = t('order.controller.create', price: price).html_safe
-  #   else
-  #     flash_error_msgs(@order)
-  #   end
-  #   redirect_to @basket
-  # end
+    it 'renders price flash message' do
+      post :create, params_for_order
+      expect(response).to render_template 'order/_price'
+      expect(flash[:info]).not_to be_empty
+    end
 
-  # def toggle_paid
-  #   @order.toggle(:paid).save
-  #   if request.xhr?
-  #     return render json: {}
-  #   else
-  #     key = "order.controller.toggle_paid.#{@order.paid? ? 'is' : 'not'}_paid"
-  #     flash[:info] = t(key, nick: @order.nick.possessive)
-  #     return redirect_to @basket
-  #   end
-  # end
+    it 'redirects to basket' do
+      post :create, params_for_order
+      expect(response).to redirect_to basket
+    end
 
-  # def destroy
-  #   unless view_context.my_order? || view_context.admin?
-  #     flash[:warn] = I18n.t('order.controller.destroy.admin_required')
-  #     return redirect_to @basket
-  #   end
+    it 'shows error if nick missing' do
+      post :create, basket_id: basket.id, json: []
+      expect(flash[:error]).not_to be_empty
+    end
 
-  #   i18n_key = view_context.my_order? ? 'my_order' : 'other_order'
-  #   flash[:info] = I18n.t("order.controller.destroy.#{i18n_key}")
+    it 'shows error if JSON missing' do
+      post :create, basket_id: basket.id, nick: 'testnick'
+      expect(flash[:error]).not_to be_empty
+    end
+  end
 
-  #   if @order.paid?
-  #     price = render_to_string 'order/_price', layout: false
-  #     flash[:info] << ' ' << I18n.t('order.controller.money.take', price: price)
-  #   end
+  describe '#toggle_paid' do
+    it 'is a no-op if executed twice' do
+      status = order.paid?
 
-  #   @order.destroy!
-  #   redirect_to @basket
-  # end
+      patch :toggle_paid, common_params
+      patch :toggle_paid, common_params
+
+      order.reload
+      expect(order.paid?).to eql status
+    end
+
+    it 'displays a flash message' do
+      patch :toggle_paid, common_params
+      expect(flash[:info]).to include order.nick
+    end
+
+    it 'redirects to basket unless XHR' do
+      patch :toggle_paid, common_params
+      expect(response).to redirect_to basket
+    end
+
+    it 'returns empty response if XHR' do
+      xhr :patch, :toggle_paid, common_params
+      expect(response.status).to eql 200
+      expect(response.body).to eql '{}'
+    end
+  end
+
+  describe '#destroy' do
+    context 'as admin' do
+      before { cookies['_hipsterpizza_is_admin'] = 'true' }
+
+      it 'removes other people’s orders' do
+        expect {
+          delete :destroy, common_params
+        }.to change { basket.orders.count }.by(-1)
+      end
+    end
+
+    context 'with different nick from order' do
+      before { cookies['_hipsterpizza_nick'] = 'Some Other Nick' }
+
+      it 'shows warning if trying to remove other people’s orders' do
+        delete :destroy, common_params
+        expect(flash[:warn]).not_to be_empty
+      end
+
+      it 'does not remove other people’s orders' do
+        expect {
+          delete :destroy, common_params
+        }.not_to change { basket.orders.count }
+      end
+
+    end
+
+    context 'with same nick as in order' do
+      before { cookies['_hipsterpizza_nick'] = basket.orders.first.nick }
+
+      it 'removes own order' do
+        expect {
+          delete :destroy, common_params
+        }.to change { basket.orders.count }.by(-1)
+      end
+
+      it 'shows message after removal' do
+        delete :destroy, common_params
+        expect(flash[:info]).not_to be_empty
+      end
+
+      it 'shows reminder to take money from pile if paid' do
+        patch :toggle_paid, common_params
+
+        delete :destroy, common_params
+
+        expect(response).to render_template('order/_price')
+      end
+    end
+
+    it 'redirects to basket' do
+      delete :destroy, common_params
+      expect(response).to redirect_to basket
+    end
+  end
 
   # def copy
   #   if @order.updated_at > 1.hour.ago && replay_mode == 'insta'

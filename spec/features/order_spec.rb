@@ -8,42 +8,6 @@ describe 'Order', type: :feature do
       basket_with_order_create
     end
 
-    it 'can be created' do
-      expect(page).to have_content I18n.t('basket.my_order.heading', nick: '')
-    end
-
-    it 'paid status can be toggled' do
-      click_on I18n.t('button.toggle_paid.not_paid.button'), match: :first
-
-      expect(page).to have_content I18n.t('basket.my_order.has_paid')
-      expect(page).to have_link I18n.t('button.toggle_paid.paid.button')
-
-      click_on I18n.t('button.toggle_paid.paid.button'), match: :first
-      wait_until_content I18n.t('basket.my_order.has_not_paid')
-      expect(page).to have_link I18n.t('button.toggle_paid.not_paid.button')
-    end
-
-    it 'can be destroyed' do
-      click_on I18n.t('basket.my_order.dropdown')
-      accept_confirm do
-        click_on I18n.t('basket.my_order.destroy.text')
-      end
-      expect(page).to have_content I18n.t('order.controller.destroy.my_order')
-      expect(page).not_to have_content 'Chicken Curry'
-    end
-
-    it 'shows hint on destruction when already paid' do
-      click_on I18n.t('button.toggle_paid.not_paid.button')
-      expect(page).to have_content I18n.t('basket.my_order.has_paid')
-      click_on I18n.t('basket.my_order.dropdown')
-      click_on I18n.t('basket.my_order.destroy.text')
-
-      expect(page).to have_content I18n.t('order.controller.destroy.my_order')
-      price_text = I18n.t('order.controller.money.take', price: 'XXXX')
-      price_text = price_text.split('XXXX').first
-      expect(page).to have_content price_text
-    end
-
     it 'can be edited' do
       click_on I18n.t('basket.my_order.dropdown')
       click_on I18n.t('basket.my_order.edit.text')
