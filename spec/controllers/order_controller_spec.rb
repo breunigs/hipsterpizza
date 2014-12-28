@@ -211,19 +211,47 @@ describe OrderController, type: :controller do
     end
   end
 
-  # def copy
-  #   if @order.updated_at > 1.hour.ago && replay_mode == 'insta'
-  #     params[:json] = @order.json
-  #     params[:nick] = @nick
-  #     return create
-  #   else
-  #     cookie_set(:replay, "order #{replay_mode} #{@order.uuid}")
-  #     cookie_set(:mode, :pizzade_order_new)
-  #     redirect_to_shop
-  #   end
-  # end
+  describe '#copy' do
+    before { cookies['_hipsterpizza_nick'] = 'Derpina' }
 
-  # private
+    let(:params) {
+      {
+        basket_id: basket.uid,
+        order_id: order.uuid,
+        nick: 'somenick',
+      }
+    }
+
+    context 'recent order' do
+      it 'copies the entry directly for 1:1 orders' do
+        expect {
+          put :copy, { mode: 'insta' }.merge(params)
+        }.to change { basket.orders.count }.by(1)
+      end
+
+      it 'redirects to basket for 1:1 orders' do
+        put :copy, { mode: 'insta'}.merge(params)
+        expect(response).to redirect_to basket
+      end
+    end
+
+    context 'old order' do
+      let(:order) { FactoryGirl.create(:order, created_at: 5.days.ago, basket_id: basket.id )}
+
+      it 'redirects to shop' do
+        put :copy, params
+        # TODO: clean up once "redirect_to_shop" does not include pizza.de
+        # specific parameters
+        expect(response.redirect_url).to include basket.full_path
+      end
+
+      it 'sets correct cookies' do
+        put :copy, params
+        expect(cookies['_hipsterpizza_replay']).to eql "order check #{order.uuid}"
+      end
+    end
+  end
+
 
   # def ensure_basket_editable
   #   if @basket.cancelled?
@@ -242,6 +270,32 @@ describe OrderController, type: :controller do
   #   msgs = errors_to_fake_list(order)
   #   flash[:error] = I18n.t('order.controller.failure', msgs: msgs)
   # end
+
+  describe '#handle_price_difference' do
+    before do
+      controller.instance_variable_set(:@order, order)
+    end
+
+    context 'more expensive' do
+      let(:pay) { 10 }
+      let(:pay_tip) { 15 }
+
+      def run
+        controller.send(:handle_price_difference, pay, pay_tip)
+      end
+
+      it 'marks order as not paid' do
+        order.update_attribute(:paid, true)
+        run
+        expect(order.paid?).to eql false
+      end
+
+      it 'renders price template' do
+        run
+        expect(response).to render_template('order/_price')
+      end
+    end
+  end
 
   # def handle_price_difference(pay, pay_tip)
   #   i18n_key = if pay == 0
