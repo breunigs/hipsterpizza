@@ -72,8 +72,9 @@ describe OrderController, type: :controller do
   describe '#update' do
     it 'reports an error of JSON is invalid' do
       invalid_json = ' { incorrect'
-      patch :update, common_params, json: invalid_json
-      expect(flash[:error]).not_to be_empty
+      expect {
+        patch :update, { json: invalid_json }.merge(common_params)
+      }.to raise_error
     end
 
     it 'handles price difference' do
@@ -84,6 +85,13 @@ describe OrderController, type: :controller do
     it 'redirects to basket' do
       patch :update, common_params
       expect(response).to redirect_to basket
+    end
+
+    it 'saves new JSON to DB' do
+      json = %|[{"price":2.5,"prod":"club mate","extra":[]}]|
+      patch :update, { json: json }.merge(common_params)
+      order.reload
+      expect(order.json).to eql json
     end
   end
 
@@ -96,6 +104,22 @@ describe OrderController, type: :controller do
       expect {
         post :create, params_for_order
       }.to change { Order.count }.by(1)
+    end
+
+    it 'rejects order if basket is cancelled' do
+      basket.cancelled = true
+      basket.save
+      expect {
+        post :create, params_for_order
+      }.not_to change { Order.count }
+    end
+
+    it 'rejects order if basket is submitted already' do
+      basket.submitted = Time.now
+      basket.save
+      expect {
+        post :create, params_for_order
+      }.not_to change { Order.count }
     end
 
     it 'order is associated with basket' do
