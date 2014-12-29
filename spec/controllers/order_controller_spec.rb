@@ -36,7 +36,6 @@ describe OrderController, type: :controller do
       # specific parameters
       expect(response.redirect_url).to include basket.full_path
     end
-
   end
 
   describe '#save' do
@@ -252,72 +251,66 @@ describe OrderController, type: :controller do
     end
   end
 
+  describe '#ensure_basket_editable' do
+    before do
+      controller.instance_variable_set(:@basket, basket)
+      allow(controller).to receive(:redirect_to)
+    end
 
-  # def ensure_basket_editable
-  #   if @basket.cancelled?
-  #     flash[:error] = I18n.t('order.controller.cancelled')
-  #     redirect_to @basket
-  #   elsif @basket.submitted?
-  #     prefix = 'order.controller.already_submitted'
-  #     flash[:error] = I18n.t("#{prefix}.main")
-  #     flash[:error] << I18n.t("#{prefix}.has_order", order: @order) if @order
-  #     redirect_to @basket
-  #   end
-  # end
+    it 'does not assign error if basket editable' do
+      controller.send(:ensure_basket_editable)
+      expect(flash[:error]).to be_blank
+    end
 
-  # def flash_error_msgs(order)
-  #   return if order.errors.none?
-  #   msgs = errors_to_fake_list(order)
-  #   flash[:error] = I18n.t('order.controller.failure', msgs: msgs)
-  # end
+    it 'sets an error if basket cancelled' do
+      basket.cancelled = true
+      controller.send(:ensure_basket_editable)
+      expect(flash[:error]).not_to be_blank
+    end
+
+    it 'sets an error if basket already submitted' do
+      basket.submitted = Time.now
+      controller.send(:ensure_basket_editable)
+      expect(flash[:error]).not_to be_blank
+    end
+  end
 
   describe '#handle_price_difference' do
-    before do
-      controller.instance_variable_set(:@order, order)
+    before { controller.instance_variable_set(:@order, order) }
+    let(:pay) { 0 }
+
+    def run
+      controller.send(:handle_price_difference, pay, pay)
+    end
+
+    it 'renders price template' do
+      run
+      expect(response).to render_template('order/_price')
+    end
+
+    it 'adds flash message' do
+      run
+      expect(flash[:info]).not_to be_empty
     end
 
     context 'more expensive' do
       let(:pay) { 10 }
-      let(:pay_tip) { 15 }
-
-      def run
-        controller.send(:handle_price_difference, pay, pay_tip)
-      end
 
       it 'marks order as not paid' do
         order.update_attribute(:paid, true)
         run
         expect(order.paid?).to eql false
       end
+    end
 
-      it 'renders price template' do
+    context 'cheaper' do
+      let(:pay) { -10 }
+
+      it 'keeps order marked as paid' do
+        order.update_attribute(:paid, true)
         run
-        expect(response).to render_template('order/_price')
+        expect(order.paid?).to eql true
       end
     end
   end
-
-  # def handle_price_difference(pay, pay_tip)
-  #   i18n_key = if pay == 0
-  #     'no_change'
-  #   elsif pay < 0
-  #     'take'
-  #   else
-  #     @order.update_attribute(:paid, false)
-  #     'give'
-  #   end
-
-  #   fake = OpenStruct.new(sum: pay, sum_with_tip: pay_tip)
-  #   price = render_to_string 'order/_price', layout: false, order: fake
-
-  #   flash[:info] = I18n.t('order.controller.update') << ' '
-  #   flash[:info] << I18n.t("order.controller.money.#{i18n_key}", price: price)
-  # end
-
-  # def require_order
-  #   @order = Order.friendly.find(params[:order_id]) rescue nil
-  #   return if @order
-  #   flash[:error] = t('order.controller.invalid_uuid')
-  #   redirect_to @basket
-  # end
 end
