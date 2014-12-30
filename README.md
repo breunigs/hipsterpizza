@@ -32,7 +32,7 @@ rake hipster:setup_production
 You are almost done, now. Caveats:
 
 -   HipsterPizza does not support sub-URIs/sub-directories. I.e. `pizza.example.com` is fine, while `www.example.com/pizza` is not.
--   HipsterPizza assumes you are going to run it behind nginx, Apache or another web server. If you **don’t**, set `config.serve_static_assets = true` in `/srv/hipsterpizza/config/environments/production.rb`, otherwise the assets won’t be served.
+-   HipsterPizza assumes you are going to run it behind nginx, Apache or another web server. If you **don’t**, set `config.serve_static_files = true` in `/srv/hipsterpizza/config/environments/production.rb`, otherwise the assets won’t be served.
 
 
 
