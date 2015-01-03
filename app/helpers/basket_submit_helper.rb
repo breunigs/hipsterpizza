@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module BasketSubmitHelper
   def a(text) # append
     @stream.write(h text.to_s) unless @stream.closed?
