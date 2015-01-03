@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe 'basket/_submitted_status', type: :view do
   context 'basket has been submitted' do
-    before(:all) do
+    before do
       b = FactoryGirl.create(:basket_with_orders, submitted: Time.now)
       assign(:basket, b)
     end

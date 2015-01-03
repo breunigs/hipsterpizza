@@ -23,21 +23,22 @@ RSpec.shared_examples 'uneditable_basket' do
 end
 
 RSpec.describe 'basket/show', type: :view do
+  let(:submitted_basket) { FactoryGirl.create(:basket_with_orders, submitted: Time.now) }
+  let(:arrived_basket) { FactoryGirl.create(:basket_with_orders, submitted: 10.minutes.ago, arrival: Time.now) }
+
   context 'basket has been submitted' do
-    before(:all) do
-      b = FactoryGirl.create(:basket_with_orders, submitted: Time.now)
-      assign(:basket, b)
-      assign(:order, b.orders.first)
+    before do
+      assign(:basket, submitted_basket)
+      assign(:order, submitted_basket.orders.first)
     end
 
     it_behaves_like 'uneditable_basket'
   end
 
   context 'delivery has arrived' do
-    before(:all) do
-      b = FactoryGirl.create(:basket_with_orders, submitted: 10.minutes.ago, arrival: Time.now)
-      assign(:basket, b)
-      assign(:order, b.orders.first)
+    before do
+      assign(:basket, arrived_basket)
+      assign(:order, arrived_basket.orders.first)
     end
 
     it_behaves_like 'uneditable_basket'

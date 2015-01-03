@@ -177,6 +177,8 @@ describe Basket, type: :model do
       end
 
       it 'estimates correctly' do
+        expect(Basket.count).to eql 1 # sanity check
+
         avg = Basket.first.duration_per_euro
         exact = avg * subject.sum
         expect(subject.estimate[0]).to be_within(0.5).of(exact)
