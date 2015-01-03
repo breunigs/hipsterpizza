@@ -9,22 +9,6 @@ xdescribe 'Basket', type: :feature do
     @basket = basket_create
   end
 
-  it 'can be cancelled' do
-    visit basket_path(@basket)
-    click_on I18n.t('nav.admin.admin')
-    click_link I18n.t('button.cancel.do')
-
-    expect(page).to have_content I18n.t('basket.controller.group_order.cancelled')
-    open_admin_menu
-    expect(page).to have_link I18n.t('button.cancel.undo')
-    expect(page).not_to have_link submit_link
-
-    click_link I18n.t('button.cancel.undo')
-
-    open_admin_menu
-    expect(page).to have_link submit_link
-  end
-
   it 'is submittable' do
     visit basket_path(@basket)
     order_create
@@ -42,8 +26,6 @@ xdescribe 'Basket', type: :feature do
     end
 
     click_on I18n.t('modes.basket_submit.cancel.button')
-    expect(page).to have_content I18n.t('basket.controller.reopened')
-    expect(page).to have_link I18n.t('nav.admin.admin')
 
     open_admin_menu(submit_link)
     wait_for_progress_done

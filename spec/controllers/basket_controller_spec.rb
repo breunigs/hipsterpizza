@@ -50,7 +50,6 @@ describe BasketController, type: :controller do
       get :new
       expect(cookies['_hipsterpizza_mode']).to eql 'pizzade_basket_new'
     end
-
   end
 
   describe '#create' do

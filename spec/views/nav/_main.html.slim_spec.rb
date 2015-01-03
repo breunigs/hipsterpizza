@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe 'nav/_main', type: :view do
-  before do
-    assign(:basket, FactoryGirl.build_stubbed(:basket))
-  end
+  let(:basket) { FactoryGirl.create(:basket) }
+
+  before { assign(:basket, basket) }
 
   context 'not admin' do
     it 'displays become admin link' do
@@ -20,6 +20,7 @@ RSpec.describe 'nav/_main', type: :view do
 
   context 'admin' do
     before { allow(view).to receive(:admin?).and_return(true) }
+    before { allow(view).to receive(:params).and_return({controller: 'basket'}) }
 
     it 'displays disable admin link' do
       render
@@ -29,6 +30,35 @@ RSpec.describe 'nav/_main', type: :view do
     it 'displays admin menu' do
       render
       expect(rendered).to have_link I18n.t('nav.admin.admin')
+    end
+
+    it 'has cancel link' do
+      render
+      expect(rendered).to have_link I18n.t('button.cancel.do')
+    end
+
+    it 'has submit link' do
+      render
+      expect(rendered).to have_link I18n.t('button.submit_group_order.first_time.text')
+    end
+
+    context 'cancelled basket' do
+      before do
+        basket.cancelled = true
+        basket.save
+        assign(:basket, basket)
+      end
+
+      it 'has un-cancel link' do
+        render
+        expect(rendered).to have_link I18n.t('button.cancel.undo')
+      end
+
+      it 'does not have submit link' do
+        render
+        expect(rendered).not_to have_link I18n.t('button.submit_group_order.first_time.text')
+      end
+
     end
   end
 
