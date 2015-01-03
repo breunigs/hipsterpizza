@@ -231,13 +231,13 @@ describe BasketController, type: :controller do
         expect(flash[:error]).to be_present
       end
 
-      context 'not cancelled' do
-        it 'shows a warning on cancelling' do
+      context 'not canceled' do
+        it 'shows a warning on canceling' do
           patch :toggle_cancelled, id: basket.uid
           expect(flash[:warn]).to be_present
         end
 
-        it 'updates the basket to be cancelled' do
+        it 'updates the basket to be canceled' do
           patch :toggle_cancelled, id: basket.uid
           basket.reload
           expect(basket.cancelled?).to eql true

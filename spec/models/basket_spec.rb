@@ -150,7 +150,38 @@ describe Basket, type: :model do
   end
 
   describe '#estimate' do
-    pending
+    let(:sha) { 'some sha’d address' }
+
+    subject do
+      s = FactoryGirl.build(:basket, sha_address: sha)
+      allow(s).to receive(:sum).and_return(37)
+      s
+    end
+
+    context 'without similar baskets' do
+      it 'does not estimate' do
+        expect(subject.estimate).to eql [nil, 0]
+      end
+    end
+
+    context 'with similar basket' do
+      before do
+        FactoryGirl.create(:basket_with_orders,
+          submitted: 10.minutes.ago,
+          arrival: 5.minutes.ago,
+          sha_address: sha)
+      end
+
+      it 'detects one sample' do
+        expect(subject.estimate[1]).to eql 1
+      end
+
+      it 'estimates correctly' do
+        avg = Basket.first.duration_per_euro
+        exact = avg * subject.sum
+        expect(subject.estimate[0]).to be_within(0.5).of(exact)
+      end
+    end
   end
 
   describe '#fax_filename' do
