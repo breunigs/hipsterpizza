@@ -107,7 +107,7 @@ class BasketController < ApplicationController
   end
 
   def pdf
-    @cfg = load_fax_config
+    @fax_config = load_fax_config
     fn = @basket.fax_filename
     response.headers['Content-Disposition'] = %(INLINE; FILENAME="#{fn}")
     response.headers['Content-Type'] = 'application/pdf'

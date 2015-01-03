@@ -3,11 +3,10 @@ class BasketSubmitController < ApplicationController
   include ActionController::Live
 
   before_filter :require_basket, only: :submit
-  before_filter :load_config
 
   def submit
     @basket.update_attribute(:submitted, Time.now)
-    provider = @cfg['order_by_fax'] ? @cfg['fax_provider'] : nil
+    provider = fax_config['order_by_fax'] ? fax_config['fax_provider'] : nil
 
     case provider
     when 'manual' then
@@ -27,7 +26,7 @@ class BasketSubmitController < ApplicationController
 
   private
 
-  def load_config
-    @cfg = load_fax_config
+  def fax_config
+    @fax_config ||= load_fax_config
   end
 end

@@ -21,7 +21,13 @@ page = m.get('https://faxout.pdf24.org/')
 success
 
 a('Rendering fax-order.pdf ') ##########################################
-fax = render(file: '/basket/fax.pdf') rescue nil
+fax = nil
+begin
+  fax = render(file: '/basket/fax.pdf')
+rescue => e
+  append_exception(e)
+end
+
 if fax.nil?
   a('✗ – Could not render PDF properly. Please contact the admin.')
   return exit
@@ -43,8 +49,8 @@ success
 
 
 a('Logging In 1/2 ') ###################################################
-mail = u @cfg['pdf24_mail']
-pass = u @cfg['pdf24_pass']
+mail = u @fax_config['pdf24_mail']
+pass = u @fax_config['pdf24_pass']
 # XXX: different subdomain!
 login = m.get("https://fax.pdf24.org/ajax.php?action=logIn&email=#{mail}&password=#{pass}")
 
@@ -89,7 +95,7 @@ success
 n
 append_raw <<END
     <div class="alert alert-info">
-    It appears the fax has been queued successfully. You should receive a mail from PDF24 at #{h @cfg['pdf24_mail']} shortly. It will tell you if the fax has been transmitted successfully.
+    It appears the fax has been queued successfully. You should receive a mail from PDF24 at #{h @fax_config['pdf24_mail']} shortly. It will tell you if the fax has been transmitted successfully.
     </div>
     #{basket_link}
 END

@@ -11,6 +11,13 @@ module BasketSubmitHelper
     @stream.write(text.to_s) unless @stream.closed?
   end
 
+  def append_exception(e)
+    Rails.logger.warning e.message
+    Rails.logger.warning e.backtrace
+    l = [e.message, '', *e.backtrace].map { |l| h(l) }.join("\n")
+    append_raw(%(<!--\n#{l}\n-->\n))
+  end
+
   def log
     l = @log.get.map { |x| x.join[0..200].strip }
 

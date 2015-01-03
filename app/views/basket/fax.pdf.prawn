@@ -1,7 +1,7 @@
 pdf.font_size 11
 
-if @cfg['logo']
-  pdf.image @cfg['logo'], position: :right, width: 200, at: [pdf.bounds.right-200, pdf.bounds.top]
+if @fax_config['logo']
+  pdf.image @fax_config['logo'], position: :right, width: 200, at: [pdf.bounds.right-200, pdf.bounds.top]
 end
 
 d = contact_details_array
@@ -21,13 +21,13 @@ pdf.move_down 15
 pdf.text "Summe: #{euro_de(@basket.sum)}", size: 16, style: :bold
 
 
-if @cfg['lat'] && @cfg['lon']
+if @fax_config['lat'] && @fax_config['lon']
   vpos = pdf.cursor + 108
 
-  lat = @cfg['lat']
-  lon = @cfg['lon']
+  lat = @fax_config['lat']
+  lon = @fax_config['lon']
 
-  osm = "http://www.osm.org/?mlat=#{lat}&mlon=#{lon}#map=17/#{lat}/#{@cfg['lon']}"
+  osm = "http://www.osm.org/?mlat=#{lat}&mlon=#{lon}#map=17/#{lat}/#{@fax_config['lon']}"
   gmaps = "https://maps.google.de/maps?q=#{lat},#{lon}&num=1&t=m&z=18"
 
   size = 100
