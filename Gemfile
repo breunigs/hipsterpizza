@@ -21,7 +21,7 @@ gem 'http_accept_language'
 gem 'mechanize', require: false
 gem 'prawn', '1.0.0'
 gem 'prawn-qrcode'
-gem 'prawn-rails', git: 'git://github.com/cortiz/prawn-rails.git'
+gem 'prawn-rails', git: 'git://github.com/cortiz/prawn-rails.git', ref: 'c276c1b601e3'
 
 group :development do
   gem 'better_errors'
