@@ -10,7 +10,10 @@ describe 'replay and storing', type: :feature do
       click_on I18n.t('order_table.menu')
       click_link I18n.t('button.copy_order.button')
 
-      expect(page).to have_button I18n.t('modes.order_new.place.button')
+      using_wait_time 30 do
+        expect(page).to have_no_content I18n.t('please_wait')
+        expect(page).to have_button I18n.t('modes.order_new.place.button')
+      end
 
       ## testing saving ##
       accept_prompt(with: 'some unused nick') do
