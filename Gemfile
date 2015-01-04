@@ -8,7 +8,6 @@ gem 'jquery-rails'
 gem 'slim'
 gem 'therubyracer',         platform: :ruby
 gem 'puma'
-gem 'actionpack-action_caching'
 gem 'rqrcode-rails3'
 gem 'possessive'
 gem 'unicode_utils'
