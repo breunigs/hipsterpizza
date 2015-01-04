@@ -4,7 +4,7 @@ class CreateBaskets < ActiveRecord::Migration
       t.string :shop_name
       t.datetime :submitted
 
-      t.timestamps
+      t.timestamps, null: false
     end
   end
 end
