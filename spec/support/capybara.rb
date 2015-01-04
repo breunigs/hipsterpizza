@@ -22,13 +22,11 @@ Capybara.register_driver :poltergeist_no_debug do |app|
   )
 end
 
-driver = "poltergeist#{debug ? "" : "_no_debug"}"
-driver = driver.to_sym
+driver = "poltergeist#{debug ? "" : "_no_debug"}".to_sym
 Capybara.current_driver = driver
 Capybara.default_driver = driver
 Capybara.javascript_driver = driver
 
-Capybara.default_wait_time = ENV['CAPYBARA_WAIT'].try(:to_i) || 2
 
 Capybara::Screenshot.register_driver(driver) do |driver, path|
   driver.save_screenshot(path)
@@ -37,5 +35,4 @@ Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
   desc = example.full_description
   "screenshot_#{desc.gsub(' ', '_')}"
 end
-
 Capybara::Screenshot.append_timestamp = false
