@@ -13,11 +13,11 @@
 
 ActiveRecord::Schema.define(version: 20141027212153) do
 
-  create_table "baskets", force: true do |t|
+  create_table "baskets", force: :cascade do |t|
     t.string   "shop_name"
     t.datetime "submitted"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "shop_url"
     t.string   "uid"
     t.boolean  "cancelled",       default: false
@@ -27,17 +27,17 @@ ActiveRecord::Schema.define(version: 20141027212153) do
     t.string   "shop_url_params"
   end
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.string   "nick"
     t.string   "json"
     t.string   "uuid"
     t.integer  "basket_id"
     t.boolean  "paid",       default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  create_table "saved_orders", force: true do |t|
+  create_table "saved_orders", force: :cascade do |t|
     t.string "shop_url"
     t.string "nick"
     t.string "json"

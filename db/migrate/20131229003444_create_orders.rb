@@ -7,7 +7,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer :basket_id
       t.boolean :paid, default: false
 
-      t.timestamps, null: false
+      t.timestamps null: false
     end
   end
 end
