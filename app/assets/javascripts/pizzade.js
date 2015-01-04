@@ -212,7 +212,7 @@ var hipster = window.hipster = (function() {
 
     // Closes order details (like extra ingredients or menu items) if present.
     function orderDetailsClose() {
-      $('.shop-dialog a:contains("in den Warenkorb"):first').click();
+      $('.shop-dialog:visible a:contains("in den Warenkorb"):first').click();
     }
 
     function orderDetailsRemoveAutoAddedExtras(extras) {
