@@ -215,9 +215,9 @@ var hipster = window.hipster = (function() {
       $('.shop-dialog a:contains("in den Warenkorb"):first').click();
     }
 
-    function orderDetailsRemoveAutoAddedExtras(extras, errmsg) {
+    function orderDetailsRemoveAutoAddedExtras(extras) {
       if(extras.length === 0) {
-        return;
+        return extras;
       }
 
       // See if they were included by pizza.de magic and assume they are included
@@ -225,18 +225,20 @@ var hipster = window.hipster = (function() {
       extras = $.grep(extras, function(extra) {
         var found = completeItem.indexOf(extra) >= 0;
         if(found) {
-          my.log('removing subitem ' + extra + ' because it appears it was auto-added.');
+          my.log('replay: | removing subitem ' + extra + ' because it appears it was auto-added.');
           return false;
         }
         return true;
       });
 
+      return extras;
+    }
 
+    function orderDetailsAddErrorsForMissingExtras(extras, errmsg) {
       $.each(extras, function(ind, extra) {
+        my.log('replay: | missing extra: "' + extra + '"');
         errorMsgs.push(errmsg + ' EXTRA NOT FOUND: ' + extra);
       });
-
-      return extras;
     }
 
     // searches current sub page and adds found items to basket. The
@@ -262,6 +264,7 @@ var hipster = window.hipster = (function() {
         }
 
         my.log('replay: found item “' + item.prod + '”');
+        my.log('replay: | searching for extras: ' + item.extra.join(' | '));
 
         var errmsg = 'product='+item.prod+'  | ';
         // exactly one link found. Add it to cart or open extra
@@ -284,23 +287,34 @@ var hipster = window.hipster = (function() {
             }
 
             if(ingred.length >= 2) {
+              console.warn('replay: | found two links for "' + extra + '"');
               errorMsgs.push(errmsg + ' EXTRA AMBIGUOUS: ' + extra);
               return false; // remove item from list
             }
 
             ingred.click();
+            my.log('replay: | added extra "' + extra + '"');
+
+            // Since we found one item, already checked extra may have become
+            // available. This happens in multi-step-menus.
+            lookAgain = true;
             return false;
           });
 
-          lookAgain = item.extra.length > 0 && orderDetailsHasMoreSteps();
-          if(lookAgain) {
-            my.log('replay: missing extra, going to next step. Extras: ' + item.extra.join(', '));
+          item.extra = orderDetailsRemoveAutoAddedExtras(item.extra);
+
+          if(item.extra.length === 0) {
+            break;
+          }
+
+          if(lookAgain || orderDetailsHasMoreSteps()) {
+            my.log('replay: | missing extra, going to next step. Extras: ' + item.extra.join(', '));
             orderDetailsGotoNextStep();
           }
 
         } while(lookAgain);
 
-        item.extra = orderDetailsRemoveAutoAddedExtras(item.extra, errmsg);
+        orderDetailsAddErrorsForMissingExtras(item.extra, errmsg);
 
         orderDetailsClose();
 
