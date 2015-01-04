@@ -1,0 +1,91 @@
+en:
+  main:
+      privacy:
+        return: Return To Start
+        header: HipsterPizza Data Usage / Privacy
+        note: 'Note:'
+
+        duration:
+          up_to_one_year: (up to one year)
+          until_clear: (until you clear them)
+          depends: (depends)
+
+        server:
+          header: Server
+          basket:
+            details: "Basket: chosen shop, status, timestamps"
+            address: "Basket: scrambled address details (see below)"
+          order: "Orders: nick, timestamp, product details and prices"
+          logs: "Server Logs: page visits with your IP, user agent and timestamp"
+
+          delete_method: No attempt is made that deleted data is not recoverable.
+
+        browser:
+          header: Browser
+          nick: "Nick: Identifies your order. Convenience for next order. Stored in cookie."
+          status: "Status: Internal flow control by HipsterPizza. Stored in cookie."
+          address: "Address: Convenience for next order. Stored in local storage. Can be accessed by third party providers."
+          cookie_passthrough: "HipsterPizza cookies are cleaned before passing the request through to third party providers. Some requests may directly connect to third party providers, who may thus read these cookies."
+
+        address:
+          header: Address Details
+          server:
+            header: On Server
+            details: 'Stored in <a href="http://en.wikipedia.org/wiki/SHA-2">scrambled form</a> as part of a basket. Used estimate delivery times for your address.'
+          browser:
+            header: In Browser
+            details: Stored in local storage and can be read by third party provider. Remove it using your browser’s cleaning tools.
+
+        third_party:
+          header: Third Party Providers
+          pizzade: pizza.de’s privacy and data usage explanation
+
+        questions:
+          header: Questions?
+          text: 'If you have any questions, please open a ticket at <a href="https://github.com/breunigs/hipsterpizza/issues">HipsterPizza’s project page on GitHub</a> or send a mail to <a href="mailto:%{mail}">%{mail}</a>.'
+
+de:
+  main:
+      privacy:
+        return: Zurück zum Start
+        header: HipsterPizza Datenschutz
+        note: 'Hinweis:'
+
+        duration:
+          up_to_one_year: (bis zu einem Jahr)
+          until_clear: (bis Du sie löschst)
+          depends: (kommt drauf an)
+
+        server:
+          header: Server
+          basket:
+            details: "Warenkorb: gewählter Lieferdienst, Status und Zeitstempel"
+            address: "Warenkorb: zerhackte / gehashte Adresse (siehe unten)"
+          order: "Bestellungen: Nick, Zeitstempel, Produkte und deren Preise"
+          logs: "Server Logs: Seitenaufrufe mit Deiner IP, User Agent („Browser“) und Zeitstempel"
+
+          delete_method: 'Es wird kein <a href="http://de.wikipedia.org/wiki/Datenvernichtung">sicheres Löschen</a> verwendet, Daten könnten wiederherstellbar sein.'
+
+        browser:
+          header: Browser
+          nick: "Nick: Identifiziert Deine Bestellung. Zur Bequemlichkeit bei nächster Bestellung. Wird als Cookie gespeichert."
+          status: "Status: Zur Ablaufsteuerung von HipsterPizza. Wird als Cookie gespeichert."
+          address: "Adresse: Zur Bequemlichkeit bei nächster Bestellung. Wird via LocalStorage gespeichert. Kann durch Drittanbieter gelesen werden."
+          cookie_passthrough: "HipsterPizza Cookies werden vor der Durchleitung an Drittanbieter entfernt. Einige Anfragen können direkt an Drittanbieter gehen, die so die HipsterPizza Cookies lesen können."
+
+        address:
+          header: Adressdaten
+          server:
+            header: Auf Server
+            details: 'Zusammen mit dem Warenkorb in <a href="http://de.wikipedia.org/wiki/SHA-2">zerhackter / gehashter Form</a> gespeichert. Wird benutzt um die Lieferzeit an eine Adresse vorherzusagen.'
+          browser:
+            header: Im Browser
+            details: Wird im Browser via Local Storage gespeichert. Kann von Drittanbietern gelesen werden. Entfernung mit den Reinigungstools des Browsers möglich.
+
+        third_party:
+          header: Drittanbieter
+          pizzade: Datenschutzbestimmungen von pizza.de
+
+        questions:
+          header: Fragen?
+          text: 'Bei Fragen schreibe <a href="https://github.com/breunigs/hipsterpizza/issues">ein neues Ticket</a> auf der HipsterPizza Projektseite auf GitHub – vorzugsweise auf Englisch. Du kannst auch eine E-Mail schreiben: <a href="mailto:%{mail}">%{mail}</a>.'
