@@ -52,7 +52,7 @@ a('Logging In 1/2 ') ###################################################
 mail = u @fax_config['pdf24_mail']
 pass = u @fax_config['pdf24_pass']
 # XXX: different subdomain!
-login = m.get("https://fax.pdf24.org/ajax.php?action=logIn&email=#{mail}&password=#{pass}")
+login = m.get("https://fax.pdf24.org/client.php?action=user%2FlogIn&email=#{mail}&password=#{pass}")
 
 json = json_or_fail(login.body)
 return if json.nil?
