@@ -13,7 +13,7 @@ describe 'Passthrough', type: :feature do
   end
 
   it 'renders shop page' do
-    visit root_path + 'indian-curry-berlin-bruesseler-str-17?lgs=102261&ed=406536'
+    visit root_path + FactoryGirl.build_stubbed(:real_basket_pizzade).full_path
     expect(page).to have_content 'Indian Curry | Brüsseler Str. 17 | 13353 Berlin'
   end
 
