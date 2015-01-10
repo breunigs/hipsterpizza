@@ -42,7 +42,7 @@ namespace :hipster do
     puts "### available on port #{DEFAULT_PORT}. See the README.md file on how to"
     puts '### integrate this into your webserver'
     puts
-    puts "RAILS_ENV=production bundle exec rails server -p #{DEFAULT_PORT} -b localhost --daemon"
+    puts "RAILS_ENV=production ./bin/rails server -p #{DEFAULT_PORT} -b localhost --daemon"
     puts
     puts
   end

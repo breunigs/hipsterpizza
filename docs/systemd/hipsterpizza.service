@@ -3,10 +3,11 @@ Description=HipsterPizza (group order system for pizza.de)
 
 [Service]
 User=www-data
-WorkingDirectory=/srv/hipsterpizza
+WorkingDirectory=/var/www/hipsterpizza
 Environment=RAILS_ENV=production
-ExecStart=/usr/bin/bundle exec rails server Puma -p 10002 -b localhost
+ExecStart=/var/www/hipsterpizza/bin/rails server Puma -p 10002 -b localhost
 Restart=always
+
 
 [Install]
 WantedBy=multi-user.target

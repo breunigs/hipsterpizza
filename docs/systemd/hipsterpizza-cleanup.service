@@ -1,0 +1,8 @@
+[Unit]
+Description=HipsterPizza Cleanup (deletes outdated data)
+
+[Service]
+User=www-data
+WorkingDirectory=/var/www/hipsterpizza
+Environment=RAILS_ENV=production
+ExecStart=/var/www/hipsterpizza/bin/rake hipster:purge_old
