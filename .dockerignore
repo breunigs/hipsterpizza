@@ -1,0 +1,7 @@
+.git/*
+coverage/*
+tmp/*
+log/*
+.bundle/
+.tags_sorted_by_file
+.tags
