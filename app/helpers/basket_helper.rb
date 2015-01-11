@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module BasketHelper
   def update_via_js(selector, template)
     js = escape_javascript(render *template) unless template.nil?
@@ -29,17 +27,14 @@ module BasketHelper
   end
 
   def contact_field(field)
-    x = @cfg['address'][field.to_s] rescue nil
-    x ||= PINNING['address'][field.to_s] rescue nil
-    x
+    x = @fax_config.fetch('address', {}).fetch(field.to_s, nil)
+    x ||= PINNING.fetch('address', {}).fetch(field.to_s, nil)
+    x || ''
   end
 
   def contact_sha_address
-    addr = ''
-    addr << contact_field(:zipcode) << ' '
-    addr << contact_field(:street) << ' '
-    addr << contact_field(:street_no) << ' '
-    addr.strip.downcase.gsub(/[^a-z0-9]/, '')
+    items = [:zipcode, :street, :street_no].map { |x| contact_field(x) }
+    items.join(' ').strip.downcase.gsub(/[^a-z0-9]/, '')
   end
 
   def contact_details_array
