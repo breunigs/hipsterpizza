@@ -9,14 +9,14 @@ RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
   ruby \
   ruby-dev
 
-WORKDIR /var/www/hipsterpizza
+WORKDIR /app
 
 RUN gem install bundler --no-ri --no-rdoc
-ADD Gemfile* /var/www/hipsterpizza/
+ADD Gemfile* /app/
 RUN /usr/local/bin/bundler --jobs 4 --deployment --without development test
 
-ADD . /var/www/hipsterpizza/
-RUN chown --recursive www-data:www-data /var/www/
+ADD . /app/
+RUN chown --recursive www-data:www-data /app
 
 ADD docs/systemd/hipsterpizza-cleanup* /etc/systemd/system/
 RUN systemctl enable hipsterpizza-cleanup.timer

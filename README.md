@@ -1,8 +1,19 @@
 # HipsterPizza – [pizza.yrden.de](https://pizza.yrden.de)
 
-HipsterPizza allows to make group orders on pizza.de. If you don’t want
-to install a copy of HipsterPizza on your own server, you can use the
+HipsterPizza allows to **make group orders** on pizza.de. If you don’t want
+to run your own copy, you can use the
 public instance at **[pizza.yrden.de](https://pizza.yrden.de)**.
+
+Regular user? Roll your own copy to gain the ability to
+- automate all the things
+- save sharing the basket ID with colleagues
+- send your own fax to…
+  - easily match order to person
+  - add detailed way description
+  - get VIP status
+  - Bonus: confuse the delivery people
+
+Convinced? Read on!
 
 ## Status
 
@@ -13,20 +24,8 @@ public instance at **[pizza.yrden.de](https://pizza.yrden.de)**.
 
 ## Rolling your own copy
 
-**Manual Setup:** Contine with **Basic Setup** below.
-
-**Docker:** Execute the following and (optionally) continue with [webserver integration](#webserver-integration)
-```
-git clone git://github.com/breunigs/hipsterpizza
-cd hipsterpizza
-sudo docker build --tag hipsterpizza .
-sudo docker run -d --name hipsterpizza_data -v /var/www/hipsterpizza/db hipsterpizza echo 'HipsterPizza Data Only'
-sudo docker run -d --name hipsterpizza_runner --volumes-from hipsterpizza_data -p 10002:10002 hipsterpizza
-# Next runs:
-# sudo docker stop hipsterpizza_runner
-# sudo docker start hipsterpizza_runner
-```
-Currently there is no HipsterPizza image available for the Docker Registry. I may provide one in the future if people prefer it to making changes in their local git repository.
+This guide explains how to install HipsterPizza on Debian **testing**.
+Alternatively, you can use [HipsterPizza with Docker](docs/DOCKER.md).
 
 ### Basic Setup
 ```bash
@@ -65,8 +64,9 @@ This will ensure HipsterPizza starts everytime you boot the system. The `hipster
 
 Execute the following commands as user `www-data` at appropriate times/events:
 ```
-cd /var/www/hipsterpizza && RAILS_ENV=production ./bin/rails server Puma -p 10002 -b localhost
-cd /var/www/hipsterpizza && RAILS_ENV=production ./bin/rake hipster:purge_old
+cd /var/www/hipsterpizza
+RAILS_ENV=production ./bin/rails server Puma -p 10002 -b localhost
+RAILS_ENV=production ./bin/rake hipster:purge_old
 ```
 
 ## Webserver integration

@@ -1,4 +1,4 @@
-## 2.0.1 (unreleased)
+## 2.1 (unreleased)
 
 Maintenance release, with little visible changes. For details on how to upgrade, [please see UPGRADING.md](UPGRADING.md).
 
@@ -12,7 +12,7 @@ Under the Hood:
   - improved tests: Previously only system tests were used. However, those were often failing/flapping and rather slow.
   - added binstubs: you can use them instead of prepending `bundle exec`. E.g. `./bin/rspec` to run all tests. If you install [direnv](https://github.com/zimbatm/direnv), your `PATH` is updated automatically, too.
 
-## 2.0.0
+## 2.0
 
 Previously HipsterPizza had a rolling release, opposed to the semantic versioning used now. The last “unversioned” change was [6a6cf91dc](https://github.com/breunigs/hipsterpizza/commit/6a6cf91dc1529d8ce319383bc5a9967d6ddae61d), authored 2015-01-04.
 
