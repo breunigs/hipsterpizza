@@ -56,7 +56,7 @@ Unfortunately the instructions given in the old [README.md](../README.md) were i
 
 5. Run HipsterPizza’s housekeeping:
   ```
-  RAILS_ENV=production ./bin/rake hipster:setup_production
+  RAILS_ENV=production bundle exec rake hipster:setup_production
   ```
 
 6. Restart HipsterPizza.
