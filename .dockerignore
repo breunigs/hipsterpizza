@@ -2,6 +2,7 @@
 coverage/*
 tmp/*
 log/*
-.bundle/
+db/*.sqlite3
+.bundle/*
 .tags_sorted_by_file
 .tags

@@ -16,19 +16,7 @@ namespace :hipster do
 
   def bundle_install
     run('which bundle || gem install bundler')
-    if Rails.env.production?
-      run('bundle --deployment --without development test')
-    else
-      run('bundle install')
-    end
-  end
-
-  desc 'Sets HipsterPizza up for development'
-  task setup_development: [] do
-    bundle_install
-    puts
-    puts '### Almost done! Execute “guard” next and you should be ready'
-    puts '### to develop away :)'
+    run('bundle --deployment --without development test')
   end
 
   desc 'Executes necessary steps to make HipsterPizza run in production'
@@ -36,7 +24,7 @@ namespace :hipster do
     bundle_install
 
     run('RAILS_ENV=production bundle exec rake assets:precompile')
-    run('RAILS_ENV=production bundle exec rake db:migrate')
+    run('RAILS_ENV=production bundle exec rake db:setup db:migrate')
 
     puts '### Almost done! Run the following command to make HipsterPizza'
     puts "### available on port #{DEFAULT_PORT}. See the README.md file on how to"
@@ -47,19 +35,20 @@ namespace :hipster do
     puts
   end
 
-  desc 'Update HipsterPizza to latest git version'
+  desc 'Update HipsterPizza to latest version'
   task update: :environment do
-    run('git pull --all')
+    run('git checkout master')
+    run('git pull')
     bundle_install
 
-    run('RAILS_ENV=production bundle exec rake assets:precompile') if Rails.env.production?
+    run('RAILS_ENV=production bundle exec rake assets:precompile')
 
     pid = File.open('tmp/pids/server.pid', 'r').read.to_i rescue nil
     running = pid && pid > 0 && (Process.kill(0, pid) rescue nil)
 
     port ||= DEFAULT_PORT
 
-    run("RAILS_ENV=#{Rails.env} bundle exec rake db:migrate")
+    run("RAILS_ENV=production bundle exec rake db:migrate")
 
     if running
       puts '### Restarting server…'
@@ -67,13 +56,7 @@ namespace :hipster do
     else
       puts '### Server wasn’t running before, not running it now'
       puts '### In order to start your server, execute:'
-      puts "RAILS_ENV=#{Rails.env} bundle exec rails server -p #{port} -b localhost --daemon"
-
-      if Rails.env.development?
-        puts
-        puts '### Since you’re running in development mode, either run'
-        puts '### “guard” or simply wait until it picks up the changes.'
-      end
+      puts "RAILS_ENV=production bundle exec rails server -p #{port} -b localhost --daemon"
     end
   end
 

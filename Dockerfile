@@ -24,6 +24,7 @@ RUN systemctl enable hipsterpizza-cleanup.timer
 USER www-data
 # Needs to run again to fix up gem detection?
 RUN /usr/local/bin/bundler --jobs 4 --deployment --without development test --quiet
+
 RUN ./bin/rake hipster:setup_production
 
 ENV RAILS_ENV production

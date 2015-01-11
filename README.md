@@ -20,8 +20,11 @@ public instance at **[pizza.yrden.de](https://pizza.yrden.de)**.
 git clone git://github.com/breunigs/hipsterpizza
 cd hipsterpizza
 sudo docker build --tag hipsterpizza .
-sudo docker run --name hipsterpizza_runner -p 10002:10002 hipsterpizza
+sudo docker run -d --name hipsterpizza_data -v /var/www/hipsterpizza/db hipsterpizza echo 'HipsterPizza Data Only'
+sudo docker run -d --name hipsterpizza_runner --volumes-from hipsterpizza_data -p 10002:10002 hipsterpizza
+# Next runs:
 # sudo docker stop hipsterpizza_runner
+# sudo docker start hipsterpizza_runner
 ```
 Currently there is no HipsterPizza image available for the Docker Registry. I may provide one in the future if people prefer it to making changes in their local git repository.
 
