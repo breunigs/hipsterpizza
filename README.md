@@ -23,8 +23,7 @@ sudo docker build --tag hipsterpizza .
 sudo docker run --name hipsterpizza_runner -p 10002:10002 hipsterpizza
 # sudo docker stop hipsterpizza_runner
 ```
-Currently there is no HipsterPizza image available on Docker
-
+Currently there is no HipsterPizza image available for the Docker Registry. I may provide one in the future if people prefer it to making changes in their local git repository.
 
 ### Basic Setup
 ```bash
