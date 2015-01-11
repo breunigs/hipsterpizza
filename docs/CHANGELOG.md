@@ -1,6 +1,6 @@
 ## 2.0.1 (unreleased)
 
-Maintenance release, with little visible changes. For details on how to upgrade, [UPGRADING.md](please see UPGRADING.md).
+Maintenance release, with little visible changes. For details on how to upgrade, [please see UPGRADING.md](UPGRADING.md).
 
 User-Facing:
 

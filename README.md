@@ -13,7 +13,18 @@ public instance at **[pizza.yrden.de](https://pizza.yrden.de)**.
 
 ## Rolling your own copy
 
-HipsterPizza uses Rails 4 and has been tested with Ruby 2.1. Here’s how to get it running on Debian **testing**:
+**Manual Setup:** Contine with **Basic Setup** below.
+
+**Docker:** Execute the following and (optionally) continue with [webserver integration](#webserver-integration)
+```
+git clone git://github.com/breunigs/hipsterpizza
+cd hipsterpizza
+sudo docker build --tag hipsterpizza .
+sudo docker run --name hipsterpizza_runner -p 10002:10002 hipsterpizza
+# sudo docker stop hipsterpizza_runner
+```
+Currently there is no HipsterPizza image available on Docker
+
 
 ### Basic Setup
 ```bash
@@ -49,13 +60,14 @@ sudo systemctl start hipsterpizza.service
 This will ensure HipsterPizza starts everytime you boot the system. The `hipsterpizza-cleanup` jobs automatically removes outdated data – this keeps the delivery time estimate decent.
 
 **not using systemd:**
+
 Execute the following commands as user `www-data` at appropriate times/events:
 ```
 cd /var/www/hipsterpizza && RAILS_ENV=production ./bin/rails server Puma -p 10002 -b localhost
 cd /var/www/hipsterpizza && RAILS_ENV=production ./bin/rake hipster:purge_old
 ```
 
-### Webserver integration
+## Webserver integration
 
 If you want HipsterPizza to be accessible “properly”, with a real domain and such, you need to install a webserver to act as reverse proxy.
 
@@ -66,7 +78,7 @@ You can find an example config for nginx in [docs/nginx_configuration_example](d
 Copy the sample to `/etc/nginx/sites-available/hipsterpizza` and edit the IPv6 address and server name. Add a symbolic link to `sites-enabled` and reload nginx to apply the changes.
 
 
-### Configuring HipsterPizza to your needs
+## Configuring HipsterPizza to your needs
 
 Once the above setup is done, you should have a public instance of
 HipsterPizza running, just like the one on
