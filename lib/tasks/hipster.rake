@@ -24,7 +24,7 @@ namespace :hipster do
     bundle_install
 
     run('RAILS_ENV=production ./bin/rake assets:precompile')
-    run('RAILS_ENV=production ./bin/rake db:setup db:migrate')
+    run('RAILS_ENV=production ./bin/rake db:create db:migrate')
 
     puts '### Almost done! Run the following command to make HipsterPizza'
     puts "### available on port #{DEFAULT_PORT}. See the README.md file on how to"
