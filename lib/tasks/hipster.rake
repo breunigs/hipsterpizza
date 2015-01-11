@@ -16,15 +16,15 @@ namespace :hipster do
 
   def bundle_install
     run('which bundle || gem install bundler')
-    run('bundle --deployment --without development test')
+    run('./bin/bundle --deployment --without development test')
   end
 
   desc 'Executes necessary steps to make HipsterPizza run in production'
   task setup_production: [] do
     bundle_install
 
-    run('RAILS_ENV=production bundle exec rake assets:precompile')
-    run('RAILS_ENV=production bundle exec rake db:setup db:migrate')
+    run('RAILS_ENV=production ./bin/rake assets:precompile')
+    run('RAILS_ENV=production ./bin/rake db:setup db:migrate')
 
     puts '### Almost done! Run the following command to make HipsterPizza'
     puts "### available on port #{DEFAULT_PORT}. See the README.md file on how to"
@@ -41,14 +41,14 @@ namespace :hipster do
     run('git pull')
     bundle_install
 
-    run('RAILS_ENV=production bundle exec rake assets:precompile')
+    run('RAILS_ENV=production ./bin/rake assets:precompile')
 
     pid = File.open('tmp/pids/server.pid', 'r').read.to_i rescue nil
     running = pid && pid > 0 && (Process.kill(0, pid) rescue nil)
 
     port ||= DEFAULT_PORT
 
-    run("RAILS_ENV=production bundle exec rake db:migrate")
+    run("RAILS_ENV=production ./bin/rake db:migrate")
 
     if running
       puts '### Restarting server…'
@@ -56,7 +56,7 @@ namespace :hipster do
     else
       puts '### Server wasn’t running before, not running it now'
       puts '### In order to start your server, execute:'
-      puts "RAILS_ENV=production bundle exec rails server -p #{port} -b localhost --daemon"
+      puts "RAILS_ENV=production ./bin/rails server -p #{port} -b localhost --daemon"
     end
   end
 
