@@ -18,8 +18,7 @@ You’ll have two containers running: One which runs the actual HipsterPizza sof
 
 ```
 docker run -d --name hipsterpizza_data -v /app/db $HP_VERSION echo 'Data Only'
-docker run -d --name hipsterpizza_runner --volumes-from hipsterpizza_data \
-    -p 10002:10002 $HP_VERSION
+docker run -d --name hipsterpizza_runner --volumes-from hipsterpizza_data -p 10002:10002 $HP_VERSION
 ```
 
 This will make HipsterPizza available on your machine on [http://localhost:10002](http://localhost:10002).
@@ -37,8 +36,7 @@ docker exec -it hipsterpizza_runner bash
 
 If you want to change configuration (e.g. editing `config/fax.yml`) store the file somewhere on your host system. Next run the following command:
 ```
-docker exec -it hipsterpizza_runner bash -c \
-    'cat > /app/config/fax.yml' < my_config/fax.yml
+docker exec -it hipsterpizza_runner bash -c 'cat > /app/config/fax.yml' < my_config/fax.yml
 ```
 It’s a bit clunky, but `docker cp` does not allow files to be copied to the container yet. If you accidentally overwrite important files and the container exits immediately start fresh – this works just like described in the “Upgrading” section. Use this to see what crashes HipsterPizza: `docker start -ai hipsterpizza_runner`.
 
@@ -47,8 +45,7 @@ It’s a bit clunky, but `docker cp` does not allow files to be copied to the co
 ```
 docker pull $HP_VERSION
 docker rm hipsterpizza_runner
-docker run -d --name hipsterpizza_runner --volumes-from hipsterpizza_data \
-    -p 10002:10002 $HP_VERSION
+docker run -d --name hipsterpizza_runner --volumes-from hipsterpizza_data -p 10002:10002 $HP_VERSION
 ```
 
 If you had modified files before, execute the copy statements again. Patches to improve the retention of config files are welcome.

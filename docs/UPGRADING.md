@@ -8,12 +8,14 @@
 
 ### Starting fresh
 
-If you decide to start fresh, these files are the files you should save and copy to the new installation, after cloning HipsterPizza with git:
+If you decide to start fresh, these files are the files you should save and copy to the new installation:
 ```
 config/fax.yml
 config/pinning.yml
 db/production.sqlite3
 ```
+
+You can either use [the manual setup](../README.md#rolling-your-own-copy) like you did before or you can [try your luck using Docker](DOCKER.md).
 
 ### Instructions
 
@@ -26,10 +28,15 @@ Unfortunately the instructions given in the old [README.md](../README.md) were i
   Continue if `ruby --version` outputs `2.0` or higher as the user you run HipsterPizza with.
 
 2. Install additional dependencies:
-  ```sudo apt-get install ruby bundler git libssl-dev libsqlite3-dev```
+  ```
+  sudo apt-get install ruby bundler git libssl-dev libsqlite3-dev
+  ```
 
 3. Update HipsterPizza:
-  ```cd hipsterpizza && git pull``
+
+  ```
+  cd hipsterpizza && git pull
+  ```
 
   If you have local changes try `git stash && git pull && git stash pop`. If you
   put your changes into a different branch, try: `git checkout master && git pull && git checkout - && git rebase master`.
