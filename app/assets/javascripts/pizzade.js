@@ -146,7 +146,7 @@ var hipster = window.hipster = (function() {
 
   function replay(items, finishCallback) {
     // setup
-    my.log('replay: setup started');
+    my.log('replay: setup started @ ' + (new Date).toUTCString());
     $.fx.off = true;
     $('body').addClass('wait');
     var navLinks = $.makeArray($('.navbars a'));
