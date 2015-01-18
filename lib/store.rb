@@ -31,11 +31,18 @@ class Store
   end
 
   def storable?(env)
-    env['REQUEST_METHOD'] == 'GET' || Rails.env.test?
+    return true if Rails.env.test?
+    return false if cache_buster_param?(env)
+
+    env['REQUEST_METHOD'] == 'GET'
+  end
+
+  def cache_buster_param?(env)
+    !!(env['REQUEST_URI'].to_s =~ /&_=[0-9]{13,}/)
   end
 
   def key(env)
-    key = "#{@host}#{env['PATH_INFO']}"
+    key = "#{@host}#{env['REQUEST_URI']}"
     key << "/#{body_sha(env)}" if env['REQUEST_METHOD'] != 'GET'
     key
   end
