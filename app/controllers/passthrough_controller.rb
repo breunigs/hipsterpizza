@@ -13,6 +13,8 @@ class PassthroughController < ApplicationController
   def pass
     if env['PATH_INFO'].include?('reporterror')
       logger.warn "Blocked reporterror: #{env['PATH_INFO']}"
+      env['rack.input'].rewind
+      logger.warn Rack::Utils.parse_nested_query(env['rack.input'].read)
       render text: 'withheld error from pizza.de', status: 500
     else
       rewrite
