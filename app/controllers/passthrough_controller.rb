@@ -6,19 +6,13 @@ class PassthroughController < ApplicationController
   skip_before_action :verify_authenticity_token
   skip_before_action :reset_flow_cookies
 
+  before_action :filter_error_reporter
   before_action :resolve_mode
 
   after_filter :add_missing_content_type
 
   def pass
-    if env['PATH_INFO'].include?('reporterror')
-      logger.warn "Blocked reporterror: #{env['PATH_INFO']}"
-      env['rack.input'].rewind
-      logger.warn Rack::Utils.parse_nested_query(env['rack.input'].read)
-      render text: 'withheld error from pizza.de', status: 500
-    else
-      rewrite
-    end
+    replace || rewrite
   end
 
   def pass_root
@@ -27,6 +21,15 @@ class PassthroughController < ApplicationController
   end
 
   private
+
+  def filter_error_reporter
+    return unless env['PATH_INFO'].include?('reporterror')
+
+    logger.warn "Blocked reporterror: #{env['PATH_INFO']}"
+    env['rack.input'].rewind
+    logger.warn Rack::Utils.parse_nested_query(env['rack.input'].read)
+    render text: 'withheld error from pizza.de', status: 500
+  end
 
   # Reads the mode cookies and ensures it’s valid and all dependencies are, too.
   # If something is wrong, it redirects to the start page with an error message.
@@ -58,8 +61,6 @@ class PassthroughController < ApplicationController
   end
 
   def rewrite
-    return if replace
-
     fix_host!(env['rack.input'].string) if request.post?
 
     code, headers, body = *forwarder.call(env)
