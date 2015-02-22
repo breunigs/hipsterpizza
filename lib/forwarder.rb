@@ -103,7 +103,8 @@ class Forwarder
       req = Net::HTTP.const_get(m.capitalize).new(path, headers(env))
     when 'PUT', 'POST'
       req = Net::HTTP.const_get(m.capitalize).new(path, headers(env))
-      req.body = rackreq.body.to_s
+      rackreq.body.rewind
+      req.body = rackreq.body.read
     else
       raise "method not supported: #{method}"
     end
