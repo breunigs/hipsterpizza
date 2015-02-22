@@ -71,9 +71,11 @@ class Forwarder
   end
 
   def convert_headers_to_utf8(resource, res_hash, from_charset)
-    return from_charset == 'UTF-8'
+    return if from_charset == 'UTF-8'
 
-    res_hash['content-type'].each { |x| x.sub!(from_charset, 'UTF-8') }
+    escaped_from_charset = Regexp.escape(from_charset)
+    res_hash['content-type'].each { |x| x.sub!(/#{escaped_from_charset}/i, 'UTF-8') }
+
     # HTML meta tags
     resource.body.sub!(/content="text\/html; charset=[^"]+"/, 'content="text/html; charset=UTF-8"')
     # XML
