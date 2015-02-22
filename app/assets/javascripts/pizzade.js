@@ -37,7 +37,7 @@ var hipster = window.hipster = (function() {
       return false;
     }
 
-    _isLoading = $('label:contains("PLZ")').length === 0;
+    _isLoading = $('label:contains("Besonderheiten")').length === 0;
     return _isLoading;
   }
 

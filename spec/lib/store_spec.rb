@@ -13,7 +13,8 @@ describe Store do
     {
       'REQUEST_URI' => '',
       'PATH_INFO' => '',
-      'rack.input' => StringIO.new('')
+      'rack.input' => StringIO.new(''),
+      'action_dispatch.cookies' => ActionDispatch::Cookies::CookieJar.new({})
     }
   end
 
@@ -23,6 +24,24 @@ describe Store do
 
   describe '#guess_expiry' do
     pending
+  end
+
+  describe '#third_party_login?' do
+    let(:cookies) { env['action_dispatch.cookies'] }
+
+    it 'defaults to false' do
+      expect(store.send(:third_party_login?, env)).to eql false
+    end
+
+    it 'detects pizza.de login cookie' do
+      cookies['pizza_de_login'] = 'gimme dat discount'
+      expect(store.send(:third_party_login?, env)).to eql true
+    end
+
+    it 'detects pizza.de "logged out" cookie' do
+      cookies['pizza_de_login'] = 'invalid&1'
+      expect(store.send(:third_party_login?, env)).to eql false
+    end
   end
 
   describe '#key' do

@@ -1,5 +1,5 @@
 module CookieHelper
-  COOKIE_VALID_KEYS = %w(basket is_admin mode nick replay)
+  COOKIE_VALID_KEYS = %w(basket is_admin mode nick replay service)
 
   def cookie_set(key, value, perma = true)
     key = key.to_s

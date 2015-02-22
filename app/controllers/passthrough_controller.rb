@@ -17,6 +17,7 @@ class PassthroughController < ApplicationController
 
   def pass_root
     env['PATH_INFO'] = "/"
+    cookie_set(:service, params[:service])
     rewrite
   end
 
@@ -71,6 +72,7 @@ class PassthroughController < ApplicationController
     end
 
     type = headers['content-type'].first rescue 'text/plain'
+    fix_headers!(headers)
 
     response.headers.merge!(headers)
     send_data body, type: type, disposition: 'inline', status: code
@@ -104,6 +106,18 @@ class PassthroughController < ApplicationController
 
     body.sub!("</head>", "#{get_view(:head_bottom)}\n</head>")
     body.sub!("</body>", "#{get_view(:body_bottom)}\n</body>")
+  end
+
+  def fix_headers!(headers)
+    headers.fetch('set-cookie', []).each do |h|
+      h.sub!(/domain=[^;]+/, "domain=#{request.host}")
+    end
+
+    headers.fetch('location', []).each.with_index do |h, i|
+      next unless h == '/'
+      s = cookie_get(:service)
+      headers['location'][i] = s ? root_service_path(s) : root_path
+    end
   end
 
   def fix_urls!(body)

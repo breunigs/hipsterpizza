@@ -33,8 +33,17 @@ class Store
   def storable?(env)
     return true if Rails.env.test?
     return false if cache_buster_param?(env)
+    return false if third_party_login?(env)
 
     env['REQUEST_METHOD'] == 'GET'
+  end
+
+  def third_party_login?(env)
+    cookies = env['action_dispatch.cookies']
+
+    pizzade = cookies['pizza_de_login']
+    return true if pizzade.present? && pizzade != 'invalid&1'
+    false
   end
 
   def cache_buster_param?(env)
