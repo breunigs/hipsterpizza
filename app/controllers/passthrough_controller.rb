@@ -124,7 +124,7 @@ class PassthroughController < ApplicationController
   def fix_host!(str)
     our = '%3A%2F%2F' # ://
     our << request.host
-    our << "%3A#{request.port}" if request.host != 80
+    our << "%3A#{request.port}" if request.port != 80
 
     str.gsub!(our, '%3A%2F%2Fpizza.de')
   end
