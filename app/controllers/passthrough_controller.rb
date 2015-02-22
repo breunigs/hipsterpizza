@@ -60,19 +60,17 @@ class PassthroughController < ApplicationController
 
     fix_host!(env['rack.input'].string) if request.post?
 
-    ret = forwarder.call(env)
-    body = ret[2].first
+    code, headers, body = *forwarder.call(env)
+    body = body.first
     if body.encoding.to_s == 'UTF-8'
       inject!(body)
       fix_urls!(body)
     end
 
-    type = ret[1]["content-type"].first rescue 'text/plain'
+    type = headers['content-type'].first rescue 'text/plain'
 
-    # send_data does not include the headers from the response object,
-    # so include them manually. Required for e.g. CSP.
-    headers.merge!(response.headers)
-    send_data body, type: type, disposition: 'inline', status: ret[0]
+    response.headers.merge!(headers)
+    send_data body, type: type, disposition: 'inline', status: code
   end
 
   def replace
