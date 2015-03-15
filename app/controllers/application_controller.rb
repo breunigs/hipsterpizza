@@ -100,7 +100,7 @@ class ApplicationController < ActionController::Base
 
   # TODO: deprecate. Should use view instead
   def errors_to_fake_list(obj)
-    '\n• ' + obj.errors.full_messages.join('\n• ')
+    "\n<br>• " + obj.errors.full_messages.join("\n<br>• ")
   end
 
   def set_locale
