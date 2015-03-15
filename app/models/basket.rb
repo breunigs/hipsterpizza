@@ -11,6 +11,7 @@ class Basket < ActiveRecord::Base
   scope :editable, -> { where(submitted: nil, cancelled: false) }
 
   validates :uid, presence: true, uniqueness: true
+  validates :provider, presence: true, inclusion: { in: Provider::VALID_NAMES }
   validates :shop_name, presence: true
   validates :shop_url, presence: true,
     format: { with: %r{\A/}, message: "must start with /" }

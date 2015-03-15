@@ -12,7 +12,6 @@ class BasketController < ApplicationController
   end
 
   def new
-
     # if there’s an editable basket and we are in single basket mode,
     # redirect directly to basket instead of creating new one
     if Pinning.single_basket_mode?
@@ -26,14 +25,18 @@ class BasketController < ApplicationController
     end
 
     provider = Provider.new(params[:provider] || Pinning.provider)
-    cookie_set(:mode, "#{provider.name}_basket_new")
+    if provider.single_shop?
+      provider.merge_defaults!(params)
+      return create
+    end
 
+    cookie_set(:mode, "#{provider.name}_basket_new")
     url = Pinning.shop_url(provider) || provider.new_basket_url
     redirect_to url
   end
 
   def create
-    basket = Basket.create(params.permit(:shop_name, :shop_url, :shop_fax, :shop_url_params))
+    basket = Basket.create(params.permit(:provider, :shop_name, :shop_url, :shop_fax, :shop_url_params))
 
     if basket.errors.any?
       msgs = errors_to_fake_list(basket)

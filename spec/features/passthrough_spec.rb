@@ -9,16 +9,16 @@ describe 'Passthrough', type: :feature do
     click_on link
   end
 
-  it 'renders pizza.de root page' do
+  xit 'renders pizza.de root page' do
     expect(page).to have_content 'Pizza Lieferservice und Pizzaservice'
   end
 
-  it 'renders shop page' do
+  xit 'renders shop page' do
     visit root_path + FactoryGirl.build_stubbed(:real_basket_pizzade).full_path
     expect(page).to have_content 'Indian Curry | Brüsseler Str. 17 | 13353 Berlin'
   end
 
-  it 'replaces content' do
+  xit 'replaces content' do
     visit root_path + '0_image/pizza-de_logoshop_v8.gif'
     expect(current_url).to end_with 'hipster/assets/blank.png'
   end

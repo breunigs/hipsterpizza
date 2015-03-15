@@ -1,14 +1,25 @@
 class Provider
   class InvalidProvider < StandardError; end
 
-  NEW_PARAMS = {
-    "pizzade" => { knddomain: 1, noflash: 1 }
-  }
+  PROVIDERS = {
+    pizzade: {
+      new_params: { knddomain: 1, noflash: 1 },
+      single_shop: false,
+    },
 
-  VALID_NAMES = ['pizzade', 'stadtsalatde']
+    stadtsalatde: {
+      single_shop: true,
+      defaults: {
+        shop_name: "Stadtsalat.de",
+        shop_url: "/"
+      }
+    }
+  }.with_indifferent_access
+
+  VALID_NAMES = PROVIDERS.keys
 
   def self.valid_name?(name)
-    VALID_NAMES.include?(name.to_s)
+    PROVIDERS.keys.include?(name)
   end
 
   def self.current(cookies)
@@ -22,15 +33,32 @@ class Provider
 
   attr_reader :name
 
+  def single_shop?
+    settings[:single_shop]
+  end
+
+  def merge_defaults!(params)
+    settings.fetch(:defaults, {}).each do |key, value|
+      params[key] = value
+    end
+    params
+  end
+
   def new_basket_url
     Rails.application.routes.url_helpers.root_service_path(name)
   end
 
   def new_parameters
-    NEW_PARAMS[name] || {}
+    settings[:new_params] || {}
   end
 
   def to_s
     @name
+  end
+
+  private
+
+  def settings
+    PROVIDERS[name]
   end
 end
