@@ -1,5 +1,14 @@
 # NOTE: restart HipsterPizza after changes in pinning.yml
 
+# Set the provider which is used to talk to the delivery service. You
+# must set the same provider as chosen on HipsterPizza’s start page.
+# Even if a certain delivery service might be available for more than
+# one provider, the other values below are specific for this provider.
+# The provider name is just the domain name of the provider, but
+# without dot. For example, "www.stadtsalat.de" wpuld have the name
+# "stadtsalatde".
+provider: 'pizzade'
+
 # this pins the shop to use and disallows the creation of any other
 # baskets. The URL is the one in the given in <link rel="canonical" …>
 # on the shop’s site. Alternatively, create a basket first and retrieve

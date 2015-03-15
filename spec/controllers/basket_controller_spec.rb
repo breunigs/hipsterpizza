@@ -10,6 +10,8 @@ describe BasketController, type: :controller do
   end
 
   describe '#new' do
+    let(:provider) { 'pizzade' }
+
     context 'pinning' do
       include_context 'pinning'
 
@@ -23,8 +25,10 @@ describe BasketController, type: :controller do
       end
 
       it 'directly creates new basket if all needed fields are pinned' do
+        PINNING['provider'] = 'pizzade'
         PINNING['shop_name'] = 'Pinned Shop'
         PINNING['shop_url'] = '/hipster/pinned_shop/fake'
+        PINNING['shop_url_params'] = '?some=1'
         PINNING['shop_fax'] = '+490000000000000'
 
         get :new
@@ -35,20 +39,27 @@ describe BasketController, type: :controller do
       end
 
       it 'redirects to pinned shop URL' do
+        PINNING['provider'] = 'pizzade'
         PINNING['shop_url'] = '/hipster/pinned_shop/fake'
         get :new
         expect(response.redirect_url).to include '/hipster/pinned_shop/fake'
       end
     end
 
+    context 'missing provider' do
+      it 'redirects to start page'
+      it 'shows error'
+    end
+
+
     it 'redirects to Pizza.de root path' do
-      get :new
+      get :new, provider: provider
       expect(response).to redirect_to root_service_path(:pizzade)
     end
 
     it 'sets correct mode cookie' do
-      get :new
-      expect(cookies['_hipsterpizza_mode']).to eql 'pizzade_basket_new'
+      get :new, provider: provider
+      expect(cookies['_hipsterpizza_mode']).to eql "#{provider}_basket_new"
     end
   end
 

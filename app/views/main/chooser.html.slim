@@ -40,4 +40,8 @@
 
   h2 main.chooser.new_basket.heading
   p main.chooser.new_basket.body
-  a.btn.btn-primary data-no-turbolink="" href=new_basket_path main.chooser.new_basket.link
+  ul
+    li
+      a.btn.btn-primary data-no-turbolink="" href=new_basket_path(provider: 'pizzade') =I18n.t('main.chooser.new_basket.link', provider: 'Pizza.de')
+    li
+      a.btn.btn-primary data-no-turbolink="" href=new_basket_path(provider: 'stadtsalat') =I18n.t('main.chooser.new_basket.link', provider: 'Stadtsalat.de')

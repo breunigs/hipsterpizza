@@ -17,8 +17,8 @@ en:
 
       new_basket:
         heading: 'New Group Basket'
-        body: 'Use this if you want to create a <b>new</b> group order. You’ll be able to choose which shop will be used.'
-        link: 'Create New Basket'
+        body: 'Use this if you want to create a <b>new</b> group order. You’ll be able to choose which shop will be used if the provider offers more than one.'
+        link: 'Create New Basket On %{provider}'
 
       participate:
         heading: Participate
@@ -47,8 +47,8 @@ de:
 
       new_basket:
         heading: 'Neuer Warenkorb'
-        body: 'Nutze diese Funktion, wenn Du eine <b>neue</b> Gruppenbestellung machen möchtest. Du kannst auswählen, welcher Lieferservice verwendet werden soll.'
-        link: 'Neuen Warenkorb erstellen'
+        body: 'Nutze diese Funktion, wenn Du eine <b>neue</b> Gruppenbestellung machen möchtest. Bei manchen Anbietern kannst Du noch einen genauen Lieferanten wählen.'
+        link: 'Neuen Warenkorb auf %{provider} erstellen'
 
       participate:
         heading: Mitbestellen

@@ -5,34 +5,31 @@ class BasketController < ApplicationController
   before_filter :ensure_admin, except: [:new, :create, :find, :show, :share,
                                         :delivery_arrived, :pdf]
 
-
-  PIZZADE_URL_MODIFIERS = { knddomain: 1, noflash: 1 }
+  rescue_from Provider::InvalidName do
+    flash[:error] = "[i18n] Provider invalid or missing, cannot continue."
+    reset_flow_cookies
+    redirect_to root_path
+  end
 
   def new
+
     # if there’s an editable basket and we are in single basket mode,
     # redirect directly to basket instead of creating new one
-    if PINNING['single_basket_mode']
+    if Pinning.single_basket_mode?
       @basket = Basket.find_editable
       return redirect_to @basket unless @basket.nil?
     end
 
-    fields = %w(name url fax)
-    if all_pinned?(fields)
-      copy_pinned_to_params(fields)
+    if Pinning.all_pinned?
+      Pinning.merge_pinned!(params)
       return create
     end
 
-    cookie_set(:mode, :pizzade_basket_new)
+    provider = Provider.new(params[:provider] || Pinning.provider)
+    cookie_set(:mode, "#{provider.name}_basket_new")
 
-    if PINNING['shop_url']
-      without_question_mark = PINNING['shop_url_params'].to_s.sub(/\A\?/, '')
-      query = Rack::Utils.parse_nested_query(without_question_mark)
-      query = query.merge(PIZZADE_URL_MODIFIERS)
-
-      redirect_to "#{PINNING['shop_url']}?#{query.to_param}"
-    else
-      redirect_to root_service_path(:pizzade)
-    end
+    url = Pinning.shop_url(provider) || provider.new_basket_url
+    redirect_to url
   end
 
   def create
@@ -120,17 +117,6 @@ class BasketController < ApplicationController
     return if view_context.admin?
     flash[:error] = t 'basket.controller.not_admin'
     redirect_to @basket
-  end
-
-  def all_pinned?(fields)
-    fields.all? { |f| PINNING["shop_#{f}"] }
-  end
-
-  def copy_pinned_to_params(fields)
-    fields.each do |f|
-      f = "shop_#{f}"
-      params[f.to_sym] = PINNING[f]
-    end
   end
 
   # detects if @basket or @order have been changed compared to the timestamps
