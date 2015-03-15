@@ -11,38 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027212153) do
+ActiveRecord::Schema.define(version: 20150315090547) do
 
   create_table "baskets", force: :cascade do |t|
-    t.string   "shop_name"
+    t.string   "shop_name",       limit: 255
     t.datetime "submitted"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "shop_url"
-    t.string   "uid"
-    t.boolean  "cancelled",       default: false
-    t.string   "sha_address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "shop_url",        limit: 255
+    t.string   "uid",             limit: 255
+    t.boolean  "cancelled",                   default: false
+    t.string   "sha_address",     limit: 255
     t.datetime "arrival"
-    t.string   "shop_fax"
-    t.string   "shop_url_params"
+    t.string   "shop_fax",        limit: 255
+    t.string   "shop_url_params", limit: 255
+    t.string   "provider"
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string   "nick"
-    t.string   "json"
-    t.string   "uuid"
+    t.string   "nick",       limit: 255
+    t.string   "json",       limit: 255
+    t.string   "uuid",       limit: 255
     t.integer  "basket_id"
-    t.boolean  "paid",       default: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.boolean  "paid",                   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "saved_orders", force: :cascade do |t|
-    t.string "shop_url"
-    t.string "nick"
-    t.string "json"
-    t.string "name"
-    t.string "uuid"
+    t.string "shop_url", limit: 255
+    t.string "nick",     limit: 255
+    t.string "json",     limit: 255
+    t.string "name",     limit: 255
+    t.string "uuid",     limit: 255
   end
 
 end

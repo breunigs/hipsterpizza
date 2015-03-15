@@ -12,6 +12,7 @@ FactoryGirl.define do
   end
 
   factory :real_basket_pizzade, class: Basket do
+    provider 'pizzade'
     shop_name 'Indian Curry, Berlin, Brüsseler Str. 17'
     shop_url '/indian-curry-berlin-bruesseler-str-17'
     shop_fax '+490000000000'

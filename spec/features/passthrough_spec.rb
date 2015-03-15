@@ -5,7 +5,8 @@ require 'spec_helper'
 describe 'Passthrough', type: :feature do
   before do
     visit root_path
-    click_on I18n.t('main.chooser.new_basket.link')
+    link = I18n.t('main.chooser.new_basket.link', provider: 'Pizza.de')
+    click_on link
   end
 
   it 'renders pizza.de root page' do
