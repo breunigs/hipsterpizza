@@ -5,7 +5,7 @@ class BasketController < ApplicationController
   before_filter :ensure_admin, except: [:new, :create, :find, :show, :share,
                                         :delivery_arrived, :pdf]
 
-  rescue_from Provider::InvalidName do
+  rescue_from Provider::InvalidProvider do
     flash[:error] = "[i18n] Provider invalid or missing, cannot continue."
     reset_flow_cookies
     redirect_to root_path

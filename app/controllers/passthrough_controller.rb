@@ -11,6 +11,16 @@ class PassthroughController < ApplicationController
 
   after_filter :add_missing_content_type
 
+  rescue_from Mode::InvalidMode do
+    flash[:error] = t 'mode.invalid_or_missing'
+    return redirect_to root_url
+  end
+
+  rescue_from Provider::InvalidProvider do
+    flash[:error] = t 'provider.invalid_or_missing'
+    return redirect_to root_url
+  end
+
   def pass
     replace || rewrite
   end
@@ -32,16 +42,10 @@ class PassthroughController < ApplicationController
     render text: 'withheld error from pizza.de', status: 500
   end
 
-  # Reads the mode cookies and ensures it’s valid and all dependencies are, too.
-  # If something is wrong, it redirects to the start page with an error message.
   def resolve_mode
-    @mode = cookie_get(:mode).to_s
-    unless VALID_MODES.include?(@mode)
-      flash[:error] = t 'mode.invalid_or_missing'
-      return redirect_to root_url
-    end
-
-    require_basket unless @mode.end_with?('_basket_new')
+    @mode = Mode.current(cookies)
+    @provider = Provider.current(cookies)
+    require_basket if @mode.requires_basket?
   end
 
   def add_missing_content_type

@@ -1,5 +1,5 @@
 .hipster
   - content_for :nav do
-    = render "modes/#{@mode}"
+    = render "modes/#{@provider}_#{@mode}"
 
   = render "nav/main"
