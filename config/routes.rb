@@ -37,7 +37,8 @@ Hipsterpizza::Application.routes.draw do
       end
     end
 
-    get 'root/:service', to: 'passthrough#pass_root', as: 'root_service'
+    get 'provider_root', to: 'passthrough#provider_root'
+    get 'raw', to: 'cors#pass'
 
     get 'streaming_test', to: 'basket_submit#test'
   end

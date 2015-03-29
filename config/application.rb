@@ -24,14 +24,5 @@ module Hipsterpizza
     config.assets.prefix = '/hipster/assets'
 
     config.i18n.available_locales = [:en, :de]
-
-    config.action_dispatch.default_headers = {
-      'Content-Security-Policy' =>  <<-END.gsub("\n", ';').gsub(/\s+/, ' ')
-        img-src       'self'
-        script-src    'self' 'unsafe-eval' 'unsafe-inline'
-        style-src     'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com
-        font-src      'self'  https://fonts.gstatic.com
-      END
-    }
   end
 end

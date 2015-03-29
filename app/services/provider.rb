@@ -3,16 +3,26 @@ class Provider
 
   PROVIDERS = {
     pizzade: {
-      new_params: { knddomain: 1, noflash: 1 },
+      new_params:  { knddomain: 1, noflash: 1 },
       single_shop: false,
+      domain:      'pizza.de',
+      csp: <<-CSP.strip_heredoc
+        img-src       'self'
+        script-src    'self' 'unsafe-eval' 'unsafe-inline'
+        style-src     'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com
+        font-src      'self'  https://fonts.gstatic.com
+      CSP
     },
 
     stadtsalatde: {
       single_shop: true,
+      https:       true,
+      domain:      'www.stadtsalat.de',
       defaults: {
-        shop_name: "Stadtsalat.de",
-        shop_url: "/"
-      }
+        shop_name: 'Stadtsalat.de',
+        shop_url:  '/hipster/provider_root',
+      },
+      passable_hosts: ['d2rzcb39z1r56i.cloudfront.net']
     }
   }.with_indifferent_access
 
@@ -33,6 +43,10 @@ class Provider
 
   attr_reader :name
 
+  def passable_host?(host)
+    settings.fetch(:passable_hosts, []).include?(host)
+  end
+
   def single_shop?
     settings[:single_shop]
   end
@@ -52,8 +66,16 @@ class Provider
     settings[:new_params] || {}
   end
 
+  def domain
+    settings[:domain]
+  end
+
   def to_s
     @name
+  end
+
+  def csp
+    settings.fetch(:csp, '').gsub("\n", ';').gsub(/\s+/, ' ')
   end
 
   private

@@ -9,12 +9,12 @@ class OrderController < ApplicationController
                 only: [:create, :new, :destroy, :copy, :edit, :update]
 
   def new
-    cookie_set(:mode, :pizzade_order_new)
+    cookie_set(:mode, "#{@basket.provider}_order_new")
     redirect_to_shop
   end
 
   def edit
-    cookie_set(:mode, :pizzade_order_edit)
+    cookie_set(:mode, "#{@basket.provider}_order_edit")
     cookie_set(:replay, "order nocheck #{@order.uuid}")
     redirect_to_shop
   end

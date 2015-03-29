@@ -73,6 +73,11 @@ describe Store do
       expect(store.send(:cache_buster_param?, env)).to eql true
     end
 
+    it 'recognizes stadtsalat.de style cache busting' do
+      env['REQUEST_URI'] = 'https://d2rzcb39z1r56i.cloudfront.net/assets/views/index.html?bust=1426870304'
+      expect(store.send(:cache_buster_param?, env)).to eql true
+    end
+
     it 'allows normal URLs' do
       env['REQUEST_URI'] = 'http://pizza.de/_shop/shopinit_json'
       expect(store.send(:cache_buster_param?, env)).to eql false

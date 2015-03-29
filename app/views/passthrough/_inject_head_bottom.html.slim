@@ -1,8 +1,9 @@
-= stylesheet_link_tag "pizzade", media: "all"
+= stylesheet_link_tag @provider.name, media: "all"
 = stylesheet_link_tag "ours", media: "all"
 
 link href='https://fonts.googleapis.com/css?family=Cabin:400,700' rel='stylesheet' type='text/css'
 
+/ PIZZA DE SPECIFIC. TODO: MOVE ME
 meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"
 
 / This prevents pizza.de from asking “switch to mobile version?” when
@@ -12,3 +13,4 @@ javascript:
   if(window.mobileRedirect) {
     window.mobileRedirect.run = function() {};
   }
+/ PIZZA DE SPECFIC END

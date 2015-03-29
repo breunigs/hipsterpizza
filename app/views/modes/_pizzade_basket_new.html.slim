@@ -1,5 +1,6 @@
 li
   = form_tag({controller: :basket, action: :create}, method: :post, title: t('modes.choose_shop.title'))
+    input                         type='hidden' name='provider' value='pizzade'
     input#hipsterShopCanonicalUrl type='hidden' name='shop_url'
     input#hipsterShopName         type='hidden' name='shop_name'
     input#hipsterShopFaxNumber    type='hidden' name='shop_fax'

@@ -47,7 +47,7 @@ class Store
   end
 
   def cache_buster_param?(env)
-    !!(env['REQUEST_URI'].to_s =~ /&_=[0-9]{13,}/)
+    !!(env['REQUEST_URI'].to_s =~ /&_=[0-9]{13,}|\?bust=[0-9]{10,}/)
   end
 
   def key(env)

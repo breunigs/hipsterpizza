@@ -7,7 +7,7 @@ class PassthroughController < ApplicationController
   skip_before_action :reset_flow_cookies
 
   before_action :filter_error_reporter
-  before_action :resolve_mode
+  before_action :resolve_state
 
   after_filter :add_missing_content_type
 
@@ -25,9 +25,8 @@ class PassthroughController < ApplicationController
     replace || rewrite
   end
 
-  def pass_root
+  def provider_root
     env['PATH_INFO'] = "/"
-    cookie_set(:service, params[:service])
     rewrite
   end
 
@@ -42,10 +41,11 @@ class PassthroughController < ApplicationController
     render text: 'withheld error from pizza.de', status: 500
   end
 
-  def resolve_mode
+  def resolve_state
     @mode = Mode.current(cookies)
     @provider = Provider.current(cookies)
     require_basket if @mode.requires_basket?
+    response.headers['Content-Security-Policy'] = @provider.csp
   end
 
   def add_missing_content_type
@@ -155,6 +155,6 @@ class PassthroughController < ApplicationController
   end
 
   def forwarder
-    @forwarder ||= Forwarder.new("pizza.de")
+    @forwarder ||= Forwarder.new(@provider.domain)
   end
 end
