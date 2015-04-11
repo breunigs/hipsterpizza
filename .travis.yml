@@ -7,9 +7,6 @@ script:
   - ./bin/rake db:migrate RAILS_ENV=test
   - ./bin/rspec
 before_install:
-  - "export COVERAGE=true"
-  - "export CODECLIMATE_REPO_TOKEN=fa7ed59cc6227b968e7e3bb14ffd71b8ac11bf67b349286d1ce87edefc574ebe"
-  - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 after_failure:
   - "./script/share_images.sh"
@@ -18,5 +15,8 @@ cache: bundler
 sudo: false
 env:
   global:
+      - COVERAGE=true
+      - CODECLIMATE_REPO_TOKEN=fa7ed59cc6227b968e7e3bb14ffd71b8ac11bf67b349286d1ce87edefc574ebe
+      - DISPLAY=:99.0
       - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
       
