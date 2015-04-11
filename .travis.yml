@@ -11,8 +11,12 @@ before_install:
   - "export CODECLIMATE_REPO_TOKEN=fa7ed59cc6227b968e7e3bb14ffd71b8ac11bf67b349286d1ce87edefc574ebe"
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - "./script/get_bundler.sh"
 after_failure:
   - "./script/share_images.sh"
 bundler_args: --without development --deployment --jobs 4
+cache: bundler
 sudo: false
+env:
+  global:
+      - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+      
