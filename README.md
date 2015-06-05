@@ -38,7 +38,7 @@ cd /var/www
 
 # Install HipsterPizza and its dependencies:
 sudo -u www-data -s
-  git clone git://github.com/breunigs/hipsterpizza
+  git clone https://github.com/breunigs/hipsterpizza.git
   cd hipsterpizza
 
   /usr/bin/bundle --deployment --without development test

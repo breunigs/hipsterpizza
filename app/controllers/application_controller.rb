@@ -69,7 +69,7 @@ class ApplicationController < ActionController::Base
   def stream(template)
     response.headers['X-Accel-Buffering'] = 'no'
 
-    # via http://stackoverflow.com/a/748646/1684530
+    # via https://stackoverflow.com/a/748646/1684530
     # ensure that streamed pages are never cached
     response.headers['Cache-Control'] = 'no-cache, no-store, max-age=0, must-revalidate'
     response.headers['Pragma'] = 'no-cache'

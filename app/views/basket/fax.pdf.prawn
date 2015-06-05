@@ -27,7 +27,7 @@ if @fax_config['lat'] && @fax_config['lon']
   lat = @fax_config['lat']
   lon = @fax_config['lon']
 
-  osm = "http://www.osm.org/?mlat=#{lat}&mlon=#{lon}#map=17/#{lat}/#{@fax_config['lon']}"
+  osm = "https://www.openstreetmap.org/?mlat=#{lat}&mlon=#{lon}#map=17/#{lat}/#{lon}"
   gmaps = "https://maps.google.de/maps?q=#{lat},#{lon}&num=1&t=m&z=18"
 
   size = 100

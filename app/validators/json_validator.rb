@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-# via http://stackoverflow.com/a/19445201/1684530
+# via https://stackoverflow.com/a/19445201/1684530
 # license: CC-BY-SA 3.0
 
 # Put this code in lib/validators/json_validator.rb

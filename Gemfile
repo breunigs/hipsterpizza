@@ -21,7 +21,7 @@ gem 'http_accept_language'
 gem 'mechanize', require: false
 gem 'prawn', '1.0.0'
 gem 'prawn-qrcode'
-gem 'prawn-rails', git: 'git://github.com/cortiz/prawn-rails.git', ref: 'c276c1b601e3'
+gem 'prawn-rails', git: 'https://github.com/cortiz/prawn-rails.git', ref: 'c276c1b601e3'
 
 group :development do
   gem 'better_errors'
@@ -39,7 +39,7 @@ end
 group :test do
   gem 'simplecov', require: false
   gem 'codeclimate-test-reporter', require: nil
-  gem 'poltergeist', git: 'git://github.com/teampoltergeist/poltergeist.git'
+  gem 'poltergeist', git: 'https://github.com/teampoltergeist/poltergeist.git'
   gem 'capybara-screenshot'
   gem 'database_cleaner'
   gem 'factory_girl_rails'

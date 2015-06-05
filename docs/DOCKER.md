@@ -59,7 +59,7 @@ Please continue with the normal guide starting at [webserver integration](../REA
 You can also build your own Docker image from HipsterPizza’s source. Below are the basic steps need to do this. Please refer to Docker’s documentation for everything else:
 
 ```
-git clone git://github.com/breunigs/hipsterpizza
+git clone https://github.com/breunigs/hipsterpizza.git
 cd hipsterpizza
 # (make some changes)
 docker build --tag MYPIZZA .
