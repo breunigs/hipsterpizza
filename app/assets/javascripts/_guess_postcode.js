@@ -13,7 +13,7 @@ var HIPSTER = (function (my) {
   }
 
   function queryNominatim(pos) {
-    var url = 'http://nominatim.openstreetmap.org/reverse?format=json&zoom=18';
+    var url = 'https://nominatim.openstreetmap.org/reverse?format=json&zoom=18';
     var c = pos.coords;
     var coords = '&lat='+c.latitude+'&lon='+c.longitude;
     my.log('Querying Nominatim at ' + coords);

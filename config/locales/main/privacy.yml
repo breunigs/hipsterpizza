@@ -31,7 +31,7 @@ en:
           header: Address Details
           server:
             header: On Server
-            details: 'Stored in <a href="http://en.wikipedia.org/wiki/SHA-2">scrambled form</a> as part of a basket. Used estimate delivery times for your address.'
+            details: 'Stored in <a href="https://en.wikipedia.org/wiki/SHA-2">scrambled form</a> as part of a basket. Used estimate delivery times for your address.'
           browser:
             header: In Browser
             details: Stored in local storage and can be read by third party provider. Remove it using your browser’s cleaning tools.
@@ -64,7 +64,7 @@ de:
           order: "Bestellungen: Nick, Zeitstempel, Produkte und deren Preise"
           logs: "Server Logs: Seitenaufrufe mit Deiner IP, User Agent („Browser“) und Zeitstempel"
 
-          delete_method: 'Es wird kein <a href="http://de.wikipedia.org/wiki/Datenvernichtung">sicheres Löschen</a> verwendet, Daten könnten wiederherstellbar sein.'
+          delete_method: 'Es wird kein <a href="https://de.wikipedia.org/wiki/Datenvernichtung">sicheres Löschen</a> verwendet, Daten könnten wiederherstellbar sein.'
 
         browser:
           header: Browser
@@ -77,7 +77,7 @@ de:
           header: Adressdaten
           server:
             header: Auf Server
-            details: 'Zusammen mit dem Warenkorb in <a href="http://de.wikipedia.org/wiki/SHA-2">zerhackter / gehashter Form</a> gespeichert. Wird benutzt um die Lieferzeit an eine Adresse vorherzusagen.'
+            details: 'Zusammen mit dem Warenkorb in <a href="https://de.wikipedia.org/wiki/SHA-2">zerhackter / gehashter Form</a> gespeichert. Wird benutzt um die Lieferzeit an eine Adresse vorherzusagen.'
           browser:
             header: Im Browser
             details: Wird im Browser via Local Storage gespeichert. Kann von Drittanbietern gelesen werden. Entfernung mit den Reinigungstools des Browsers möglich.

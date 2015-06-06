@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/cortiz/prawn-rails.git
+  remote: https://github.com/cortiz/prawn-rails.git
   revision: c276c1b601e3fd3bcf9e6edd04da6330419b2d12
   ref: c276c1b601e3
   specs:
@@ -8,7 +8,7 @@ GIT
       rails (>= 3.1.0)
 
 GIT
-  remote: git://github.com/teampoltergeist/poltergeist.git
+  remote: https://github.com/teampoltergeist/poltergeist.git
   revision: 3aec468f9f0f93570b6c58bfd7f67e4cf1a9d360
   specs:
     poltergeist (1.5.1)
