@@ -24,7 +24,7 @@ Convinced? Read on!
 
 ## Rolling your own copy
 
-- This guide explains how to **manually install** HipsterPizza on Debian **testing**.
+- This guide explains how to **manually install** HipsterPizza on Debian **stable**.
 - Alternatively, you can use [HipsterPizza with **Docker**](docs/DOCKER.md).
 - If you’ve already got a local installation, refer to [the **UPGRADING** guide](docs/UPGRADING.md).
 
