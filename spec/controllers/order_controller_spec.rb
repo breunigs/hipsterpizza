@@ -74,7 +74,7 @@ describe OrderController, type: :controller do
       invalid_json = ' { incorrect'
       expect {
         patch :update, { json: invalid_json }.merge(common_params)
-      }.to raise_error
+      }.to raise_error(JSON::ParserError)
     end
 
     it 'handles price difference' do

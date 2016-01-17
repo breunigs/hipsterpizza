@@ -16,7 +16,7 @@ describe Order, type: :model do
     it 'raises errors for invalid json' do
       o.json = 'derp } '
 
-      expect { o.json_parsed }.to raise_error
+      expect { o.json_parsed }.to raise_error(JSON::ParserError)
     end
   end
 
