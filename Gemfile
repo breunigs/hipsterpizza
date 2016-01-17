@@ -6,7 +6,6 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'slim'
-gem 'therubyracer',         platform: :ruby
 gem 'puma'
 gem 'rqrcode-rails3'
 gem 'possessive'
