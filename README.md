@@ -30,7 +30,8 @@ Convinced? Read on!
 
 ### Basic Setup
 ```bash
-sudo apt-get install ruby bundler git libssl-dev libsqlite3-dev
+sudo apt-get install ruby git libssl-dev libsqlite3-dev nodejs
+sudo gem install bundler
 
 sudo mkdir -p /var/www/
 sudo chown www-data:www-data /var/www
@@ -41,6 +42,7 @@ sudo -u www-data -s
   git clone git://github.com/breunigs/hipsterpizza
   cd hipsterpizza
 
+  export DISABLE_SPRING=1
   /usr/bin/bundle --deployment --without development test
   ./bin/rake hipster:setup_production
 
