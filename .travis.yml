@@ -1,6 +1,4 @@
 language: ruby
-rvm:
-  - 2.3
 script:
   - ./bin/rake db:migrate RAILS_ENV=test
   - ./bin/rspec --exclude-pattern 'spec/features/**/*'
