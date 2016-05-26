@@ -1,13 +1,4 @@
 GIT
-  remote: git://github.com/cortiz/prawn-rails.git
-  revision: c276c1b601e3fd3bcf9e6edd04da6330419b2d12
-  ref: c276c1b601e3
-  specs:
-    prawn-rails (0.0.3)
-      prawn
-      rails (>= 3.1.0)
-
-GIT
   remote: git://github.com/teampoltergeist/poltergeist.git
   revision: d78722ce462ec96ec3fb9758fb3a699aa84947f2
   specs:
@@ -151,6 +142,11 @@ GEM
     prawn-qrcode (0.2.2.1)
       prawn (>= 0.11.1)
       rqrcode (>= 0.4.1)
+    prawn-rails (0.1.1)
+      prawn
+      prawn-table
+      rails (>= 3.1.0)
+    prawn-table (0.2.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -279,7 +275,8 @@ DEPENDENCIES
   possessive
   prawn (= 1.0.0)
   prawn-qrcode
-  prawn-rails!
+  prawn-rails (~> 0.1.0)
+  prawn-table
   pry
   puma
   quiet_assets
@@ -297,4 +294,4 @@ DEPENDENCIES
   unicode_utils
 
 BUNDLED WITH
-   1.10.6
+   1.12.4
