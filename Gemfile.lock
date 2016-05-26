@@ -142,7 +142,7 @@ GEM
     prawn-qrcode (0.2.2.1)
       prawn (>= 0.11.1)
       rqrcode (>= 0.4.1)
-    prawn-rails (0.1.1)
+    prawn-rails (0.1.0)
       prawn
       prawn-table
       rails (>= 3.1.0)
@@ -275,7 +275,7 @@ DEPENDENCIES
   possessive
   prawn (= 1.0.0)
   prawn-qrcode
-  prawn-rails (~> 0.1.0)
+  prawn-rails (= 0.1.0)
   prawn-table
   pry
   puma

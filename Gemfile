@@ -20,8 +20,8 @@ gem 'http_accept_language'
 gem 'mechanize', require: false
 gem 'prawn', '1.0.0'
 gem 'prawn-qrcode'
-gem 'prawn-table'
-gem 'prawn-rails', '~> 0.1.0'
+gem 'prawn-table', '0.2.1'
+gem 'prawn-rails', '0.1.0'
 
 group :development do
   gem 'better_errors'
