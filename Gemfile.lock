@@ -276,7 +276,7 @@ DEPENDENCIES
   prawn (= 1.0.0)
   prawn-qrcode
   prawn-rails (= 0.1.0)
-  prawn-table
+  prawn-table (= 0.2.1)
   pry
   puma
   quiet_assets
