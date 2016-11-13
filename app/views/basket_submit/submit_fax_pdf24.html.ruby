@@ -15,6 +15,10 @@ append_raw <<END
 END
 @footer = '</p></div>' + @footer
 
+if @basket.orders.none?
+  a('✗ – Basket has no orders. Why would you want to submit that?')
+  return exit
+end
 
 a('Loading landing page ') #############################################
 page = m.get('https://faxout.pdf24.org/')
