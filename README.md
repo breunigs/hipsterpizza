@@ -1,8 +1,22 @@
-# HipsterPizza – [pizza.yrden.de](https://pizza.yrden.de)
+# New Pizza.de design and HipsterPizza
 
-HipsterPizza allows to **make group orders** on pizza.de. If you don’t want
-to run your own copy, you can use the
-public instance at **[pizza.yrden.de](https://pizza.yrden.de)**.
+Pizza.de have changed their design, which completely breaks HipsterPizza. A rewrite is
+a lot of effort, especially given the hacks upon hacks and general bad code quality that
+is HipsterPizza. If someone wants to take over, please contact me and we'll figure it out.
+
+For now, Pizza.de's old design is still available and mostly works fine. The shop selection
+is a bit whacky, but with a bit of URL guessing you can make it work. The code changes are
+surprisingly little, see this commit on how to do so:
+https://github.com/nnev/hipsterpizza/commit/5e4898a8e477495b3f79239830efd5357e8d82f1
+
+It has been a nice ride, thanks everyone!
+-- Stefan
+
+# HipsterPizza
+
+HipsterPizza allows to **make group orders** on pizza.de. 
+
+There is no more public instance available as of ~2016-11-20. You need to roll your own.
 
 Regular user? Roll your own copy to gain the ability to
 - automate all the things
